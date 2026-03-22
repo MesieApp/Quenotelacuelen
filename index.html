@@ -1462,8 +1462,7 @@
         'Content-Type': 'application/json',
         'x-api-key': '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',
         'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-        'anthropic-beta': 'pdfs-2024-09-25'
+        'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
@@ -1497,8 +1496,13 @@
       })
     });
     const data = await resp.json();
+    if (!resp.ok) {
+      console.error('API error:', JSON.stringify(data));
+      throw new Error(data.error?.message || 'Error en la API');
+    }
     const text = (data.content || []).map(b => b.text || '').join('').trim();
     const clean = text.replace(/\`\`\`json|\`\`\`/g, '').trim();
+    console.log('Respuesta IA:', clean);
     return JSON.parse(clean);
   }
 
@@ -1508,7 +1512,7 @@
       alert('Por favor, sube tu factura en PDF.');
       return;
     }
-    if (!file.name.toLowerCase().endsWith('.pdf')) {
+    if (!file.type.includes('pdf') && !file.name.toLowerCase().endsWith('.pdf')) {
       alert('Por favor, sube un archivo PDF.');
       return;
     }
