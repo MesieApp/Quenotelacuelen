@@ -998,7 +998,7 @@
     <span>🎁 Gana hasta 50 € si cambias de tarifa con nosotros</span>
     <button type="button" class="hero-incentive-btn open-modal-50" id="openModal50" aria-label="Más información sobre la recompensa">?</button>
   </div>
-  <a href="#formulario" class="hero-cta">Sube tu factura ahora</a>
+  <a href="#formulario" class="hero-cta">Calcula tu ahorro ahora</a>
   <p class="hero-note">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
     Tus datos están protegidos y no los compartimos con nadie
@@ -1030,16 +1030,16 @@
         <div class="how-card-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         </div>
-        <h3>Nos envías tu factura</h3>
-        <p>Sube tu factura de luz o gas en PDF desde <a href="#formulario">este mismo formulario</a>. También puedes enviarnos varias.</p>
+        <h3>Indicas cuánto pagas</h3>
+        <p>Introduce el importe de tu factura mensual de luz o gas en <a href="#formulario">el formulario</a>. Es rápido y no necesitas subir documentos.</p>
       </div>
       <div class="how-connector" aria-hidden="true"></div>
       <div class="how-card">
         <div class="how-card-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
-        <h3>La analizamos en detalle</h3>
-        <p>Nuestros especialistas revisan cada línea de tu factura: tarifa, potencia contratada, cargos y peajes.</p>
+        <h3>Te mostramos tu ahorro</h3>
+        <p>Te decimos cuánto podrías ahorrar con la tarifa de precio de mercado de Gana Energía (estimación del 20% de ahorro).</p>
       </div>
       <div class="how-connector" aria-hidden="true"></div>
       <div class="how-card">
@@ -1123,7 +1123,7 @@
   <div class="form-inner">
     <p class="section-label">Empieza a ahorrar desde ya</p>
     <h2>Analiza tu factura gratis</h2>
-    <p class="section-desc">Sube tu factura y calcula tu ahorro con Gana Energía en segundos.</p>
+    <p class="section-desc">Indica cuánto pagas y calcula tu ahorro con Gana Energía al instante.</p>
 
     <!-- PASO 1: Formulario inicial -->
     <div class="flow-step" id="step1" data-step="1">
@@ -1135,16 +1135,11 @@
             <button type="button" class="toggle-btn" data-type="gas">Gas</button>
           </div>
         </div>
-        <div class="file-drop" id="fileDrop">
-          <input type="file" id="factura" accept=".pdf,.jpg,.jpeg,.png" />
-          <div class="file-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          </div>
-          <p class="file-title">Arrastra tu factura aquí o haz clic para subir</p>
-          <p class="file-sub">PDF, JPG o PNG · Máx. 10 MB</p>
-          <p class="file-selected" id="fileName"></p>
+        <div class="form-group full">
+          <label for="importeFactura">¿Cuánto pagas al mes en tu factura? (€)</label>
+          <input type="number" id="importeFactura" placeholder="Ej: 85" min="1" max="9999" step="0.01" />
         </div>
-        <button type="button" class="submit-btn" id="btnAnalizar">Analizar mi factura</button>
+        <button type="button" class="submit-btn" id="btnAnalizar">Calcular mi ahorro</button>
       </div>
     </div>
 
@@ -1152,7 +1147,7 @@
     <div class="flow-step hidden" id="step2" data-step="2">
       <div class="loading-container">
         <div class="loading-spinner"></div>
-        <p class="loading-text" id="loadingText">Leyendo tu factura...</p>
+        <p class="loading-text" id="loadingText">Comparando con el mercado...</p>
         <div class="loading-bar"><div class="loading-bar-fill" id="loadingBarFill"></div></div>
       </div>
     </div>
@@ -1160,19 +1155,19 @@
     <!-- PASO 3: Resultado -->
     <div class="flow-step hidden" id="step3" data-step="3">
       <div class="result-container">
-        <p class="result-label">Tu ahorro anual estimado</p>
+        <p class="result-label">Tu ahorro anual estimado con Gana Energía</p>
         <p class="result-anual" id="resultAnual">— €</p>
         <p class="result-mensual" id="resultMensual">— €/mes</p>
         <div class="result-table-wrap">
           <table class="result-table">
             <thead>
-              <tr><th>Concepto</th><th id="thTuTarifa">Tu tarifa</th><th>Gana Energía</th></tr>
+              <tr><th>Concepto</th><th>Tu tarifa actual</th><th>Gana Energía (Tarifa PM)</th></tr>
             </thead>
             <tbody id="resultTableBody"></tbody>
           </table>
         </div>
         <button type="button" class="submit-btn submit-btn-green" id="btnCambiarme">Cambiarme a Gana Energía →</button>
-        <button type="button" class="submit-btn-secondary" id="btnOtraFactura">Analizar otra factura</button>
+        <button type="button" class="submit-btn-secondary" id="btnOtraFactura">Calcular otra factura</button>
       </div>
     </div>
 
@@ -1180,51 +1175,28 @@
     <div class="flow-step hidden" id="step4" data-step="4">
       <h2 class="flow-step4-title">Un último paso para empezar a ahorrar</h2>
       <form id="contratacionForm" class="contratacion-form">
-        <div class="form-extracted-group">
-          <span class="extracted-badge">Extraído de tu factura 🔒</span>
-          <div class="form-grid form-grid-2">
-            <div class="form-group full">
-              <label for="cups">CUPS</label>
-              <input type="text" id="cups" name="cups" readonly class="extracted-field" placeholder="—" />
-            </div>
-            <div class="form-group full">
-              <label for="direccion">Dirección del suministro</label>
-              <input type="text" id="direccion" name="direccion" readonly class="extracted-field" placeholder="—" />
-            </div>
-            <div class="form-group">
-              <label for="nombre_titular">Nombre completo del titular</label>
-              <input type="text" id="nombre_titular" name="nombre_titular" readonly class="extracted-field" placeholder="—" />
-            </div>
-            <div class="form-group">
-              <label for="dni">DNI del titular</label>
-              <input type="text" id="dni" name="dni" readonly class="extracted-field" placeholder="—" />
-            </div>
+        <div class="form-grid form-grid-2">
+          <div class="form-group full">
+            <label for="cups">CUPS (código de tu punto de suministro)</label>
+            <input type="text" id="cups" name="cups" placeholder="Ej: ES0021000000000000AA" required />
           </div>
-        </div>
-        <div class="form-manual-group">
-          <div class="form-grid form-grid-2">
-            <div class="form-group full">
-              <label for="iban_cargo">IBAN donde se cargará la factura</label>
-              <input type="text" id="iban_cargo" name="iban_cargo" placeholder="ES00 0000 0000 0000 0000 0000" required />
-            </div>
-            <div class="form-group full">
-              <label for="iban_bono">IBAN donde quieres recibir el bono de fidelidad</label>
-              <input type="text" id="iban_bono" name="iban_bono" placeholder="ES00 0000 0000 0000 0000 0000" />
-              <span class="field-note">15€ cada 3 meses que mantengas el contrato</span>
-            </div>
-            <div class="form-group">
-              <label for="nombre_usuario">Tu nombre y apellidos</label>
-              <input type="text" id="nombre_usuario" name="nombre_usuario" placeholder="Ana García López" required />
-            </div>
-            <div class="form-group">
-              <label for="movil">Tu número de móvil</label>
-              <input type="tel" id="movil" name="movil" placeholder="600 000 000" required />
-            </div>
-            <div class="form-group full">
-              <label for="email">Correo electrónico</label>
-              <input type="email" id="email" name="email" placeholder="tu@email.com" required />
-              <span class="field-note">Donde Gana Energía enviará el contrato</span>
-            </div>
+          <div class="form-group full">
+            <label for="dni">DNI del titular</label>
+            <input type="text" id="dni" name="dni" placeholder="12345678A" required />
+          </div>
+          <div class="form-group full">
+            <label for="iban_cargo">IBAN donde se cargará la factura</label>
+            <input type="text" id="iban_cargo" name="iban_cargo" placeholder="ES00 0000 0000 0000 0000 0000" required />
+          </div>
+          <div class="form-group full">
+            <label for="iban_bono">IBAN donde quieres recibir el bono de fidelidad</label>
+            <input type="text" id="iban_bono" name="iban_bono" placeholder="ES00 0000 0000 0000 0000 0000" />
+            <span class="field-note">15€ cada 3 meses que mantengas el contrato</span>
+          </div>
+          <div class="form-group full">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+            <span class="field-note">Gana Energía te enviará el contrato a este correo. Deberás autorizar el cambio en un máximo de 12 horas.</span>
           </div>
         </div>
         <button type="submit" class="submit-btn submit-btn-green">Enviar solicitud</button>
@@ -1236,7 +1208,7 @@
       <div class="confirmation-container">
         <div class="confirmation-icon">✓</div>
         <h2 class="confirmation-title">¡Todo listo! 🎉</h2>
-        <p class="confirmation-text">En un máximo de 12 horas recibirás un email de Gana Energía para autorizar el cambio de tarifa. A partir de ahí, todo es automático.</p>
+        <p class="confirmation-text">En un máximo de 12 horas recibirás un correo de Gana Energía con el contrato. Solo tienes que autorizar el cambio de tarifa y, a partir de ahí, todo es automático.</p>
         <p class="confirmation-note">Recibirás tu primer bono de 15€ a los 3 meses de mantener el contrato activo.</p>
       </div>
     </div>
@@ -1314,7 +1286,7 @@
 </footer>
 
 <script>
-  // ─── Modal 50€ (sin cambios) ───
+  // ─── Modal 50€ ───
   const modal50 = document.getElementById('modal50');
   document.querySelectorAll('.open-modal-50').forEach(el => {
     el.addEventListener('click', (e) => {
@@ -1333,74 +1305,10 @@
     if (e.key === 'Escape' && modal50.classList.contains('is-open')) closeModal();
   });
 
-  // ─── LÓGICA IA Y CÁLCULO (código exacto proporcionado) ───
-  const MARKET = {
-    '2025-07':{p:.1010,l:.0830,v:.0560},
-    '2025-08':{p:.1080,l:.0880,v:.0590},
-    '2025-09':{p:.1420,l:.1140,v:.0760},
-    '2025-10':{p:.1650,l:.1280,v:.0880},
-    '2025-11':{p:.2036,l:.1346,v:.1078},
-    '2025-12':{p:.1820,l:.1380,v:.1040},
-    '2026-01':{p:.2050,l:.1600,v:.1180},
-    '2026-02':{p:.1650,l:.1250,v:.0880},
-    '2026-03':{p:.1550,l:.1150,v:.0800},
-  };
-  const PEAJE_EN_2025={p:.020130,l:.014423,v:.004303};
-  const PEAJE_EN_2026={p:.018920,l:.013510,v:.003980};
-  const PEAJE_POT_2025={p1:26.930550/365,p2:0.697588/365};
-  const PEAJE_POT_2026={p1:26.200000/365,p2:0.680000/365};
-  const GANA_DIA=0.167, ALQ_DIA=0.026630;
-  const BONO_2025=0.019121, BONO_2026=0.012742;
-  const IMP_ELEC=0.0511269632, IVA=0.21;
-
-  function getWeightedPrices(iniStr, finStr){
-    const d1 = new Date(iniStr+'T12:00:00');
-    const d2 = new Date(finStr+'T12:00:00');
-    let wp={p:0,l:0,v:0}, count=0;
-    const cur = new Date(d1);
-    while(cur < d2){
-      const y=cur.getFullYear(), m=String(cur.getMonth()+1).padStart(2,'0');
-      const key=y+'-'+m;
-      const pr = MARKET[key] || MARKET[Object.keys(MARKET).slice(-1)[0]];
-      wp.p+=pr.p; wp.l+=pr.l; wp.v+=pr.v; count++;
-      cur.setDate(cur.getDate()+1);
-    }
-    return count>0 ? {p:wp.p/count,l:wp.l/count,v:wp.v/count} : MARKET['2026-03'];
-  }
-
-  function calcularAhorroGana(d) {
-    const p1kw = parseFloat(d.potencia_p1)||0;
-    const p2kw = parseFloat(d.potencia_p2)||p1kw;
-    const e_p = parseFloat(d.kwh_punta)||0;
-    const e_l = parseFloat(d.kwh_llano)||0;
-    const e_v = parseFloat(d.kwh_valle)||0;
-    const dias = parseInt(d.dias)||30;
-    const total_ib = parseFloat(d.total_factura)||0;
-    const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
-    const pe = año>=2026 ? PEAJE_EN_2026 : PEAJE_EN_2025;
-    const pp = año>=2026 ? PEAJE_POT_2026 : PEAJE_POT_2025;
-    const mp = getWeightedPrices(d.fecha_inicio, d.fecha_fin);
-    const bonoFallback = año>=2026 ? BONO_2026 : BONO_2025;
-    const bonoG = d.bono_social!=null && d.bono_social>0 ? parseFloat(d.bono_social) : bonoFallback*dias;
-    const impPct = d.imp_electrico_pct!=null ? parseFloat(d.imp_electrico_pct)/100 : IMP_ELEC;
-    const pot = p1kw*pp.p1*dias + p2kw*pp.p2*dias;
-    const enG = e_p*(mp.p+pe.p) + e_l*(mp.l+pe.l) + e_v*(mp.v+pe.v);
-    const margen = GANA_DIA * dias;
-    const alq = ALQ_DIA * dias;
-    const base = pot + enG + margen + bonoG;
-    const impEl = base * impPct;
-    const sub = base + impEl + alq;
-    const ivaG = sub * IVA;
-    const totalG = sub + ivaG + 4.00;
-    const ahorro = total_ib - totalG;
-    const ahorroAnual = (ahorro/dias)*365;
-    return { totalG, ahorro, ahorroAnual, pot, enG, margen, bonoG, alq, impEl, ivaG, total_ib, dias, comer: d.comercializadora||'Tu tarifa' };
-  }
-
-  // ─── Flujo 5 pasos ───
+  // ─── Flujo 5 pasos (sin IA, 20% ahorro fijo) ───
+  const AHORRO_PCT = 0.20; // Gana Energía consigue 20% de ahorro
   let currentTipo = 'luz';
-  let extractedData = null;
-  let calcResult = null;
+  let importeMensual = 0;
 
   const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3'), document.getElementById('step4'), document.getElementById('step5')];
 
@@ -1410,7 +1318,6 @@
     });
   }
 
-  // Toggle Luz/Gas
   document.querySelectorAll('.toggle-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
@@ -1419,113 +1326,23 @@
     });
   });
 
-  // File drop
-  const fileInput = document.getElementById('factura');
-  const fileNameEl = document.getElementById('fileName');
-  fileInput.addEventListener('change', () => {
-    if (fileInput.files.length > 0) {
-      fileNameEl.textContent = '✓ ' + fileInput.files[0].name;
-      fileNameEl.style.display = 'block';
-    }
-  });
-
-  // Drag & drop
-  const fileDrop = document.getElementById('fileDrop');
-  fileDrop.addEventListener('dragover', (e) => { e.preventDefault(); fileDrop.style.borderColor = 'rgba(255,255,255,0.5)'; });
-  fileDrop.addEventListener('dragleave', () => { fileDrop.style.borderColor = ''; });
-  fileDrop.addEventListener('drop', (e) => {
-    e.preventDefault();
-    fileDrop.style.borderColor = '';
-    if (e.dataTransfer.files.length) {
-      fileInput.files = e.dataTransfer.files;
-      fileNameEl.textContent = '✓ ' + e.dataTransfer.files[0].name;
-      fileNameEl.style.display = 'block';
-    }
-  });
-
-  async function fileToBase64(file) {
-    return new Promise((res, rej) => {
-      const r = new FileReader();
-      r.onload = () => {
-        const b = r.result.split(',')[1];
-        res(b || '');
-      };
-      r.onerror = rej;
-      r.readAsDataURL(file);
-    });
-  }
-
-  // URL del proxy (Cloudflare Worker). Ver workers/README.md — tras desplegar, sustituye por tu URL.
-  const PROXY_URL = 'https://tiny-bar-b2da.gp-mesie.workers.dev';
-
-  async function extraerDatosPDF(base64pdf) {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 min máx (la IA puede tardar en facturas grandes)
-    const resp = await fetch(PROXY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content: [
-            { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64pdf } },
-            { type: 'text', text: `Eres un extractor de datos de facturas eléctricas españolas. Analiza esta factura y extrae EXACTAMENTE estos datos en formato JSON. Si un dato no aparece claramente, usa null. Responde SOLO con el JSON sin texto adicional:
-{
-  "comercializadora": "nombre de la compañía",
-  "fecha_inicio": "YYYY-MM-DD",
-  "fecha_fin": "YYYY-MM-DD",
-  "dias": número entero,
-  "potencia_p1": número en kW,
-  "potencia_p2": número en kW,
-  "kwh_punta": número kWh,
-  "kwh_llano": número kWh,
-  "kwh_valle": número kWh,
-  "total_factura": número en euros con IVA,
-  "tarifa": "nombre de la tarifa",
-  "cups": "código CUPS",
-  "direccion": "dirección completa del suministro",
-  "nombre_titular": "nombre completo del titular del contrato",
-  "dni": "DNI o NIF del titular",
-  "bono_social": número en euros sin IVA,
-  "imp_electrico_pct": número decimal del porcentaje
-}` }
-          ]
-        }]
-      })
-    });
-    clearTimeout(timeoutId);
-    const data = await resp.json();
-    if (!resp.ok) {
-      console.error('API error:', JSON.stringify(data));
-      throw new Error(data.error?.message || 'Error en la API');
-    }
-    const text = (data.content || []).map(b => b.text || '').join('').trim();
-    const clean = text.replace(/\`\`\`json|\`\`\`/g, '').trim();
-    console.log('Respuesta IA:', clean);
-    return JSON.parse(clean);
-  }
-
   document.getElementById('btnAnalizar').addEventListener('click', async () => {
-    const file = fileInput.files[0];
-    if (!file) {
-      alert('Por favor, sube tu factura en PDF.');
+    const importeInput = document.getElementById('importeFactura');
+    const importe = parseFloat(importeInput.value.replace(',', '.'));
+
+    if (!importe || importe <= 0) {
+      alert('Por favor, introduce cuánto pagas al mes en tu factura.');
       return;
     }
-    if (!file.type.includes('pdf') && !file.name.toLowerCase().endsWith('.pdf')) {
-      alert('Por favor, sube un archivo PDF.');
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      alert('El PDF no puede superar 5 MB. Si tu factura es muy grande, prueba con solo la primera o segunda página.');
+    if (importe > 9999) {
+      alert('Introduce un importe razonable (menos de 10.000 €).');
       return;
     }
 
+    importeMensual = importe;
     showStep(2);
 
-    const loadingTexts = ['Leyendo tu factura...', 'Comparando con 12 comercializadoras...', 'Calculando tu ahorro con Gana Energía...'];
+    const loadingTexts = ['Comparando con el mercado...', 'Buscando la mejor tarifa...', 'Calculando tu ahorro con Gana Energía...'];
     let textIdx = 0;
     const loadingTextEl = document.getElementById('loadingText');
     const loadingBarFill = document.getElementById('loadingBarFill');
@@ -1534,7 +1351,7 @@
     const textInterval = setInterval(() => {
       textIdx = (textIdx + 1) % loadingTexts.length;
       loadingTextEl.textContent = loadingTexts[textIdx];
-    }, 3000);
+    }, 3333);
 
     const minDelay = new Promise(r => setTimeout(r, 10000));
     let progress = 0;
@@ -1543,50 +1360,28 @@
       if (progress <= 100) loadingBarFill.style.width = progress + '%';
     }, 200);
 
-    const base64pdf = await fileToBase64(file);
-    const apiPromise = extraerDatosPDF(base64pdf).catch(err => {
-      console.error(err);
-      if (err.name === 'AbortError') {
-        alert('La solicitud tardó más de lo esperado. Prueba con un PDF de 1-2 páginas o vuelve a intentarlo.');
-      }
-      return null;
-    });
-
-    const [, data] = await Promise.all([minDelay, apiPromise]);
+    await minDelay;
     clearInterval(textInterval);
     clearInterval(progressInterval);
     loadingBarFill.style.width = '100%';
 
-    extractedData = data;
-    if (!extractedData) {
-      const errMsg = navigator.onLine ? 'No pudimos analizar tu factura. Por favor, intenta con otro PDF o verifica que sea una factura eléctrica válida.' : 'Sin conexión. Revisa tu internet e inténtalo de nuevo.';
-      alert(errMsg);
-      showStep(1);
-      return;
-    }
+    // Cálculo 20% ahorro
+    const ahorroMensual = importeMensual * AHORRO_PCT;
+    const ahorroAnual = ahorroMensual * 12;
+    const totalConGana = importeMensual - ahorroMensual;
 
-    calcResult = calcularAhorroGana(extractedData);
-
-    // Mostrar resultado
-    document.getElementById('resultAnual').textContent = calcResult.ahorroAnual.toFixed(0) + ' €';
-    document.getElementById('resultMensual').textContent = (calcResult.ahorro / calcResult.dias * 30).toFixed(2) + ' €/mes';
-    document.getElementById('thTuTarifa').textContent = calcResult.comer;
+    document.getElementById('resultAnual').textContent = Math.round(ahorroAnual) + ' €';
+    document.getElementById('resultMensual').textContent = ahorroMensual.toFixed(2) + ' €/mes';
 
     const tbody = document.getElementById('resultTableBody');
     tbody.innerHTML = '';
-    const potStr = extractedData.potencia_p1 != null ? (extractedData.potencia_p1 + ' kW') : '—';
     const rows = [
-      ['Potencia', potStr, '—'],
-      ['Energía', '—', calcResult.enG.toFixed(2) + ' €'],
-      ['Margen comercial', '—', calcResult.margen.toFixed(2) + ' €'],
-      ['Imp. eléctrico', '—', calcResult.impEl.toFixed(2) + ' €'],
-      ['Alquiler contador', '—', calcResult.alq.toFixed(2) + ' €'],
-      ['IVA', '—', calcResult.ivaG.toFixed(2) + ' €'],
-      ['Total factura', calcResult.total_ib.toFixed(2) + ' €', calcResult.totalG.toFixed(2) + ' €'],
+      ['Factura mensual', importeMensual.toFixed(2) + ' €', totalConGana.toFixed(2) + ' €'],
+      ['Ahorro (20%)', '—', ahorroMensual.toFixed(2) + ' €'],
     ];
     rows.forEach(([c, tu, gana]) => {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}">${gana}</td>`;
+      tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Ahorro (20%)' ? 'highlight' : ''}">${gana}</td>`;
       tbody.appendChild(tr);
     });
 
@@ -1594,42 +1389,17 @@
   });
 
   document.getElementById('btnOtraFactura').addEventListener('click', () => {
-    fileInput.value = '';
-    fileNameEl.textContent = '';
-    fileNameEl.style.display = 'none';
+    document.getElementById('importeFactura').value = '';
     document.getElementById('loadingBarFill').style.width = '0%';
     showStep(1);
   });
 
   document.getElementById('btnCambiarme').addEventListener('click', () => {
-    // Pre-rellenar campos extraídos
-    const cupsIn = document.getElementById('cups');
-    const dirIn = document.getElementById('direccion');
-    const nombreTitIn = document.getElementById('nombre_titular');
-    const dniIn = document.getElementById('dni');
-
-    const setExtracted = (el, val, canEdit) => {
-      el.value = val || '';
-      el.readOnly = !canEdit;
-      el.classList.toggle('extracted-field', !canEdit);
-      el.classList.toggle('editable', canEdit);
-    };
-
-    const hasCups = extractedData && extractedData.cups;
-    const hasDir = extractedData && extractedData.direccion;
-    const hasNombre = extractedData && extractedData.nombre_titular;
-
-    setExtracted(cupsIn, extractedData?.cups || '', !hasCups);
-    setExtracted(dirIn, extractedData?.direccion || '', !hasDir);
-    setExtracted(nombreTitIn, extractedData?.nombre_titular || '', !hasNombre);
-    setExtracted(dniIn, extractedData?.dni || extractedData?.nif || extractedData?.documento || '', false);
-
+    document.getElementById('cups').value = '';
+    document.getElementById('dni').value = '';
     document.getElementById('iban_cargo').value = '';
     document.getElementById('iban_bono').value = '';
-    document.getElementById('nombre_usuario').value = '';
-    document.getElementById('movil').value = '';
     document.getElementById('email').value = '';
-
     showStep(4);
   });
 
@@ -1638,15 +1408,13 @@
 
     const payload = {
       asunto: 'NUEVO CONTRATO GANA ENERGÍA',
-      cups: document.getElementById('cups').value,
-      direccion: document.getElementById('direccion').value,
-      nombre_titular: document.getElementById('nombre_titular').value,
-      dni: document.getElementById('dni').value,
-      iban_cargo: document.getElementById('iban_cargo').value,
-      iban_bono: document.getElementById('iban_bono').value,
-      nombre_usuario: document.getElementById('nombre_usuario').value,
-      movil: document.getElementById('movil').value,
-      email: document.getElementById('email').value
+      tipo: currentTipo,
+      importe_mensual: importeMensual,
+      cups: document.getElementById('cups').value.trim(),
+      dni: document.getElementById('dni').value.trim(),
+      iban_cargo: document.getElementById('iban_cargo').value.trim(),
+      iban_bono: document.getElementById('iban_bono').value.trim(),
+      email: document.getElementById('email').value.trim()
     };
 
     try {
