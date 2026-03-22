@@ -2,23 +2,33 @@ const { Resend } = require('resend');
 
 const DESTINATARIOS = ['gp.mesie@gmail.com', 'info@quenotelacuelen.com'];
 
+const corsHeaders = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: { ...corsHeaders, 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type' }, body: '' };
+  }
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Method Not Allowed' }) };
+    return { statusCode: 405, headers: corsHeaders, body: JSON.stringify({ error: 'Method Not Allowed' }) };
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY || process.env.resend_api_key;
   if (!apiKey) {
     console.error('RESEND_API_KEY no configurada');
     return {
       statusCode: 500,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ error: 'Configuración de email no disponible' })
+      headers: corsHeaders,
+      body: JSON.stringify({ error: 'RESEND_API_KEY no configurada en Netlify. Ve a Site settings > Environment variables.' })
     };
   }
 
   try {
-    const body = JSON.parse(event.body || '{}');
+    let body = {};
+    try {
+      body = typeof event.body === 'string' ? JSON.parse(event.body) : (event.body || {});
+    } catch (_) {
+      return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Body JSON inválido' }) };
+    }
     const { tipo, cups, direccion, nombre_titular, dni, iban_cargo, iban_bono, email, pdfBase64 } = body;
 
     const attachments = [];
@@ -46,34 +56,38 @@ exports.handler = async (event) => {
     `;
 
     const resend = new Resend(apiKey);
-    const { data, error } = await resend.emails.send({
-      from: process.env.RESEND_FROM || 'Quenotelacuelen <onboarding@resend.dev>',
-      to: DESTINATARIOS,
-      subject: 'NUEVO CONTRATO GANA ENERGÍA – ' + (nombre_titular || 'Sin nombre'),
-      html,
-      attachments: attachments.length ? attachments : undefined
-    });
+    const from = process.env.RESEND_FROM || 'Quenotelacuelen <onboarding@resend.dev>';
+    const subject = 'NUEVO CONTRATO GANA ENERGÍA – ' + (nombre_titular || 'Sin nombre');
+    const emailPayload = { from, subject, html, attachments: attachments.length ? attachments : undefined };
 
-    if (error) {
-      console.error('Resend error:', error);
+    let lastError = null;
+    for (const to of DESTINATARIOS) {
+      const { data, error } = await resend.emails.send({ ...emailPayload, to: [to] });
+      if (error) {
+        console.error('Resend error para', to, error);
+        lastError = error;
+      }
+    }
+
+    if (lastError) {
       return {
         statusCode: 500,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ error: error.message })
+        headers: corsHeaders,
+        body: JSON.stringify({ error: lastError?.message || (typeof lastError === 'object' ? JSON.stringify(lastError) : String(lastError)) || 'Error al enviar con Resend' })
       };
     }
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ success: true, id: data?.id })
+      headers: corsHeaders,
+      body: JSON.stringify({ success: true })
     };
   } catch (err) {
     console.error('enviar-contrato error:', err);
     return {
       statusCode: 500,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ error: err.message })
+      headers: corsHeaders,
+      body: JSON.stringify({ error: err.message || String(err) })
     };
   }
 };
