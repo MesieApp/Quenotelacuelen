@@ -1459,9 +1459,12 @@
   const PROXY_URL = 'https://tiny-bar-b2da.gp-mesie.workers.dev';
 
   async function extraerDatosPDF(base64pdf) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 min máx
     const resp = await fetch(PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
@@ -1493,6 +1496,7 @@
         }]
       })
     });
+    clearTimeout(timeoutId);
     const data = await resp.json();
     if (!resp.ok) {
       console.error('API error:', JSON.stringify(data));
@@ -1538,6 +1542,9 @@
     const base64pdf = await fileToBase64(file);
     const apiPromise = extraerDatosPDF(base64pdf).catch(err => {
       console.error(err);
+      if (err.name === 'AbortError') {
+        alert('La solicitud tardó demasiado. Prueba con un PDF más pequeño o de menos páginas.');
+      }
       return null;
     });
 
@@ -1548,7 +1555,8 @@
 
     extractedData = data;
     if (!extractedData) {
-      alert('No pudimos analizar tu factura. Por favor, intenta con otro PDF o verifica que sea una factura eléctrica válida.');
+      const errMsg = navigator.onLine ? 'No pudimos analizar tu factura. Por favor, intenta con otro PDF o verifica que sea una factura eléctrica válida.' : 'Sin conexión. Revisa tu internet e inténtalo de nuevo.';
+      alert(errMsg);
       showStep(1);
       return;
     }
