@@ -1460,7 +1460,7 @@
 
   async function extraerDatosPDF(base64pdf) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 min máx
+    const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 min máx (la IA puede tardar en facturas grandes)
     const resp = await fetch(PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1518,6 +1518,10 @@
       alert('Por favor, sube un archivo PDF.');
       return;
     }
+    if (file.size > 5 * 1024 * 1024) {
+      alert('El PDF no puede superar 5 MB. Si tu factura es muy grande, prueba con solo la primera o segunda página.');
+      return;
+    }
 
     showStep(2);
 
@@ -1543,7 +1547,7 @@
     const apiPromise = extraerDatosPDF(base64pdf).catch(err => {
       console.error(err);
       if (err.name === 'AbortError') {
-        alert('La solicitud tardó demasiado. Prueba con un PDF más pequeño o de menos páginas.');
+        alert('La solicitud tardó más de lo esperado. Prueba con un PDF de 1-2 páginas o vuelve a intentarlo.');
       }
       return null;
     });
