@@ -175,10 +175,8 @@
     document.getElementById('resultColandoMensual').textContent = ahorroMensual.toFixed(2).replace('.', ',');
     document.getElementById('resultColandoAnual').textContent = ahorroAnual.toString().replace('.', ',');
     const fmtEur = (n) => n.toFixed(2).replace('.', ',') + ' €';
-    const totalMensualTu = (totalTu / calcResult.dias) * 30;
-    const totalMensualGana = (totalGana / calcResult.dias) * 30;
-    document.getElementById('resultTuTarifa').textContent = fmtEur(totalMensualTu) + ' / mes';
-    document.getElementById('resultMejorTarifa').textContent = fmtEur(totalMensualGana) + ' / mes';
+    document.getElementById('resultTuTarifa').textContent = fmtEur(totalTu);
+    document.getElementById('resultMejorTarifa').textContent = fmtEur(totalGana);
 
     const tbody = document.getElementById('resultTableBody');
     tbody.innerHTML = '';
