@@ -979,7 +979,6 @@
   </style>
 </head>
 <body>
-<script>window._ak = atob('c2stYW50LWFwaTAzLWxIYnRNaEd3Nm1VUUJhb2FhMC11NnV1UHFpQ1U5ZzV3Mm5KV3IycGNJMUhpbzFXSFFJZlM3RHZRQU5LTjZ0MEkyU0ktdDhFZXJMSDV6UG1mZTUwZjA1US1pU1NmWndBQQ==');</script>
 
 <!-- NAV -->
 <nav>
@@ -1456,15 +1455,13 @@
     });
   }
 
+  // URL del proxy (Cloudflare Worker). Ver workers/README.md — tras desplegar, sustituye por tu URL.
+  const PROXY_URL = 'https://tiny-bar-b2da.gp-mesie.workers.dev';
+
   async function extraerDatosPDF(base64pdf) {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch(PROXY_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': window._ak || '',
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
