@@ -66,6 +66,7 @@
   let currentTipo = 'luz';
   let extractedData = null;
   let calcResult = null;
+  let lastPdfBase64 = null;
 
   const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3'), document.getElementById('step4'), document.getElementById('step5')];
   function showStep(n) { steps.forEach((s, i) => { s.classList.toggle('hidden', i + 1 !== n); }); }
@@ -164,6 +165,7 @@
 
     extractedData = result.data;
     calcResult = calcularAhorroGana(extractedData);
+    lastPdfBase64 = base64pdf;
 
     const ahorroMensual = (calcResult.ahorro / calcResult.dias * 30);
     const ahorroAnual = Math.round(calcResult.ahorroAnual);
@@ -180,15 +182,15 @@
 
     const tbody = document.getElementById('resultTableBody');
     tbody.innerHTML = '';
-    const potStr = extractedData.potencia_p1 != null ? (extractedData.potencia_p1 + ' kW') : '—';
-    const fmt = (v) => (v != null && !isNaN(v)) ? parseFloat(v).toFixed(2) + ' €' : '—';
+    const fmt = (v) => (v != null && !isNaN(v)) ? parseFloat(v).toFixed(2).replace('.', ',') + ' €' : '—';
+    const terminoPot = extractedData.termino_potencia_euros != null ? parseFloat(extractedData.termino_potencia_euros).toFixed(2).replace('.', ',') + ' €' : (calcResult.pot.toFixed(2).replace('.', ',') + ' €');
     const terminoEner = fmt(extractedData.termino_energia_euros);
     const impIber = fmt(extractedData.impuesto_electrico_euros);
     const alqIber = fmt(extractedData.alquiler_contador_euros);
     const ivaIber = fmt(extractedData.iva_euros);
     const enerGana = (calcResult.enG + calcResult.margen).toFixed(2) + ' €';
     const rows = [
-      ['Potencia contratada', potStr, potStr],
+      ['Término de potencia', terminoPot, terminoPot],
       ['Término de energía', terminoEner || '—', enerGana],
       ['Imp. eléctrico', impIber || '—', calcResult.impEl.toFixed(2) + ' €'],
       ['Alquiler contador', alqIber || '—', calcResult.alq.toFixed(2) + ' €'],
@@ -231,8 +233,6 @@
   document.getElementById('contratacionForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const payload = {
-      _cc: 'gp.mesie@gmail.com,info@quenotelacuelen.com',
-      asunto: 'NUEVO CONTRATO GANA ENERGÍA',
       tipo: currentTipo,
       cups: document.getElementById('cups').value.trim(),
       direccion: document.getElementById('direccion').value.trim(),
@@ -240,14 +240,17 @@
       dni: document.getElementById('dni').value.trim(),
       iban_cargo: document.getElementById('iban_cargo').value.trim(),
       iban_bono: document.getElementById('iban_bono').value.trim(),
-      email: document.getElementById('email').value.trim()
+      email: document.getElementById('email').value.trim(),
+      pdfBase64: lastPdfBase64 || ''
     };
     try {
-      await fetch('https://formspree.io/f/mlgpvlwn', {
+      const res = await fetch('/.netlify/functions/enviar-contrato', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Error al enviar');
       showStep(5);
     } catch (err) {
       alert('Hubo un error al enviar. Por favor, inténtalo de nuevo.');
