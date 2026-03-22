@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="Logo_Quenotelacuelen.png">
+  <title>Estás pagando de más. Analizamos tu factura en minutos | Quenotelacuelen.com</title>
+  <meta name="description" content="Analizamos tu factura de luz y gas gratis en 24 horas y te decimos cuánto puedes ahorrar. Sin compromiso, sin tecnicismos. Comparador independiente de tarifas energéticas en España.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.quenotelacuelen.com/">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Quenotelacuelen.com",
+    "description": "Estás pagando de más. Analizamos tu factura en minutos y te decimos cuánto puedes ahorrar. Comparador independiente de tarifas energéticas en España.",
+    "url": "https://www.quenotelacuelen.com/",
+    "areaServed": "ES",
+    "priceRange": "Gratuito"
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:   #1E6B3A;
+      --primary-dk:#175430;
+      --secondary: #9dbfa8;
+      --secondary-lt:#e8f0eb;
+      --text:      #1a1a1a;
+      --muted:     #64748B;
+      --border:    #E8ECEF;
+      --bg:        #FFFFFF;
+      --bg-soft:   #FAFBFC;
+      --radius:    8px;
+      --font-head: 'Lora', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 80px;
+    }
+    .logo {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    nav a.cta-nav {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--primary);
+      text-decoration: none;
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius);
+      transition: background 0.2s;
+    }
+    nav a.cta-nav:hover { background: var(--primary-dk); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 6rem 2rem 5rem;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #EBF5EF;
+      color: #1E6B3A;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 2rem;
+      letter-spacing: 0.03em;
+    }
+    .hero-badge svg { width: 13px; height: 13px; }
+    h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    h1 em { font-style: italic; color: var(--primary); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.9rem 2.2rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .hero-incentive {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: #EBF5EF;
+      color: #1E6B3A;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+    }
+    .hero-incentive-btn {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1px solid #1E6B3A;
+      background: transparent;
+      color: #1E6B3A;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .hero-incentive-btn:hover {
+      background: #1E6B3A;
+      color: #fff;
+    }
+    .hero-cta:hover { background: var(--primary-dk); transform: translateY(-1px); }
+    .hero-note {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    }
+    .hero-note svg { width: 12px; height: 12px; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-soft);
+    }
+    .stats-inner {
+      max-width: min(900px, 100%);
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .stat {
+      text-align: center;
+      padding: 0.5rem 1rem;
+    }
+    .stat + .stat {
+      border-left: 1px solid var(--border);
+    }
+    .stat-number {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      font-weight: 400;
+    }
+
+    /* ── SECTIONS COMUNES ── */
+    .section { padding: 5rem 2rem; }
+    .section-inner { max-width: min(900px, 100%); margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #1E6B3A;
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 520px;
+      font-weight: 300;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #como-funciona { background: #F4FAF6; }
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr 48px 1fr 48px 1fr;
+      gap: 0;
+      margin-top: 3.5rem;
+      align-items: stretch;
+    }
+    .how-connector {
+      position: relative;
+      align-self: stretch;
+    }
+    .how-connector::after {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-top: 2px dotted #9DBFA8;
+    }
+    .how-card {
+      padding: 2rem;
+      border: none;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .how-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #1E6B3A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    .how-card-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: #fff;
+    }
+    .how-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #0D1B2A;
+      margin-bottom: 0.6rem;
+    }
+    .how-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+    .how-card p a {
+      color: #1E6B3A;
+      text-decoration: underline;
+    }
+    .how-reward-cta {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+    .how-reward-box {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid #c8e0d0;
+      border-radius: 12px;
+      padding: 1.25rem 2rem;
+      margin: 2.5rem auto 0;
+      width: fit-content;
+      font-size: 0.9rem;
+      color: #1E6B3A;
+      font-weight: 500;
+    }
+    .how-reward-box svg {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+      margin-right: 0.35rem;
+    }
+    .how-reward-box .how-reward-link {
+      color: #1E6B3A;
+      text-decoration: underline;
+      font-weight: 400;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-left: 0.25rem;
+    }
+
+    /* ── TRUST ── */
+    .trust { background: #F8FAFC; }
+    .trust-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    .trust-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+    .trust-card:hover {
+      border-color: #9DBFA8;
+    }
+    .trust-icon {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      background: #EBF5EF;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .trust-icon svg { width: 22px; height: 22px; color: #1E6B3A; }
+    .trust-card-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .trust-card h3 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .trust-card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    /* ── FORM SECTION ── */
+    .form-section {
+      background: #0D1B2A;
+      padding: 5rem 2rem;
+    }
+    .form-inner {
+      max-width: min(680px, 100%);
+      margin: 0 auto;
+    }
+    .form-section .section-label { color: var(--secondary); }
+    .form-section h2 { color: #fff; margin-bottom: 0.5rem; }
+    .form-section .section-desc { color: rgba(255,255,255,0.85); margin-bottom: 2.5rem; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-checkboxes { gap: 0.85rem; }
+    .form-checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      line-height: 1.5;
+      font-size: 0.85rem;
+      color: #CBD5E1;
+      cursor: pointer;
+    }
+    .form-checkbox-label input[type="checkbox"] {
+      flex-shrink: 0;
+      margin-top: 3px;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      accent-color: #4ade80;
+      cursor: pointer;
+    }
+    .form-checkbox-label span {
+      flex: 1;
+      min-width: 0;
+    }
+    .form-checkbox-label a {
+      color: #86efac;
+      text-decoration: underline;
+    }
+    label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.03em;
+    }
+    input:not([type="checkbox"]), select {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 0.7rem 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    input:not([type="checkbox"])::placeholder { color: rgba(255,255,255,0.5); }
+    input:not([type="checkbox"]):focus, select:focus {
+      border-color: rgba(255,255,255,0.4);
+    }
+    select option { background: var(--primary-dk); color: #fff; }
+
+    .file-drop {
+      grid-column: 1 / -1;
+      border: 1.5px dashed rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .file-drop:hover {
+      border-color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.03);
+    }
+    .file-drop input[type="file"] {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer;
+      width: 100%; height: 100%;
+    }
+    .file-icon {
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 0.75rem;
+    }
+    .file-icon svg { width: 20px; height: 20px; color: var(--secondary); }
+    .file-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 0.25rem;
+    }
+    .file-sub {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .file-selected {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .submit-btn {
+      grid-column: 1 / -1;
+      margin-top: 0.5rem;
+      background: #fff;
+      color: #0D1B2A;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .submit-btn:hover { background: #F1F5F9; transform: translateY(-1px); }
+
+    .form-legal {
+      margin-top: 1.25rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      line-height: 1.6;
+      display: flex; align-items: flex-start; justify-content: center; gap: 0.4rem;
+    }
+    .form-legal svg { width: 13px; height: 13px; flex-shrink: 0; margin-top: 2px; }
+    .form-legal a { color: var(--secondary); text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #fff;
+      padding: 3rem 2rem 2rem;
+      border-top: 1px solid #E2E8F0;
+    }
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .footer-logo img {
+      height: 48px;
+      width: auto;
+      display: block;
+      opacity: 0.85;
+    }
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .footer-contact p {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #475569;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+    .footer-contact a {
+      font-size: 0.82rem;
+      color: #64748B;
+      text-decoration: none;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .footer-contact a:hover { color: #94A3B8; }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      color: #475569;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #94A3B8; }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: #334155;
+      width: 100%;
+      padding-top: 1.5rem;
+      border-top: 1px solid #E2E8F0;
+      text-align: center;
+    }
+
+    /* ── MODAL 50€ ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.is-open { display: flex; }
+    .modal-card {
+      background: #fff;
+      max-width: 480px;
+      width: 100%;
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      width: 32px; height: 32px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .modal-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .modal-timeline {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 0.25rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+    .modal-timeline::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    .modal-hito {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .modal-hito-circle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #1E6B3A;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.4rem;
+    }
+    .modal-hito-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .modal-hito-amount {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #1E6B3A;
+    }
+    .modal-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+
+      /* NAV */
+      nav {
+        padding: 0 1rem;
+        height: 56px;
+        justify-content: center;
+      }
+      nav a.cta-nav {
+        display: none;
+      }
+      .logo img {
+        height: 28px;
+      }
+
+      /* HERO */
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      h1 { font-size: 2rem; letter-spacing: -0.02em; }
+      .hero-sub { font-size: 0.95rem; }
+      .hero-cta { width: 100%; text-align: center; padding: 0.9rem 1rem; }
+      .hero-badge { font-size: 0.75rem; }
+
+      /* REWARD BANNER */
+      .reward-banner,
+      .hero-incentive {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-wrap: nowrap;
+        padding: 0.6rem 1rem;
+        font-size: 0.82rem;
+      }
+      .hero-incentive-btn { flex-shrink: 0; }
+
+      /* STATS */
+      .stats-inner {
+        grid-template-columns: 1fr;
+        padding: 1.25rem;
+        gap: 0;
+      }
+      .stat { padding: 0.75rem 1rem; }
+      .stat + .stat { border-left: none; border-top: 1px solid var(--border); }
+      .stat-number { font-size: 1.8rem; }
+
+      /* SECCIONES */
+      .section { padding: 3rem 1.25rem; }
+      h2 { font-size: 1.7rem; }
+      .section-desc { font-size: 0.9rem; }
+
+      /* HOW IT WORKS */
+      .how-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      .how-connector { display: none; }
+
+      /* TRUST */
+      .trust-grid { gap: 0.75rem; }
+      .trust-card {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.25rem;
+      }
+
+      /* FORMULARIO */
+      .form-section { padding: 3rem 1.25rem; }
+      .form-inner { padding: 0; }
+      .form-grid { grid-template-columns: 1fr; gap: 0.85rem; }
+      .form-group.full { grid-column: 1; }
+      .file-drop { grid-column: 1; padding: 1.5rem 1rem; }
+      .submit-btn { grid-column: 1; }
+      .form-legal {
+        display: block;
+        text-align: center;
+        font-size: 0.72rem;
+        line-height: 1.7;
+        padding: 0 0.5rem;
+      }
+      .form-legal svg { display: none; }
+
+      .seo-grid { grid-template-columns: 1fr !important; }
+
+      /* FOOTER */
+      footer { padding: 2rem 1.25rem; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; }
+      .footer-copy { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Que no te la cuelen" style="height:61px;width:auto;"></a>
+  <a href="#formulario" class="cta-nav">Quiero ahorrar</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    Servicio gratuito y sin compromiso
+  </div>
+  <h1>¿Estás pagando de más<br />en tu <em>factura de luz o gas</em>?</h1>
+  <p class="hero-sub">Analizamos tu factura en minutos y te decimos exactamente cuánto puedes ahorrar. Sin tecnicismos, sin letra pequeña.</p>
+  <div class="hero-incentive">
+    <span>🎁 Gana hasta 50 € si cambias de tarifa con nosotros</span>
+    <button type="button" class="hero-incentive-btn open-modal-50" id="openModal50" aria-label="Más información sobre la recompensa">?</button>
+  </div>
+  <a href="#formulario" class="hero-cta">Sube tu factura ahora</a>
+  <p class="hero-note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    Tus datos están protegidos y no los compartimos con nadie
+  </p>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-number">1.000+</div>
+      <div class="stat-label">Facturas revisadas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">400€</div>
+      <div class="stat-label">Ahorro medio anual</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="como-funciona">
+  <div class="section-inner">
+    <p class="section-label">Cómo funciona</p>
+    <h2>Tres pasos y listo</h2>
+    <p class="section-desc">Sin necesidad de llamadas comerciales ni visitas. Todo de forma remota y a tu ritmo.</p>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <h3>Nos envías tu factura</h3>
+        <p>Sube tu factura de luz o gas en PDF desde <a href="#formulario">este mismo formulario</a>. También puedes enviarnos varias.</p>
+      </div>
+      <div class="how-connector" aria-hidden="true"></div>
+      <div class="how-card">
+        <div class="how-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>La analizamos en detalle</h3>
+        <p>Nuestros especialistas revisan cada línea de tu factura: tarifa, potencia contratada, cargos y peajes.</p>
+      </div>
+      <div class="how-connector" aria-hidden="true"></div>
+      <div class="how-card">
+        <div class="how-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2z"/></svg>
+        </div>
+        <h3>Resultados</h3>
+        <p>Descubre si te la estaban colando. Te enviamos un informe con la mejor tarifa que encontremos. Sin presiones, tú decides qué hacer.</p>
+      </div>
+    </div>
+    <div class="how-reward-cta">
+      <div class="how-reward-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/></svg>
+        ¿Cambias de tarifa con nosotros? Gana hasta 50 € en recompensas. <span class="open-modal-50 how-reward-link">¿Cómo funciona?</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="section trust" id="garantias">
+  <div class="section-inner">
+    <p class="section-label">Por qué confiar en nosotros</p>
+    <h2>Tu privacidad, nuestra prioridad</h2>
+    <p class="section-desc">Sabemos que compartirnos documentos personales requiere confianza. Por eso nos tomamos muy en serio la seguridad.</p>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="trust-card-content">
+          <h3>Datos cifrados y seguros</h3>
+          <p>Toda la información que nos envías viaja cifrada y se almacena de forma segura. Cumplimos con el RGPD.</p>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+        <div class="trust-card-content">
+          <h3>100% gratuito y sin compromiso</h3>
+          <p>Nuestro análisis es completamente gratuito. No cobramos nada y no tienes ninguna obligación de contratar nada.</p>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="trust-card-content">
+          <h3>Sin letra pequeña</h3>
+          <p>No te suscribes a nada. No te llamamos sin permiso. Te enviamos el informe y ya decides tú lo que quieres hacer.</p>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="trust-card-content">
+          <h3>Especialistas independientes</h3>
+          <p>Estamos hartos de ver cómo las compañías se aprovechan de sus clientes con tarifas opacas y renovaciones automáticas que nadie pidió. No somos una comercializadora ni trabajamos para ninguna. Solo trabajamos para ti.</p>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:900px; margin: 3rem auto 0; padding: 0 2rem;">
+      <div class="seo-grid" style="border-top: 1px solid #E2E8F0; padding-top: 2.5rem; display:grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div>
+          <h3 style="font-family:'Lora',Georgia,serif; font-size:1.1rem; font-weight:500; color:#0D1B2A; margin-bottom:0.6rem;">¿Por qué revisar tu factura de luz?</h3>
+          <p style="font-size:0.875rem; color:#64748B; line-height:1.7; font-weight:300;">El mercado energético en España cambia constantemente. Las tarifas se actualizan, aparecen nuevas comercializadoras y muchos hogares siguen pagando precios desactualizados sin saberlo. Una revisión periódica de tu factura eléctrica puede suponer un ahorro de cientos de euros al año.</p>
+        </div>
+        <div>
+          <h3 style="font-family:'Lora',Georgia,serif; font-size:1.1rem; font-weight:500; color:#0D1B2A; margin-bottom:0.6rem;">¿Cuánto se puede ahorrar en la factura del gas?</h3>
+          <p style="font-size:0.875rem; color:#64748B; line-height:1.7; font-weight:300;">La mayoría de consumidores domésticos en España tienen contratada una tarifa de gas que ya no es la más competitiva del mercado. Comparar tarifas de gas de forma independiente y sin compromiso es el primer paso para reducir tu factura mensual de forma real y duradera.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="formulario">
+  <div class="form-inner">
+    <p class="section-label">Empieza a ahorrar desde ya</p>
+    <h2>Analiza tu factura gratis</h2>
+    <p class="section-desc">Rellena el formulario y sube tu factura. Calcula tu ahorro de forma instantánea.</p>
+
+    <form id="contactForm" action="https://formspree.io/f/mlgpvlwn" method="POST">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Ana García López" required />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="600 000 000" required />
+        </div>
+        <div class="form-group full">
+          <label for="tipo">Tipo de factura</label>
+          <select id="tipo" name="tipo" required>
+            <option value="" disabled selected>Selecciona el tipo</option>
+            <option value="luz">Factura de luz</option>
+            <option value="gas">Factura de gas</option>
+            <option value="ambas">Luz y gas</option>
+          </select>
+        </div>
+
+        <div class="file-drop" id="fileDrop">
+          <input type="file" id="factura" name="factura" accept=".pdf,.jpg,.jpeg,.png" multiple />
+          <div class="file-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <p class="file-title">Sube tu factura o facturas aquí</p>
+          <p class="file-sub">PDF, JPG o PNG · Puedes subir varias · Máx. 10 MB cada una</p>
+          <p class="file-selected" id="fileName"></p>
+        </div>
+
+        <div class="form-group full form-checkboxes">
+          <label class="form-checkbox-label">
+            <input type="checkbox" id="titular" name="titular" required />
+            <span>Confirmo que soy titular del suministro o estoy autorizado.</span>
+          </label>
+          <label class="form-checkbox-label">
+            <input type="checkbox" id="privacidad" name="privacidad" required />
+            <span>He leído y acepto la <a href="#">Política de Privacidad</a> y autorizo el tratamiento de mis datos personales para recibir el análisis de mi factura.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="submit-btn">Enviar y obtener mi análisis gratuito</button>
+      </div>
+    </form>
+
+    <p class="form-legal" style="margin-top:1.25rem;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Tus datos se tratan conforme al <a href="#">Aviso de Privacidad</a> y nunca se comparten con terceros.
+    </p>
+    <p style="font-size:0.72rem; text-align:center; line-height:1.65; padding: 0 0.5rem; margin-top: 0.5rem; color:rgba(255,255,255,0.6);">
+      Si cambias de tarifa a través de nuestra recomendación, podrás recibir una compensación de hasta 50 €.*<br/>
+      <span style="color:rgba(255,255,255,0.45);">* Abonada en 4 tramos de 12,50 € cada 3 meses, condicionada a la permanencia del contrato durante 12 meses.</span>
+    </p>
+  </div>
+</section>
+
+<!-- MODAL 50€ -->
+<div class="modal-overlay" id="modal50" role="dialog" aria-modal="true" aria-labelledby="modal50Title">
+  <div class="modal-card" id="modalCard">
+    <button type="button" class="modal-close" id="closeModal50" aria-label="Cerrar">×</button>
+    <h3 id="modal50Title">¿Cómo funciona la recompensa?</h3>
+    <p class="modal-subtitle">Si decides ahorrar de verdad con nosotros, recibes hasta 50 € en 4 pagos. Directamente en tu cuenta.</p>
+    <div class="modal-timeline">
+      <div class="modal-hito">
+        <div class="modal-hito-circle">3m</div>
+        <span class="modal-hito-label">3 meses</span>
+        <span class="modal-hito-amount">12,50 €</span>
+      </div>
+      <div class="modal-hito">
+        <div class="modal-hito-circle">6m</div>
+        <span class="modal-hito-label">6 meses</span>
+        <span class="modal-hito-amount">12,50 €</span>
+      </div>
+      <div class="modal-hito">
+        <div class="modal-hito-circle">9m</div>
+        <span class="modal-hito-label">9 meses</span>
+        <span class="modal-hito-amount">12,50 €</span>
+      </div>
+      <div class="modal-hito">
+        <div class="modal-hito-circle">12m</div>
+        <span class="modal-hito-label">12 meses</span>
+        <span class="modal-hito-amount">12,50 €</span>
+      </div>
+    </div>
+    <p class="modal-note">La compensación está condicionada a mantener el contrato activo en cada tramo.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">
+      <img src="Logo_Quenotelacuelen.png" alt="Quenotelacuelen.com" />
+    </a>
+
+    <div class="footer-contact">
+      <p>Contáctanos para cualquier duda</p>
+      <a href="tel:+34 623 756 420">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.1 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92v2z"/></svg>
+        +34 623 756 420
+      </a>
+      <a href="mailto:hola@quenotelacuelen.com">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        info@quenotelacuelen.com
+      </a>
+    </div>
+
+    <nav class="footer-links">
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="politica-privacidad.html">Política de privacidad</a>
+      <a href="politica-cookies.html">Política de cookies</a>
+    </nav>
+
+    <p class="footer-copy">© 2026 Quenotelacuelen.com · Todos los derechos reservados. · Servicio independiente de auditoría energética en España.</p>
+  </div>
+</footer>
+
+<script>
+  const fileInput = document.getElementById('factura');
+  const fileNameEl = document.getElementById('fileName');
+  fileInput.addEventListener('change', () => {
+    const n = fileInput.files.length;
+    if (n > 0) {
+      fileNameEl.textContent = n === 1 ? '✓ ' + fileInput.files[0].name : '✓ ' + n + ' archivos seleccionados';
+      fileNameEl.style.display = 'block';
+    }
+  });
+
+  const modal50 = document.getElementById('modal50');
+  document.querySelectorAll('.open-modal-50').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal50.classList.add('is-open');
+    });
+  });
+  function closeModal() {
+    modal50.classList.remove('is-open');
+  }
+  document.getElementById('closeModal50').addEventListener('click', closeModal);
+  modal50.addEventListener('click', (e) => {
+    if (e.target === modal50) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal50.classList.contains('is-open')) closeModal();
+  });
+
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', function() {
+    const btn = form.querySelector('.submit-btn');
+    btn.textContent = '✓ Enviado — te responderemos en 24h';
+    btn.style.background = '#D1FAE5';
+    btn.style.color = '#065F46';
+    btn.disabled = true;
+  });
+</script>
+</body>
+</html>
