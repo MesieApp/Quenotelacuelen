@@ -17,7 +17,7 @@ exports.handler = async (event) => {
         role: 'user',
         content: [
           { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 } },
-          { type: 'text', text: `Extrae estos datos de la factura eléctrica española en JSON sin texto adicional:
+          { type: 'text', text: `Extrae estos datos de la factura eléctrica española en JSON sin texto adicional. Para el desglose en euros (termino_potencia, termino_energia, etc.) busca las líneas del detalle de la factura. Si no aparece, usa null:
 {
   "comercializadora": "nombre",
   "fecha_inicio": "YYYY-MM-DD",
@@ -35,7 +35,13 @@ exports.handler = async (event) => {
   "nombre_titular": "nombre completo titular",
   "dni": "DNI o NIF",
   "bono_social": euros sin IVA o null,
-  "imp_electrico_pct": porcentaje decimal
+  "imp_electrico_pct": porcentaje decimal,
+  "termino_potencia_euros": euros término potencia o null,
+  "termino_energia_euros": euros término energía o null,
+  "impuesto_electrico_euros": euros impuesto electricidad o null,
+  "alquiler_contador_euros": euros alquiler contador o null,
+  "iva_euros": euros IVA o null,
+  "margen_comercial_euros": euros margen comercial o null
 }` }
         ]
       }]
