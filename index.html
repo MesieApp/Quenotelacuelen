@@ -54,7 +54,7 @@
     const margen = GANA_DIA * dias;
     const alq = ALQ_DIA * dias;
     const base = pot + enG + margen + bonoG;
-    const impEl = base * impPct;
+    const impEl = (d.impuesto_electrico_euros != null && !isNaN(parseFloat(d.impuesto_electrico_euros))) ? parseFloat(d.impuesto_electrico_euros) : (base * impPct);
     const sub = base + impEl + alq;
     const ivaG = sub * IVA;
     const totalG = sub + ivaG + 4.00;
@@ -241,7 +241,7 @@
       iban_cargo: document.getElementById('iban_cargo').value.trim(),
       iban_bono: document.getElementById('iban_bono').value.trim(),
       email: document.getElementById('email').value.trim(),
-      pdfBase64: lastPdfBase64 || ''
+      pdfBase64: (lastPdfBase64 && lastPdfBase64.length < 5000000) ? lastPdfBase64 : ''
     };
     try {
       const res = await fetch('/.netlify/functions/enviar-contrato', {
@@ -249,11 +249,12 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || 'Error al enviar');
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || `Error ${res.status}: ${res.statusText}`);
       showStep(5);
     } catch (err) {
-      alert('Hubo un error al enviar. Por favor, inténtalo de nuevo.');
+      const msg = err.message || String(err);
+      alert('Error al enviar: ' + msg + '\n\nSi el problema continúa, revisa que RESEND_API_KEY esté configurada en Netlify.');
     }
   });
 </script> </body> </html>
