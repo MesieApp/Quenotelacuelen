@@ -1,6 +1,6 @@
 const { Resend } = require('resend');
 
-const DESTINATARIOS = ['gp.mesie@gmail.com', 'info@quenotelacuelen.com'];
+const DESTINATARIOS = ['gp.mesie@gmail.com'];
 
 const corsHeaders = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
 
