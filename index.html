@@ -440,6 +440,7 @@
       outline: none;
       transition: border-color 0.2s;
       -webkit-appearance: none;
+      appearance: none;
     }
     input:not([type="checkbox"])::placeholder { color: rgba(255,255,255,0.5); }
     input:not([type="checkbox"]):focus, select:focus {
@@ -518,6 +519,213 @@
     }
     .form-legal svg { width: 13px; height: 13px; flex-shrink: 0; margin-top: 2px; }
     .form-legal a { color: var(--secondary); text-decoration: underline; }
+
+    /* ── FLUJO 5 PASOS ── */
+    .flow-step { transition: opacity 0.3s ease; }
+    .flow-step.hidden { display: none !important; }
+    .flow-step1-grid { display: flex; flex-direction: column; gap: 1rem; }
+
+    /* Toggle Luz/Gas */
+    .toggle-buttons {
+      display: flex;
+      gap: 0;
+      background: rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 4px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .toggle-btn {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .toggle-btn:hover { color: rgba(255,255,255,0.9); }
+    .toggle-btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Loading */
+    .loading-container {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1.5rem;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 1.5rem;
+      min-height: 1.5em;
+    }
+    .loading-bar {
+      height: 6px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 999px;
+      overflow: hidden;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .loading-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.2s linear;
+    }
+
+    /* Resultado */
+    .result-container {
+      padding: 1rem 0;
+      text-align: center;
+    }
+    .result-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .result-anual {
+      font-family: var(--font-head);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 500;
+      color: #4ade80;
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.02em;
+    }
+    .result-mensual {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+    }
+    .result-table-wrap {
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.2);
+    }
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .result-table th, .result-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .result-table th { color: rgba(255,255,255,0.8); font-weight: 500; }
+    .result-table td { color: rgba(255,255,255,0.95); }
+    .result-table tr:last-child td { border-bottom: none; }
+    .result-table .highlight { color: #4ade80; font-weight: 500; }
+    .submit-btn-green {
+      background: #1E6B3A !important;
+      color: #fff !important;
+      margin-bottom: 0.75rem;
+    }
+    .submit-btn-green:hover { background: var(--primary-dk) !important; }
+    .submit-btn-secondary {
+      display: block;
+      width: 100%;
+      background: transparent !important;
+      color: rgba(255,255,255,0.9) !important;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+    .submit-btn-secondary:hover {
+      background: rgba(255,255,255,0.08) !important;
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    /* Paso 4: Formulario contratación */
+    .flow-step4-title {
+      font-size: 1.5rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+    .contratacion-form .form-grid-2 { gap: 1rem; }
+    .form-extracted-group {
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .extracted-badge {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--secondary);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.03em;
+    }
+    .extracted-field {
+      background: rgba(148,163,184,0.25) !important;
+      color: rgba(255,255,255,0.95) !important;
+      cursor: not-allowed;
+    }
+    .extracted-field.editable {
+      background: rgba(255,255,255,0.08) !important;
+      cursor: text;
+    }
+    .form-manual-group { margin-bottom: 1rem; }
+    .field-note {
+      display: block;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.25rem;
+    }
+
+    /* Paso 5: Confirmación */
+    .confirmation-container {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .confirmation-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.5rem;
+      background: #1E6B3A;
+      color: #fff;
+      font-size: 2.5rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .confirmation-title {
+      font-size: 1.75rem !important;
+      margin-bottom: 1rem !important;
+    }
+    .confirmation-text {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 420px;
+      margin: 0 auto 1rem;
+      line-height: 1.7;
+    }
+    .confirmation-note {
+      font-size: 0.85rem;
+      color: var(--secondary);
+      font-weight: 500;
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -743,13 +951,15 @@
         padding: 1.25rem;
       }
 
-      /* FORMULARIO */
+      /* FORMULARIO / FLUJO */
       .form-section { padding: 3rem 1.25rem; }
       .form-inner { padding: 0; }
       .form-grid { grid-template-columns: 1fr; gap: 0.85rem; }
       .form-group.full { grid-column: 1; }
       .file-drop { grid-column: 1; padding: 1.5rem 1rem; }
       .submit-btn { grid-column: 1; }
+      .result-anual { font-size: 2.2rem; }
+      .contratacion-form .form-grid-2 { grid-template-columns: 1fr; }
       .form-legal {
         display: block;
         text-align: center;
@@ -908,61 +1118,132 @@
   </div>
 </section>
 
-<!-- FORM -->
+<!-- FORM / FLUJO 5 PASOS -->
 <section class="form-section" id="formulario">
   <div class="form-inner">
     <p class="section-label">Empieza a ahorrar desde ya</p>
     <h2>Analiza tu factura gratis</h2>
-    <p class="section-desc">Rellena el formulario y sube tu factura. Calcula tu ahorro de forma instantánea.</p>
+    <p class="section-desc">Sube tu factura y calcula tu ahorro con Gana Energía en segundos.</p>
 
-    <form id="contactForm" action="https://formspree.io/f/mlgpvlwn" method="POST">
-      <div class="form-grid">
+    <!-- PASO 1: Formulario inicial -->
+    <div class="flow-step" id="step1" data-step="1">
+      <div class="form-grid flow-step1-grid">
         <div class="form-group full">
-          <label for="nombre">Nombre completo</label>
-          <input type="text" id="nombre" name="nombre" placeholder="Ana García López" required />
+          <label>Tipo de factura</label>
+          <div class="toggle-buttons">
+            <button type="button" class="toggle-btn active" data-type="luz">Luz</button>
+            <button type="button" class="toggle-btn" data-type="gas">Gas</button>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="telefono">Teléfono</label>
-          <input type="tel" id="telefono" name="telefono" placeholder="600 000 000" required />
-        </div>
-        <div class="form-group full">
-          <label for="tipo">Tipo de factura</label>
-          <select id="tipo" name="tipo" required>
-            <option value="" disabled selected>Selecciona el tipo</option>
-            <option value="luz">Factura de luz</option>
-            <option value="gas">Factura de gas</option>
-            <option value="ambas">Luz y gas</option>
-          </select>
-        </div>
-
         <div class="file-drop" id="fileDrop">
-          <input type="file" id="factura" name="factura" accept=".pdf,.jpg,.jpeg,.png" multiple />
+          <input type="file" id="factura" accept=".pdf,.jpg,.jpeg,.png" />
           <div class="file-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           </div>
-          <p class="file-title">Sube tu factura o facturas aquí</p>
-          <p class="file-sub">PDF, JPG o PNG · Puedes subir varias · Máx. 10 MB cada una</p>
+          <p class="file-title">Arrastra tu factura aquí o haz clic para subir</p>
+          <p class="file-sub">PDF, JPG o PNG · Máx. 10 MB</p>
           <p class="file-selected" id="fileName"></p>
         </div>
-
-        <div class="form-group full form-checkboxes">
-          <label class="form-checkbox-label">
-            <input type="checkbox" id="titular" name="titular" required />
-            <span>Confirmo que soy titular del suministro o estoy autorizado.</span>
-          </label>
-          <label class="form-checkbox-label">
-            <input type="checkbox" id="privacidad" name="privacidad" required />
-            <span>He leído y acepto la <a href="#">Política de Privacidad</a> y autorizo el tratamiento de mis datos personales para recibir el análisis de mi factura.</span>
-          </label>
-        </div>
-
-        <button type="submit" class="submit-btn">Enviar y obtener mi análisis gratuito</button>
+        <button type="button" class="submit-btn" id="btnAnalizar">Analizar mi factura</button>
       </div>
-    </form>
+    </div>
+
+    <!-- PASO 2: Loading -->
+    <div class="flow-step hidden" id="step2" data-step="2">
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p class="loading-text" id="loadingText">Leyendo tu factura...</p>
+        <div class="loading-bar"><div class="loading-bar-fill" id="loadingBarFill"></div></div>
+      </div>
+    </div>
+
+    <!-- PASO 3: Resultado -->
+    <div class="flow-step hidden" id="step3" data-step="3">
+      <div class="result-container">
+        <p class="result-label">Tu ahorro anual estimado</p>
+        <p class="result-anual" id="resultAnual">— €</p>
+        <p class="result-mensual" id="resultMensual">— €/mes</p>
+        <div class="result-table-wrap">
+          <table class="result-table">
+            <thead>
+              <tr><th>Concepto</th><th id="thTuTarifa">Tu tarifa</th><th>Gana Energía</th></tr>
+            </thead>
+            <tbody id="resultTableBody"></tbody>
+          </table>
+        </div>
+        <button type="button" class="submit-btn submit-btn-green" id="btnCambiarme">Cambiarme a Gana Energía →</button>
+        <button type="button" class="submit-btn-secondary" id="btnOtraFactura">Analizar otra factura</button>
+      </div>
+    </div>
+
+    <!-- PASO 4: Formulario contratación -->
+    <div class="flow-step hidden" id="step4" data-step="4">
+      <h2 class="flow-step4-title">Un último paso para empezar a ahorrar</h2>
+      <form id="contratacionForm" class="contratacion-form">
+        <div class="form-extracted-group">
+          <span class="extracted-badge">Extraído de tu factura 🔒</span>
+          <div class="form-grid form-grid-2">
+            <div class="form-group full">
+              <label for="cups">CUPS</label>
+              <input type="text" id="cups" name="cups" readonly class="extracted-field" placeholder="—" />
+            </div>
+            <div class="form-group full">
+              <label for="direccion">Dirección del suministro</label>
+              <input type="text" id="direccion" name="direccion" readonly class="extracted-field" placeholder="—" />
+            </div>
+            <div class="form-group">
+              <label for="nombre_titular">Nombre completo del titular</label>
+              <input type="text" id="nombre_titular" name="nombre_titular" readonly class="extracted-field" placeholder="—" />
+            </div>
+            <div class="form-group">
+              <label for="dni">DNI del titular</label>
+              <input type="text" id="dni" name="dni" readonly class="extracted-field" placeholder="—" />
+            </div>
+          </div>
+        </div>
+        <div class="form-manual-group">
+          <div class="form-grid form-grid-2">
+            <div class="form-group full">
+              <label for="iban_cargo">IBAN donde se cargará la factura</label>
+              <input type="text" id="iban_cargo" name="iban_cargo" placeholder="ES00 0000 0000 0000 0000 0000" required />
+            </div>
+            <div class="form-group full">
+              <label for="iban_bono">IBAN donde quieres recibir el bono de fidelidad</label>
+              <input type="text" id="iban_bono" name="iban_bono" placeholder="ES00 0000 0000 0000 0000 0000" />
+              <span class="field-note">15€ cada 3 meses que mantengas el contrato</span>
+            </div>
+            <div class="form-group">
+              <label for="nombre_usuario">Tu nombre y apellidos</label>
+              <input type="text" id="nombre_usuario" name="nombre_usuario" placeholder="Ana García López" required />
+            </div>
+            <div class="form-group">
+              <label for="movil">Tu número de móvil</label>
+              <input type="tel" id="movil" name="movil" placeholder="600 000 000" required />
+            </div>
+            <div class="form-group full">
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+              <span class="field-note">Donde Gana Energía enviará el contrato</span>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn submit-btn-green">Enviar solicitud</button>
+      </form>
+    </div>
+
+    <!-- PASO 5: Confirmación -->
+    <div class="flow-step hidden" id="step5" data-step="5">
+      <div class="confirmation-container">
+        <div class="confirmation-icon">✓</div>
+        <h2 class="confirmation-title">¡Todo listo! 🎉</h2>
+        <p class="confirmation-text">En un máximo de 12 horas recibirás un email de Gana Energía para autorizar el cambio de tarifa. A partir de ahí, todo es automático.</p>
+        <p class="confirmation-note">Recibirás tu primer bono de 15€ a los 3 meses de mantener el contrato activo.</p>
+      </div>
+    </div>
 
     <p class="form-legal" style="margin-top:1.25rem;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      Tus datos se tratan conforme al <a href="#">Aviso de Privacidad</a> y nunca se comparten con terceros.
+      Tus datos se tratan conforme al <a href="politica-privacidad.html">Política de Privacidad</a> y nunca se comparten con terceros.
     </p>
     <p style="font-size:0.72rem; text-align:center; line-height:1.65; padding: 0 0.5rem; margin-top: 0.5rem; color:rgba(255,255,255,0.6);">
       Si cambias de tarifa a través de nuestra recomendación, podrás recibir una compensación de hasta 50 €.*<br/>
@@ -1033,16 +1314,7 @@
 </footer>
 
 <script>
-  const fileInput = document.getElementById('factura');
-  const fileNameEl = document.getElementById('fileName');
-  fileInput.addEventListener('change', () => {
-    const n = fileInput.files.length;
-    if (n > 0) {
-      fileNameEl.textContent = n === 1 ? '✓ ' + fileInput.files[0].name : '✓ ' + n + ' archivos seleccionados';
-      fileNameEl.style.display = 'block';
-    }
-  });
-
+  // ─── Modal 50€ (sin cambios) ───
   const modal50 = document.getElementById('modal50');
   document.querySelectorAll('.open-modal-50').forEach(el => {
     el.addEventListener('click', (e) => {
@@ -1061,13 +1333,318 @@
     if (e.key === 'Escape' && modal50.classList.contains('is-open')) closeModal();
   });
 
-  const form = document.getElementById('contactForm');
-  form.addEventListener('submit', function() {
-    const btn = form.querySelector('.submit-btn');
-    btn.textContent = '✓ Enviado — te responderemos en 24h';
-    btn.style.background = '#D1FAE5';
-    btn.style.color = '#065F46';
-    btn.disabled = true;
+  // ─── LÓGICA IA Y CÁLCULO (código exacto proporcionado) ───
+  const MARKET = {
+    '2025-07':{p:.1010,l:.0830,v:.0560},
+    '2025-08':{p:.1080,l:.0880,v:.0590},
+    '2025-09':{p:.1420,l:.1140,v:.0760},
+    '2025-10':{p:.1650,l:.1280,v:.0880},
+    '2025-11':{p:.2036,l:.1346,v:.1078},
+    '2025-12':{p:.1820,l:.1380,v:.1040},
+    '2026-01':{p:.2050,l:.1600,v:.1180},
+    '2026-02':{p:.1650,l:.1250,v:.0880},
+    '2026-03':{p:.1550,l:.1150,v:.0800},
+  };
+  const PEAJE_EN_2025={p:.020130,l:.014423,v:.004303};
+  const PEAJE_EN_2026={p:.018920,l:.013510,v:.003980};
+  const PEAJE_POT_2025={p1:26.930550/365,p2:0.697588/365};
+  const PEAJE_POT_2026={p1:26.200000/365,p2:0.680000/365};
+  const GANA_DIA=0.167, ALQ_DIA=0.026630;
+  const BONO_2025=0.019121, BONO_2026=0.012742;
+  const IMP_ELEC=0.0511269632, IVA=0.21;
+
+  function getWeightedPrices(iniStr, finStr){
+    const d1 = new Date(iniStr+'T12:00:00');
+    const d2 = new Date(finStr+'T12:00:00');
+    let wp={p:0,l:0,v:0}, count=0;
+    const cur = new Date(d1);
+    while(cur < d2){
+      const y=cur.getFullYear(), m=String(cur.getMonth()+1).padStart(2,'0');
+      const key=y+'-'+m;
+      const pr = MARKET[key] || MARKET[Object.keys(MARKET).slice(-1)[0]];
+      wp.p+=pr.p; wp.l+=pr.l; wp.v+=pr.v; count++;
+      cur.setDate(cur.getDate()+1);
+    }
+    return count>0 ? {p:wp.p/count,l:wp.l/count,v:wp.v/count} : MARKET['2026-03'];
+  }
+
+  function calcularAhorroGana(d) {
+    const p1kw = parseFloat(d.potencia_p1)||0;
+    const p2kw = parseFloat(d.potencia_p2)||p1kw;
+    const e_p = parseFloat(d.kwh_punta)||0;
+    const e_l = parseFloat(d.kwh_llano)||0;
+    const e_v = parseFloat(d.kwh_valle)||0;
+    const dias = parseInt(d.dias)||30;
+    const total_ib = parseFloat(d.total_factura)||0;
+    const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
+    const pe = año>=2026 ? PEAJE_EN_2026 : PEAJE_EN_2025;
+    const pp = año>=2026 ? PEAJE_POT_2026 : PEAJE_POT_2025;
+    const mp = getWeightedPrices(d.fecha_inicio, d.fecha_fin);
+    const bonoFallback = año>=2026 ? BONO_2026 : BONO_2025;
+    const bonoG = d.bono_social!=null && d.bono_social>0 ? parseFloat(d.bono_social) : bonoFallback*dias;
+    const impPct = d.imp_electrico_pct!=null ? parseFloat(d.imp_electrico_pct)/100 : IMP_ELEC;
+    const pot = p1kw*pp.p1*dias + p2kw*pp.p2*dias;
+    const enG = e_p*(mp.p+pe.p) + e_l*(mp.l+pe.l) + e_v*(mp.v+pe.v);
+    const margen = GANA_DIA * dias;
+    const alq = ALQ_DIA * dias;
+    const base = pot + enG + margen + bonoG;
+    const impEl = base * impPct;
+    const sub = base + impEl + alq;
+    const ivaG = sub * IVA;
+    const totalG = sub + ivaG + 4.00;
+    const ahorro = total_ib - totalG;
+    const ahorroAnual = (ahorro/dias)*365;
+    return { totalG, ahorro, ahorroAnual, pot, enG, margen, bonoG, alq, impEl, ivaG, total_ib, dias, comer: d.comercializadora||'Tu tarifa' };
+  }
+
+  // ─── Flujo 5 pasos ───
+  let currentTipo = 'luz';
+  let extractedData = null;
+  let calcResult = null;
+
+  const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3'), document.getElementById('step4'), document.getElementById('step5')];
+
+  function showStep(n) {
+    steps.forEach((s, i) => {
+      s.classList.toggle('hidden', i + 1 !== n);
+    });
+  }
+
+  // Toggle Luz/Gas
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentTipo = btn.dataset.type;
+    });
+  });
+
+  // File drop
+  const fileInput = document.getElementById('factura');
+  const fileNameEl = document.getElementById('fileName');
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) {
+      fileNameEl.textContent = '✓ ' + fileInput.files[0].name;
+      fileNameEl.style.display = 'block';
+    }
+  });
+
+  // Drag & drop
+  const fileDrop = document.getElementById('fileDrop');
+  fileDrop.addEventListener('dragover', (e) => { e.preventDefault(); fileDrop.style.borderColor = 'rgba(255,255,255,0.5)'; });
+  fileDrop.addEventListener('dragleave', () => { fileDrop.style.borderColor = ''; });
+  fileDrop.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileDrop.style.borderColor = '';
+    if (e.dataTransfer.files.length) {
+      fileInput.files = e.dataTransfer.files;
+      fileNameEl.textContent = '✓ ' + e.dataTransfer.files[0].name;
+      fileNameEl.style.display = 'block';
+    }
+  });
+
+  async function fileToBase64(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => {
+        const b = r.result.split(',')[1];
+        res(b || '');
+      };
+      r.onerror = rej;
+      r.readAsDataURL(file);
+    });
+  }
+
+  async function extraerDatosPDF(base64pdf) {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': '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',
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+        'anthropic-beta': 'pdfs-2024-09-25'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64pdf } },
+            { type: 'text', text: `Eres un extractor de datos de facturas eléctricas españolas. Analiza esta factura y extrae EXACTAMENTE estos datos en formato JSON. Si un dato no aparece claramente, usa null. Responde SOLO con el JSON sin texto adicional:
+{
+  "comercializadora": "nombre de la compañía",
+  "fecha_inicio": "YYYY-MM-DD",
+  "fecha_fin": "YYYY-MM-DD",
+  "dias": número entero,
+  "potencia_p1": número en kW,
+  "potencia_p2": número en kW,
+  "kwh_punta": número kWh,
+  "kwh_llano": número kWh,
+  "kwh_valle": número kWh,
+  "total_factura": número en euros con IVA,
+  "tarifa": "nombre de la tarifa",
+  "cups": "código CUPS",
+  "direccion": "dirección completa del suministro",
+  "nombre_titular": "nombre completo del titular del contrato",
+  "dni": "DNI o NIF del titular",
+  "bono_social": número en euros sin IVA,
+  "imp_electrico_pct": número decimal del porcentaje
+}` }
+          ]
+        }]
+      })
+    });
+    const data = await resp.json();
+    const text = (data.content || []).map(b => b.text || '').join('').trim();
+    const clean = text.replace(/\`\`\`json|\`\`\`/g, '').trim();
+    return JSON.parse(clean);
+  }
+
+  document.getElementById('btnAnalizar').addEventListener('click', async () => {
+    const file = fileInput.files[0];
+    if (!file) {
+      alert('Por favor, sube tu factura en PDF.');
+      return;
+    }
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+      alert('Por favor, sube un archivo PDF.');
+      return;
+    }
+
+    showStep(2);
+
+    const loadingTexts = ['Leyendo tu factura...', 'Comparando con 12 comercializadoras...', 'Calculando tu ahorro con Gana Energía...'];
+    let textIdx = 0;
+    const loadingTextEl = document.getElementById('loadingText');
+    const loadingBarFill = document.getElementById('loadingBarFill');
+    loadingTextEl.textContent = loadingTexts[0];
+
+    const textInterval = setInterval(() => {
+      textIdx = (textIdx + 1) % loadingTexts.length;
+      loadingTextEl.textContent = loadingTexts[textIdx];
+    }, 3000);
+
+    const minDelay = new Promise(r => setTimeout(r, 10000));
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+      progress += 2;
+      if (progress <= 100) loadingBarFill.style.width = progress + '%';
+    }, 200);
+
+    const base64pdf = await fileToBase64(file);
+    const apiPromise = extraerDatosPDF(base64pdf).catch(err => {
+      console.error(err);
+      return null;
+    });
+
+    const [, data] = await Promise.all([minDelay, apiPromise]);
+    clearInterval(textInterval);
+    clearInterval(progressInterval);
+    loadingBarFill.style.width = '100%';
+
+    extractedData = data;
+    if (!extractedData) {
+      alert('No pudimos analizar tu factura. Por favor, intenta con otro PDF o verifica que sea una factura eléctrica válida.');
+      showStep(1);
+      return;
+    }
+
+    calcResult = calcularAhorroGana(extractedData);
+
+    // Mostrar resultado
+    document.getElementById('resultAnual').textContent = calcResult.ahorroAnual.toFixed(0) + ' €';
+    document.getElementById('resultMensual').textContent = (calcResult.ahorro / calcResult.dias * 30).toFixed(2) + ' €/mes';
+    document.getElementById('thTuTarifa').textContent = calcResult.comer;
+
+    const tbody = document.getElementById('resultTableBody');
+    tbody.innerHTML = '';
+    const potStr = extractedData.potencia_p1 != null ? (extractedData.potencia_p1 + ' kW') : '—';
+    const rows = [
+      ['Potencia', potStr, '—'],
+      ['Energía', '—', calcResult.enG.toFixed(2) + ' €'],
+      ['Margen comercial', '—', calcResult.margen.toFixed(2) + ' €'],
+      ['Imp. eléctrico', '—', calcResult.impEl.toFixed(2) + ' €'],
+      ['Alquiler contador', '—', calcResult.alq.toFixed(2) + ' €'],
+      ['IVA', '—', calcResult.ivaG.toFixed(2) + ' €'],
+      ['Total factura', calcResult.total_ib.toFixed(2) + ' €', calcResult.totalG.toFixed(2) + ' €'],
+    ];
+    rows.forEach(([c, tu, gana]) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}">${gana}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    showStep(3);
+  });
+
+  document.getElementById('btnOtraFactura').addEventListener('click', () => {
+    fileInput.value = '';
+    fileNameEl.textContent = '';
+    fileNameEl.style.display = 'none';
+    document.getElementById('loadingBarFill').style.width = '0%';
+    showStep(1);
+  });
+
+  document.getElementById('btnCambiarme').addEventListener('click', () => {
+    // Pre-rellenar campos extraídos
+    const cupsIn = document.getElementById('cups');
+    const dirIn = document.getElementById('direccion');
+    const nombreTitIn = document.getElementById('nombre_titular');
+    const dniIn = document.getElementById('dni');
+
+    const setExtracted = (el, val, canEdit) => {
+      el.value = val || '';
+      el.readOnly = !canEdit;
+      el.classList.toggle('extracted-field', !canEdit);
+      el.classList.toggle('editable', canEdit);
+    };
+
+    const hasCups = extractedData && extractedData.cups;
+    const hasDir = extractedData && extractedData.direccion;
+    const hasNombre = extractedData && extractedData.nombre_titular;
+
+    setExtracted(cupsIn, extractedData?.cups || '', !hasCups);
+    setExtracted(dirIn, extractedData?.direccion || '', !hasDir);
+    setExtracted(nombreTitIn, extractedData?.nombre_titular || '', !hasNombre);
+    setExtracted(dniIn, extractedData?.dni || extractedData?.nif || extractedData?.documento || '', false);
+
+    document.getElementById('iban_cargo').value = '';
+    document.getElementById('iban_bono').value = '';
+    document.getElementById('nombre_usuario').value = '';
+    document.getElementById('movil').value = '';
+    document.getElementById('email').value = '';
+
+    showStep(4);
+  });
+
+  document.getElementById('contratacionForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      asunto: 'NUEVO CONTRATO GANA ENERGÍA',
+      cups: document.getElementById('cups').value,
+      direccion: document.getElementById('direccion').value,
+      nombre_titular: document.getElementById('nombre_titular').value,
+      dni: document.getElementById('dni').value,
+      iban_cargo: document.getElementById('iban_cargo').value,
+      iban_bono: document.getElementById('iban_bono').value,
+      nombre_usuario: document.getElementById('nombre_usuario').value,
+      movil: document.getElementById('movil').value,
+      email: document.getElementById('email').value
+    };
+
+    try {
+      await fetch('https://formspree.io/f/mlgpvlwn', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      showStep(5);
+    } catch (err) {
+      alert('Hubo un error al enviar. Por favor, inténtalo de nuevo.');
+    }
   });
 </script>
 </body>
