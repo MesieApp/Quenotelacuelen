@@ -9,10 +9,3 @@
   for = "/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
-```
-
-Guarda con **Ctrl+S**. Luego en el terminal:
-```
-git add .
-git commit -m "fix submodule"
-git push
