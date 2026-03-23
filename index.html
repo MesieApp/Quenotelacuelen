@@ -67,6 +67,49 @@
     return { totalG, ahorro, ahorroAnual, pot, enG, margen, bonoG, alq, impEl, ivaG, total_ib, dias, comer: d.comercializadora||'Tu tarifa' };
   }
 
+  function calcularAhorroGanaGas(d) {
+    const kwhGas = parseFloat(d.kwh_gas) || 0;
+    const dias = parseInt(d.dias) || 30;
+    const totalActual = parseFloat(d.total_factura) || 0;
+    const segmento = (d.segmento_gas || 'RL.1').toUpperCase();
+
+    // Término fijo por segmento (€/mes)
+    const terminoFijo = { 'RL.1': 3.93, 'RL.2': 8.11, 'RL.3': 18.82 };
+    // Precio indexado mes en curso por segmento (€/kWh, ya incluye peajes)
+    const precioMercado = { 'RL.1': 0.078566, 'RL.2': 0.076466, 'RL.3': 0.073026 };
+    // Margen Gana por kWh
+    const margenGana = { 'RL.1': 0.011, 'RL.2': 0.006, 'RL.3': 0.004 };
+    // Impuesto de hidrocarburos
+    const IMP_HIDRO = 0.00234;
+    const IVA = 0.21;
+
+    const fijo = terminoFijo[segmento] || 3.93;
+    const precioKwh = precioMercado[segmento] || 0.078566;
+    const margen = margenGana[segmento] || 0.011;
+
+    const consumo = kwhGas * (precioKwh + margen + IMP_HIDRO);
+    const base = fijo + consumo;
+    const iva = base * IVA;
+    const totalGana = base + iva;
+
+    const ahorro = totalActual - totalGana;
+    const ahorroAnual = (ahorro / dias) * 365;
+
+    return {
+      totalG: totalGana,
+      ahorro,
+      ahorroAnual,
+      fijo,
+      consumo,
+      iva,
+      total_ib: totalActual,
+      dias,
+      segmento,
+      kwhGas,
+      comer: d.comercializadora || 'Tu tarifa'
+    };
+  }
+
   let currentTipo = 'luz';
   window._tipoFactura = 'luz';
   let extractedData = null;
@@ -171,7 +214,11 @@
 
     extractedData = result.data;
     window._facturaData = extractedData;
-    calcResult = calcularAhorroGana(extractedData);
+    if (currentTipo === 'gas' || extractedData.tipo_factura === 'gas') {
+      calcResult = calcularAhorroGanaGas(extractedData);
+    } else {
+      calcResult = calcularAhorroGana(extractedData);
+    }
     lastPdfBase64 = base64pdf;
 
     const ahorroMensual = (calcResult.ahorro / calcResult.dias * 30);
@@ -188,26 +235,42 @@
 
     const tbody = document.getElementById('resultTableBody');
     tbody.innerHTML = '';
-    const fmt = (v) => (v != null && !isNaN(v)) ? parseFloat(v).toFixed(2).replace('.', ',') + ' €' : '—';
-    const terminoPot = extractedData.termino_potencia_euros != null ? parseFloat(extractedData.termino_potencia_euros).toFixed(2).replace('.', ',') + ' €' : (calcResult.pot.toFixed(2).replace('.', ',') + ' €');
-    const terminoEner = fmt(extractedData.termino_energia_euros);
-    const impIber = fmt(extractedData.impuesto_electrico_euros);
-    const alqIber = fmt(extractedData.alquiler_contador_euros);
-    const ivaIber = fmt(extractedData.iva_euros);
-    const enerGana = (calcResult.enG + calcResult.margen).toFixed(2) + ' €';
-    const rows = [
-      ['Término de potencia', terminoPot, terminoPot],
-      ['Término de energía', terminoEner || '—', enerGana],
-      ['Imp. eléctrico', impIber || '—', calcResult.impEl.toFixed(2) + ' €'],
-      ['Alquiler contador', alqIber || '—', calcResult.alq.toFixed(2) + ' €'],
-      ['IVA', ivaIber || '—', calcResult.ivaG.toFixed(2) + ' €'],
-      ['Total factura', calcResult.total_ib.toFixed(2) + ' €', calcResult.totalG.toFixed(2) + ' €']
-    ];
-    rows.forEach(([c, tu, gana]) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}">${gana}</td>`;
-      tbody.appendChild(tr);
-    });
+
+    if (currentTipo === 'gas' || extractedData.tipo_factura === 'gas') {
+      const rows = [
+        ['Segmento', calcResult.segmento, calcResult.segmento],
+        ['Consumo (' + calcResult.kwhGas + ' kWh)', '—', calcResult.consumo.toFixed(2) + ' €'],
+        ['Término fijo', '—', calcResult.fijo.toFixed(2) + ' €'],
+        ['IVA (21%)', fmtEur(extractedData.iva_euros || 0), calcResult.iva.toFixed(2) + ' €'],
+        ['Total factura', calcResult.total_ib.toFixed(2) + ' €', calcResult.totalG.toFixed(2) + ' €']
+      ];
+      rows.forEach(([c, tu, gana]) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}">${gana}</td>`;
+        tbody.appendChild(tr);
+      });
+    } else {
+      const fmt = (v) => (v != null && !isNaN(v)) ? parseFloat(v).toFixed(2).replace('.', ',') + ' €' : '—';
+      const terminoPot = extractedData.termino_potencia_euros != null ? parseFloat(extractedData.termino_potencia_euros).toFixed(2).replace('.', ',') + ' €' : (calcResult.pot.toFixed(2).replace('.', ',') + ' €');
+      const terminoEner = fmt(extractedData.termino_energia_euros);
+      const impIber = fmt(extractedData.impuesto_electrico_euros);
+      const alqIber = fmt(extractedData.alquiler_contador_euros);
+      const ivaIber = fmt(extractedData.iva_euros);
+      const enerGana = (calcResult.enG + calcResult.margen).toFixed(2) + ' €';
+      const rows = [
+        ['Término de potencia', terminoPot, terminoPot],
+        ['Término de energía', terminoEner || '—', enerGana],
+        ['Imp. eléctrico', impIber || '—', calcResult.impEl.toFixed(2) + ' €'],
+        ['Alquiler contador', alqIber || '—', calcResult.alq.toFixed(2) + ' €'],
+        ['IVA', ivaIber || '—', calcResult.ivaG.toFixed(2) + ' €'],
+        ['Total factura', calcResult.total_ib.toFixed(2) + ' €', calcResult.totalG.toFixed(2) + ' €']
+      ];
+      rows.forEach(([c, tu, gana]) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}">${gana}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
 
     showStep(3);
   });

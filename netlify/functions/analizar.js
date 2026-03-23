@@ -12,36 +12,44 @@ exports.handler = async (event) => {
     
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
+      max_tokens: 2000,
       messages: [{
         role: 'user',
         content: [
           { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 } },
-          { type: 'text', text: `Extrae estos datos de la factura eléctrica española en JSON sin texto adicional. Para el desglose en euros (termino_potencia, termino_energia, etc.) busca las líneas del detalle de la factura. Si no aparece, usa null:
+          { type: 'text', text: `Analiza esta factura de suministro energético español y extrae los datos en JSON sin texto adicional. Detecta automáticamente si es una factura de GAS o de LUZ/ELECTRICIDAD. Si no aparece un dato, usa null:
 {
+  "tipo_factura": "luz" o "gas",
   "comercializadora": "nombre",
   "fecha_inicio": "YYYY-MM-DD",
   "fecha_fin": "YYYY-MM-DD",
   "dias": número,
-  "potencia_p1": kW,
-  "potencia_p2": kW,
-  "kwh_punta": kWh,
-  "kwh_llano": kWh,
-  "kwh_valle": kWh,
   "total_factura": euros con IVA,
   "tarifa": "nombre tarifa",
   "cups": "código CUPS",
   "direccion": "dirección suministro",
   "nombre_titular": "nombre completo titular",
   "dni": "DNI o NIF",
-  "bono_social": euros sin IVA o null,
-  "imp_electrico_pct": porcentaje decimal,
-  "termino_potencia_euros": euros término potencia o null,
-  "termino_energia_euros": euros término energía o null,
-  "impuesto_electrico_euros": euros impuesto electricidad o null,
-  "alquiler_contador_euros": euros alquiler contador o null,
-  "iva_euros": euros IVA o null,
-  "margen_comercial_euros": euros margen comercial o null
+
+  "potencia_p1": kW (solo luz),
+  "potencia_p2": kW (solo luz),
+  "kwh_punta": kWh (solo luz),
+  "kwh_llano": kWh (solo luz),
+  "kwh_valle": kWh (solo luz),
+  "bono_social": euros sin IVA o null (solo luz),
+  "imp_electrico_pct": porcentaje decimal (solo luz),
+  "termino_potencia_euros": euros o null (solo luz),
+  "termino_energia_euros": euros o null (solo luz),
+  "impuesto_electrico_euros": euros o null (solo luz),
+  "alquiler_contador_euros": euros o null,
+  "iva_euros": euros o null,
+  "margen_comercial_euros": euros o null,
+
+  "kwh_gas": kWh totales consumidos (solo gas),
+  "segmento_gas": "RL.1", "RL.2" o "RL.3" (solo gas, busca en la factura),
+  "termino_fijo_euros": euros término fijo sin IVA (solo gas),
+  "termino_variable_euros": euros término variable sin IVA (solo gas),
+  "impuesto_hidrocarburos_euros": euros impuesto hidrocarburos (solo gas)
 }` }
         ]
       }]
