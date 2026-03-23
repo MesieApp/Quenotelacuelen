@@ -243,27 +243,57 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando...';
 
+    // 1. Recoger datos (formulario + factura analizada)
     const facturaData = window._facturaData || {};
+    const email = document.getElementById('email').value.trim();
+    const iban_cargo = document.getElementById('iban_cargo').value.trim();
+    const iban_bono = document.getElementById('iban_bono').value.trim();
+
+    /* Legacy Netlify: envío por email (desactivado; reactivar si hace falta)
+    const payload = {
+      tipo: currentTipo,
+      cups: document.getElementById('cups').value.trim(),
+      direccion: document.getElementById('direccion').value.trim(),
+      nombre_titular: document.getElementById('nombre_titular').value.trim(),
+      dni: document.getElementById('dni').value.trim(),
+      iban_cargo: iban_cargo,
+      iban_bono: iban_bono,
+      email: email,
+      pdfBase64: (lastPdfBase64 && lastPdfBase64.length < 5000000) ? lastPdfBase64 : ''
+    };
+    try {
+      const res = await fetch('/.netlify/functions/enviar-contrato', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || `Error ${res.status}: ${res.statusText}`);
+      showStep(5);
+    } catch (err) {
+      const msg = err.message || String(err);
+      alert('Error al enviar: ' + msg + '\n\nSi el problema continúa, revisa que RESEND_API_KEY esté configurada en Netlify.');
+    }
+    */
 
     try {
-      // 1. Crear cliente en Supabase
+      // 2. Guardar en Supabase (clientes → contratos)
       const { data: clienteData, error: clienteError } = await _supabase
         .from('clientes')
         .insert({
           nombre: facturaData.nombre_titular || '',
           apellidos: '',
           dni: facturaData.dni || '',
-          email: document.getElementById('email').value.trim(),
+          email: email,
           telefono: '',
-          iban_cargo: document.getElementById('iban_cargo').value.trim(),
-          iban_bono: document.getElementById('iban_bono').value.trim(),
+          iban_cargo: iban_cargo,
+          iban_bono: iban_bono,
         })
         .select()
         .single();
 
       if (clienteError) throw clienteError;
 
-      // 2. Crear contrato en Supabase
       const tipoActual = window._tipoFactura || 'luz';
       const { error: contratoError } = await _supabase
         .from('contratos')
@@ -286,7 +316,7 @@
 
       if (contratoError) throw contratoError;
 
-      // 3. Mostrar confirmación
+      // 3. Mostrar paso 5 (confirmación)
       showStep(5);
 
     } catch (err) {
