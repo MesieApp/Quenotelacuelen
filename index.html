@@ -305,6 +305,7 @@
     }).then(r => r.json()).catch(err => ({ success: false, error: err.message }));
 
     const [, result] = await Promise.all([minDelay, apiPromise]);
+    console.log('DATOS EXTRAÍDOS:', JSON.stringify(result.data, null, 2));
     clearInterval(textInterval);
     clearInterval(progressInterval);
     loadingBarFill.style.width = '100%';
