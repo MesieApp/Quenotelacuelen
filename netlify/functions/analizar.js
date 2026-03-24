@@ -81,6 +81,7 @@ IMPORTANTE: Si la factura tiene un único precio de energía para todos los kWh 
 
 SOLO SI ES GAS:
 - kwh_gas: kWh totales de gas consumidos
+- precio_kwh_gas: precio €/kWh del consumo de gas SIN incluir impuesto de hidrocarburos. Está en el detalle de la factura como "X kWh x 0.XXXXXX €/kWh". Ejemplo en esta factura: "4.611 kWh x 0,062460 €/kWh" → extraer 0.062460. Es OBLIGATORIO extraer este campo si aparece en la factura.
 - segmento_gas: segmento de consumo. IMPORTANTE: búscalo en la factura. Puede aparecer como "RL.1" (consumo anual hasta 5.000 kWh), "RL.2" (entre 5.000 y 50.000 kWh) o "RL.3" (más de 50.000 kWh). Si no aparece explícitamente, dedúcelo del consumo anual estimado o del término fijo
 - termino_fijo_euros: término fijo sin IVA
 - termino_variable_euros: término variable sin IVA
