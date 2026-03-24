@@ -9,3 +9,6 @@
   for = "/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
+
+[functions."sync-gana"]
+  schedule = "*/30 * * * *"
