@@ -542,6 +542,20 @@
 
       if (contratoError) throw contratoError;
 
+      try {
+        await fetch('/.netlify/functions/enviar-contrato', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nombre_titular: facturaData.nombre_titular || '',
+            tipo: tipoActual,
+            cups: facturaData.cups || ''
+          })
+        });
+      } catch (emailErr) {
+        console.log('Error enviando email de aviso:', emailErr);
+      }
+
       // 3. Mostrar paso 5 (confirmación)
       showStep(5);
 
