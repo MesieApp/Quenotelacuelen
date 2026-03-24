@@ -27,7 +27,7 @@ function mapEstadoGanaToSupabase(item) {
   if (item?.fecha_activacion) return "activado";
   if (item?.estadoid === 31 || item?.estadoid === 34) return "contrato_firmado";
   if (estadoNombre.includes("firmado")) return "contrato_firmado";
-  return null;
+  return "contrato_enviado";
 }
 
 async function ganaLogin() {
