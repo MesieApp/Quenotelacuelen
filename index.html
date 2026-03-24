@@ -74,17 +74,11 @@
     const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
     const pe = año >= 2026 ? PEAJE_EN_2026 : PEAJE_EN_2025;
 
-    // POTENCIA: precios de Gana ya incluyen BOE, no se suman peajes
     const pot = (p1kw * tarifa.potencia_p1_dia * dias)
               + (p2kw * tarifa.potencia_p2_dia * dias);
-    console.log('POTENCIA GANA:', {
-      p1kw, p2kw, dias,
-      p1_tarifa: tarifa.potencia_p1_dia,
-      p2_tarifa: tarifa.potencia_p2_dia,
-      pot_total: pot
-    });
 
-    // ENERGÍA
+    console.log('POTENCIA GANA:', {p1kw, p2kw, dias, p1_tarifa: tarifa.potencia_p1_dia, p2_tarifa: tarifa.potencia_p2_dia, pot_total: pot});
+
     let ener = 0;
     const ep = parseFloat(d.kwh_punta) || 0;
     const el = parseFloat(d.kwh_llano) || 0;
@@ -97,7 +91,6 @@
       const precioPunta = parseFloat(d.precio_kwh_punta) || precioUnico || 0;
       const precioLlano = parseFloat(d.precio_kwh_llano) || precioUnico || 0;
       const precioValle = parseFloat(d.precio_kwh_valle) || precioUnico || 0;
-
       if (tieneHoraria) {
         ener = ep * precioPunta + el * precioLlano + ev * precioValle;
       } else {
@@ -105,8 +98,6 @@
       }
 
     } else if (tarifa.tipo_energia === 'fija') {
-      // Precio fijo de Gana por tramo. NO usamos el precio de la factura del cliente.
-      // Solo usamos los precios propios de esta tarifa más los peajes BOE de energía.
       if (tieneHoraria) {
         ener = ep * (tarifa.energia_punta + pe.p)
              + el * (tarifa.energia_llano + pe.l)
@@ -118,38 +109,24 @@
       }
 
     } else if (tarifa.tipo_energia === 'unica') {
-      // Precio único 24h de Gana. NO usamos el precio de la factura del cliente.
       const avgPe = (pe.p + pe.l + pe.v) / 3;
       ener = etotal * (tarifa.energia_unica + avgPe);
     }
 
-    // MARGEN GANA
     const margen = tarifa.margen_dia * dias;
-
-    // BONO SOCIAL
     const bonoFallback = (año >= 2026 ? BONO_2026 : BONO_2025) * dias;
     const bonoG = (d.bono_social != null && parseFloat(d.bono_social) > 0)
       ? parseFloat(d.bono_social)
       : bonoFallback;
 
-    // BASE
     const base = pot + ener + margen + bonoG;
-
-    // IMPUESTO ELÉCTRICO
     const impEl = base * IMP_ELEC;
-
-    // ALQUILER: mismo que factura original
     const alq = parseFloat(d.alquiler_contador_euros) || (ALQ_DIA * dias);
-
-    // IVA
     const sub = base + impEl + alq;
     const ivaG = sub * IVA;
     const total = sub + ivaG;
 
-    console.log('CALCULO COMPLETO:', {
-      pot, ener, margen: tarifa.margen_dia * dias,
-      bonoG, impEl, alq, ivaG, total
-    });
+    console.log('CALCULO COMPLETO:', {pot, ener, margen, bonoG, impEl, alq, ivaG, total, tipo: tarifa.tipo_energia});
 
     return { total, pot, ener, margen, bonoG, alq, impEl, ivaG, tarifa };
   }
