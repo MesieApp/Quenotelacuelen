@@ -18,6 +18,24 @@ const toDateYMD = (unixTs) => {
   return date.toISOString().slice(0, 10);
 };
 
+const addMonthsToYMD = (ymd, monthsToAdd) => {
+  if (!ymd) return null;
+  const [y, m, d] = ymd.split("-").map(Number);
+  if (!y || !m || !d) return null;
+  const dt = new Date(Date.UTC(y, m - 1 + monthsToAdd, d));
+  if (Number.isNaN(dt.getTime())) return null;
+  return dt.toISOString().slice(0, 10);
+};
+
+const addDaysToYMD = (ymd, daysToAdd) => {
+  if (!ymd) return null;
+  const [y, m, d] = ymd.split("-").map(Number);
+  if (!y || !m || !d) return null;
+  const dt = new Date(Date.UTC(y, m - 1, d + daysToAdd));
+  if (Number.isNaN(dt.getTime())) return null;
+  return dt.toISOString().slice(0, 10);
+};
+
 const normalizeCups = (value) => (value || "").replace(/\s/g, "").trim().toUpperCase();
 
 function mapEstadoGanaToSupabase(item) {
@@ -184,6 +202,12 @@ async function runSync() {
         payload.fecha_contrato_firmado = toDateYMD(ganaItem.fecha_estado);
       } else if (nextEstado === "activado") {
         payload.fecha_activado = toDateYMD(ganaItem.fecha_activacion);
+        if (payload.fecha_activado) {
+          payload.fecha_pago_1 = addDaysToYMD(addMonthsToYMD(payload.fecha_activado, 3), 1);
+          payload.fecha_pago_2 = addMonthsToYMD(payload.fecha_pago_1, 3);
+          payload.fecha_pago_3 = addMonthsToYMD(payload.fecha_pago_2, 3);
+          payload.fecha_pago_4 = addMonthsToYMD(payload.fecha_pago_3, 3);
+        }
       } else if (nextEstado === "baja") {
         payload.fecha_baja = toDateYMD(ganaItem.fecha_baja);
       }
