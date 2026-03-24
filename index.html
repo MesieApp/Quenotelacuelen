@@ -191,8 +191,13 @@
 
     const p = (precios && precios[segmento]) ? precios[segmento] : (fallback[segmento] || fallback['RL.1']);
 
-    // Precio de mercado: usamos el de la factura del cliente
-    const precioMercado = parseFloat(d.precio_kwh_gas) || 0;
+    // Si la IA no extrajo el precio por kWh, lo calculamos dividiendo el término variable entre los kWh
+    const precioMercado = parseFloat(d.precio_kwh_gas) ||
+      (d.termino_variable_euros && d.kwh_gas
+        ? parseFloat(d.termino_variable_euros) / parseFloat(d.kwh_gas)
+        : 0);
+
+    console.log('GAS precio mercado usado:', precioMercado, '| kWh:', d.kwh_gas, '| días:', d.dias);
 
     // Término fijo Gana (€/mes convertido a días)
     const fijoGana = (p.termino_fijo / 30) * dias;
