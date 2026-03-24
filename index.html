@@ -93,8 +93,6 @@
     const tieneHoraria = d.tiene_discriminacion_horaria !== false && (ep + el + ev) > 0;
 
     if (tarifa.tipo_energia === 'mercado') {
-      // Usamos el precio €/kWh real de la factura del cliente
-      // (ya incluye OMIE + peajes, es el precio real que pagaron)
       const precioUnico = parseFloat(d.precio_kwh_unico) || null;
       const precioPunta = parseFloat(d.precio_kwh_punta) || precioUnico || 0;
       const precioLlano = parseFloat(d.precio_kwh_llano) || precioUnico || 0;
@@ -107,7 +105,8 @@
       }
 
     } else if (tarifa.tipo_energia === 'fija') {
-      // Precio fijo de Gana por tramo + peaje BOE energía
+      // Precio fijo de Gana por tramo. NO usamos el precio de la factura del cliente.
+      // Solo usamos los precios propios de esta tarifa más los peajes BOE de energía.
       if (tieneHoraria) {
         ener = ep * (tarifa.energia_punta + pe.p)
              + el * (tarifa.energia_llano + pe.l)
@@ -119,7 +118,7 @@
       }
 
     } else if (tarifa.tipo_energia === 'unica') {
-      // Precio único 24h de Gana + peaje BOE energía
+      // Precio único 24h de Gana. NO usamos el precio de la factura del cliente.
       const avgPe = (pe.p + pe.l + pe.v) / 3;
       ener = etotal * (tarifa.energia_unica + avgPe);
     }
