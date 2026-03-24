@@ -67,39 +67,42 @@
     }
   }
 
-  function calcularConTarifa(tarifa, d, mp) {
+  function calcularConTarifa(tarifa, d) {
     const p1kw = parseFloat(d.potencia_p1) || 0;
     const p2kw = parseFloat(d.potencia_p2) || p1kw;
     const dias = parseInt(d.dias) || 30;
     const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
     const pe = año >= 2026 ? PEAJE_EN_2026 : PEAJE_EN_2025;
-    const pp = año >= 2026 ? PEAJE_POT_2026 : PEAJE_POT_2025;
-    const bonoFallback = (año >= 2026 ? BONO_2026 : BONO_2025) * dias;
-    const bonoG = (d.bono_social != null && d.bono_social > 0) ? parseFloat(d.bono_social) : bonoFallback;
-    const tieneHoraria = d.tiene_discriminacion_horaria !== false;
 
-    const pot = p1kw * (pp.p1 + tarifa.potencia_p1_dia) * dias
-              + p2kw * (pp.p2 + tarifa.potencia_p2_dia) * dias;
+    // POTENCIA: precios de Gana ya incluyen BOE, no se suman peajes
+    const pot = (p1kw * tarifa.potencia_p1_dia * dias)
+              + (p2kw * tarifa.potencia_p2_dia * dias);
 
+    // ENERGÍA
     let ener = 0;
+    const ep = parseFloat(d.kwh_punta) || 0;
+    const el = parseFloat(d.kwh_llano) || 0;
+    const ev = parseFloat(d.kwh_valle) || 0;
+    const etotal = parseFloat(d.kwh_total) || (ep + el + ev);
+    const tieneHoraria = d.tiene_discriminacion_horaria !== false && (ep + el + ev) > 0;
+
     if (tarifa.tipo_energia === 'mercado') {
-      const ep = parseFloat(d.kwh_punta) || 0;
-      const el = parseFloat(d.kwh_llano) || 0;
-      const ev = parseFloat(d.kwh_valle) || 0;
-      const etotal = parseFloat(d.kwh_total) || (ep + el + ev);
-      if (tieneHoraria && (ep + el + ev) > 0) {
-        ener = ep * (mp.p + pe.p) + el * (mp.l + pe.l) + ev * (mp.v + pe.v);
+      // Usamos el precio €/kWh real de la factura del cliente
+      // (ya incluye OMIE + peajes, es el precio real que pagaron)
+      const precioUnico = parseFloat(d.precio_kwh_unico) || null;
+      const precioPunta = parseFloat(d.precio_kwh_punta) || precioUnico || 0;
+      const precioLlano = parseFloat(d.precio_kwh_llano) || precioUnico || 0;
+      const precioValle = parseFloat(d.precio_kwh_valle) || precioUnico || 0;
+
+      if (tieneHoraria) {
+        ener = ep * precioPunta + el * precioLlano + ev * precioValle;
       } else {
-        const avgMp = (mp.p + mp.l + mp.v) / 3;
-        const avgPe = (pe.p + pe.l + pe.v) / 3;
-        ener = etotal * (avgMp + avgPe);
+        ener = etotal * (precioUnico || ((precioPunta + precioLlano + precioValle) / 3));
       }
+
     } else if (tarifa.tipo_energia === 'fija') {
-      const ep = parseFloat(d.kwh_punta) || 0;
-      const el = parseFloat(d.kwh_llano) || 0;
-      const ev = parseFloat(d.kwh_valle) || 0;
-      const etotal = parseFloat(d.kwh_total) || (ep + el + ev);
-      if (tieneHoraria && (ep + el + ev) > 0) {
+      // Precio fijo de Gana por tramo + peaje BOE energía
+      if (tieneHoraria) {
         ener = ep * (tarifa.energia_punta + pe.p)
              + el * (tarifa.energia_llano + pe.l)
              + ev * (tarifa.energia_valle + pe.v);
@@ -108,19 +111,32 @@
         const avgPe = (pe.p + pe.l + pe.v) / 3;
         ener = etotal * (avgTarifa + avgPe);
       }
+
     } else if (tarifa.tipo_energia === 'unica') {
-      const etotal = parseFloat(d.kwh_total)
-        || (parseFloat(d.kwh_punta) || 0) + (parseFloat(d.kwh_llano) || 0) + (parseFloat(d.kwh_valle) || 0);
+      // Precio único 24h de Gana + peaje BOE energía
       const avgPe = (pe.p + pe.l + pe.v) / 3;
       ener = etotal * (tarifa.energia_unica + avgPe);
     }
 
+    // MARGEN GANA
     const margen = tarifa.margen_dia * dias;
-    const alq = ALQ_DIA * dias;
+
+    // BONO SOCIAL
+    const bonoFallback = (año >= 2026 ? BONO_2026 : BONO_2025) * dias;
+    const bonoG = (d.bono_social != null && parseFloat(d.bono_social) > 0)
+      ? parseFloat(d.bono_social)
+      : bonoFallback;
+
+    // BASE
     const base = pot + ener + margen + bonoG;
-    const impEl = (d.impuesto_electrico_euros != null && !isNaN(parseFloat(d.impuesto_electrico_euros)))
-      ? parseFloat(d.impuesto_electrico_euros)
-      : base * IMP_ELEC;
+
+    // IMPUESTO ELÉCTRICO
+    const impEl = base * IMP_ELEC;
+
+    // ALQUILER: mismo que factura original
+    const alq = parseFloat(d.alquiler_contador_euros) || (ALQ_DIA * dias);
+
+    // IVA
     const sub = base + impEl + alq;
     const ivaG = sub * IVA;
     const total = sub + ivaG;
@@ -130,12 +146,11 @@
 
   async function calcularMejorTarifaLuz(d) {
     const tarifas = await cargarTarifasLuz();
-    const mp = getWeightedPrices(d.fecha_inicio || '2026-01-01', d.fecha_fin || '2026-01-31');
     const totalActual = parseFloat(d.total_factura) || 0;
     const dias = parseInt(d.dias) || 30;
 
     const resultados = tarifas.map(t => {
-      const calc = calcularConTarifa(t, d, mp);
+      const calc = calcularConTarifa(t, d);
       return {
         ...calc,
         enG: calc.ener,
