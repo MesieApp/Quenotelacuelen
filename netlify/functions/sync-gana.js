@@ -18,7 +18,7 @@ const toDateYMD = (unixTs) => {
   return date.toISOString().slice(0, 10);
 };
 
-const normalizeCups = (value) => (value || "").trim().toUpperCase();
+const normalizeCups = (value) => (value || "").replace(/\s/g, "").trim().toUpperCase();
 
 function mapEstadoGanaToSupabase(item) {
   const estadoNombre = (item?.estado?.nombre || "").toLowerCase();
