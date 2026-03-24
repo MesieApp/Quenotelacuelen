@@ -77,6 +77,12 @@
     // POTENCIA: precios de Gana ya incluyen BOE, no se suman peajes
     const pot = (p1kw * tarifa.potencia_p1_dia * dias)
               + (p2kw * tarifa.potencia_p2_dia * dias);
+    console.log('POTENCIA GANA:', {
+      p1kw, p2kw, dias,
+      p1_tarifa: tarifa.potencia_p1_dia,
+      p2_tarifa: tarifa.potencia_p2_dia,
+      pot_total: pot
+    });
 
     // ENERGÍA
     let ener = 0;
@@ -140,6 +146,11 @@
     const sub = base + impEl + alq;
     const ivaG = sub * IVA;
     const total = sub + ivaG;
+
+    console.log('CALCULO COMPLETO:', {
+      pot, ener, margen: tarifa.margen_dia * dias,
+      bonoG, impEl, alq, ivaG, total
+    });
 
     return { total, pot, ener, margen, bonoG, alq, impEl, ivaG, tarifa };
   }
