@@ -48,6 +48,16 @@ CAMPOS COMUNES:
 - dni: DNI o NIF del titular
 - alquiler_contador_euros: importe del alquiler del contador sin IVA
 - iva_euros: importe total del IVA
+- total_electricidad_euros: importe total de electricidad SIN IVA (solo el suministro eléctrico puro, sin servicios adicionales como seguros). En facturas Naturgy es el campo "Total electricidad".
+- servicios_adicionales_euros: importe total de servicios adicionales SIN IVA (seguros, mantenimientos, etc. que no son suministro eléctrico). Si no hay servicios adicionales, null.
+- detalle_servicios: array de objetos con los servicios adicionales detectados. Cada objeto tiene "nombre" y "importe_mes" (importe mensual neto con descuentos aplicados). Si no hay servicios, array vacío [].
+
+Ejemplo de detalle_servicios:
+[
+  {"nombre": "Servielectric Xpress Piezas", "importe_mes": 6.70},
+  {"nombre": "Servigas Complet Agua Caliente", "importe_mes": 7.85},
+  {"nombre": "Servihogar", "importe_mes": 4.01}
+]
 
 SOLO SI ES LUZ:
 - potencia_p1: potencia contratada P1 en kW
