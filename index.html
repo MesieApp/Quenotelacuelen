@@ -463,8 +463,6 @@
               dni: dniActual,
               email: email,
               telefono: telefono,
-              iban_cargo: iban_cargo,
-              iban_bono: iban_bono,
             })
             .select()
             .single();
@@ -482,8 +480,6 @@
             dni: dniActual,
             email: email,
             telefono: telefono,
-            iban_cargo: iban_cargo,
-            iban_bono: iban_bono,
           })
           .select()
           .single();
@@ -536,6 +532,8 @@
           kwh_valle: facturaData.kwh_valle || null,
           total_factura: facturaData.total_factura || null,
           ahorro_estimado: window._ahorroEstimado || null,
+          iban_cargo: iban_cargo,
+          iban_bono: iban_bono,
           estado: 'pendiente_contrato',
           factura_url: facturaUrl
         });
