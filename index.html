@@ -655,6 +655,11 @@
 
     // 1. Recoger datos (formulario + factura analizada)
     const facturaData = window._facturaData || {};
+    const cupsNorm = (facturaData.cups || '').replace(/\s/g, '').toUpperCase();
+    const direccionNorm = (facturaData.direccion || '').toUpperCase();
+    const comercNorm = (facturaData.comercializadora || '').toUpperCase();
+    const tarifaNorm = (facturaData.tarifa || '').toUpperCase();
+    const nombreNorm = (document.getElementById('nombre_titular')?.value || '').toUpperCase();
     const email = document.getElementById('email').value.trim();
     const telefono = document.getElementById('telefono').value.trim();
     const iban_cargo = document.getElementById('iban_cargo').value.trim();
@@ -708,7 +713,7 @@
           const { data: nuevoCliente, error: clienteError } = await _supabase
             .from('clientes')
             .insert({
-              nombre: facturaData.nombre_titular || '',
+              nombre: nombreNorm || '',
               apellidos: '',
               dni: dniActual,
               email: email,
@@ -725,7 +730,7 @@
         const { data: nuevoCliente, error: clienteError } = await _supabase
           .from('clientes')
           .insert({
-            nombre: facturaData.nombre_titular || '',
+            nombre: nombreNorm || '',
             apellidos: '',
             dni: dniActual,
             email: email,
@@ -766,29 +771,48 @@
         }
       }
 
-      const { error: contratoError } = await _supabase
-        .from('contratos')
-        .insert({
-          cliente_id: clienteData.id,
-          tipo: tipoActual,
-          cups: facturaData.cups || '',
-          direccion: facturaData.direccion || '',
-          comercializadora_actual: facturaData.comercializadora || '',
-          tarifa_actual: facturaData.tarifa || '',
-          potencia_p1: facturaData.potencia_p1 || null,
-          potencia_p2: facturaData.potencia_p2 || null,
-          kwh_punta: facturaData.kwh_punta || null,
-          kwh_llano: facturaData.kwh_llano || null,
-          kwh_valle: facturaData.kwh_valle || null,
-          total_factura: facturaData.total_factura || null,
-          ahorro_estimado: window._ahorroEstimado || null,
-          iban_cargo: iban_cargo,
-          iban_bono: iban_bono,
-          estado: 'pendiente_contrato',
-          factura_url: facturaUrl
-        });
+      let insertarContrato = true;
+      if (cupsNorm) {
+        try {
+          const { data: cupsDuplicados, error: cupsDupError } = await _supabase
+            .from('contratos')
+            .select('id')
+            .eq('cups', cupsNorm)
+            .limit(1);
 
-      if (contratoError) throw contratoError;
+          if (!cupsDupError && cupsDuplicados && cupsDuplicados.length > 0) {
+            insertarContrato = false;
+          }
+        } catch (cupsDupErr) {
+          // Si falla por error de red, continuamos e insertamos con normalidad
+        }
+      }
+
+      if (insertarContrato) {
+        const { error: contratoError } = await _supabase
+          .from('contratos')
+          .insert({
+            cliente_id: clienteData.id,
+            tipo: tipoActual,
+            cups: cupsNorm || '',
+            direccion: direccionNorm || '',
+            comercializadora_actual: comercNorm || '',
+            tarifa_actual: tarifaNorm || '',
+            potencia_p1: facturaData.potencia_p1 || null,
+            potencia_p2: facturaData.potencia_p2 || null,
+            kwh_punta: facturaData.kwh_punta || null,
+            kwh_llano: facturaData.kwh_llano || null,
+            kwh_valle: facturaData.kwh_valle || null,
+            total_factura: facturaData.total_factura || null,
+            ahorro_estimado: window._ahorroEstimado || null,
+            iban_cargo: iban_cargo,
+            iban_bono: iban_bono,
+            estado: 'pendiente_contrato',
+            factura_url: facturaUrl
+          });
+
+        if (contratoError) throw contratoError;
+      }
 
       try {
         await fetch('/.netlify/functions/enviar-contrato', {
