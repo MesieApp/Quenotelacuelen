@@ -71,7 +71,48 @@
     }
   }
 
-  function calcularConTarifa(tarifa, d) {
+  async function obtenerPreciosLuzPeriodo(fechaInicio, fechaFin) {
+    try {
+      const { data, error } = await _supabase
+        .from('preciosluz')
+        .select('precio_punta, precio_llano, precio_valle')
+        .gte('fecha', fechaInicio)
+        .lte('fecha', fechaFin);
+
+      if (error || !data || data.length === 0) return null;
+
+      const avg = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+      return {
+        punta: avg(data.map(r => parseFloat(r.precio_punta))),
+        llano: avg(data.map(r => parseFloat(r.precio_llano))),
+        valle: avg(data.map(r => parseFloat(r.precio_valle)))
+      };
+    } catch (e) {
+      console.warn('No se pudieron obtener precios de luz de Supabase:', e);
+      return null;
+    }
+  }
+
+  async function obtenerPrecioGasPeriodo(fechaInicio, fechaFin) {
+    try {
+      const { data, error } = await _supabase
+        .from('preciosgas')
+        .select('precio_kwh')
+        .gte('fecha', fechaInicio)
+        .lte('fecha', fechaFin);
+
+      if (error || !data || data.length === 0) return null;
+
+      const avg = data.reduce((a, b) => a + parseFloat(b.precio_kwh), 0) / data.length;
+      return avg;
+    } catch (e) {
+      console.warn('No se pudieron obtener precios de gas de Supabase:', e);
+      return null;
+    }
+  }
+
+  function calcularConTarifa(tarifa, d, preciosMercadoReales) {
     const p1kw = parseFloat(d.potencia_p1) || 0;
     const p2kw = parseFloat(d.potencia_p2) || p1kw;
     const dias = parseInt(d.dias) || 30;
@@ -91,22 +132,30 @@
     const tieneHoraria = d.tiene_discriminacion_horaria !== false && (ep + el + ev) > 0;
 
     if (tarifa.tipo_energia === 'mercado') {
-      // Fallback: si no hay precio de kWh explícito, lo calculamos del término de energía
-      const precioCalculado = (d.termino_energia_euros && d.kwh_total && parseFloat(d.kwh_total) > 0)
-        ? parseFloat(d.termino_energia_euros) / parseFloat(d.kwh_total)
-        : null;
-
-      const precioUnico = parseFloat(d.precio_kwh_unico) || precioCalculado || null;
-      const precioPunta = parseFloat(d.precio_kwh_punta) || precioUnico || 0;
-      const precioLlano = parseFloat(d.precio_kwh_llano) || precioUnico || 0;
-      const precioValle = parseFloat(d.precio_kwh_valle) || precioUnico || 0;
-
-      console.log('PRECIO KWH usado:', { precioUnico, precioPunta, precioLlano, precioValle, calculado: precioCalculado });
-
-      if (tieneHoraria) {
-        ener = ep * precioPunta + el * precioLlano + ev * precioValle;
+      if (preciosMercadoReales) {
+        console.log('Usando precios reales de Supabase:', preciosMercadoReales);
+        if (tieneHoraria) {
+          ener = ep * (preciosMercadoReales.punta + pe.p)
+               + el * (preciosMercadoReales.llano + pe.l)
+               + ev * (preciosMercadoReales.valle + pe.v);
+        } else {
+          const avgMercado = (preciosMercadoReales.punta + preciosMercadoReales.llano + preciosMercadoReales.valle) / 3;
+          const avgPe = (pe.p + pe.l + pe.v) / 3;
+          ener = etotal * (avgMercado + avgPe);
+        }
       } else {
-        ener = etotal * (precioUnico || ((precioPunta + precioLlano + precioValle) / 3));
+        const precioCalculado = (d.termino_energia_euros && d.kwh_total && parseFloat(d.kwh_total) > 0)
+          ? parseFloat(d.termino_energia_euros) / parseFloat(d.kwh_total)
+          : null;
+        const precioUnico = parseFloat(d.precio_kwh_unico) || precioCalculado || 0;
+        const precioPunta = parseFloat(d.precio_kwh_punta) || precioUnico || 0;
+        const precioLlano = parseFloat(d.precio_kwh_llano) || precioUnico || 0;
+        const precioValle = parseFloat(d.precio_kwh_valle) || precioUnico || 0;
+        if (tieneHoraria) {
+          ener = ep * precioPunta + el * precioLlano + ev * precioValle;
+        } else {
+          ener = etotal * precioUnico;
+        }
       }
 
     } else if (tarifa.tipo_energia === 'fija') {
@@ -150,8 +199,19 @@
       : parseFloat(d.total_factura) || 0;
     const dias = parseInt(d.dias) || 30;
 
+    const preciosMercado = await obtenerPreciosLuzPeriodo(
+      d.fecha_inicio || '2026-01-01',
+      d.fecha_fin || '2026-01-31'
+    );
+
+    if (preciosMercado) {
+      console.log('Precios reales de mercado obtenidos de Supabase para el período:', preciosMercado);
+    } else {
+      console.warn('No hay precios en Supabase para este período, usando precio de la factura como fallback');
+    }
+
     const resultados = tarifas.map(t => {
-      const calc = calcularConTarifa(t, d);
+      const calc = calcularConTarifa(t, d, preciosMercado);
       return {
         ...calc,
         enG: calc.ener,
@@ -185,7 +245,19 @@
     } catch (e) { return null; }
   }
 
-  function calcularAhorroGanaGas(d, precios) {
+  async function calcularAhorroGanaGas(d, precios) {
+    const precioMercadoSupabase = await obtenerPrecioGasPeriodo(
+      d.fecha_inicio || '2026-01-01',
+      d.fecha_fin || '2026-01-31'
+    );
+
+    const precioMercado = precioMercadoSupabase || parseFloat(d.precio_kwh_gas) ||
+      (d.termino_variable_euros && d.kwh_gas
+        ? parseFloat(d.termino_variable_euros) / parseFloat(d.kwh_gas)
+        : 0);
+
+    console.log('Precio mercado gas usado:', precioMercado, precioMercadoSupabase ? '(Supabase)' : '(factura fallback)');
+
     const kwhGas = parseFloat(d.kwh_gas) || 0;
     const dias = parseInt(d.dias) || 30;
     const totalActual = parseFloat(d.total_gas_euros)
@@ -202,14 +274,6 @@
     };
 
     const p = (precios && precios[segmento]) ? precios[segmento] : (fallback[segmento] || fallback['RL.1']);
-
-    // Si la IA no extrajo el precio por kWh, lo calculamos dividiendo el término variable entre los kWh
-    const precioMercado = parseFloat(d.precio_kwh_gas) ||
-      (d.termino_variable_euros && d.kwh_gas
-        ? parseFloat(d.termino_variable_euros) / parseFloat(d.kwh_gas)
-        : 0);
-
-    console.log('GAS precio mercado usado:', precioMercado, '| kWh:', d.kwh_gas, '| días:', d.dias);
 
     // Término fijo Gana (€/mes convertido a días)
     const fijoGana = (p.termino_fijo / 30) * dias;
@@ -252,15 +316,35 @@
 
   const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3'), document.getElementById('step4'), document.getElementById('step5')];
   window._step3OriginalHtml = document.getElementById('step3').innerHTML;
+
+  function volverAlPaso1() {
+    const factura = document.getElementById('factura');
+    if (factura) factura.value = '';
+    const fileNameEl = document.getElementById('fileName');
+    if (fileNameEl) { fileNameEl.textContent = ''; fileNameEl.style.display = 'none'; }
+    extractedData = null;
+    calcResult = null;
+    lastPdfBase64 = null;
+    showStep(1);
+    setTimeout(() => {
+      const formulario = document.getElementById('formulario');
+      if (formulario) window.scrollTo({ top: formulario.offsetTop - 100, behavior: 'smooth' });
+    }, 50);
+  }
+
   function showStep(n) {
-    steps.forEach((s, i) => { s.classList.toggle('hidden', i + 1 !== n); });
-    const formHeader = document.querySelector('.form-section .section-label, .form-section h2, .form-section .section-desc, .form-deco-line');
-    if (formHeader) {
-      const headerEls = document.querySelectorAll('.form-section .section-label, .form-section h2, .form-section .section-desc, .form-deco-line');
-      headerEls.forEach(el => {
-        el.style.display = (n === 3 || n === 4 || n === 5) ? 'none' : '';
-      });
+    if (n === 1) {
+      const step3 = document.getElementById('step3');
+      if (step3 && !step3.querySelector('.result-container')) {
+        // step3 fue reemplazado con el mensaje de no tarifa, restaurar estructura original no es necesario
+        // solo aseguramos que se oculta
+      }
     }
+    steps.forEach((s, i) => { s.classList.toggle('hidden', i + 1 !== n); });
+    const headerEls = document.querySelectorAll('.form-section .section-label, .form-section h2, .form-section .section-desc, .form-deco-line');
+    headerEls.forEach(el => {
+      el.style.display = (n === 3 || n === 4 || n === 5) ? 'none' : '';
+    });
   }
 
   document.querySelectorAll('.toggle-btn').forEach(btn => {
@@ -369,7 +453,7 @@
     window._facturaData = extractedData;
     if (currentTipo === 'gas' || extractedData.tipo_factura === 'gas') {
       const precios = await cargarPreciosGas();
-      calcResult = calcularAhorroGanaGas(extractedData, precios);
+      calcResult = await calcularAhorroGanaGas(extractedData, precios);
     } else {
       calcResult = await calcularMejorTarifaLuz(extractedData);
     }
@@ -411,13 +495,10 @@
 `;
       showStep(3);
 
-      document.getElementById('btnVolverNoTarifa').addEventListener('click', () => {
-        document.getElementById('factura').value = '';
-        const fileNameEl = document.getElementById('fileName');
-        if (fileNameEl) { fileNameEl.textContent = ''; fileNameEl.style.display = 'none'; }
-        showStep(1);
-        window.scrollTo({ top: document.getElementById('formulario').offsetTop - 100, behavior: 'smooth' });
-      });
+      setTimeout(() => {
+        const btnVolverNoTarifa = document.getElementById('btnVolverNoTarifa');
+        if (btnVolverNoTarifa) btnVolverNoTarifa.addEventListener('click', volverAlPaso1);
+      }, 0);
       return;
     }
 
@@ -529,21 +610,11 @@
     showStep(3);
   });
 
-  document.getElementById('btnVolver').addEventListener('click', () => {
-    document.getElementById('factura').value = '';
-    const fileNameEl = document.getElementById('fileName');
-    if (fileNameEl) { fileNameEl.textContent = ''; fileNameEl.style.display = 'none'; }
-    showStep(1);
-    window.scrollTo({ top: document.getElementById('formulario').offsetTop - 100, behavior: 'smooth' });
-  });
+  const btnVolver = document.getElementById('btnVolver');
+  if (btnVolver) btnVolver.addEventListener('click', volverAlPaso1);
 
-  document.getElementById('btnVolverConfirmation').addEventListener('click', () => {
-    document.getElementById('factura').value = '';
-    const fileNameEl = document.getElementById('fileName');
-    if (fileNameEl) { fileNameEl.textContent = ''; fileNameEl.style.display = 'none'; }
-    showStep(1);
-    window.scrollTo({ top: document.getElementById('formulario').offsetTop - 100, behavior: 'smooth' });
-  });
+  const btnVolverConfirmation = document.getElementById('btnVolverConfirmation');
+  if (btnVolverConfirmation) btnVolverConfirmation.addEventListener('click', volverAlPaso1);
 
   document.getElementById('formulario').addEventListener('click', (e) => {
     if (!e.target.closest('#btnCambiarme')) return;
