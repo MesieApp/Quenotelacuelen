@@ -87,10 +87,18 @@
     const tieneHoraria = d.tiene_discriminacion_horaria !== false && (ep + el + ev) > 0;
 
     if (tarifa.tipo_energia === 'mercado') {
-      const precioUnico = parseFloat(d.precio_kwh_unico) || null;
+      // Fallback: si no hay precio de kWh explícito, lo calculamos del término de energía
+      const precioCalculado = (d.termino_energia_euros && d.kwh_total && parseFloat(d.kwh_total) > 0)
+        ? parseFloat(d.termino_energia_euros) / parseFloat(d.kwh_total)
+        : null;
+
+      const precioUnico = parseFloat(d.precio_kwh_unico) || precioCalculado || null;
       const precioPunta = parseFloat(d.precio_kwh_punta) || precioUnico || 0;
       const precioLlano = parseFloat(d.precio_kwh_llano) || precioUnico || 0;
       const precioValle = parseFloat(d.precio_kwh_valle) || precioUnico || 0;
+
+      console.log('PRECIO KWH usado:', { precioUnico, precioPunta, precioLlano, precioValle, calculado: precioCalculado });
+
       if (tieneHoraria) {
         ener = ep * precioPunta + el * precioLlano + ev * precioValle;
       } else {
