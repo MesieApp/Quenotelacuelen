@@ -502,26 +502,19 @@
 
     const isGas = currentTipo === 'gas' || extractedData.tipo_factura === 'gas';
 
-    const diasDesglose = parseInt(extractedData.dias) || 30;
-    const totalFacturaUsuario = parseFloat(extractedData.total_factura) || 0;
+    const dias = parseInt(extractedData.dias) || 30;
+    const totalFacturaReal = parseFloat(extractedData.total_factura) || 0;
     const totalElec = isGas
       ? (extractedData.total_electricidad_euros
         ? parseFloat(extractedData.total_electricidad_euros) * 1.21
         : calcResult.total_ib)
-      : totalFacturaUsuario;
+      : totalFacturaReal;
 
     const fmtEur = (n) => parseFloat(n).toFixed(2).replace('.', ',') + ' €';
-    const ahorroLuzAnual = Math.round(calcResult.ahorroAnual);
-
-    let ahorroServiciosMes = 0;
-    let ahorroServiciosAnual = 0;
-    if (extractedData.detalle_servicios && extractedData.detalle_servicios.length > 0) {
-      extractedData.detalle_servicios.forEach(s => { ahorroServiciosMes += parseFloat(s.importe_mes) || 0; });
-      ahorroServiciosAnual = Math.round((ahorroServiciosMes / 30) * 365);
-    }
-
-    const totalColandoAnual = ahorroLuzAnual + ahorroServiciosAnual;
-    window._ahorroEstimado = ahorroLuzAnual;
+    const ahorroEnFactura = totalFacturaReal - (calcResult.total ?? calcResult.totalG);
+    const ahorroAnualReal = Math.round((ahorroEnFactura / dias) * 365);
+    const totalColandoAnual = ahorroAnualReal;
+    window._ahorroEstimado = ahorroAnualReal;
 
     document.getElementById('resultTotalColandoAnual').textContent = totalColandoAnual + ' €';
 
@@ -560,11 +553,11 @@
       ];
       if (extractedData.detalle_servicios && extractedData.detalle_servicios.length > 0) {
         extractedData.detalle_servicios.forEach(s => {
-          const prop = (parseFloat(s.importe_mes) || 0) * diasDesglose / 30;
+          const prop = (parseFloat(s.importe_mes) || 0) * dias / 30;
           rows.push([s.nombre || 'Servicio', fmtEur(prop), '—']);
         });
       }
-      rows.push(['Total factura', fmtEur(totalFacturaUsuario), fmtEur(calcResult.totalG)]);
+      rows.push(['Total factura', fmtEur(totalFacturaReal), fmtEur(calcResult.totalG)]);
       rows.forEach(([c, tu, gana]) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}">${gana}</td>`;
