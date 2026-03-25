@@ -517,7 +517,7 @@
     let ahorroServiciosAnual = 0;
     if (extractedData.detalle_servicios && extractedData.detalle_servicios.length > 0) {
       extractedData.detalle_servicios.forEach(s => { ahorroServiciosMes += parseFloat(s.importe_mes) || 0; });
-      ahorroServiciosAnual = Math.round(ahorroServiciosMes * 12);
+      ahorroServiciosAnual = Math.round((ahorroServiciosMes / 30) * 365);
     }
 
     const totalColandoAnual = ahorroLuzAnual + ahorroServiciosAnual;
