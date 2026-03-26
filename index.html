@@ -190,7 +190,7 @@
 
     if (tarifa.tipo_energia === 'mercado') {
       if (preciosMercadoReales) {
-        console.log('Usando precios reales de Supabase:', preciosMercadoReales);
+        // Precios Mercado D+I son OMIE puro SIN peajes — sumamos peajes BOE
         if (tieneHoraria) {
           ener = ep * (preciosMercadoReales.punta + pe.p)
                + el * (preciosMercadoReales.llano + pe.l)
@@ -200,6 +200,7 @@
           const avgPe = (pe.p + pe.l + pe.v) / 3;
           ener = etotal * (avgMercado + avgPe);
         }
+        console.log('Energía con peajes:', ener, 'pe:', pe);
       } else {
         const precioCalculado = (d.termino_energia_euros && d.kwh_total && parseFloat(d.kwh_total) > 0)
           ? parseFloat(d.termino_energia_euros) / parseFloat(d.kwh_total)
