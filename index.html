@@ -36,10 +36,60 @@ footer { padding: 1.25rem 2rem; }
   font-weight: 300;
 }
 .cambio-propuesta { margin-bottom: 1.5rem; }
-.cambio-propuesta-inner { display: flex; align-items: flex-start; gap: 1rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.25rem; }
-.cambio-propuesta-icon { font-size: 1.4rem; flex-shrink: 0; }
-.cambio-propuesta-inner strong { display: block; font-family: var(--font-head); font-size: 1rem; color: #fff; font-weight: 500; margin-bottom: 0.4rem; }
-.cambio-propuesta-inner p { font-size: 0.78rem; color: rgba(255,255,255,0.4); line-height: 1.7; font-weight: 300; margin: 0; }
+.cambio-propuesta-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  background: linear-gradient(135deg, rgba(30,107,58,0.12) 0%, rgba(30,107,58,0.06) 100%);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cambio-propuesta-inner::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(74,222,128,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cambio-propuesta-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #1E6B3A, #2d8a4e);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(30,107,58,0.4);
+}
+.cambio-propuesta-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #fff;
+  stroke-width: 1.8;
+}
+.cambio-propuesta-inner strong {
+  display: block;
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+.cambio-propuesta-inner p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+  font-weight: 300;
+  margin: 0;
+}
 .tarifa-recomendada { background: rgba(30,107,58,0.08); border: 1px solid rgba(30,107,58,0.2); border-radius: 14px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
 .tarifa-rec-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.3); margin-bottom: 0.5rem; display: block; }
 .tarifa-rec-nombre { font-family: var(--font-head); font-size: 1.1rem; color: #fff; font-weight: 500; margin-bottom: 0.25rem; }
@@ -139,7 +189,12 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 
   <div class="cambio-propuesta">
     <div class="cambio-propuesta-inner">
-      <span class="cambio-propuesta-icon">🔄</span>
+      <div class="cambio-propuesta-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+      </div>
       <div>
         <strong>Te cambiamos de tarifa sin ningún coste</strong>
         <p>Gestionamos el cambio de comercializadora por ti. Sin cortes de suministro, sin llamadas, sin papeleo. Solo tienes que rellenar tus datos y nosotros nos encargamos de todo para que empieces a ahorrar desde ya.</p>
