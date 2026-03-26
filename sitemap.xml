@@ -25,4 +25,20 @@
     <priority>0.2</priority>
   </url>
 
+  <url>
+    <loc>https://www.quenotelacuelen.com/blog-trucos-ahorrar-luz.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.quenotelacuelen.com/blog-apagon-espana.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.quenotelacuelen.com/blog-iva-luz-10-por-ciento.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
