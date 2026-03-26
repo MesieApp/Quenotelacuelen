@@ -1,0 +1,37 @@
+# quenotelacuelen.com
+
+> Comparador independiente de tarifas de luz y gas en España. El usuario sube su factura en PDF, nuestra IA la analiza y le dice exactamente cuánto está pagando de más comparado con la mejor tarifa disponible hoy en el mercado. Si decide cambiarse, gestionamos el cambio de comercializadora de forma gratuita.
+
+## Qué hacemos
+
+- El usuario sube su factura de luz o gas en PDF
+- Nuestra IA extrae automáticamente todos los datos: CUPS, consumo, potencia, tarifa actual, servicios adicionales
+- Comparamos su tarifa actual con las mejores tarifas disponibles en el mercado español hoy
+- Mostramos exactamente cuánto pagaría con la mejor tarifa encontrada, desglosado concepto por concepto
+- Si quiere cambiar, gestionamos el proceso de cambio de comercializadora gratis
+
+## Servicio
+
+- 100% gratuito y sin compromiso
+- Sin registro previo
+- El cambio de comercializadora no interrumpe el suministro
+- Operamos en toda España peninsular
+
+## Blog
+
+- Trucos para ahorrar en la factura de la luz: https://www.quenotelacuelen.com/blog-trucos-ahorrar-luz.html
+- Por qué ocurrió el apagón en España: https://www.quenotelacuelen.com/blog-apagon-espana.html
+- Baja el IVA de la luz al 10%: https://www.quenotelacuelen.com/blog-iva-luz-10-por-ciento.html
+
+## Tecnología
+
+- Frontend: HTML/CSS/JS en Netlify
+- Base de datos: Supabase
+- IA de análisis de facturas: Claude Sonnet (Anthropic)
+- Sincronización automática con Gana Energía cada 30 minutos
+
+## Contacto
+
+- Web: https://www.quenotelacuelen.com
+- Email: info@quenotelacuelen.com
+- Teléfono: +34 623 756 420
