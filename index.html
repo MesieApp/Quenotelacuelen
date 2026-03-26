@@ -846,8 +846,9 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
     showStep(3);
   });
 
-  const btnVolver = document.getElementById('btnVolver');
-  if (btnVolver) btnVolver.addEventListener('click', volverAlPaso1);
+  document.getElementById('formulario').addEventListener('click', (e) => {
+    if (e.target.closest('#btnVolver')) volverAlPaso1();
+  });
 
   document.getElementById('formulario').addEventListener('click', (e) => {
     // Botón "Ver mi tarifa recomendada" en paso 3
