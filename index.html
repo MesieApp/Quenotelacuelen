@@ -84,6 +84,14 @@
   const IMP_ELEC = 0.0511269632;
   const IVA = 0.21;
 
+  // Peajes de red gas por segmento 2026 (BOE) — €/kWh término variable
+  // Se suman al precio MIBGAS para obtener el coste real de energía
+  const PEAJES_GAS_2026 = {
+    'RL.1': 0.018900,
+    'RL.2': 0.013500,
+    'RL.3': 0.007900
+  };
+
   const MARKET = {
     '2025-07': { p: .1010, l: .0830, v: .0560 },
     '2025-08': { p: .1080, l: .0880, v: .0590 },
@@ -336,8 +344,19 @@
     // Alquiler: mismo que factura original
     const alq = parseFloat(d.alquiler_contador_euros) || 0;
 
-    // Consumo: precio mercado + margen Gana + impuesto hidrocarburos
-    const consumo = kwhGas * (precioMercado + p.margen_gana + IMP_HIDRO);
+    // Peaje de red del gas para este segmento
+    const peajeGas = PEAJES_GAS_2026[segmento] || PEAJES_GAS_2026['RL.1'];
+
+    // Consumo: precio MIBGAS + peaje red + margen Gana + impuesto hidrocarburos
+    const consumo = kwhGas * (precioMercado + peajeGas + p.margen_gana + IMP_HIDRO);
+
+    console.log('GAS desglose precio:', {
+      mibgas: precioMercado,
+      peaje: peajeGas,
+      margen: p.margen_gana,
+      hidro: IMP_HIDRO,
+      total_kwh: precioMercado + peajeGas + p.margen_gana + IMP_HIDRO
+    });
 
     const base = fijoGana + consumo + alq;
     const iva = base * IVA;
