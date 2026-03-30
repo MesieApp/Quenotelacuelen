@@ -1292,6 +1292,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     extractedData = result.data;
+fetch('/.netlify/functions/notificar-factura', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    nombre_titular: result.data.nombre_titular || '',
+    fuente: 'lp'
+  })
+}).catch(() => {});
+
     if (!extractedData.tipo_factura && 
         !extractedData.total_factura && 
         !extractedData.cups && 
