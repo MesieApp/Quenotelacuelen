@@ -163,7 +163,33 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 .footer-links { display: flex; gap: 1.5rem; }
 .footer-links a { font-size: 0.72rem !important; color: #94a3b8 !important; text-decoration: none !important; transition: color 0.2s !important; background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; animation: none !important; display: inline !important; }
 .footer-links a:hover { color: #475569 !important; }
-@media (max-width: 600px) { .footer-row-main { flex-direction: column; align-items: flex-start; } .footer-contact-row { flex-direction: column; align-items: flex-start; gap: 0.6rem; } .footer-row-bottom { flex-direction: column; } } /* ── MODAL 50€ ── */ .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; } .modal-overlay.is-open { display: flex; } .modal-card { background: #fff; max-width: 480px; width: 100%; border-radius: 12px; padding: 2rem; position: relative; border: 1px solid #e0ece4; box-shadow: 0 32px 64px -12px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04); } .modal-close { position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; border: none; border-radius: 50%; background: #f1f5f9; color: var(--muted); font-size: 1.1rem; cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 2; } .modal-close:hover { background: #e2e8f0; } .modal-header { background: linear-gradient(135deg, #eef5f0, #f8fdf9); margin: -2rem -2rem 1.5rem -2rem; padding: 1.75rem 2rem 1.5rem; border-bottom: 1px solid #e0ece4; border-radius: 12px 12px 0 0; } .modal-card h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; } .modal-subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; } .modal-header .modal-subtitle { margin-bottom: 0; } .modal-total { display: inline-flex; align-items: center; gap: 0.4rem; background: #1E6B3A; color: #fff; font-size: 0.82rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 999px; margin-top: 0.5rem; } .modal-total strong { font-weight: 700; } .modal-timeline { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.25rem; margin-bottom: 1.25rem; position: relative; } .modal-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2px; background: var(--border); z-index: 0; } .modal-hito { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; } .modal-hito-circle { width: 36px; height: 36px; border-radius: 50%; background: #1E6B3A; color: #fff; font-size: 0.65rem; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 0.4rem; box-shadow: 0 4px 12px rgba(30,107,58,0.3); transition: transform 0.2s; } .modal-hito-circle:hover { transform: scale(1.1); } .modal-hito-label { font-size: 0.7rem; color: var(--muted); text-align: center; } .modal-hito-amount { font-size: 0.95rem; font-weight: 600; color: #1E6B3A; } .modal-note { font-size: 0.75rem; color: var(--muted); line-height: 1.5; } /* ── RESPONSIVE ── */ @media (max-width: 600px) { /* NAV */ nav { padding: 0 1rem; height: 56px; justify-content: center; } nav a.cta-nav { display: none; } .logo img { height: 28px; } /* HERO */ .hero { padding: 2rem 1.25rem 3.5rem; } h1 { font-size: 2rem; letter-spacing: -0.02em; } .hero h1 { letter-spacing: -0.04em; } .hero-sub { font-size: 1.05rem; } .hero-cta-group { width: 100%; } .hero-cta { width: 100%; text-align: center; } .hero-cta-label { text-align: center; } .hero-badge { font-size: 0.75rem; } /* REWARD BANNER */ .reward-banner { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: nowrap; padding: 0.6rem 1rem; font-size: 0.82rem; } .hero-incentive-btn { flex-shrink: 0; } /* STATS */ .stats-bar { padding: 3rem 1.25rem; } .stat-single-number { font-size: 3rem; } .stat-single-label { font-size: 0.82rem; } /* SECCIONES */ .section { padding: 3rem 1.25rem; } h2 { font-size: 1.7rem; } .section-desc { font-size: 0.9rem; } } .field-error { color: #f87171; font-size: 0.72rem; margin-top: 0.35rem; } .field-error:empty { display: none; } .field-error:not(:empty) { display: block; } </style> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> </head> <body> <!-- NAV --> <nav> <a href="#" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Que no te la cuelen" style="height:61px;width:auto;"></a> </nav> <!-- HERO --> <section class="hero"> <div class="hero-inner"> <div class="hero-badge"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Servicio gratuito y sin compromiso </div> <h1>¿Estás pagando de más<br />en tu <em>factura de luz o gas</em>?</h1> <p class="hero-sub">Sube tu factura y en segundos nuestra IA te dirá si te la están colando</p> <div class="hero-actions"> <a href="#formulario" class="hero-cta">Sube tu factura ahora</a> </div> <p class="hero-note"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Tus datos están protegidos y no los compartimos con nadie </p> </div> <div class="hero-fade" aria-hidden="true"></div> </section> <!-- STATS BAR --> <div class="stats-bar"> <div class="stats-inner-single"> <div class="stat-single"> <span class="stat-single-number" id="statFacturas">1000+</span> <span class="stat-single-label">Facturas analizadas, de españoles que quisieron saber la verdad</span> </div> </div> </div> <!-- HOW IT WORKS --> <section id="como-funciona">
+@media (max-width: 600px) { .footer-row-main { flex-direction: column; align-items: flex-start; } .footer-contact-row { flex-direction: column; align-items: flex-start; gap: 0.6rem; } .footer-row-bottom { flex-direction: column; } } /* ── MODAL 50€ ── */ .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; } .modal-overlay.is-open { display: flex; } .modal-card { background: #fff; max-width: 480px; width: 100%; border-radius: 12px; padding: 2rem; position: relative; border: 1px solid #e0ece4; box-shadow: 0 32px 64px -12px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04); } .modal-close { position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; border: none; border-radius: 50%; background: #f1f5f9; color: var(--muted); font-size: 1.1rem; cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 2; } .modal-close:hover { background: #e2e8f0; } .modal-header { background: linear-gradient(135deg, #eef5f0, #f8fdf9); margin: -2rem -2rem 1.5rem -2rem; padding: 1.75rem 2rem 1.5rem; border-bottom: 1px solid #e0ece4; border-radius: 12px 12px 0 0; } .modal-card h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; } .modal-subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; } .modal-header .modal-subtitle { margin-bottom: 0; } .modal-total { display: inline-flex; align-items: center; gap: 0.4rem; background: #1E6B3A; color: #fff; font-size: 0.82rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 999px; margin-top: 0.5rem; } .modal-total strong { font-weight: 700; } .modal-timeline { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.25rem; margin-bottom: 1.25rem; position: relative; } .modal-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2px; background: var(--border); z-index: 0; } .modal-hito { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; } .modal-hito-circle { width: 36px; height: 36px; border-radius: 50%; background: #1E6B3A; color: #fff; font-size: 0.65rem; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 0.4rem; box-shadow: 0 4px 12px rgba(30,107,58,0.3); transition: transform 0.2s; } .modal-hito-circle:hover { transform: scale(1.1); } .modal-hito-label { font-size: 0.7rem; color: var(--muted); text-align: center; } .modal-hito-amount { font-size: 0.95rem; font-weight: 600; color: #1E6B3A; } .modal-note { font-size: 0.75rem; color: var(--muted); line-height: 1.5; } /* ── RESPONSIVE ── */ @media (max-width: 600px) { /* NAV */ nav { padding: 0 1rem; height: 56px; justify-content: center; } nav a.cta-nav { display: none; } .logo img { height: 28px; } /* HERO */ .hero { padding: 2rem 1.25rem 3.5rem; } h1 { font-size: 2rem; letter-spacing: -0.02em; } .hero h1 { letter-spacing: -0.04em; } .hero-sub { font-size: 1.05rem; } .hero-cta-group { width: 100%; } .hero-cta { width: 100%; text-align: center; } .hero-cta-label { text-align: center; } .hero-badge { font-size: 0.75rem; } /* REWARD BANNER */ .reward-banner { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: nowrap; padding: 0.6rem 1rem; font-size: 0.82rem; } .hero-incentive-btn { flex-shrink: 0; } /* STATS */ .stats-bar { padding: 3rem 1.25rem; } .stat-single-number { font-size: 3rem; } .stat-single-label { font-size: 0.82rem; } /* SECCIONES */ .section { padding: 3rem 1.25rem; } h2 { font-size: 1.7rem; } .section-desc { font-size: 0.9rem; } } .field-error { color: #f87171; font-size: 0.72rem; margin-top: 0.35rem; } .field-error:empty { display: none; } .field-error:not(:empty) { display: block; } </style> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
+<style>
+.step1-tabs{display:flex;background:rgba(255,255,255,0.05);border-radius:10px;padding:3px;gap:2px;border:1px solid rgba(255,255,255,0.08);margin-bottom:1.1rem}
+.step1-tab{flex:1;padding:0.6rem 0.5rem;border:none;background:transparent;color:rgba(255,255,255,0.55);font-family:var(--font-body);font-size:0.82rem;font-weight:500;border-radius:8px;cursor:pointer;transition:all 0.2s;text-align:center}
+.step1-tab.active{background:#1E6B3A;color:#fff}
+.step1-panel{display:none}
+.step1-panel.active{display:block}
+.rec-option-label{font-size:0.72rem;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:0.75rem}
+.rec-options{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.2rem}
+.rec-option{display:flex;align-items:center;gap:0.75rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.85rem 1rem;cursor:pointer;transition:border-color 0.2s,background 0.2s}
+.rec-option:hover,.rec-option.selected{border-color:rgba(30,107,58,0.4);background:rgba(30,107,58,0.06)}
+.rec-option-icon{font-size:1.1rem;flex-shrink:0}
+.rec-option-text strong{display:block;font-size:0.85rem;color:#fff;margin-bottom:0.1rem}
+.rec-option-text span{font-size:0.72rem;color:rgba(255,255,255,0.55)}
+.rec-input-group{display:none;margin-bottom:1rem}
+.rec-input-group.visible{display:block}
+.rec-input-group .form-label{display:block;font-size:0.8rem;color:rgba(255,255,255,0.7);margin-bottom:0.35rem}
+.rec-input-group input{width:100%;padding:0.8rem 0.9rem;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#fff}
+.rec-input-group input::placeholder{color:rgba(255,255,255,0.3)}
+.recordatorio-intro{font-size:0.86rem;color:rgba(255,255,255,0.7);line-height:1.65;margin-bottom:1rem}
+.rec-confirmation{text-align:center;padding:2.5rem 1rem}
+.rec-confirmation-icon{font-size:2.2rem;margin-bottom:1rem}
+.rec-confirmation-title{font-family:var(--font-head);font-size:1.35rem;color:#fff;margin-bottom:0.6rem}
+.rec-confirmation-text{font-size:0.85rem;color:rgba(255,255,255,0.55);max-width:360px;margin:0 auto;line-height:1.7;font-weight:300}
+</style>
+
+</head> <body> <!-- NAV --> <nav> <a href="#" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Que no te la cuelen" style="height:61px;width:auto;"></a> </nav> <!-- HERO --> <section class="hero"> <div class="hero-inner"> <div class="hero-badge"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Servicio gratuito y sin compromiso </div> <h1>¿Estás pagando de más<br />en tu <em>factura de luz o gas</em>?</h1> <p class="hero-sub">Sube tu factura y en segundos nuestra IA te dirá si te la están colando</p> <div class="hero-actions"> <a href="#formulario" class="hero-cta">Sube tu factura ahora</a> </div> <p class="hero-note"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Tus datos están protegidos y no los compartimos con nadie </p> </div> <div class="hero-fade" aria-hidden="true"></div> </section> <!-- STATS BAR --> <div class="stats-bar"> <div class="stats-inner-single"> <div class="stat-single"> <span class="stat-single-number" id="statFacturas">1000+</span> <span class="stat-single-label">Facturas analizadas, de españoles que quisieron saber la verdad</span> </div> </div> </div> <!-- HOW IT WORKS --> <section id="como-funciona">
   <div class="cf-inner">
     <div class="cf-strip">
 
@@ -230,11 +256,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
     </div>
   </div>
 </section>
-<!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true"></div> <p class="section-label">Empieza ahora</p> <h2>¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step" id="step1" data-step="1"> <div class="step1-layout"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>. Mis datos están seguros.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar">
-  <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-  <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg>
-  Analizar mi factura
-</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2"> <div class="loading-layout"> <div class="loading-ring"> <div class="loading-spinner"></div> </div> <p class="loading-text" id="loadingText">Leyendo factura</p> <div class="loading-bar"><div class="loading-bar-fill" id="loadingBarFill"></div></div> </div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Ver mi tarifa recomendada</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
+<!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true"></div> <p class="section-label">Empieza ahora</p> <h2>¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step" id="step1" data-step="1"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>. Mis datos están seguros.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2"> <div class="loading-layout"> <div class="loading-ring"> <div class="loading-spinner"></div> </div> <p class="loading-text" id="loadingText">Leyendo factura</p> <div class="loading-bar"><div class="loading-bar-fill" id="loadingBarFill"></div></div> </div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Ver mi tarifa recomendada</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
 <div class="flow-step hidden" id="step4" data-step="4">
   <button type="button" class="btn-volver" id="btnVolverStep4">← Volver</button>
 
@@ -308,7 +330,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
     <button type="submit" class="submit-btn submit-btn-green">Solicitar cambio de tarifa</button>
   </form>
 </div>
-<!-- PASO 5: Confirmación --> <div class="flow-step hidden" id="step5" data-step="5"> <div class="confirmation-container"> <div class="confirmation-icon">✓</div> <h2 class="confirmation-title">¡Todo listo! 🎉</h2> <p class="confirmation-text">En las próximas horas (max. 12h) recibirás un SMS o un correo de tu nueva comercializadora para que autorices el cambio. Por lo demás no tienes que hacer nada, no hace falta avisar a tu antigua comercializadora, nosotros nos encargamos de todo.</p> </div> </div> <div style="width:40px; height:1px; background:rgba(255,255,255,0.08); margin: 1rem auto 0;"></div> <p class="form-legal" style="margin-top:1.25rem;"> Tus datos se tratan conforme al <a href="politica-privacidad.html">Política de Privacidad</a> y nunca se comparten con terceros. </p> </div> </section>
+<!-- PASO 5: Confirmación --> <div class="flow-step hidden" id="step5" data-step="5"> <div class="confirmation-container"> <div class="confirmation-icon">✓</div> <h2 class="confirmation-title">¡Todo listo! 🎉</h2> <p class="confirmation-text">En las próximas horas (max. 12h) recibirás un SMS o un correo de tu nueva comercializadora para que autorices el cambio. Por lo demás no tienes que hacer nada, no hace falta avisar a tu antigua comercializadora, nosotros nos encargamos de todo.</p> </div> </div>  <div class="flow-step hidden" id="step6" data-step="6"> <div class="rec-confirmation"> <div class="rec-confirmation-icon">🔔</div> <h2 class="rec-confirmation-title">¡Anotado!</h2> <p class="rec-confirmation-text">Te avisamos en unos días para que puedas subir tu factura cuando la tengas a mano.</p> </div> </div> <div style="width:40px; height:1px; background:rgba(255,255,255,0.08); margin: 1rem auto 0;"></div> <p class="form-legal" style="margin-top:1.25rem;"> Tus datos se tratan conforme al <a href="politica-privacidad.html">Política de Privacidad</a> y nunca se comparten con terceros. </p> </div> </section>
 
 <section style="background:#f8fafc; padding:3rem 1.5rem; border-top:1px solid #e2e8f0;">
   <div style="max-width:860px; margin:0 auto;">
@@ -710,7 +732,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
   let calcResult = null;
   let lastPdfBase64 = null;
 
-  const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3'), document.getElementById('step4'), document.getElementById('step5')];
+  const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3'), document.getElementById('step4'), document.getElementById('step5'), document.getElementById('step6')];
   window._step3OriginalHtml = document.getElementById('step3').innerHTML;
 
   function volverAlPaso1() {
@@ -739,7 +761,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
     steps.forEach((s, i) => { s.classList.toggle('hidden', i + 1 !== n); });
     const headerEls = document.querySelectorAll('.form-section .section-label, .form-section h2, .form-section .section-desc, .form-deco-line');
     headerEls.forEach(el => {
-      el.style.display = (n === 3 || n === 4 || n === 5) ? 'none' : '';
+      el.style.display = (n === 3 || n === 4 || n === 5 || n === 6) ? 'none' : '';
     });
   }
 
@@ -752,6 +774,16 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
       const isGas = btn.dataset.type === 'gas';
       document.getElementById('btnIconLuz').style.display = isGas ? 'none' : 'inline';
       document.getElementById('btnIconGas').style.display = isGas ? 'inline-flex' : 'none';
+    });
+  });
+
+
+  document.querySelectorAll('.step1-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.step1-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.step1-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
     });
   });
 
@@ -776,6 +808,59 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
       fileNameEl.style.display = 'block';
     }
   });
+
+
+  let recMode = null;
+  document.querySelectorAll('.rec-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.rec-option').forEach(o => o.classList.remove('selected'));
+      document.querySelectorAll('.rec-input-group').forEach(g => g.classList.remove('visible'));
+      opt.classList.add('selected');
+      recMode = opt.dataset.mode;
+      document.getElementById('rec-input-' + recMode).classList.add('visible');
+      document.getElementById('btnRecordatorio').style.display = 'block';
+    });
+  });
+
+  const recWhatsapp = document.getElementById('rec-whatsapp');
+  if (recWhatsapp) {
+    recWhatsapp.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 9);
+    });
+  }
+
+  const btnRecordatorio = document.getElementById('btnRecordatorio');
+  if (btnRecordatorio) {
+    btnRecordatorio.addEventListener('click', async () => {
+      if (!recMode) { alert('Elige cómo quieres que te avisemos.'); return; }
+      let contacto = '', errEl, ok = false;
+      if (recMode === 'email') {
+        contacto = (document.getElementById('rec-email').value || '').trim();
+        errEl = document.getElementById('rec-email-error');
+        ok = contacto.includes('@');
+        if (errEl) errEl.textContent = ok ? '' : 'Email no válido';
+      } else {
+        contacto = (document.getElementById('rec-whatsapp').value || '').trim();
+        errEl = document.getElementById('rec-whatsapp-error');
+        ok = /^\d{9}$/.test(contacto);
+        if (errEl) errEl.textContent = ok ? '' : 'Debe tener 9 dígitos';
+      }
+      if (!ok) return;
+      btnRecordatorio.disabled = true;
+      btnRecordatorio.textContent = 'Guardando...';
+      try {
+        await _supabase.from('recordatorios').insert({
+          canal: recMode,
+          contacto,
+          url_landing: window.location.href,
+          fuente: 'web-principal'
+        });
+      } catch (e) {
+        console.warn('Error guardando recordatorio:', e);
+      }
+      showStep(6);
+    });
+  }
 
   function fileToBase64(file) {
     return new Promise((res, rej) => {
