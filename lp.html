@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" href="Logo_Quenotelacuelen.png">
+<title>¿Pagas demasiado de luz? Descúbrelo gratis en segundos</title>
+<meta name="description" content="Sube tu factura y nuestra IA te dice en segundos cuánto estás pagando de más. Gratis, sin compromiso, sin llamadas.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1E6B3A;--green-dk:#175430;--green-lt:#EBF5EF;
+  --text:#1a1a1a;--muted:#64748B;--border:#E8ECEF;
+  --font-head:'Lora',Georgia,serif;--font-body:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--font-body);color:var(--text);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+.lp-header{padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);z-index:100}
+.lp-header img{height:44px;width:auto}
+.lp-header-cta{font-size:0.82rem;font-weight:500;color:#fff;background:var(--green);padding:0.45rem 1.1rem;border-radius:999px;text-decoration:none;transition:background 0.2s}
+.lp-header-cta:hover{background:var(--green-dk)}
+.lp-hero{max-width:700px;margin:0 auto;padding:3rem 1.5rem 2.5rem;text-align:center;background:radial-gradient(ellipse 60% 60% at 50% 0%,#d4ead9 0%,transparent 100%)}
+.lp-badge{display:inline-flex;align-items:center;gap:0.4rem;background:var(--green-lt);color:var(--green);font-size:0.75rem;font-weight:500;padding:0.3rem 0.85rem;border-radius:999px;margin-bottom:1.25rem;letter-spacing:0.02em}
+.lp-hero h1{font-family:var(--font-head);font-size:clamp(2.1rem,5vw,3.4rem);font-weight:500;line-height:1.15;letter-spacing:-0.03em;color:var(--text);margin-bottom:1rem}
+.lp-hero h1 em{font-style:italic;color:var(--green)}
+.lp-hero p{font-size:1.05rem;color:#475569;font-weight:300;line-height:1.7;max-width:520px;margin:0 auto 1.75rem}
+.lp-trust{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;font-size:0.78rem;color:var(--muted)}
+.lp-trust span{display:flex;align-items:center;gap:0.35rem}
+.lp-trust svg{width:13px;height:13px;stroke:var(--green);flex-shrink:0}
+.lp-steps{display:flex;align-items:flex-start;justify-content:center;gap:0;max-width:620px;margin:0 auto 2.5rem;background:#fff;border:1px solid rgba(30,107,58,0.1);border-radius:16px;padding:1.5rem 1rem;box-shadow:0 2px 20px rgba(30,107,58,0.06)}
+.lp-step{flex:1;text-align:center;padding:0 0.5rem;position:relative}
+.lp-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:14px;color:rgba(30,107,58,0.3);font-size:1rem}
+.lp-step-num{width:32px;height:32px;border-radius:50%;background:var(--green);color:#fff;font-size:0.78rem;font-weight:600;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem}
+.lp-step strong{display:block;font-size:0.82rem;color:var(--text);margin-bottom:0.2rem}
+.lp-step span{font-size:0.72rem;color:var(--muted)}
+.lp-testimonios{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem;max-width:700px;margin:0 auto;padding:0 1.5rem 2.5rem}
+.lp-testi{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1rem}
+.lp-testi-stars{color:#f59e0b;font-size:12px;margin-bottom:0.4rem}
+.lp-testi p{font-size:0.8rem;color:#334155;line-height:1.6;margin-bottom:0.5rem}
+.lp-testi-autor{font-size:0.7rem;color:#94a3b8}
+.lp-testi-autor strong{color:#475569}
+.lp-form-section{background:#0a1628;padding:3rem 1.5rem 4rem;position:relative;overflow:hidden}
+.lp-form-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(30,107,58,0.08) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
+.lp-form-section::after{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(30,107,58,0.12) 0%,transparent 65%);pointer-events:none}
+.lp-form-inner{max-width:500px;margin:0 auto;position:relative;z-index:1}
+.lp-form-eyebrow{font-size:0.7rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#4ade80;display:block;margin-bottom:0.5rem}
+.lp-form-title{font-family:var(--font-head);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:500;color:#fff;line-height:1.15;letter-spacing:-0.03em;margin-bottom:0.5rem}
+.lp-form-sub{font-size:0.88rem;color:rgba(255,255,255,0.45);font-weight:300;margin-bottom:2rem;line-height:1.6}
+.lp-tabs{display:flex;background:rgba(255,255,255,0.05);border-radius:10px;padding:3px;gap:2px;border:1px solid rgba(255,255,255,0.08);margin-bottom:1.5rem}
+.lp-tab{flex:1;padding:0.6rem 0.5rem;border:none;background:transparent;color:rgba(255,255,255,0.45);font-family:var(--font-body);font-size:0.82rem;font-weight:500;border-radius:8px;cursor:pointer;transition:all 0.2s;text-align:center}
+.lp-tab.active{background:#1E6B3A;color:#fff}
+.lp-panel{display:none}
+.lp-panel.active{display:block}
+.toggle-buttons{display:flex;background:rgba(255,255,255,0.06);border-radius:8px;padding:3px;gap:2px;border:1px solid rgba(255,255,255,0.08);margin-bottom:1rem;width:fit-content}
+.toggle-btn{padding:0.4rem 1.1rem;border:none;background:transparent;color:rgba(255,255,255,0.5);font-family:var(--font-body);font-size:0.82rem;font-weight:500;border-radius:6px;cursor:pointer;transition:all 0.2s}
+.toggle-btn.active{background:#1E6B3A;color:#fff}
+.file-drop{border:1.5px dashed rgba(255,255,255,0.12);border-radius:12px;padding:1.5rem;cursor:pointer;position:relative;background:rgba(255,255,255,0.02);margin-bottom:1rem;transition:border-color 0.2s,background 0.2s}
+.file-drop:hover{border-color:rgba(30,107,58,0.5);background:rgba(30,107,58,0.04)}
+.file-drop input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.file-drop-inner{display:flex;align-items:center;gap:1rem}
+.file-drop-icon{width:40px;height:40px;flex-shrink:0;background:rgba(30,107,58,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.file-drop-icon svg{width:20px;height:20px;stroke:#4ade80}
+.file-title{font-size:0.88rem;font-weight:500;color:rgba(255,255,255,0.9);margin-bottom:0.2rem}
+.file-sub{font-size:0.72rem;color:rgba(255,255,255,0.35)}
+.file-selected{font-size:0.75rem;color:#4ade80;margin-top:0.5rem;display:none}
+.recordatorio-intro{font-size:0.88rem;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:1.5rem;font-weight:300}
+.rec-option-label{font-size:0.7rem;font-weight:500;color:rgba(255,255,255,0.4);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:0.75rem}
+.rec-options{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem}
+.rec-option{display:flex;align-items:center;gap:0.75rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.85rem 1rem;cursor:pointer;transition:border-color 0.2s,background 0.2s}
+.rec-option:hover,.rec-option.selected{border-color:rgba(30,107,58,0.4);background:rgba(30,107,58,0.06)}
+.rec-option-icon{font-size:1.1rem;flex-shrink:0}
+.rec-option-text strong{display:block;font-size:0.85rem;color:#fff;margin-bottom:0.1rem}
+.rec-option-text span{font-size:0.72rem;color:rgba(255,255,255,0.4)}
+.rec-input-group{display:none;margin-top:0.5rem}
+.rec-input-group.visible{display:block}
+label.form-label{font-size:0.7rem;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:0.05em;text-transform:uppercase;display:block;margin-bottom:0.3rem}
+input:not([type="checkbox"]):not([type="radio"]){background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;font-family:var(--font-body);font-size:0.88rem;padding:0.65rem 0.9rem;outline:none;transition:border-color 0.2s;width:100%;margin-bottom:0.75rem;-webkit-appearance:none;appearance:none}
+input:not([type="checkbox"]):not([type="radio"])::placeholder{color:rgba(255,255,255,0.25)}
+input:not([type="checkbox"]):not([type="radio"]):focus{border-color:rgba(30,107,58,0.6)}
+.extracted-field{background:rgba(255,255,255,0.03)!important;color:rgba(255,255,255,0.45)!important;cursor:not-allowed}
+.field-note{font-size:0.68rem;color:rgba(255,255,255,0.28);margin-top:-0.5rem;margin-bottom:0.75rem;display:block;font-style:italic;line-height:1.5}
+.field-error{color:#f87171;font-size:0.7rem;margin-top:-0.5rem;margin-bottom:0.5rem;display:none}
+.field-error:not(:empty){display:block}
+.form-checkbox-label{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.76rem;color:rgba(255,255,255,0.4);cursor:pointer;line-height:1.5;margin-bottom:1rem}
+.form-checkbox-label input[type="checkbox"]{flex-shrink:0;margin-top:2px;width:14px;height:14px;accent-color:#1E6B3A;cursor:pointer}
+.form-checkbox-label a{color:rgba(255,255,255,0.55);text-decoration:underline;text-underline-offset:2px}
+.submit-btn{width:100%;background:#1E6B3A;color:#fff;font-weight:600;border:none;border-radius:10px;font-family:var(--font-body);font-size:0.95rem;padding:0.95rem;cursor:pointer;transition:background 0.2s,transform 0.15s;box-shadow:0 4px 20px rgba(30,107,58,0.3);letter-spacing:0.02em}
+.submit-btn:hover{background:var(--green-dk);transform:translateY(-1px)}
+.submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.loading-layout{text-align:center;padding:3rem 1rem;display:flex;flex-direction:column;align-items:center;gap:1.25rem}
+.loading-spinner{width:48px;height:48px;border:2px solid rgba(255,255,255,0.08);border-top-color:#1E6B3A;border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:0.85rem;color:rgba(255,255,255,0.55);font-weight:300;min-height:1.2em}
+.loading-bar{width:180px;height:2px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden}
+.loading-bar-fill{height:100%;background:#1E6B3A;border-radius:999px;width:0%;transition:width 0.2s linear}
+.result-container{max-width:500px;margin:0 auto}
+.btn-volver{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.55);font-family:var(--font-body);font-size:0.76rem;padding:0.45rem 0.9rem;border-radius:999px;cursor:pointer;margin-bottom:0.75rem;transition:all 0.2s}
+.btn-volver:hover{background:rgba(255,255,255,0.09);color:rgba(255,255,255,0.9)}
+.result-impact{text-align:center;padding:1.25rem 0 1.75rem}
+.result-impact-eyebrow{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:rgba(255,255,255,0.22);margin-bottom:0.3rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.result-impact-eyebrow::before,.result-impact-eyebrow::after{content:'';display:block;width:20px;height:1px;background:rgba(255,255,255,0.12)}
+.result-impact-number{font-family:var(--font-head);font-size:clamp(4rem,14vw,7rem);font-weight:700;color:#ef2222;line-height:1;letter-spacing:-0.05em;animation:alarma 2s ease-in-out infinite}
+@keyframes alarma{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+.result-impact-year{font-size:1rem;font-weight:300;color:rgba(239,34,34,0.65);margin-left:2px}
+.result-impact-sub{font-size:0.65rem;color:rgba(255,255,255,0.18);margin-top:0.25rem}
+.result-table-wrap{overflow-x:auto;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.15);margin-bottom:0.85rem}
+.result-table{width:100%;border-collapse:collapse;font-size:0.75rem}
+.result-table th,.result-table td{padding:0.5rem 0.8rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.04)}
+.result-table th{color:rgba(255,255,255,0.28);font-weight:500;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.05em}
+.result-table td{color:rgba(255,255,255,0.78)}
+.result-table tr:last-child td{border-bottom:none}
+.result-table .highlight{color:#4ade80;font-weight:600}
+.result-disclaimer{font-size:0.62rem;color:rgba(255,255,255,0.15);text-align:center;margin:0.5rem 0 1rem}
+.tarifa-rec-box{background:rgba(30,107,58,0.08);border:1px solid rgba(30,107,58,0.2);border-radius:14px;padding:1rem 1.25rem;margin-bottom:1rem}
+.tarifa-rec-eyebrow{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.28);display:block;margin-bottom:0.35rem}
+.tarifa-rec-nombre{font-family:var(--font-head);font-size:1.05rem;color:#fff;font-weight:500;margin-bottom:0.2rem}
+.tarifa-rec-ahorro{font-size:0.82rem;color:#4ade80;font-weight:500}
+.tarifa-rec-total{font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:0.1rem}
+.cambio-box{background:linear-gradient(135deg,rgba(30,107,58,0.12),rgba(30,107,58,0.05));border:1px solid rgba(74,222,128,0.18);border-radius:14px;padding:1.1rem;margin-bottom:1.5rem;display:flex;gap:0.9rem;align-items:flex-start}
+.cambio-box-icon{width:38px;height:38px;flex-shrink:0;background:linear-gradient(135deg,#1E6B3A,#2d8a4e);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.cambio-box-icon svg{width:18px;height:18px;stroke:#fff;stroke-width:1.8}
+.cambio-box strong{display:block;font-family:var(--font-head);font-size:0.9rem;color:#fff;margin-bottom:0.25rem}
+.cambio-box p{font-size:0.73rem;color:rgba(255,255,255,0.38);line-height:1.7;margin:0}
+.extracted-badge{display:block;font-size:0.65rem;color:#4ade80;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.6rem}
+.extracted-group{background:rgba(255,255,255,0.02);border-radius:10px;padding:1rem;margin-bottom:1.25rem;border:1px solid rgba(255,255,255,0.05)}
+.confirmation-container{text-align:center;padding:2.5rem 1rem}
+.confirmation-icon{width:56px;height:56px;margin:0 auto 1.25rem;background:#1E6B3A;color:#fff;font-size:1.4rem;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.confirmation-title{font-family:var(--font-head);font-size:1.65rem;color:#fff;margin-bottom:0.65rem}
+.confirmation-text{font-size:0.85rem;color:rgba(255,255,255,0.55);max-width:360px;margin:0 auto;line-height:1.75;font-weight:300}
+.confirmation-note{font-size:0.82rem;color:#4ade80;font-weight:500;margin-top:0.6rem}
+.rec-confirmation{text-align:center;padding:2.5rem 1rem}
+.rec-confirmation-icon{font-size:2.5rem;margin-bottom:1rem}
+.rec-confirmation-title{font-family:var(--font-head);font-size:1.4rem;color:#fff;margin-bottom:0.6rem}
+.rec-confirmation-text{font-size:0.85rem;color:rgba(255,255,255,0.5);max-width:340px;margin:0 auto;line-height:1.7;font-weight:300}
+.flow-step{transition:opacity 0.3s}
+.flow-step.hidden{display:none!important}
+.lp-footer{padding:1.25rem 1.5rem;text-align:center;font-size:0.68rem;color:#94a3b8;border-top:1px solid var(--border)}
+.lp-footer a{color:#94a3b8;text-decoration:underline;margin:0 0.4rem}
+@media(max-width:600px){
+  .lp-hero h1{font-size:1.9rem}
+  .lp-steps{flex-direction:column;gap:0.75rem}
+  .lp-step:not(:last-child)::after{content:'↓';position:static;display:block;margin-top:0.5rem}
+  .lp-testimonios{grid-template-columns:1fr}
+  .lp-header{padding:0.75rem 1rem}
+  .lp-header img{height:36px}
+}
+</style>
+</head>
+<body>
+
+<header class="lp-header">
+  <img src="Logo_Quenotelacuelen.png" alt="Quenotelacuelen.com" />
+  <a href="#formulario" class="lp-header-cta">Analizar mi factura →</a>
+</header>
+
+<section class="lp-hero">
+  <div class="lp-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:12px;height:12px"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    Gratis · Sin compromiso · Sin llamadas
+  </div>
+  <h1>¿Tu factura de luz<br/>es más cara de lo que <em>debería</em>?</h1>
+  <p>Sube tu factura y en segundos nuestra IA te dice exactamente cuánto estás pagando de más — y cómo dejarlo de pagar hoy mismo.</p>
+  <div class="lp-trust">
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Datos cifrados · RGPD</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>1.000+ facturas analizadas</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Sin cortes de suministro</span>
+  </div>
+  <div class="lp-steps">
+    <div class="lp-step">
+      <div class="lp-step-num">1</div>
+      <strong>Sube tu factura</strong>
+      <span>PDF · 30 segundos</span>
+    </div>
+    <div class="lp-step">
+      <div class="lp-step-num">2</div>
+      <strong>La IA la analiza</strong>
+      <span>Compara con el mercado</span>
+    </div>
+    <div class="lp-step">
+      <div class="lp-step-num">3</div>
+      <strong>Ves el resultado</strong>
+      <span>Cuánto te están colando</span>
+    </div>
+  </div>
+</section>
+
+<div class="lp-testimonios">
+  <div class="lp-testi">
+    <div class="lp-testi-stars">★★★★★</div>
+    <p>"Llevaba 3 años con Endesa pagando de más. En 30 segundos supe que me estaban cobrando 340 € extra al año."</p>
+    <div class="lp-testi-autor"><strong>María G.</strong> · Madrid · Ahorro: 340 €/año</div>
+  </div>
+  <div class="lp-testi">
+    <div class="lp-testi-stars">★★★★★</div>
+    <p>"Podía pagar 22 € menos al mes con el mismo consumo. Cambié sin llamar a nadie y sin cortes."</p>
+    <div class="lp-testi-autor"><strong>Carlos M.</strong> · Barcelona · Ahorro: 264 €/año</div>
+  </div>
+  <div class="lp-testi">
+    <div class="lp-testi-stars">★★★★★</div>
+    <p>"Subí el PDF, en 2 días nueva tarifa. Sin gestiones, sin papeleo. Ojalá lo hubiera hecho antes."</p>
+    <div class="lp-testi-autor"><strong>Ana R.</strong> · Valencia · Ahorro: 180 €/año</div>
+  </div>
+</div>
+
+<section class="lp-form-section" id="formulario">
+  <div class="lp-form-inner">
+    <span class="lp-form-eyebrow">Empieza ahora — es gratis</span>
+    <h2 class="lp-form-title">Descubre cuánto<br/>te están colando</h2>
+    <p class="lp-form-sub">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para encontrar la mejor tarifa disponible hoy.</p>
+
+    <div class="flow-step" id="lp-step1">
+      <div class="lp-tabs">
+        <button type="button" class="lp-tab active" data-panel="factura">📄 Tengo mi factura</button>
+        <button type="button" class="lp-tab" data-panel="recordatorio">🔔 No la tengo ahora</button>
+      </div>
+
+      <div class="lp-panel active" id="panel-factura">
+        <div class="toggle-buttons">
+          <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button>
+          <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button>
+        </div>
+        <div class="file-drop" id="lp-fileDrop">
+          <input type="file" id="lp-factura-input" accept=".pdf" />
+          <div class="file-drop-inner">
+            <div class="file-drop-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <div>
+              <p class="file-title">Arrastra o sube tu factura aquí</p>
+              <p class="file-sub">Solo PDF · Máx. 5 MB · Seguro y cifrado</p>
+            </div>
+          </div>
+          <p class="file-selected" id="lp-fileName"></p>
+        </div>
+        <label class="form-checkbox-label">
+          <input type="checkbox" id="lp-acepto" />
+          <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>.</span>
+        </label>
+        <button type="button" class="submit-btn" id="lp-btnAnalizar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;vertical-align:middle;margin-right:6px"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Analizar mi factura gratis
+        </button>
+      </div>
+
+      <div class="lp-panel" id="panel-recordatorio">
+        <p class="recordatorio-intro">No pasa nada. Dinos cómo prefieres que te avisemos cuando tengas la factura a mano y te mandamos un recordatorio.</p>
+        <span class="rec-option-label">¿Cómo te avisamos?</span>
+        <div class="rec-options">
+          <div class="rec-option" id="rec-opt-email" data-mode="email">
+            <span class="rec-option-icon">✉️</span>
+            <div class="rec-option-text">
+              <strong>Por correo electrónico</strong>
+              <span>Te mandamos un email con el enlace directo</span>
+            </div>
+          </div>
+          <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp">
+            <span class="rec-option-icon">💬</span>
+            <div class="rec-option-text">
+              <strong>Por WhatsApp</strong>
+              <span>Te enviamos un mensaje con recordatorio</span>
+            </div>
+          </div>
+        </div>
+        <div class="rec-input-group" id="rec-input-email">
+          <label class="form-label">Tu correo electrónico</label>
+          <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" />
+          <div class="field-error" id="rec-email-error"></div>
+        </div>
+        <div class="rec-input-group" id="rec-input-whatsapp">
+          <label class="form-label">Tu número de WhatsApp</label>
+          <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" />
+          <div class="field-error" id="rec-whatsapp-error"></div>
+        </div>
+        <button type="button" class="submit-btn" id="lp-btnRecordatorio" style="display:none">
+          Avisarme cuando tenga la factura
+        </button>
+      </div>
+    </div>
+
+    <div class="flow-step hidden" id="lp-step2">
+      <div class="loading-layout">
+        <div class="loading-spinner"></div>
+        <p class="loading-text" id="lp-loadingText">Analizando tu factura...</p>
+        <div class="loading-bar"><div class="loading-bar-fill" id="lp-loadingBarFill"></div></div>
+      </div>
+    </div>
+
+    <div class="flow-step hidden" id="lp-step3">
+      <div class="result-container">
+        <button type="button" class="btn-volver" id="lp-btnVolver">← Analizar otra factura</button>
+        <div class="result-impact">
+          <p class="result-impact-eyebrow">En total te están colando</p>
+          <p class="result-impact-number"><span id="lp-totalColando">—</span><span class="result-impact-year"> €/año</span></p>
+          <p class="result-impact-sub">estimado según tu última factura</p>
+        </div>
+        <div class="result-table-wrap">
+          <table class="result-table">
+            <thead><tr><th>Concepto</th><th>Tu tarifa actual</th><th>Mejor tarifa encontrada hoy</th></tr></thead>
+            <tbody id="lp-resultTableBody"></tbody>
+          </table>
+        </div>
+        <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar.</p>
+        <button type="button" class="submit-btn" id="lp-btnSiguiente">Ver cómo cambiarme gratis →</button>
+      </div>
+    </div>
+
+    <div class="flow-step hidden" id="lp-step4">
+      <button type="button" class="btn-volver" id="lp-btnVolverStep4">← Volver</button>
+      <div class="tarifa-rec-box" id="lp-tarifaBox"></div>
+      <div class="cambio-box">
+        <div class="cambio-box-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div>
+          <strong>Sin llamadas, sin cortes, sin gestiones</strong>
+          <p>Solo rellena tus datos y nosotros nos encargamos de todo el cambio. No tienes que avisar a tu compañía actual.</p>
+        </div>
+      </div>
+      <form id="lp-contratacionForm" novalidate>
+        <div class="extracted-group">
+          <span class="extracted-badge">✓ Extraído de tu factura</span>
+          <label class="form-label">CUPS</label>
+          <input type="text" id="lp-cups" readonly class="extracted-field" placeholder="—" />
+          <label class="form-label">Dirección del suministro</label>
+          <input type="text" id="lp-direccion" readonly class="extracted-field" placeholder="—" />
+          <label class="form-label">Nombre del titular</label>
+          <input type="text" id="lp-nombre" readonly class="extracted-field" placeholder="—" />
+          <label class="form-label">DNI del titular</label>
+          <input type="text" id="lp-dni" readonly class="extracted-field" placeholder="—" />
+        </div>
+        <label class="form-label">Tu correo electrónico</label>
+        <input type="text" id="lp-email" placeholder="tu@email.com" autocomplete="email" />
+        <div class="field-error" id="lp-email-error"></div>
+        <label class="form-label">Número de móvil</label>
+        <input type="tel" id="lp-telefono" placeholder="600000000" maxlength="9" inputmode="numeric" />
+        <div class="field-error" id="lp-tel-error"></div>
+        <label class="form-label">IBAN para domiciliar la factura</label>
+        <input type="text" id="lp-iban" placeholder="ES00 0000 0000 0000 0000 0000" autocomplete="off" />
+        <div class="field-error" id="lp-iban-error"></div>
+        <span class="field-note">En las próximas horas recibirás un SMS o correo de Gana Energía para autorizar el cambio.</span>
+        <label class="form-checkbox-label">
+          <input type="checkbox" id="lp-autorizo" />
+          <span>Autorizo a QNTLC a gestionar por mí el cambio de comercializadora</span>
+        </label>
+        <button type="submit" class="submit-btn">Solicitar cambio de tarifa gratis</button>
+      </form>
+    </div>
+
+    <div class="flow-step hidden" id="lp-step5">
+      <div class="confirmation-container">
+        <div class="confirmation-icon">✓</div>
+        <h2 class="confirmation-title">¡Todo listo! 🎉</h2>
+        <p class="confirmation-text">En las próximas horas recibirás un SMS o correo de tu nueva comercializadora para que autorices el cambio. No tienes que hacer nada más — nosotros nos encargamos de todo.</p>
+        <p class="confirmation-note">Ahorro estimado: <span id="lp-ahorroConfirm">—</span> €/año</p>
+      </div>
+    </div>
+
+    <div class="flow-step hidden" id="lp-step6">
+      <div class="rec-confirmation">
+        <div class="rec-confirmation-icon">🔔</div>
+        <h2 class="rec-confirmation-title">¡Anotado!</h2>
+        <p class="rec-confirmation-text">Te avisamos en cuanto tengas la factura a mano. Solo tienes que subirla y en segundos sabrás cuánto puedes ahorrar.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="lp-footer">
+  © 2026 Quenotelacuelen.com ·
+  <a href="aviso-legal.html">Aviso legal</a>
+  <a href="politica-privacidad.html">Privacidad</a>
+  <a href="politica-cookies.html">Cookies</a>
+</footer>
+
+<script>
+const SUPABASE_URL='https://zxdkdephdsjqqqzmeeuq.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4ZGtkZXBoZHNqcXFxem1lZXVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNTQ2NTYsImV4cCI6MjA4OTgzMDY1Nn0.Szet-Du-xRKbBABgTzOQQrbosvN-noCr4QHyofklS_I';
+const _sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const PEAJE_2026={p:0.018920,l:0.013510,v:0.003980};
+const ALQ_DIA=0.026630,BONO_2026=0.012742,IMP_ELEC=0.0511269632,IVA=0.21;
+
+let lpTipo='luz',lpExtracted=null,lpCalcResult=null,lpPdfBase64=null;
+window._lpAhorro=0;
+
+// TABS
+document.querySelectorAll('.lp-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.lp-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.lp-panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-'+tab.dataset.panel).classList.add('active');
+  });
+});
+
+// TOGGLE LUZ/GAS
+document.querySelectorAll('.toggle-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    lpTipo=btn.dataset.type;
+  });
+});
+
+// FILE DROP
+const lpFileInput=document.getElementById('lp-factura-input');
+const lpFileNameEl=document.getElementById('lp-fileName');
+lpFileInput.addEventListener('change',()=>{
+  if(lpFileInput.files.length){
+    lpFileNameEl.textContent='✓ '+lpFileInput.files[0].name;
+    lpFileNameEl.style.display='block';
+  }
+});
+const lpFileDrop=document.getElementById('lp-fileDrop');
+lpFileDrop.addEventListener('dragover',e=>{e.preventDefault();lpFileDrop.style.borderColor='rgba(74,222,128,0.4)'});
+lpFileDrop.addEventListener('dragleave',()=>{lpFileDrop.style.borderColor=''});
+lpFileDrop.addEventListener('drop',e=>{
+  e.preventDefault();lpFileDrop.style.borderColor='';
+  if(e.dataTransfer.files.length){
+    lpFileInput.files=e.dataTransfer.files;
+    lpFileNameEl.textContent='✓ '+e.dataTransfer.files[0].name;
+    lpFileNameEl.style.display='block';
+  }
+});
+
+// RECORDATORIO — selección modo
+let recMode=null;
+document.querySelectorAll('.rec-option').forEach(opt=>{
+  opt.addEventListener('click',()=>{
+    document.querySelectorAll('.rec-option').forEach(o=>o.classList.remove('selected'));
+    document.querySelectorAll('.rec-input-group').forEach(g=>g.classList.remove('visible'));
+    opt.classList.add('selected');
+    recMode=opt.dataset.mode;
+    document.getElementById('rec-input-'+recMode).classList.add('visible');
+    document.getElementById('lp-btnRecordatorio').style.display='block';
+  });
+});
+
+document.getElementById('rec-whatsapp').addEventListener('input',e=>{
+  e.target.value=e.target.value.replace(/\D/g,'').slice(0,9);
+});
+
+// BOTÓN RECORDATORIO
+document.getElementById('lp-btnRecordatorio').addEventListener('click',async()=>{
+  if(!recMode){alert('Elige cómo quieres que te avisemos.');return;}
+  let contacto='',errEl,ok=false;
+  if(recMode==='email'){
+    contacto=document.getElementById('rec-email').value.trim();
+    errEl=document.getElementById('rec-email-error');
+    ok=contacto.includes('@');
+    errEl.textContent=ok?'':'Email no válido';
+  }else{
+    contacto=document.getElementById('rec-whatsapp').value.trim();
+    errEl=document.getElementById('rec-whatsapp-error');
+    ok=/^\d{9}$/.test(contacto);
+    errEl.textContent=ok?'':'Debe tener 9 dígitos';
+  }
+  if(!ok)return;
+  const btn=document.getElementById('lp-btnRecordatorio');
+  btn.disabled=true;btn.textContent='Guardando...';
+  try{
+    await _sb.from('recordatorios').insert({
+      canal:recMode,
+      contacto:contacto,
+      url_landing:window.location.href,
+      fuente:'lp-ads'
+    });
+  }catch(e){console.warn('Error guardando recordatorio:',e);}
+  lpShowStep(6);
+});
+
+// FLOW STEPS
+const lpStepIds=['lp-step1','lp-step2','lp-step3','lp-step4','lp-step5','lp-step6'];
+function lpShowStep(n){
+  lpStepIds.forEach((id,i)=>document.getElementById(id).classList.toggle('hidden',i+1!==n));
+  if(n===5&&typeof window.dataLayer!=='undefined'){
+    window.dataLayer.push({event:'solicitud_completada',tipo_factura:lpTipo,ahorro_estimado:window._lpAhorro});
+  }
+  window.scrollTo({top:document.getElementById('formulario').offsetTop-80,behavior:'smooth'});
+}
+
+function lpFileToBase64(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result.split(',')[1]||'');
+    r.onerror=rej;r.readAsDataURL(file);
+  });
+}
+
+// TARIFAS Y CÁLCULO
+async function lpCargarTarifas(){
+  try{
+    const{data,error}=await _sb.from('tarifas_luz').select('*').eq('activa',true);
+    if(error||!data||!data.length)throw new Error();
+    return data;
+  }catch{
+    return[
+      {nombre:'Precio Mercado',tipo_energia:'mercado',margen_dia:0.167,potencia_p1_dia:0.075903,potencia_p2_dia:0.019880},
+      {nombre:'Tramos Horarios',tipo_energia:'fija',margen_dia:0.167,potencia_p1_dia:0.089434,potencia_p2_dia:0.089434,energia_punta:0.181,energia_llano:0.114,energia_valle:0.09},
+      {nombre:'24 Horas',tipo_energia:'unica',margen_dia:0.167,potencia_p1_dia:0.089434,potencia_p2_dia:0.089434,energia_unica:0.129}
+    ];
+  }
+}
+
+async function lpObtenerPreciosLuz(fi,ff){
+  try{
+    const{data,error}=await _sb.from('preciosluz').select('precio_punta,precio_llano,precio_valle').gte('fecha',fi).lte('fecha',ff);
+    if(error||!data||!data.length)return null;
+    const avg=arr=>arr.reduce((a,b)=>a+b,0)/arr.length;
+    return{
+      punta:avg(data.map(r=>parseFloat(r.precio_punta))),
+      llano:avg(data.map(r=>parseFloat(r.precio_llano))),
+      valle:avg(data.map(r=>parseFloat(r.precio_valle)))
+    };
+  }catch{return null;}
+}
+
+function lpCalcTarifa(t,d,pm){
+  const p1=parseFloat(d.potencia_p1)||0,p2=parseFloat(d.potencia_p2)||p1;
+  const dias=parseInt(d.dias)||30,pe=PEAJE_2026;
+  const pot=p1*t.potencia_p1_dia*dias+p2*t.potencia_p2_dia*dias;
+  const ep=parseFloat(d.kwh_punta)||0,el=parseFloat(d.kwh_llano)||0,ev=parseFloat(d.kwh_valle)||0;
+  const etotal=parseFloat(d.kwh_total)||(ep+el+ev);
+  const tieneH=d.tiene_discriminacion_horaria!==false&&(ep+el+ev)>0;
+  let ener=0;
+  if(t.tipo_energia==='mercado'){
+    if(pm){
+      ener=tieneH
+        ?ep*(pm.punta+pe.p)+el*(pm.llano+pe.l)+ev*(pm.valle+pe.v)
+        :etotal*((pm.punta+pm.llano+pm.valle)/3+(pe.p+pe.l+pe.v)/3);
+    }else{
+      const pu=parseFloat(d.precio_kwh_unico)||(d.termino_energia_euros&&d.kwh_total?parseFloat(d.termino_energia_euros)/parseFloat(d.kwh_total):0);
+      ener=tieneH
+        ?ep*(parseFloat(d.precio_kwh_punta)||pu)+el*(parseFloat(d.precio_kwh_llano)||pu)+ev*(parseFloat(d.precio_kwh_valle)||pu)
+        :etotal*pu;
+    }
+  }else if(t.tipo_energia==='fija'){
+    ener=tieneH
+      ?ep*(t.energia_punta+pe.p)+el*(t.energia_llano+pe.l)+ev*(t.energia_valle+pe.v)
+      :etotal*((t.energia_punta+t.energia_llano+t.energia_valle)/3+(pe.p+pe.l+pe.v)/3);
+  }else{
+    ener=etotal*(t.energia_unica+(pe.p+pe.l+pe.v)/3);
+  }
+  const margen=t.margen_dia*dias,bono=BONO_2026*dias;
+  const base=pot+ener+margen+bono,impEl=base*IMP_ELEC;
+  const alq=parseFloat(d.alquiler_contador_euros)||ALQ_DIA*dias;
+  const sub=base+impEl+alq,iva=sub*IVA;
+  return{total:sub+iva,pot,ener,impEl,alq,ivaG:iva,tarifa:t};
+}
+
+async function lpCalcularMejorLuz(d){
+  const tarifas=await lpCargarTarifas();
+  const pm=await lpObtenerPreciosLuz(d.fecha_inicio||'2026-01-01',d.fecha_fin||'2026-01-31');
+  const totalActual=parseFloat(d.total_factura)||0,dias=parseInt(d.dias)||30;
+  const resultados=tarifas.map(t=>{
+    const c=lpCalcTarifa(t,d,pm);
+    return{...c,ahorro:totalActual-c.total,ahorroAnual:((totalActual-c.total)/dias)*365};
+  }).sort((a,b)=>b.ahorro-a.ahorro);
+  return{...resultados[0],total_ib:totalActual,dias};
+}
+
+async function lpCalcularGas(d){
+  try{
+    const{data}=await _sb.from('preciosgas').select('precio_kwh').gte('fecha',d.fecha_inicio||'2026-01-01').lte('fecha',d.fecha_fin||'2026-01-31');
+    const pm=data&&data.length?data.reduce((a,b)=>a+parseFloat(b.precio_kwh),0)/data.length:parseFloat(d.precio_kwh_gas)||0;
+    const kwh=parseFloat(d.kwh_gas)||0,dias=parseInt(d.dias)||30;
+    const totalActual=parseFloat(d.total_factura)||0;
+    const peaje=0.018900,margen=0.011,hidro=0.00234,fijoMes=3.93;
+    const fijo=(fijoMes/30)*dias,consumo=kwh*(pm+peaje+margen+hidro);
+    const alq=parseFloat(d.alquiler_contador_euros)||0;
+    const totalG=(fijo+consumo+alq)*(1+IVA);
+    const ahorro=totalActual-totalG;
+    return{totalG,ahorro,ahorroAnual:(ahorro/dias)*365,total_ib:totalActual,dias,
+      tarifa:{nombre:'Gas Mercado'},fijo,consumo,ivaG:(fijo+consumo+alq)*IVA};
+  }catch{return null;}
+}
+
+// ANALIZAR
+document.getElementById('lp-btnAnalizar').addEventListener('click',async()=>{
+  const file=lpFileInput.files[0];
+  if(!file){alert('Por favor, sube tu factura en formato PDF.');return;}
+  if(!file.name.toLowerCase().endsWith('.pdf')){alert('Solo se aceptan archivos PDF.');return;}
+  if(file.size>5*1024*1024){alert('El PDF no puede superar 5 MB.');return;}
+  if(!document.getElementById('lp-acepto').checked){alert('Debes aceptar la política de privacidad para continuar.');return;}
+
+  lpShowStep(2);
+  const texts=['Leyendo tu factura...','Buscando la mejor tarifa del mercado...','Comparando precios...','Calculando tu ahorro...'];
+  let ti=0;
+  const ltEl=document.getElementById('lp-loadingText'),lbEl=document.getElementById('lp-loadingBarFill');
+  ltEl.textContent=texts[0];
+  const tInt=setInterval(()=>{ti=(ti+1)%texts.length;ltEl.textContent=texts[ti];},3000);
+  let prog=0;
+  const pInt=setInterval(()=>{prog+=2;if(prog<=100)lbEl.style.width=prog+'%';},200);
+  const minDelay=new Promise(r=>setTimeout(r,10000));
+  lpPdfBase64=await lpFileToBase64(file);
+  const apiP=fetch('/.netlify/functions/analizar',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({pdfBase64:lpPdfBase64})
+  }).then(r=>r.json()).catch(e=>({success:false,error:e.message}));
+  const[,result]=await Promise.all([minDelay,apiP]);
+  clearInterval(tInt);clearInterval(pInt);lbEl.style.width='100%';
+
+  if(!result.success||!result.data){
+    alert(result.error||'No pudimos analizar tu factura. Asegúrate de que es un PDF de factura de luz o gas.');
+    lpShowStep(1);return;
+  }
+  lpExtracted=result.data;
+  const esGas=lpTipo==='gas'||lpExtracted.tipo_factura==='gas';
+  lpCalcResult=esGas?await lpCalcularGas(lpExtracted):await lpCalcularMejorLuz(lpExtracted);
+
+  if(!lpCalcResult||lpCalcResult.ahorro<=0){
+    document.getElementById('lp-step3').innerHTML=`
+      <div style="text-align:center;padding:2rem 1rem">
+        <div style="font-size:2.5rem;margin-bottom:1rem">🎉</div>
+        <h3 style="font-family:var(--font-head);font-size:1.4rem;color:#4ade80;margin-bottom:0.65rem">¡No te la están colando!</h3>
+        <p style="font-size:0.85rem;color:rgba(255,255,255,0.55);max-width:320px;margin:0 auto 1.5rem;line-height:1.7">Tu tarifa actual ya es competitiva. No hemos encontrado nada más barato para tu perfil.</p>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.25);max-width:300px;margin:0 auto 1.5rem;line-height:1.6">Los precios cambian cada mes. Vuelve a comprobarlo con tu próxima factura.</p>
+        <button onclick="lpShowStep(1)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);font-family:var(--font-body);font-size:0.78rem;padding:0.5rem 1.1rem;border-radius:999px;cursor:pointer">← Analizar otra factura</button>
+      </div>`;
+    lpShowStep(3);return;
+  }
+
+  const dias=parseInt(lpExtracted.dias)||30;
+  const totalActual=parseFloat(lpExtracted.total_factura)||0;
+  const ahorroAnual=Math.round(lpCalcResult.ahorroAnual||0);
+  window._lpAhorro=ahorroAnual;
+  document.getElementById('lp-totalColando').textContent=ahorroAnual+'';
+  const fmt=v=>(v!=null&&!isNaN(v))?parseFloat(v).toFixed(2).replace('.',',')+' €':'—';
+  const tbody=document.getElementById('lp-resultTableBody');
+  tbody.innerHTML='';
+  const rows=esGas?[ 
+    ['Consumo gas','—',fmt(lpCalcResult.consumo)],
+    ['Término fijo','—',fmt(lpCalcResult.fijo)],
+    ['IVA (21%)',fmt(lpExtracted.iva_euros),fmt(lpCalcResult.ivaG)],
+    ['Total factura',fmt(totalActual),fmt(lpCalcResult.totalG)]
+  ]:[
+    ['Término de potencia',fmt(lpExtracted.termino_potencia_euros),fmt(lpCalcResult.pot)],
+    ['Término de energía',fmt(lpExtracted.termino_energia_euros),fmt(lpCalcResult.ener)],
+    ['Imp. eléctrico',fmt(lpExtracted.impuesto_electrico_euros),fmt(lpCalcResult.impEl)],
+    ['Alquiler contador',fmt(lpExtracted.alquiler_contador_euros),fmt(lpCalcResult.alq)],
+    ['IVA',fmt(lpExtracted.iva_euros),fmt(lpCalcResult.ivaG)],
+    ['Total factura',fmt(totalActual),fmt(lpCalcResult.total||lpCalcResult.totalG)]
+  ];
+  rows.forEach(([c,tu,gana])=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${c}</td><td>${tu}</td><td class="${c==='Total factura'?'highlight':''}">${gana}</td>`;
+    tbody.appendChild(tr);
+  });
+  lpShowStep(3);
+});
+
+document.getElementById('lp-btnVolver').addEventListener('click',()=>lpShowStep(1));
+document.getElementById('lp-btnVolverStep4').addEventListener('click',()=>lpShowStep(3));
+
+document.getElementById('lp-btnSiguiente').addEventListener('click',()=>{
+  document.getElementById('lp-cups').value=lpExtracted?.cups||'';
+  document.getElementById('lp-direccion').value=lpExtracted?.direccion||'';
+  document.getElementById('lp-nombre').value=lpExtracted?.nombre_titular||'';
+  document.getElementById('lp-dni').value=lpExtracted?.dni||'';
+  const box=document.getElementById('lp-tarifaBox');
+  const nombre=lpCalcResult?.tarifa?.nombre||'Precio Mercado';
+  const ahorro=Math.round(lpCalcResult?.ahorroAnual||0);
+  const totalG=(lpCalcResult?.total||lpCalcResult?.totalG||0).toFixed(2).replace('.',',');
+  const totalA=parseFloat(lpExtracted?.total_factura||0).toFixed(2).replace('.',',');
+  box.innerHTML=`<span class="tarifa-rec-eyebrow">Tu tarifa recomendada</span><div class="tarifa-rec-nombre">Gana Energía — ${nombre}</div><div class="tarifa-rec-ahorro">Ahorro estimado: ${ahorro} €/año</div><div class="tarifa-rec-total">Factura estimada con Gana: ${totalG} € vs ${totalA} € actuales</div>`;
+  lpShowStep(4);
+});
+
+// VALIDACIÓN
+['lp-email','lp-telefono','lp-iban'].forEach(id=>{
+  const el=document.getElementById(id);
+  el.addEventListener('blur',()=>lpValidate(id));
+  if(id==='lp-telefono'){
+    el.addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,9);});
+  }
+});
+function lpValidate(id){
+  const v=document.getElementById(id).value;
+  const errMap={'lp-email':'lp-email-error','lp-telefono':'lp-tel-error','lp-iban':'lp-iban-error'};
+  const errEl=document.getElementById(errMap[id]);
+  if(id==='lp-email'){const ok=v.includes('@');if(errEl)errEl.textContent=ok?'':'Email no válido';return ok;}
+  if(id==='lp-telefono'){const ok=/^\d{9}$/.test(v);if(errEl)errEl.textContent=ok?'':'Debe tener 9 dígitos';return ok;}
+  if(id==='lp-iban'){const ok=v.replace(/\s/g,'').length===24;if(errEl)errEl.textContent=ok?'':'El IBAN debe tener 24 caracteres';return ok;}
+  return true;
+}
+
+// ENVÍO CONTRATACIÓN
+document.getElementById('lp-contratacionForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!lpValidate('lp-email')||!lpValidate('lp-telefono')||!lpValidate('lp-iban'))return;
+  if(!document.getElementById('lp-autorizo').checked){alert('Debes autorizar la gestión del cambio para continuar.');return;}
+  const btn=e.target.querySelector('button[type="submit"]');
+  btn.disabled=true;btn.textContent='Enviando...';
+  try{
+    const email=document.getElementById('lp-email').value.trim();
+    const telefono=document.getElementById('lp-telefono').value.trim();
+    const iban=document.getElementById('lp-iban').value.trim();
+    const fd=lpExtracted||{};
+    const nombreNorm=(document.getElementById('lp-nombre').value||'').toUpperCase();
+    const cupsNorm=(fd.cups||'').replace(/\s/g,'').toUpperCase();
+
+    let cliente;
+    if(fd.dni){
+      const{data:exist}=await _sb.from('clientes').select('*').eq('dni',fd.dni).single();
+      cliente=exist;
+    }
+    if(!cliente){
+      const{data:nuevo,error:cErr}=await _sb.from('clientes').insert({
+        nombre:nombreNorm,apellidos:'',dni:fd.dni||'',email,telefono
+      }).select().single();
+      if(cErr)throw cErr;
+      cliente=nuevo;
+    }
+
+    let facturaUrl=null;
+    if(lpPdfBase64){
+      try{
+        const blob=await fetch(`data:application/pdf;base64,${lpPdfBase64}`).then(r=>r.blob());
+        const fn=`${cliente.id}_${lpTipo}_${Date.now()}.pdf`;
+        const{error:upErr}=await _sb.storage.from('facturas').upload(fn,blob,{contentType:'application/pdf',upsert:false});
+        if(!upErr){
+          const{data:ud}=_sb.storage.from('facturas').getPublicUrl(fn);
+          facturaUrl=ud?.publicUrl||null;
+        }
+      }catch{}
+    }
+
+    let insertarContrato=true;
+    if(cupsNorm){
+      const{data:dup}=await _sb.from('contratos').select('id').eq('cups',cupsNorm).limit(1);
+      if(dup&&dup.length>0)insertarContrato=false;
+    }
+
+    if(insertarContrato){
+      const{error:coErr}=await _sb.from('contratos').insert({
+        cliente_id:cliente.id,tipo:lpTipo,cups:cupsNorm,
+        direccion:(fd.direccion||'').toUpperCase(),
+        comercializadora_actual:(fd.comercializadora||'').toUpperCase(),
+        tarifa_actual:(fd.tarifa||'').toUpperCase(),
+        potencia_p1:fd.potencia_p1||null,potencia_p2:fd.potencia_p2||null,
+        kwh_punta:fd.kwh_punta||null,kwh_llano:fd.kwh_llano||null,kwh_valle:fd.kwh_valle||null,
+        total_factura:fd.total_factura||null,ahorro_estimado:window._lpAhorro||null,
+        iban_cargo:iban,iban_bono:'',estado:'pendiente_contrato',factura_url:facturaUrl
+      });
+      if(coErr)throw coErr;
+    }
+
+    await fetch('/.netlify/functions/enviar-contrato',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({nombre_titular:fd.nombre_titular||'',tipo:lpTipo,cups:fd.cups||''})
+    }).catch(()=>{});
+
+    document.getElementById('lp-ahorroConfirm').textContent=window._lpAhorro||'—';
+    lpShowStep(5);
+  }catch(err){
+    console.error(err);
+    btn.disabled=false;btn.textContent='Solicitar cambio de tarifa gratis';
+    alert('Error al enviar. Por favor inténtalo de nuevo.');
+  }
+});
+</script>
+</body>
+</html>
