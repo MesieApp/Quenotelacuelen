@@ -1528,6 +1528,15 @@ function toggleFaqExtra() {
     }
 
     extractedData = result.data;
+fetch('/.netlify/functions/notificar-factura', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    nombre_titular: result.data.nombre_titular || '',
+    fuente: 'web'
+  })
+}).catch(() => {});
+
     if (!extractedData.tipo_factura && 
         !extractedData.total_factura && 
         !extractedData.cups && 
