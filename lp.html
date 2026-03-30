@@ -1386,6 +1386,21 @@ fetch('/.netlify/functions/notificar-factura', {
     const totalColandoAnual = ahorroAnualReal;
     window._ahorroEstimado = ahorroAnualReal;
 
+    const ahorroAnual = ahorroAnualReal;
+    const lpExtracted = extractedData;
+    const lpTipo = currentTipo;
+    const _sb = _supabase;
+    window._lpAhorro = ahorroAnual;
+    _sb.from('leads_facturas').insert({
+      nombre_titular: lpExtracted.nombre_titular || '',
+      comercializadora_actual: lpExtracted.comercializadora || '',
+      total_factura: parseFloat(lpExtracted.total_factura) || null,
+      ahorro_estimado: ahorroAnual || 0,
+      tipo: lpTipo || 'luz',
+      fuente: 'lp',
+      completado: false
+    }).then(() => {}).catch(() => {});
+
     document.getElementById('resultTotalColandoAnual').textContent = totalColandoAnual + ' €';
 
     const tbody = document.getElementById('resultTableBody');
