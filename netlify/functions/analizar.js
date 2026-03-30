@@ -44,6 +44,7 @@ CAMPOS COMUNES:
 - tarifa: nombre de la tarifa contratada
 - cups: código CUPS completo (empieza por ES)
 - direccion: dirección completa del punto de suministro
+- provincia: provincia del punto de suministro extraída de la dirección. Usar nombre oficial español en mayúsculas. Ejemplos: "MADRID", "BARCELONA", "VALENCIA", "SEVILLA". Si no aparece explícitamente, deducirla de la dirección o del municipio. Si no es posible deducirla, null.
 - nombre_titular: nombre completo del titular del contrato
 - dni: DNI o NIF del titular
 - alquiler_contador_euros: importe del alquiler del contador sin IVA
