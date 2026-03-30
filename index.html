@@ -338,6 +338,10 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
   border-color: rgba(74,222,128,0.3);
   box-shadow: 0 0 10px rgba(74,222,128,0.1);
 }
+.loading-chip.done {
+  color: rgba(74,222,128,0.5);
+  border-color: rgba(74,222,128,0.15);
+}
 
 </style> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
 <style>
@@ -461,7 +465,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </svg>
     <div class="loading-center-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
       </svg>
     </div>
     <div class="loading-dots">
@@ -472,16 +476,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-  <p class="loading-text" id="loadingText">Leyendo tu factura...</p>
+  <div style="text-align:center;">
+    <p class="loading-text" id="loadingText">Analizando tu factura</p>
+    <p id="loadingSubtext" style="font-size:0.7rem;color:rgba(255,255,255,0.25);margin-top:0.3rem;font-weight:300;letter-spacing:0.03em;">Leyendo los datos de tu factura PDF...</p>
+  </div>
 
   <div class="loading-bar">
     <div class="loading-bar-fill" id="loadingBarFill"></div>
   </div>
 
   <div class="loading-chips">
-    <span class="loading-chip" id="chip1">Extrayendo datos</span>
-    <span class="loading-chip" id="chip2">Comparando tarifas</span>
-    <span class="loading-chip" id="chip3">Calculando ahorro</span>
+    <span class="loading-chip active" id="chip1">Analizando</span>
+    <span class="loading-chip" id="chip2">Buscando</span>
+    <span class="loading-chip" id="chip3">Comparando</span>
+    <span class="loading-chip" id="chip4">Concluyendo</span>
   </div>
 </div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Ver mi tarifa recomendada</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
 <div class="flow-step hidden" id="step4" data-step="4">
@@ -1326,34 +1334,84 @@ function toggleFaq(btn) {
     }
 
     showStep(2);
+    const loadingTexts = [
+      'Analizando tu factura',
+      'Buscando la mejor tarifa disponible en el mercado',
+      'Comparando tu tarifa con la mejor tarifa del mercado',
+      'Extrayendo conclusiones'
+    ];
 
-    const loadingTexts = ['Analizando tu factura', 'Buscando la mejor tarifa disponible en el mercado', 'Comparando tu tarifa con la mejor tarifa del mercado', 'Extrayendo conclusiones'];
-    let textIdx = 0;
-    const loadingTextEl = document.getElementById('loadingText');
+    const loadingIcons = [
+      // Fase 1 — lupa leyendo documento
+      '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>',
+      // Fase 2 — radar / búsqueda
+      '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>',
+      // Fase 3 — balanza comparando
+      '<line x1="12" y1="3" x2="12" y2="21"/><path d="M3 9l4-4 4 4"/><path d="M17 15l4-4-4-4"/>',
+      // Fase 4 — check / conclusión
+      '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'
+    ];
+
+    const loadingSubtexts = [
+      'Leyendo los datos de tu factura PDF...',
+      'Rastreando el mercado en tiempo real...',
+      'Calculando cuánto pagas de más...',
+      'Preparando tu resultado personalizado...'
+    ];
+
+    // Porcentaje de barra por fase (acumulado al entrar en cada fase)
+    const phaseProgress = [10, 35, 70, 92];
+
+    let currentPhase = 0;
+    const loadingTextEl  = document.getElementById('loadingText');
     const loadingBarFill = document.getElementById('loadingBarFill');
-    loadingTextEl.textContent = loadingTexts[0];
+    const centerIconEl   = document.querySelector('#step2 .loading-center-icon svg');
+    const subtextEl      = document.getElementById('loadingSubtext');
 
-    const textInterval = setInterval(() => {
-      textIdx = (textIdx + 1) % loadingTexts.length;
-      loadingTextEl.textContent = loadingTexts[textIdx];
-    }, 3333);
+    function applyPhase(idx) {
+      // Texto principal
+      loadingTextEl.textContent = loadingTexts[idx];
+      // Subtext
+      if (subtextEl) subtextEl.textContent = loadingSubtexts[idx];
+      // Icono central
+      if (centerIconEl) centerIconEl.innerHTML = loadingIcons[idx];
+      // Chips
+      ['chip1','chip2','chip3','chip4'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.toggle('active', i === idx);
+          el.classList.toggle('done', i < idx);
+        }
+      });
+      // Barra de progreso (salta al % de la fase)
+      loadingBarFill.style.width = phaseProgress[idx] + '%';
+    }
 
-const chipIds = ['chip1','chip2','chip3'];
-let chipIdx = 0;
-const chipInterval = setInterval(() => {
-  chipIds.forEach((id,i) => {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle('active', i === chipIdx);
-  });
-  chipIdx = (chipIdx + 1) % chipIds.length;
-}, 3000);
+    // Inicializa fase 0
+    applyPhase(0);
 
-    const minDelay = new Promise(r => setTimeout(r, 10000));
-    let progress = 0;
+    // Avanza de fase en fase cada 5 segundos
+    const phaseInterval = setInterval(() => {
+      currentPhase++;
+      if (currentPhase < loadingTexts.length) {
+        applyPhase(currentPhase);
+      } else {
+        clearInterval(phaseInterval);
+      }
+    }, 5000);
+
+    // Animación suave de la barra dentro de cada fase
+    let progress = phaseProgress[0];
     const progressInterval = setInterval(() => {
-      progress += 2;
-      if (progress <= 100) loadingBarFill.style.width = progress + '%';
+      const nextPhaseProgress = phaseProgress[Math.min(currentPhase + 1, 3)];
+      const maxForNow = nextPhaseProgress - 2;
+      if (progress < maxForNow) {
+        progress += 0.4;
+        loadingBarFill.style.width = progress + '%';
+      }
     }, 200);
+
+    const minDelay = new Promise(r => setTimeout(r, 20000));
 
     const base64pdf = await fileToBase64(file);
     const apiPromise = fetch('/.netlify/functions/analizar', {
@@ -1364,9 +1422,8 @@ const chipInterval = setInterval(() => {
 
     const [, result] = await Promise.all([minDelay, apiPromise]);
     console.log('DATOS EXTRAÍDOS:', JSON.stringify(result.data, null, 2));
-    clearInterval(textInterval);
+    clearInterval(phaseInterval);
     clearInterval(progressInterval);
-    clearInterval(chipInterval);
     loadingBarFill.style.width = '100%';
 
     
