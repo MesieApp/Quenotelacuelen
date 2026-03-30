@@ -1361,6 +1361,18 @@ fetch('/.netlify/functions/notificar-factura', {
   <button type="button" id="btnVolverNoTarifa" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);font-family:var(--font-body);font-size:0.78rem;font-weight:500;padding:0.55rem 1.2rem;border-radius:999px;cursor:pointer;">← Analizar otra factura</button>
 </div>
 `;
+      const lpCalcResult = calcResult;
+      const lpExtracted = extractedData;
+      const lpTipo = currentTipo;
+      _supabase.from('leads_facturas').insert({
+        nombre_titular: lpExtracted.nombre_titular || '',
+        comercializadora_actual: lpExtracted.comercializadora || '',
+        total_factura: parseFloat(lpExtracted.total_factura) || null,
+        ahorro_estimado: Math.round((lpCalcResult.ahorro / (parseInt(lpExtracted.dias) || 30)) * 365) || 0,
+        tipo: lpTipo || 'luz',
+        fuente: 'lp',
+        completado: false
+      }).then(() => {}).catch(() => {});
       showStep(3);
 
       setTimeout(() => {
