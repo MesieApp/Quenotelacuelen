@@ -173,174 +173,221 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 .footer-links a:hover { color: #475569 !important; }
 @media (max-width: 600px) { .footer-row-main { flex-direction: column; align-items: flex-start; } .footer-contact-row { flex-direction: column; align-items: flex-start; gap: 0.6rem; } .footer-row-bottom { flex-direction: column; } } /* ── MODAL 50€ ── */ .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; } .modal-overlay.is-open { display: flex; } .modal-card { background: #fff; max-width: 480px; width: 100%; border-radius: 12px; padding: 2rem; position: relative; border: 1px solid #e0ece4; box-shadow: 0 32px 64px -12px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04); } .modal-close { position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; border: none; border-radius: 50%; background: #f1f5f9; color: var(--muted); font-size: 1.1rem; cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 2; } .modal-close:hover { background: #e2e8f0; } .modal-header { background: linear-gradient(135deg, #eef5f0, #f8fdf9); margin: -2rem -2rem 1.5rem -2rem; padding: 1.75rem 2rem 1.5rem; border-bottom: 1px solid #e0ece4; border-radius: 12px 12px 0 0; } .modal-card h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; } .modal-subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; } .modal-header .modal-subtitle { margin-bottom: 0; } .modal-total { display: inline-flex; align-items: center; gap: 0.4rem; background: #1E6B3A; color: #fff; font-size: 0.82rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 999px; margin-top: 0.5rem; } .modal-total strong { font-weight: 700; } .modal-timeline { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.25rem; margin-bottom: 1.25rem; position: relative; } .modal-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2px; background: var(--border); z-index: 0; } .modal-hito { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; } .modal-hito-circle { width: 36px; height: 36px; border-radius: 50%; background: #1E6B3A; color: #fff; font-size: 0.65rem; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 0.4rem; box-shadow: 0 4px 12px rgba(30,107,58,0.3); transition: transform 0.2s; } .modal-hito-circle:hover { transform: scale(1.1); } .modal-hito-label { font-size: 0.7rem; color: var(--muted); text-align: center; } .modal-hito-amount { font-size: 0.95rem; font-weight: 600; color: #1E6B3A; } .modal-note { font-size: 0.75rem; color: var(--muted); line-height: 1.5; } /* ── RESPONSIVE ── */ @media (max-width: 600px) { /* NAV */ nav { padding: 0 1rem; height: 56px; justify-content: center; } nav a.cta-nav { display: none; } .logo img { height: 28px; } /* HERO */ .hero { padding: 2rem 1.25rem 3.5rem; } h1 { font-size: 2rem; letter-spacing: -0.02em; } .hero h1 { letter-spacing: -0.04em; } .hero-sub { font-size: 1.05rem; } .hero-cta-group { width: 100%; } .hero-cta { width: 100%; text-align: center; } .hero-cta-label { text-align: center; } .hero-badge { font-size: 0.75rem; } /* REWARD BANNER */ .reward-banner { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: nowrap; padding: 0.6rem 1rem; font-size: 0.82rem; } .hero-incentive-btn { flex-shrink: 0; } /* STATS */ .stats-bar { padding: 3rem 1.25rem; } .stat-single-number { font-size: 3rem; } .stat-single-label { font-size: 0.82rem; } /* SECCIONES */ .section { padding: 3rem 1.25rem; } h2 { font-size: 1.7rem; } .section-desc { font-size: 0.9rem; } } .field-error { color: #f87171; font-size: 0.72rem; margin-top: 0.35rem; } .field-error:empty { display: none; } .field-error:not(:empty) { display: block; } 
 .loading-layout {
-  text-align: center;
-  padding: 3rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem 3rem;
+  min-height: 320px;
+}
+.loading-grid {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem 0.75rem;
+  align-items: center;
+  justify-items: center;
+  max-width: 480px;
+  width: 100%;
+}
+.loading-circle-wrap {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+.loading-circle-svg {
+  width: 140px;
+  height: 140px;
+}
+.loading-circle-track {
+  fill: none;
+  stroke: rgba(255,255,255,0.05);
+  stroke-width: 3;
+}
+.loading-circle-prog {
+  fill: none;
+  stroke: url(#circleGrad);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 376;
+  stroke-dashoffset: 376;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+.loading-circle-center {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  position: relative;
+  justify-content: center;
+  gap: 2px;
+  pointer-events: none;
+}
+.loading-circle-pct {
+  font-family: var(--font-head);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.loading-circle-sublabel {
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
 }
 
-/* Anillo exterior giratorio */
-.loading-ring-outer {
+/* Cuadrantes */
+.lq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.02);
+  width: 100%;
+  max-width: 145px;
+  transition: all 0.5s ease;
   position: relative;
-  width: 90px;
-  height: 90px;
-  flex-shrink: 0;
+  overflow: hidden;
 }
-.loading-ring-outer::before {
+.lq::before {
   content: '';
   position: absolute;
   inset: 0;
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.lq.waiting {
+  opacity: 0.35;
+}
+.lq.active {
+  opacity: 1;
+  border-color: rgba(74,222,128,0.25);
+  background: rgba(30,107,58,0.1);
+  box-shadow: 0 0 20px rgba(74,222,128,0.08);
+}
+.lq.active::before {
+  background: radial-gradient(circle at 50% 0%, rgba(74,222,128,0.06), transparent 70%);
+  opacity: 1;
+}
+.lq.done {
+  opacity: 0.6;
+  border-color: rgba(74,222,128,0.12);
+  background: transparent;
+}
+
+/* Cabecera del cuadrante */
+.lq-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.lq-num {
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  border: 1.5px solid rgba(74,222,128,0.08);
-  animation: ring-pulse 2s ease-in-out infinite;
-}
-@keyframes ring-pulse {
-  0%,100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.12); opacity: 1; }
-}
-
-/* SVG del anillo principal */
-.loading-svg {
-  width: 90px;
-  height: 90px;
-  transform: rotate(-90deg);
-}
-.loading-svg-track {
-  fill: none;
-  stroke: rgba(255,255,255,0.04);
-  stroke-width: 2;
-}
-.loading-svg-fill {
-  fill: none;
-  stroke: url(#spinGrad);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-dasharray: 220;
-  stroke-dashoffset: 220;
-  animation: dash-fill 2.4s cubic-bezier(0.4,0,0.2,1) infinite;
-}
-@keyframes dash-fill {
-  0%   { stroke-dashoffset: 220; opacity: 0.4; }
-  50%  { stroke-dashoffset: 55;  opacity: 1;   }
-  100% { stroke-dashoffset: 220; opacity: 0.4; }
-}
-
-/* Icono central */
-.loading-center-icon {
-  position: absolute;
-  inset: 0;
+  font-size: 0.6rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.4s;
 }
-.loading-center-icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: #4ade80;
-  animation: icon-breathe 2.4s ease-in-out infinite;
-}
-@keyframes icon-breathe {
-  0%,100% { opacity: 0.5; transform: scale(0.9); }
-  50%      { opacity: 1;   transform: scale(1.05); }
-}
-
-/* Puntos de datos flotantes */
-.loading-dots {
-  position: absolute;
-  inset: -16px;
-  pointer-events: none;
-}
-.loading-dot {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #4ade80;
-  opacity: 0;
-}
-.loading-dot:nth-child(1) { top: 10%; left: 50%; animation: dot-orbit 2.4s ease-in-out infinite 0s; }
-.loading-dot:nth-child(2) { top: 50%; right: 8%; animation: dot-orbit 2.4s ease-in-out infinite 0.6s; }
-.loading-dot:nth-child(3) { bottom: 10%; left: 50%; animation: dot-orbit 2.4s ease-in-out infinite 1.2s; }
-.loading-dot:nth-child(4) { top: 50%; left: 8%; animation: dot-orbit 2.4s ease-in-out infinite 1.8s; }
-@keyframes dot-orbit {
-  0%,100% { opacity: 0; transform: scale(0.5); }
-  50%      { opacity: 1; transform: scale(1); }
-}
-
-/* Texto de estado */
-.loading-text {
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.5);
-  font-weight: 300;
-  min-height: 1.2em;
-  letter-spacing: 0.04em;
-  animation: text-fade 0.4s ease;
-}
-@keyframes text-fade {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Barra de progreso */
-.loading-bar {
-  width: 200px;
-  height: 2px;
+.lq.waiting .lq-num {
   background: rgba(255,255,255,0.05);
-  border-radius: 999px;
-  overflow: visible;
-  position: relative;
+  color: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.08);
 }
-.loading-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #1E6B3A, #4ade80);
-  border-radius: 999px;
-  width: 0%;
-  transition: width 0.2s linear;
-  position: relative;
+.lq.active .lq-num {
+  background: #1E6B3A;
+  color: #4ade80;
+  border: 1px solid rgba(74,222,128,0.4);
+  box-shadow: 0 0 8px rgba(74,222,128,0.3);
+  animation: num-pulse 1.5s ease-in-out infinite;
 }
-.loading-bar-fill::after {
-  content: '';
-  position: absolute;
-  right: -1px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 8px #4ade80;
+@keyframes num-pulse {
+  0%,100% { box-shadow: 0 0 6px rgba(74,222,128,0.2); }
+  50%      { box-shadow: 0 0 14px rgba(74,222,128,0.5); }
 }
-
-/* Chips de estado */
-.loading-chips {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 320px;
+.lq.done .lq-num {
+  background: rgba(74,222,128,0.08);
+  color: #4ade80;
+  border: 1px solid rgba(74,222,128,0.2);
 }
-.loading-chip {
+.lq-title {
   font-size: 0.65rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 999px;
-  padding: 0.25rem 0.65rem;
-  transition: color 0.4s, border-color 0.4s, box-shadow 0.4s;
+  line-height: 1.35;
+  transition: color 0.4s;
 }
-.loading-chip.active {
-  color: #4ade80;
-  border-color: rgba(74,222,128,0.3);
-  box-shadow: 0 0 10px rgba(74,222,128,0.1);
+.lq.waiting .lq-title { color: rgba(255,255,255,0.25); }
+.lq.active  .lq-title { color: #fff; }
+.lq.done    .lq-title { color: rgba(255,255,255,0.4); }
+
+/* Línea conectora cuadrante → círculo */
+.lq-connector {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  transition: background 0.5s;
 }
-.loading-chip.done {
-  color: rgba(74,222,128,0.5);
-  border-color: rgba(74,222,128,0.15);
+.lq.active .lq-connector,
+.lq.done   .lq-connector {
+  background: rgba(74,222,128,0.2);
+}
+/* izquierda */
+.lq-left  .lq-connector { right: -12px; }
+/* derecha */
+.lq-right .lq-connector { left: -12px; }
+
+/* Sub-texto solo en activo */
+.lq-sub {
+  font-size: 0.6rem;
+  color: rgba(74,222,128,0.6);
+  font-weight: 300;
+  line-height: 1.4;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+.lq.active .lq-sub {
+  max-height: 40px;
+  opacity: 1;
+}
+
+/* Alineación de cuadrantes */
+.lq-tl { grid-column:1; grid-row:1; justify-self:end;   text-align:right; }
+.lq-tr { grid-column:3; grid-row:1; justify-self:start; text-align:left;  }
+.lq-bl { grid-column:1; grid-row:2; justify-self:end;   text-align:right; }
+.lq-br { grid-column:3; grid-row:2; justify-self:start; text-align:left;  }
+
+.lq-tl .lq-head { flex-direction: row-reverse; }
+.lq-bl .lq-head { flex-direction: row-reverse; }
+
+.lq-tl .lq-connector { right:-12px; }
+.lq-bl .lq-connector { right:-12px; }
+.lq-tr .lq-connector { left:-12px;  }
+.lq-br .lq-connector { left:-12px;  }
+
+@media(max-width:480px){
+  .loading-grid {
+    grid-template-columns: 1fr 110px 1fr;
+  }
+  .loading-circle-wrap { width:110px; height:110px; }
+  .loading-circle-svg  { width:110px; height:110px; }
+  .loading-circle-pct  { font-size:1.4rem; }
+  .lq { max-width:110px; padding:0.5rem 0.6rem; }
+  .lq-title { font-size:0.58rem; }
 }
 
 </style> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
@@ -452,44 +499,66 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 <!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true"></div> <p class="section-label">Empieza ahora</p> <h2>¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step" id="step1" data-step="1"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>. Mis datos están seguros.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2"> <div class="loading-layout">
-  <div class="loading-ring-outer">
-    <svg class="loading-svg" viewBox="0 0 90 90">
-      <defs>
-        <linearGradient id="spinGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#1E6B3A"/>
-          <stop offset="100%" stop-color="#4ade80"/>
-        </linearGradient>
-      </defs>
-      <circle class="loading-svg-track" cx="45" cy="45" r="35"/>
-      <circle class="loading-svg-fill"  cx="45" cy="45" r="35"/>
-    </svg>
-    <div class="loading-center-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
+  <div class="loading-grid">
+
+    <!-- Cuadrante 1: arriba izquierda -->
+    <div class="lq lq-left lq-tl active" id="phase0">
+      <div class="lq-connector"></div>
+      <div class="lq-head">
+        <span class="lq-num">1</span>
+        <span class="lq-title">Analizando tu factura</span>
+      </div>
+      <span class="lq-sub">Leyendo los datos del PDF...</span>
+    </div>
+
+    <!-- Círculo central -->
+    <div class="loading-circle-wrap">
+      <svg class="loading-circle-svg" viewBox="0 0 140 140">
+        <defs>
+          <linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#1E6B3A"/>
+            <stop offset="100%" stop-color="#4ade80"/>
+          </linearGradient>
+        </defs>
+        <circle class="loading-circle-track" cx="70" cy="70" r="60"/>
+        <circle class="loading-circle-prog"  cx="70" cy="70" r="60" id="circleProgress"/>
       </svg>
+      <div class="loading-circle-center">
+        <span class="loading-circle-pct" id="circlePercent">0%</span>
+        <span class="loading-circle-sublabel">completado</span>
+      </div>
     </div>
-    <div class="loading-dots">
-      <div class="loading-dot"></div>
-      <div class="loading-dot"></div>
-      <div class="loading-dot"></div>
-      <div class="loading-dot"></div>
+
+    <!-- Cuadrante 2: arriba derecha -->
+    <div class="lq lq-right lq-tr waiting" id="phase1">
+      <div class="lq-connector"></div>
+      <div class="lq-head">
+        <span class="lq-num">2</span>
+        <span class="lq-title">Buscando la mejor tarifa del mercado</span>
+      </div>
+      <span class="lq-sub">Rastreando el mercado...</span>
     </div>
-  </div>
 
-  <div style="text-align:center;">
-    <p class="loading-text" id="loadingText">Analizando tu factura</p>
-    <p id="loadingSubtext" style="font-size:0.7rem;color:rgba(255,255,255,0.25);margin-top:0.3rem;font-weight:300;letter-spacing:0.03em;">Leyendo los datos de tu factura PDF...</p>
-  </div>
+    <!-- Cuadrante 3: abajo izquierda -->
+    <div class="lq lq-left lq-bl waiting" id="phase2">
+      <div class="lq-connector"></div>
+      <div class="lq-head">
+        <span class="lq-num">3</span>
+        <span class="lq-title">Comparando con la mejor tarifa encontrada</span>
+      </div>
+      <span class="lq-sub">Calculando cuánto pagas de más...</span>
+    </div>
 
-  <div class="loading-bar">
-    <div class="loading-bar-fill" id="loadingBarFill"></div>
-  </div>
+    <!-- Cuadrante 4: abajo derecha -->
+    <div class="lq lq-right lq-br waiting" id="phase3">
+      <div class="lq-connector"></div>
+      <div class="lq-head">
+        <span class="lq-num">4</span>
+        <span class="lq-title">Extrayendo conclusiones</span>
+      </div>
+      <span class="lq-sub">Preparando tu resultado...</span>
+    </div>
 
-  <div class="loading-chips">
-    <span class="loading-chip active" id="chip1">Analizando</span>
-    <span class="loading-chip" id="chip2">Buscando</span>
-    <span class="loading-chip" id="chip3">Comparando</span>
-    <span class="loading-chip" id="chip4">Concluyendo</span>
   </div>
 </div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Ver mi tarifa recomendada</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
 <div class="flow-step hidden" id="step4" data-step="4">
@@ -1334,84 +1403,57 @@ function toggleFaq(btn) {
     }
 
     showStep(2);
-    const loadingTexts = [
-      'Analizando tu factura',
-      'Buscando la mejor tarifa disponible en el mercado',
-      'Comparando tu tarifa con la mejor tarifa del mercado',
-      'Extrayendo conclusiones'
-    ];
+    const circumference = 376;
+    const circleEl  = document.getElementById('circleProgress');
+    const pctEl     = document.getElementById('circlePercent');
 
-    const loadingIcons = [
-      // Fase 1 — lupa leyendo documento
-      '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>',
-      // Fase 2 — radar / búsqueda
-      '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>',
-      // Fase 3 — balanza comparando
-      '<line x1="12" y1="3" x2="12" y2="21"/><path d="M3 9l4-4 4 4"/><path d="M17 15l4-4-4-4"/>',
-      // Fase 4 — check / conclusión
-      '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'
-    ];
-
-    const loadingSubtexts = [
-      'Leyendo los datos de tu factura PDF...',
-      'Rastreando el mercado en tiempo real...',
-      'Calculando cuánto pagas de más...',
-      'Preparando tu resultado personalizado...'
-    ];
-
-    // Porcentaje de barra por fase (acumulado al entrar en cada fase)
-    const phaseProgress = [10, 35, 70, 92];
-
+    const phaseTargets = [25, 50, 75, 99];
     let currentPhase = 0;
-    const loadingTextEl  = document.getElementById('loadingText');
-    const loadingBarFill = document.getElementById('loadingBarFill');
-    const centerIconEl   = document.querySelector('#step2 .loading-center-icon svg');
-    const subtextEl      = document.getElementById('loadingSubtext');
+    let currentPct   = 0;
 
-    function applyPhase(idx) {
-      // Texto principal
-      loadingTextEl.textContent = loadingTexts[idx];
-      // Subtext
-      if (subtextEl) subtextEl.textContent = loadingSubtexts[idx];
-      // Icono central
-      if (centerIconEl) centerIconEl.innerHTML = loadingIcons[idx];
-      // Chips
-      ['chip1','chip2','chip3','chip4'].forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.classList.toggle('active', i === idx);
-          el.classList.toggle('done', i < idx);
-        }
-      });
-      // Barra de progreso (salta al % de la fase)
-      loadingBarFill.style.width = phaseProgress[idx] + '%';
+    function setCircle(pct) {
+      const clamped = Math.min(Math.max(pct, 0), 100);
+      if (circleEl) 
+        circleEl.style.strokeDashoffset = 
+          circumference - (clamped / 100) * circumference;
+      if (pctEl) pctEl.textContent = Math.round(clamped) + '%';
     }
 
-    // Inicializa fase 0
-    applyPhase(0);
+    function activatePhase(idx) {
+      [0,1,2,3].forEach(i => {
+        const el = document.getElementById('phase' + i);
+        if (!el) return;
+        const dot = el.querySelector('.lq-num');
+        const isLeft = el.classList.contains('lq-left');
+        el.className = 'lq ' + 
+          (isLeft ? 'lq-left ' : 'lq-right ') +
+          (el.classList.contains('lq-tl') ? 'lq-tl' :
+           el.classList.contains('lq-tr') ? 'lq-tr' :
+           el.classList.contains('lq-bl') ? 'lq-bl' : 'lq-br') +
+          (i < idx  ? ' done' :
+           i === idx ? ' active' : ' waiting');
+        if (dot) dot.textContent = i < idx ? '✓' : (i + 1);
+      });
+    }
 
-    // Avanza de fase en fase cada 5 segundos
+    activatePhase(0);
+
     const phaseInterval = setInterval(() => {
       currentPhase++;
-      if (currentPhase < loadingTexts.length) {
-        applyPhase(currentPhase);
-      } else {
-        clearInterval(phaseInterval);
-      }
+      if (currentPhase < 4) activatePhase(currentPhase);
+      else clearInterval(phaseInterval);
     }, 5000);
 
-    // Animación suave de la barra dentro de cada fase
-    let progress = phaseProgress[0];
     const progressInterval = setInterval(() => {
-      const nextPhaseProgress = phaseProgress[Math.min(currentPhase + 1, 3)];
-      const maxForNow = nextPhaseProgress - 2;
-      if (progress < maxForNow) {
-        progress += 0.4;
-        loadingBarFill.style.width = progress + '%';
+      const target = phaseTargets[Math.min(currentPhase, 3)];
+      if (currentPct < target - 1) {
+        currentPct += 0.35;
+        setCircle(currentPct);
       }
     }, 200);
 
     const minDelay = new Promise(r => setTimeout(r, 20000));
+
 
     const base64pdf = await fileToBase64(file);
     const apiPromise = fetch('/.netlify/functions/analizar', {
@@ -1424,7 +1466,7 @@ function toggleFaq(btn) {
     console.log('DATOS EXTRAÍDOS:', JSON.stringify(result.data, null, 2));
     clearInterval(phaseInterval);
     clearInterval(progressInterval);
-    loadingBarFill.style.width = '100%';
+    setCircle(100);
 
     
     if (!result.success || !result.data) {
