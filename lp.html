@@ -1,771 +1,1356 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="icon" type="image/png" href="Logo_Quenotelacuelen.png">
-<title>¿Pagas demasiado de luz? Descúbrelo gratis en segundos</title>
-<meta name="description" content="Sube tu factura y nuestra IA te dice en segundos cuánto estás pagando de más. Gratis, sin compromiso, sin llamadas.">
-<meta name="robots" content="noindex, nofollow">
-<link rel="preconnect" href="https://fonts.googleapis.com" />
+<!DOCTYPE html> <html lang="es"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <link rel="icon" type="image/png" href="Logo_Quenotelacuelen.png"> <title>Comparador de tarifas de luz y gas gratis | Quenotelacuelen.com</title> <meta name="description" content="Sube tu factura y en segundos nuestra IA te dice cuánto estás pagando de más. Comparamos tu tarifa con las mejores del mercado. Gratis, sin compromiso, sin tecnicismos."> <meta name="robots" content="index, follow"> <link rel="canonical" href="https://www.quenotelacuelen.com/"><meta property="og:type" content="website">
+<meta property="og:url" content="https://www.quenotelacuelen.com/">
+<meta property="og:title" content="¿Te están colando en la factura de luz? Descúbrelo gratis en segundos">
+<meta property="og:description" content="Nuestra IA analiza tu factura y la compara con las mejores tarifas del mercado. Miles de españoles ya saben cuánto les estaban robando.">
+<meta property="og:image" content="https://www.quenotelacuelen.com/og-image.png">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Quenotelacuelen.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="¿Te están colando en la factura de luz? Descúbrelo gratis">
+<meta name="twitter:description" content="Sube tu factura y en segundos nuestra IA te dice cuánto estás pagando de más.">
+<meta name="twitter:image" content="https://www.quenotelacuelen.com/og-image.png"> <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" /></noscript>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --green:#1E6B3A;--green-dk:#175430;--green-lt:#EBF5EF;
-  --text:#1a1a1a;--muted:#64748B;--border:#E8ECEF;
-  --font-head:'Lora',Georgia,serif;--font-body:'DM Sans',sans-serif;
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" /></noscript> <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Quenotelacuelen.com — Comparador de tarifas de luz y gas",
+    "description": "Comparador gratuito de tarifas de luz y gas en España. Analiza tu factura con IA y descubre cuánto puedes ahorrar cambiando de tarifa.",
+    "url": "https://www.quenotelacuelen.com/",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "areaServed": { "@type": "Country", "name": "España" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Es gratis analizar mi factura de luz o gas?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí, completamente gratis y sin compromiso. Sube tu factura en PDF, nuestra IA la analiza en segundos y te dice cuánto podrías ahorrar. No tienes que contratar nada." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuánto puedo ahorrar cambiando de tarifa de luz?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Depende de tu consumo y tu tarifa actual. La mayoría de usuarios que analizamos ahorra entre 100 y 400 euros al año cambiando a una tarifa más barata." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Tengo que llamar a mi compañía actual para cambiar de tarifa?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Nosotros gestionamos el cambio completo. No hay cortes de suministro, no tienes que avisar a tu compañía actual, y el proceso tarda menos de 24 horas en iniciarse." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Es seguro subir mi factura de luz?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí. Tu factura se analiza de forma segura y nunca se comparte con terceros. Cumplimos con el RGPD y los datos se cifran en todo momento." }
+      }
+    ]
+  }
+]
+</script> <style> *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; } :root { --primary:   #1E6B3A; --primary-dk:#175430; --secondary: #9dbfa8; --secondary-lt:#e8f0eb; --text:      #1a1a1a; --muted:     #64748B; --border:    #E8ECEF; --bg:        #FFFFFF; --bg-soft:   #FAFBFC; --radius:    8px; --font-head: 'Lora', Georgia, serif; --font-body: 'DM Sans', sans-serif; } html { scroll-behavior: smooth; overflow-x: hidden; } body { font-family: var(--font-body); color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; } /* ── NAV ── */ nav { position: sticky; top: 0; z-index: 100; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; min-height: 80px; background: rgba(240,247,242,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: background 0.3s ease, border-color 0.3s ease; border-bottom: 1px solid transparent; } nav.scrolled { background: rgba(255,255,255,0.92); border-bottom: 1px solid var(--border); } .logo { font-family: var(--font-head); font-size: 1.1rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; text-decoration: none; } nav a.cta-nav { font-size: 0.875rem; font-weight: 500; color: var(--bg); background: var(--primary); text-decoration: none; padding: 0.5rem 1.25rem; border-radius: var(--radius); transition: background 0.2s; } nav a.cta-nav:hover { background: var(--primary-dk); } /* ── HERO ── */ .hero { position: relative; max-width: 760px; margin: 0 auto; padding: 3.5rem 2rem 5rem; text-align: center; background: radial-gradient(ellipse 50% 80% at 50% 0%, #d4ead9 0%, transparent 100%), #ffffff; } .hero-inner { position: relative; z-index: 2; } .hero-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 80px; background: linear-gradient(to bottom, transparent, #ffffff); pointer-events: none; z-index: 1; } .hero .hero-badge, .hero h1, .hero .hero-sub, .hero .hero-actions, .hero .hero-cta-group, .hero .hero-cta, .hero .hero-note { position: relative; z-index: 1; } @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } } .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: #EBF5EF; color: #1E6B3A; font-size: 0.8rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 999px; margin-bottom: 1.25rem; letter-spacing: 0.03em; animation: fadeUp 0.5s ease both 0.1s; } .hero-badge svg { width: 13px; height: 13px; } h1 { font-family: var(--font-head); font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 500; line-height: 1.15; letter-spacing: -0.03em; color: var(--text); margin-bottom: 1.5rem; } .hero h1 { letter-spacing: -0.04em; animation: fadeUp 0.5s ease both 0.25s; } h1 em { font-style: italic; color: var(--primary); } .hero-sub { font-size: 1.15rem; color: #475569; max-width: 540px; margin: 0 auto 2rem; font-weight: 300; line-height: 1.7; animation: fadeUp 0.5s ease both 0.4s; } .hero-actions { display: flex; flex-direction: column; align-items: center; gap: 0; margin-top: 0.25rem; } .hero-cta-group { display: inline-flex; flex-direction: column; align-items: center; gap: 0.6rem; animation: fadeUp 0.5s ease both 0.55s; } .hero-cta-label { display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; flex-wrap: wrap; font-size: 0.78rem; font-weight: 500; color: var(--primary); letter-spacing: 0.02em; opacity: 0.85; } .hero-cta { position: relative; overflow: hidden; display: inline-block; background: var(--primary); color: #fff; font-family: var(--font-body); font-size: 1.05rem; font-weight: 600; padding: 1rem 3rem; border-radius: 999px; text-decoration: none; letter-spacing: 0.02em; box-shadow: 0 4px 24px rgba(30,107,58,0.35), 0 1px 3px rgba(30,107,58,0.2); transition: background 0.2s, transform 0.15s, box-shadow 0.2s; } .hero-cta::after { content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%; background: rgba(255,255,255,0.07); transform: skewX(-20deg); transition: left 0.4s ease; pointer-events: none; z-index: 0; } .hero-cta:hover { background: var(--primary-dk); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(30,107,58,0.4), 0 2px 6px rgba(30,107,58,0.25); } .hero-cta:hover::after { left: 130%; } .hero-incentive-btn { width: 22px; height: 22px; border-radius: 50%; border: 1px solid #1E6B3A; background: transparent; color: #1E6B3A; font-size: 0.75rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; } .hero-incentive-btn:hover { background: #1E6B3A; color: #fff; } .hero-note { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e8ecef; font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 0.4rem; animation: fadeUp 0.5s ease both 0.7s; } .hero-note svg { width: 12px; height: 12px; } /* ── STATS BAR ── */ .stats-bar { background: linear-gradient(135deg, #0f3d22 0%, #1E6B3A 60%, #2d8a4e 100%); clip-path: polygon(0% 6%, 50% 0%, 100% 6%, 100% 94%, 50% 100%, 0% 94%); padding: 4rem 2rem; } .stats-inner-single { max-width: 700px; margin: 0 auto; display: flex; align-items: center; justify-content: center; text-align: center; } .stat-single { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; } .stat-single-number { font-family: var(--font-head); font-size: clamp(3.5rem, 8vw, 5.5rem); font-weight: 600; color: #ffffff; letter-spacing: -0.05em; line-height: 1; } .stat-single-label { font-size: 0.9rem; color: rgba(255,255,255,0.6); font-weight: 300; max-width: 380px; line-height: 1.6; letter-spacing: 0.01em; } /* ── SECTIONS COMUNES ── */ .section { padding: 5rem 2rem; } .section-inner { max-width: min(900px, 100%); margin: 0 auto; } .section-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #1E6B3A; margin-bottom: 0.75rem; } h2 { font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 500; line-height: 1.2; letter-spacing: -0.02em; color: var(--text); margin-bottom: 1rem; } .section-desc { font-size: 1rem; color: var(--muted); max-width: 520px; font-weight: 300; } #como-funciona { background: linear-gradient(180deg, #ffffff 0%, #f0f7f2 100%); padding: 3.5rem 2rem; } .cf-inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem; } .cf-strip { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 0; background: #fff; border: 1px solid rgba(30,107,58,0.1); border-radius: 20px; padding: 2rem 1.5rem; box-shadow: 0 2px 24px rgba(30,107,58,0.06); } .cf-strip-step { display: flex; align-items: center; gap: 1rem; padding: 0 0.75rem; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; } .cf-strip-step.is-visible { opacity: 1; transform: translateY(0); } .cf-strip-step:nth-child(1) { transition-delay: 0s; } .cf-strip-step:nth-child(3) { transition-delay: 0.15s; } .cf-strip-step:nth-child(5) { transition-delay: 0.3s; } .cf-strip-icon { width: 44px; height: 44px; flex-shrink: 0; background: #eef5f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; transition: background 0.25s, transform 0.25s; } .cf-strip-icon svg { width: 20px; height: 20px; stroke: #1E6B3A; transition: stroke 0.25s; } .cf-strip-step--accent .cf-strip-icon { background: #1E6B3A; } .cf-strip-step--accent .cf-strip-icon svg { stroke: #fff; } .cf-strip-step:hover .cf-strip-icon { background: #1E6B3A; transform: scale(1.05); } .cf-strip-step:hover .cf-strip-icon svg { stroke: #fff; } .cf-strip-text { display: flex; flex-direction: column; gap: 0.15rem; } .cf-strip-num { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; color: rgba(30,107,58,0.4); } .cf-strip-text strong { font-family: var(--font-head); font-size: 0.95rem; font-weight: 500; color: #0D1B2A; line-height: 1.2; } .cf-strip-text span { font-size: 0.75rem; color: var(--muted); font-weight: 300; line-height: 1.4; } .cf-strip-connector { display: flex; align-items: center; justify-content: center; padding: 0 0.25rem; width: 60px; } .cf-connector-track { position: relative; width: 100%; height: 2px; background: rgba(30,107,58,0.1); border-radius: 999px; overflow: hidden; } .cf-connector-dot { position: absolute; top: 50%; left: -8px; transform: translateY(-50%); width: 8px; height: 8px; background: #1E6B3A; border-radius: 50%; animation: dot-travel 2s ease-in-out infinite; } .cf-strip-connector:nth-child(4) .cf-connector-dot { animation-delay: 1s; } @keyframes dot-travel { 0% { left: -8px; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { left: calc(100% + 8px); opacity: 0; } } .cf-trust { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; } .trust-chip { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; border: 1px solid #e0ece4; border-radius: 999px; padding: 0.45rem 1rem; font-size: 0.78rem; font-weight: 500; color: #475569; transition: border-color 0.2s, color 0.2s, transform 0.2s; } .trust-chip:hover { border-color: #1E6B3A; color: #1E6B3A; transform: translateY(-1px); } .trust-chip svg { width: 12px; height: 12px; stroke: #1E6B3A; flex-shrink: 0; } @keyframes badge-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } } .trust-chip:nth-child(1) { animation: badge-in 0.5s ease both 0.1s, chip-pulse 4s ease-in-out infinite 1s; }
+footer nav, footer nav * { background: transparent !important; animation: none !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; }
+footer { padding: 1.25rem 2rem; }
+.trust-chip:nth-child(2) { animation: badge-in 0.5s ease both 0.25s, chip-pulse 4s ease-in-out infinite 2s; } .trust-chip:nth-child(3) { animation: badge-in 0.5s ease both 0.4s, chip-pulse 4s ease-in-out infinite 3s; } @keyframes chip-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(30,107,58,0); } 50% { box-shadow: 0 0 0 4px rgba(30,107,58,0.06); } } @media (max-width: 600px) { #como-funciona { padding: 2.5rem 1.25rem; } .cf-strip { grid-template-columns: 1fr; gap: 0; padding: 1.25rem; } .cf-strip-connector { width: auto; height: 32px; padding: 0.25rem 0; } .cf-connector-track { width: 2px; height: 100%; margin: 0 auto; } .cf-connector-dot { top: -8px; left: 50%; transform: translateX(-50%); animation: dot-travel-v 2s ease-in-out infinite; } @keyframes dot-travel-v { 0% { top: -8px; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: calc(100% + 8px); opacity: 0; } } .cf-strip-step { padding: 0.5rem 0; } .cf-trust { gap: 0.5rem; } } /* ── FORM SECTION ── */ .flow-step { transition: opacity 0.3s ease; } .flow-step.hidden { display: none !important; } .form-section{background:#0a1628;padding:5rem 2rem;position:relative;overflow:hidden;}.form-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(30,107,58,0.08) 1px,transparent 1px);background-size:32px 32px;opacity:1;pointer-events:none;}.form-section::after{content:'';position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(30,107,58,0.15) 0%,transparent 65%);pointer-events:none;}.form-inner{max-width:520px;margin:0 auto;position:relative;z-index:1;opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}.form-inner.is-visible{opacity:1;transform:translateY(0);}.form-deco-line{width:48px;height:1.5px;background:rgba(74,222,128,0.15);border-radius:999px;margin-bottom:1.25rem;position:relative;overflow:hidden;}.form-deco-line::after{content:'';position:absolute;top:0;left:0;width:40%;height:100%;background:#4ade80;border-radius:999px;animation:line-slide 2s ease-in-out infinite;}@keyframes line-slide{0%{left:0%;}50%{left:60%;}100%{left:0%;}}.form-section .section-label{color:#4ade80;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;display:block;}.form-section h2{color:#fff;font-size:clamp(2rem,4vw,2.8rem);font-weight:500;line-height:1.15;letter-spacing:-0.03em;margin-bottom:0.5rem;}.form-section .section-desc{color:rgba(255,255,255,0.5);font-size:0.9rem;margin-bottom:3rem;font-weight:300;}.step1-layout{display:flex;flex-direction:column;gap:1rem;}.step1-toggle-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;}.step1-toggle-label{font-size:0.82rem;color:rgba(255,255,255,0.5);font-weight:400;}.toggle-buttons{display:flex;background:rgba(255,255,255,0.06);border-radius:8px;padding:3px;gap:2px;border:1px solid rgba(255,255,255,0.08);}.toggle-btn{padding:0.45rem 1.25rem;border:none;background:transparent;color:rgba(255,255,255,0.5);font-family:var(--font-body);font-size:0.85rem;font-weight:500;border-radius:6px;cursor:pointer;transition:all 0.2s;}.toggle-btn.active{background:#1E6B3A;color:#fff;}.file-drop{border:1.5px dashed rgba(255,255,255,0.12);border-radius:12px;padding:1.5rem;cursor:pointer;transition:border-color 0.2s,background 0.2s;position:relative;background:rgba(255,255,255,0.02);}.file-drop:hover{border-color:rgba(30,107,58,0.5);background:rgba(30,107,58,0.04);}.file-drop input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}.file-drop-inner{display:flex;align-items:center;gap:1rem;}.file-drop-icon{width:40px;height:40px;flex-shrink:0;background:rgba(30,107,58,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;}.file-drop-icon svg{width:20px;height:20px;stroke:#4ade80;}.file-drop-text .file-title{font-size:0.9rem;font-weight:500;color:rgba(255,255,255,0.9);margin-bottom:0.2rem;}.file-drop-text .file-sub{font-size:0.75rem;color:rgba(255,255,255,0.35);}.file-selected{font-size:0.78rem;color:#4ade80;margin-top:0.75rem;display:none;padding-left:0;}.step1-footer{display:flex;flex-direction:column;gap:0.75rem;}.form-checkbox-label{display:flex;align-items:flex-start;gap:0.65rem;font-size:0.78rem;color:rgba(255,255,255,0.4);cursor:pointer;line-height:1.5;text-transform:none;}.form-checkbox-label input[type="checkbox"]{flex-shrink:0;margin-top:2px;width:15px;height:15px;accent-color:#1E6B3A;cursor:pointer;}.form-checkbox-label a{color:rgba(255,255,255,0.6);text-decoration:underline;text-underline-offset:2px;}.form-checkbox-label span{text-transform:none !important;font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.5;}.submit-btn{width:100%;background:#1E6B3A;color:#fff;font-weight:600;border:none;border-radius:10px;font-family:var(--font-body);font-size:0.95rem;padding:0.9rem;cursor:pointer;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;letter-spacing:0.02em;box-shadow:0 4px 20px rgba(30,107,58,0.3);}.submit-btn:hover{background:#175430;transform:translateY(-1px);box-shadow:0 6px 28px rgba(30,107,58,0.4);}.loading-layout{text-align:center;padding:4rem 2rem;display:flex;flex-direction:column;align-items:center;gap:1.5rem;}.loading-ring{position:relative;width:56px;height:56px;}.loading-spinner{width:56px;height:56px;border:2px solid rgba(255,255,255,0.08);border-top-color:#1E6B3A;border-radius:50%;animation:spin 0.8s linear infinite;}@keyframes spin{to{transform:rotate(360deg);}}@keyframes alarma{0%,100%{transform:scale(1);text-shadow:0 0 0px rgba(239,34,34,0);}50%{transform:scale(1.04);text-shadow:0 0 40px rgba(239,34,34,0.4);}}.loading-text{font-size:0.9rem;color:rgba(255,255,255,0.6);font-weight:300;min-height:1.4em;}.loading-bar{width:200px;height:2px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;}.loading-bar-fill{height:100%;background:#1E6B3A;border-radius:999px;width:0%;transition:width 0.2s linear;}.result-container{padding:0;max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:0.75rem;}.btn-volver{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);font-family:var(--font-body);font-size:0.78rem;font-weight:500;padding:0.5rem 1rem;border-radius:999px;cursor:pointer;width:fit-content;margin-bottom:0.75rem;transition:background 0.2s,border-color 0.2s,color 0.2s,transform 0.15s;}.btn-volver:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.9);transform:translateX(-2px);}.result-impact{text-align:center;padding:1.5rem 0 2rem;position:relative;background:transparent;border:none;box-shadow:none;}.result-impact::before,.result-impact::after{display:none;}.result-impact-label{display:flex;align-items:center;justify-content:center;gap:0.75rem;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.25);margin-bottom:0.5rem;}.result-impact-label-line{display:block;width:24px;height:1px;background:rgba(255,255,255,0.15);flex-shrink:0;}.result-impact-number{font-family:var(--font-head);font-size:clamp(4rem,14vw,7rem);font-weight:700;color:#ef2222;line-height:1;letter-spacing:-0.06em;margin-bottom:0.5rem;position:relative;animation:alarma 2s ease-in-out infinite;}.result-impact-year{font-family:var(--font-body);font-size:1.1rem;font-weight:300;color:rgba(239,34,34,0.7);letter-spacing:0;margin-left:4px;}.result-impact-sub{font-size:0.72rem;color:rgba(255,255,255,0.2);letter-spacing:0.02em;}.result-cards{display:flex;flex-direction:column;gap:0.6rem;}.result-card{border-radius:14px;padding:1.1rem 1.25rem;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.03);position:relative;overflow:hidden;transition:border-color 0.2s;}.result-card:hover{border-color:rgba(255,255,255,0.12);}.result-card--warn{background:rgba(251,191,36,0.03);border-color:rgba(251,191,36,0.12);}.result-card--warn:hover{border-color:rgba(251,191,36,0.25);}.result-card-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.9rem;}.result-card-icon{font-size:0.95rem;width:32px;height:32px;background:rgba(255,255,255,0.05);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}.result-card-title{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.3);margin-bottom:0.15rem;}.result-card-saving{font-family:var(--font-head);font-size:1.5rem;font-weight:600;color:#4ade80;letter-spacing:-0.03em;line-height:1;}.result-card-saving.yellow{color:#fbbf24;}.result-card-comparison{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0.5rem;margin-bottom:0.6rem;background:rgba(0,0,0,0.15);border-radius:10px;padding:0.6rem 0.75rem;}.result-card-comp-item{text-align:center;}.result-card-comp-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.25);display:block;margin-bottom:0.25rem;}.result-card-comp-value{font-size:1rem;font-weight:600;color:rgba(255,255,255,0.7);}.result-card-comp-value.green{color:#4ade80;}.result-card-comp-arrow{color:rgba(255,255,255,0.15);font-size:0.85rem;text-align:center;}.result-card-note{font-size:0.65rem;color:rgba(255,255,255,0.2);margin-top:0.25rem;}.result-card-note-highlight{color:rgba(74,222,128,0.7);font-weight:500;}.result-details{margin-top:0.6rem;border-top:1px solid rgba(255,255,255,0.05);padding-top:0.6rem;}.result-details summary{font-size:0.68rem;color:rgba(255,255,255,0.25);cursor:pointer;list-style:none;transition:color 0.2s;}.result-details summary:hover{color:rgba(255,255,255,0.5);}.result-details[open] summary{margin-bottom:0.5rem;}details[open] .details-arrow{transform:rotate(180deg);}.result-table-wrap{overflow-x:auto;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.15);margin-top:0.5rem;}.result-table{width:100%;border-collapse:collapse;font-size:0.75rem;}.result-table th,.result-table td{padding:0.55rem 0.85rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.04);}.result-table th{color:rgba(255,255,255,0.3);font-weight:500;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.05em;}.result-table td{color:rgba(255,255,255,0.8);}.result-table tr:last-child td{border-bottom:none;}.result-table .highlight{color:#4ade80;font-weight:600;}.servicios-list{list-style:none;padding:0;margin:0 0 0.35rem 0;}.servicios-list li{display:flex;justify-content:space-between;font-size:0.75rem;color:rgba(255,255,255,0.5);padding:0.3rem 0;border-bottom:1px solid rgba(255,255,255,0.04);}.servicios-list li:last-child{border-bottom:none;}.servicios-list li span:last-child{color:#fbbf24;font-weight:500;}.autorizacion-check{display:flex;align-items:center;gap:0.6rem;margin-top:0.25rem;}.autorizacion-check span{font-size:0.78rem !important;color:rgba(255,255,255,0.45) !important;text-transform:none !important;}.submit-btn-green{background:#1E6B3A !important;color:#fff !important;box-shadow:0 4px 16px rgba(30,107,58,0.25) !important;font-size:0.9rem;padding:0.8rem;}.result-footer-notes{padding:0.6rem 0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid rgba(255,255,255,0.04);display:flex;flex-direction:column;gap:0.25rem;}.result-disclaimer{font-size:0.65rem;color:rgba(255,255,255,0.18);line-height:1.5;text-align:center;margin:0;}.form-legal{font-size:0.68rem;color:rgba(255,255,255,0.2);text-align:center;margin:0;}.form-legal a{color:rgba(255,255,255,0.35);text-decoration:underline;}@media (max-width:600px){.result-impact-number{font-size:2.5rem;}.result-card-comparison{grid-template-columns:1fr;}.result-card-comp-arrow{transform:rotate(90deg);}}.flow-step4-title{font-family:var(--font-head);font-size:1.5rem !important;color:#fff;margin-bottom:1.5rem !important;font-weight:500;}.form-extracted-group{background:rgba(255,255,255,0.03);border-radius:10px;padding:1.25rem;margin-bottom:1.5rem;border:1px solid rgba(255,255,255,0.07);}.extracted-badge{display:block;font-size:0.68rem;color:#4ade80;margin-bottom:0.75rem;letter-spacing:0.05em;text-transform:uppercase;}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;}.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;}.form-group{display:flex;flex-direction:column;gap:0.35rem;}.form-group.full{grid-column:1 / -1;}.form-manual-group{margin-bottom:1rem;}label{font-size:0.72rem;font-weight:500;color:rgba(255,255,255,0.5);letter-spacing:0.04em;text-transform:uppercase;}input:not([type="checkbox"]),select{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;font-family:var(--font-body);font-size:0.88rem;padding:0.65rem 0.9rem;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;}input:not([type="checkbox"])::placeholder{color:rgba(255,255,255,0.25);}input:not([type="checkbox"]):focus,select:focus{border-color:rgba(30,107,58,0.6);}.extracted-field{background:rgba(255,255,255,0.03) !important;color:rgba(255,255,255,0.5) !important;cursor:not-allowed;}.field-note{display:block;font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:0.3rem;line-height:1.5;font-style:italic;}.confirmation-container{text-align:center;padding:3rem 1rem;}.confirmation-icon{width:64px;height:64px;margin:0 auto 1.5rem;background:#1E6B3A;color:#fff;font-size:1.75rem;border-radius:50%;display:flex;align-items:center;justify-content:center;}.confirmation-title{font-size:1.75rem !important;color:#fff;margin-bottom:0.75rem !important;}.confirmation-text{font-size:0.9rem;color:rgba(255,255,255,0.6);max-width:400px;margin:0 auto 0.75rem;line-height:1.7;font-weight:300;}.confirmation-note{font-size:0.82rem;color:#4ade80;font-weight:500;}.btn-volver-confirmation{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.55);font-family:var(--font-body);font-size:0.78rem;font-weight:500;padding:0.5rem 1.1rem;border-radius:999px;cursor:pointer;margin-top:1.75rem;transition:background 0.2s,border-color 0.2s,color 0.2s,transform 0.15s;}.btn-volver-confirmation:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);transform:translateX(-2px);}@media (max-width:600px){.form-section{padding:3rem 1.25rem;}.step1-toggle-row{flex-direction:column;align-items:flex-start;gap:0.5rem;}.form-grid,.form-grid-2{grid-template-columns:1fr;}.form-group.full{grid-column:1;}}.extracted-field.editable { background: rgba(255,255,255,0.08) !important; cursor: text; color: rgba(255,255,255,0.95) !important; } .contratacion-form .form-grid-2 { gap: 0.85rem; } .form-section select option { background: #175430; color: #fff; } .submit-btn-secondary { display: block; width: 100%; background: transparent !important; color: rgba(255,255,255,0.9) !important; border: 1px solid rgba(255,255,255,0.4); } .submit-btn-secondary:hover { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.6); }
+
+.result-propuesta {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: rgba(30,107,58,0.08);
+  border: 1px solid rgba(30,107,58,0.2);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  margin-top: 0.25rem;
 }
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{font-family:var(--font-body);color:var(--text);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
-.lp-header{padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);z-index:100}
-.lp-header img{height:44px;width:auto}
-.lp-header-cta{font-size:0.82rem;font-weight:500;color:#fff;background:var(--green);padding:0.45rem 1.1rem;border-radius:999px;text-decoration:none;transition:background 0.2s}
-.lp-header-cta:hover{background:var(--green-dk)}
-.lp-hero{max-width:700px;margin:0 auto;padding:3rem 1.5rem 2.5rem;text-align:center;background:radial-gradient(ellipse 60% 60% at 50% 0%,#d4ead9 0%,transparent 100%)}
-.lp-badge{display:inline-flex;align-items:center;gap:0.4rem;background:var(--green-lt);color:var(--green);font-size:0.75rem;font-weight:500;padding:0.3rem 0.85rem;border-radius:999px;margin-bottom:1.25rem;letter-spacing:0.02em}
-.lp-hero h1{font-family:var(--font-head);font-size:clamp(2.1rem,5vw,3.4rem);font-weight:500;line-height:1.15;letter-spacing:-0.03em;color:var(--text);margin-bottom:1rem}
-.lp-hero h1 em{font-style:italic;color:var(--green)}
-.lp-hero p{font-size:1.05rem;color:#475569;font-weight:300;line-height:1.7;max-width:520px;margin:0 auto 1.75rem}
-.lp-trust{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;font-size:0.78rem;color:var(--muted)}
-.lp-trust span{display:flex;align-items:center;gap:0.35rem}
-.lp-trust svg{width:13px;height:13px;stroke:var(--green);flex-shrink:0}
-.lp-steps{display:flex;align-items:flex-start;justify-content:center;gap:0;max-width:620px;margin:0 auto 2.5rem;background:#fff;border:1px solid rgba(30,107,58,0.1);border-radius:16px;padding:1.5rem 1rem;box-shadow:0 2px 20px rgba(30,107,58,0.06)}
-.lp-step{flex:1;text-align:center;padding:0 0.5rem;position:relative}
-.lp-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:14px;color:rgba(30,107,58,0.3);font-size:1rem}
-.lp-step-num{width:32px;height:32px;border-radius:50%;background:var(--green);color:#fff;font-size:0.78rem;font-weight:600;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem}
-.lp-step strong{display:block;font-size:0.82rem;color:var(--text);margin-bottom:0.2rem}
-.lp-step span{font-size:0.72rem;color:var(--muted)}
-.lp-testimonios{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem;max-width:700px;margin:0 auto;padding:0 1.5rem 2.5rem}
-.lp-testi{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1rem}
-.lp-testi-stars{color:#f59e0b;font-size:12px;margin-bottom:0.4rem}
-.lp-testi p{font-size:0.8rem;color:#334155;line-height:1.6;margin-bottom:0.5rem}
-.lp-testi-autor{font-size:0.7rem;color:#94a3b8}
-.lp-testi-autor strong{color:#475569}
-.lp-form-section{background:#0a1628;padding:3rem 1.5rem 4rem;position:relative;overflow:hidden}
-.lp-form-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(30,107,58,0.08) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
-.lp-form-section::after{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(30,107,58,0.12) 0%,transparent 65%);pointer-events:none}
-.lp-form-inner{max-width:500px;margin:0 auto;position:relative;z-index:1}
-.lp-form-eyebrow{font-size:0.7rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#4ade80;display:block;margin-bottom:0.5rem}
-.lp-form-title{font-family:var(--font-head);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:500;color:#fff;line-height:1.15;letter-spacing:-0.03em;margin-bottom:0.5rem}
-.lp-form-sub{font-size:0.88rem;color:rgba(255,255,255,0.45);font-weight:300;margin-bottom:2rem;line-height:1.6}
-.lp-tabs{display:flex;background:rgba(255,255,255,0.05);border-radius:10px;padding:3px;gap:2px;border:1px solid rgba(255,255,255,0.08);margin-bottom:1.5rem}
-.lp-tab{flex:1;padding:0.6rem 0.5rem;border:none;background:transparent;color:rgba(255,255,255,0.45);font-family:var(--font-body);font-size:0.82rem;font-weight:500;border-radius:8px;cursor:pointer;transition:all 0.2s;text-align:center}
-.lp-tab.active{background:#1E6B3A;color:#fff}
-.lp-panel{display:none}
-.lp-panel.active{display:block}
-.toggle-buttons{display:flex;background:rgba(255,255,255,0.06);border-radius:8px;padding:3px;gap:2px;border:1px solid rgba(255,255,255,0.08);margin-bottom:1rem;width:fit-content}
-.toggle-btn{padding:0.4rem 1.1rem;border:none;background:transparent;color:rgba(255,255,255,0.5);font-family:var(--font-body);font-size:0.82rem;font-weight:500;border-radius:6px;cursor:pointer;transition:all 0.2s}
-.toggle-btn.active{background:#1E6B3A;color:#fff}
-.file-drop{border:1.5px dashed rgba(255,255,255,0.12);border-radius:12px;padding:1.5rem;cursor:pointer;position:relative;background:rgba(255,255,255,0.02);margin-bottom:1rem;transition:border-color 0.2s,background 0.2s}
-.file-drop:hover{border-color:rgba(30,107,58,0.5);background:rgba(30,107,58,0.04)}
-.file-drop input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.file-drop-inner{display:flex;align-items:center;gap:1rem}
-.file-drop-icon{width:40px;height:40px;flex-shrink:0;background:rgba(30,107,58,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center}
-.file-drop-icon svg{width:20px;height:20px;stroke:#4ade80}
-.file-title{font-size:0.88rem;font-weight:500;color:rgba(255,255,255,0.9);margin-bottom:0.2rem}
-.file-sub{font-size:0.72rem;color:rgba(255,255,255,0.35)}
-.file-selected{font-size:0.75rem;color:#4ade80;margin-top:0.5rem;display:none}
-.recordatorio-intro{font-size:0.88rem;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:1.5rem;font-weight:300}
-.rec-option-label{font-size:0.7rem;font-weight:500;color:rgba(255,255,255,0.4);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:0.75rem}
-.rec-options{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem}
+.propuesta-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.propuesta-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.propuesta-texto strong {
+  font-size: 0.88rem;
+  color: #4ade80;
+  font-weight: 600;
+  font-family: var(--font-head);
+}
+.propuesta-texto span {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.cambio-propuesta { margin-bottom: 1.5rem; }
+.cambio-propuesta-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  background: linear-gradient(135deg, rgba(30,107,58,0.12) 0%, rgba(30,107,58,0.06) 100%);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cambio-propuesta-inner::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(74,222,128,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cambio-propuesta-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #1E6B3A, #2d8a4e);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(30,107,58,0.4);
+}
+.cambio-propuesta-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #fff;
+  stroke-width: 1.8;
+}
+.cambio-propuesta-inner strong {
+  display: block;
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+.cambio-propuesta-inner p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+  font-weight: 300;
+  margin: 0;
+}
+.tarifa-recomendada { background: rgba(30,107,58,0.08); border: 1px solid rgba(30,107,58,0.2); border-radius: 14px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.tarifa-rec-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.3); margin-bottom: 0.5rem; display: block; }
+.tarifa-rec-nombre { font-family: var(--font-head); font-size: 1.1rem; color: #fff; font-weight: 500; margin-bottom: 0.25rem; }
+.tarifa-rec-ahorro { font-size: 0.82rem; color: #4ade80; font-weight: 500; }
+.tarifa-rec-total { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 0.15rem; }
+
+/* ── FOOTER ── */
+footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem; }
+.footer-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+.footer-row-main { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.footer-logo img { height: 44px; width: auto; display: block; opacity: 0.85; }
+.footer-contact-row { display: flex; align-items: center; gap: 1.5rem; }
+.footer-contact-row a { font-size: 0.8rem; color: #64748B; text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+.footer-contact-row a:hover { color: #1E6B3A; }
+.footer-contact-row svg { width: 13px; height: 13px; stroke: #1E6B3A; flex-shrink: 0; }
+.footer-row-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 1.25rem; border-top: 1px solid #E2E8F0; }
+.footer-copy { font-size: 0.7rem; color: #94a3b8; }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: 0.72rem !important; color: #94a3b8 !important; text-decoration: none !important; transition: color 0.2s !important; background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; animation: none !important; display: inline !important; }
+.footer-links a:hover { color: #475569 !important; }
+@media (max-width: 600px) { .footer-row-main { flex-direction: column; align-items: flex-start; } .footer-contact-row { flex-direction: column; align-items: flex-start; gap: 0.6rem; } .footer-row-bottom { flex-direction: column; } } /* ── MODAL 50€ ── */ .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; } .modal-overlay.is-open { display: flex; } .modal-card { background: #fff; max-width: 480px; width: 100%; border-radius: 12px; padding: 2rem; position: relative; border: 1px solid #e0ece4; box-shadow: 0 32px 64px -12px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04); } .modal-close { position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; border: none; border-radius: 50%; background: #f1f5f9; color: var(--muted); font-size: 1.1rem; cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 2; } .modal-close:hover { background: #e2e8f0; } .modal-header { background: linear-gradient(135deg, #eef5f0, #f8fdf9); margin: -2rem -2rem 1.5rem -2rem; padding: 1.75rem 2rem 1.5rem; border-bottom: 1px solid #e0ece4; border-radius: 12px 12px 0 0; } .modal-card h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; } .modal-subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; } .modal-header .modal-subtitle { margin-bottom: 0; } .modal-total { display: inline-flex; align-items: center; gap: 0.4rem; background: #1E6B3A; color: #fff; font-size: 0.82rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 999px; margin-top: 0.5rem; } .modal-total strong { font-weight: 700; } .modal-timeline { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.25rem; margin-bottom: 1.25rem; position: relative; } .modal-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2px; background: var(--border); z-index: 0; } .modal-hito { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; } .modal-hito-circle { width: 36px; height: 36px; border-radius: 50%; background: #1E6B3A; color: #fff; font-size: 0.65rem; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 0.4rem; box-shadow: 0 4px 12px rgba(30,107,58,0.3); transition: transform 0.2s; } .modal-hito-circle:hover { transform: scale(1.1); } .modal-hito-label { font-size: 0.7rem; color: var(--muted); text-align: center; } .modal-hito-amount { font-size: 0.95rem; font-weight: 600; color: #1E6B3A; } .modal-note { font-size: 0.75rem; color: var(--muted); line-height: 1.5; } /* ── RESPONSIVE ── */ @media (max-width: 600px) { /* NAV */ nav { padding: 0 1rem; height: 56px; justify-content: center; } nav a.cta-nav { display: none; } .logo img { height: 28px; } /* HERO */ .hero { padding: 2rem 1.25rem 3.5rem; } h1 { font-size: 2rem; letter-spacing: -0.02em; } .hero h1 { letter-spacing: -0.04em; } .hero-sub { font-size: 1.05rem; } .hero-cta-group { width: 100%; } .hero-cta { width: 100%; text-align: center; } .hero-cta-label { text-align: center; } .hero-badge { font-size: 0.75rem; } /* REWARD BANNER */ .reward-banner { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: nowrap; padding: 0.6rem 1rem; font-size: 0.82rem; } .hero-incentive-btn { flex-shrink: 0; } /* STATS */ .stats-bar { padding: 3rem 1.25rem; } .stat-single-number { font-size: 3rem; } .stat-single-label { font-size: 0.82rem; } /* SECCIONES */ .section { padding: 3rem 1.25rem; } h2 { font-size: 1.7rem; } .section-desc { font-size: 0.9rem; } } .field-error { color: #f87171; font-size: 0.72rem; margin-top: 0.35rem; } .field-error:empty { display: none; } .field-error:not(:empty) { display: block; } </style> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
+<style>
+.step1-tabs{display:flex;background:rgba(255,255,255,0.05);border-radius:10px;padding:3px;gap:2px;border:1px solid rgba(255,255,255,0.08);margin-bottom:1.1rem}
+.step1-tab{flex:1;padding:0.6rem 0.5rem;border:none;background:transparent;color:rgba(255,255,255,0.55);font-family:var(--font-body);font-size:0.82rem;font-weight:500;border-radius:8px;cursor:pointer;transition:all 0.2s;text-align:center}
+.step1-tab.active{background:#1E6B3A;color:#fff}
+.step1-panel{display:none}
+.step1-panel.active{display:block}
+.rec-option-label{font-size:0.72rem;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:0.75rem}
+.rec-options{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.2rem}
 .rec-option{display:flex;align-items:center;gap:0.75rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.85rem 1rem;cursor:pointer;transition:border-color 0.2s,background 0.2s}
 .rec-option:hover,.rec-option.selected{border-color:rgba(30,107,58,0.4);background:rgba(30,107,58,0.06)}
 .rec-option-icon{font-size:1.1rem;flex-shrink:0}
 .rec-option-text strong{display:block;font-size:0.85rem;color:#fff;margin-bottom:0.1rem}
-.rec-option-text span{font-size:0.72rem;color:rgba(255,255,255,0.4)}
-.rec-input-group{display:none;margin-top:0.5rem}
+.rec-option-text span{font-size:0.72rem;color:rgba(255,255,255,0.55)}
+.rec-input-group{display:none;margin-bottom:1rem}
 .rec-input-group.visible{display:block}
-label.form-label{font-size:0.7rem;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:0.05em;text-transform:uppercase;display:block;margin-bottom:0.3rem}
-input:not([type="checkbox"]):not([type="radio"]){background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;font-family:var(--font-body);font-size:0.88rem;padding:0.65rem 0.9rem;outline:none;transition:border-color 0.2s;width:100%;margin-bottom:0.75rem;-webkit-appearance:none;appearance:none}
-input:not([type="checkbox"]):not([type="radio"])::placeholder{color:rgba(255,255,255,0.25)}
-input:not([type="checkbox"]):not([type="radio"]):focus{border-color:rgba(30,107,58,0.6)}
-.extracted-field{background:rgba(255,255,255,0.03)!important;color:rgba(255,255,255,0.45)!important;cursor:not-allowed}
-.field-note{font-size:0.68rem;color:rgba(255,255,255,0.28);margin-top:-0.5rem;margin-bottom:0.75rem;display:block;font-style:italic;line-height:1.5}
-.field-error{color:#f87171;font-size:0.7rem;margin-top:-0.5rem;margin-bottom:0.5rem;display:none}
-.field-error:not(:empty){display:block}
-.form-checkbox-label{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.76rem;color:rgba(255,255,255,0.4);cursor:pointer;line-height:1.5;margin-bottom:1rem}
-.form-checkbox-label input[type="checkbox"]{flex-shrink:0;margin-top:2px;width:14px;height:14px;accent-color:#1E6B3A;cursor:pointer}
-.form-checkbox-label a{color:rgba(255,255,255,0.55);text-decoration:underline;text-underline-offset:2px}
-.submit-btn{width:100%;background:#1E6B3A;color:#fff;font-weight:600;border:none;border-radius:10px;font-family:var(--font-body);font-size:0.95rem;padding:0.95rem;cursor:pointer;transition:background 0.2s,transform 0.15s;box-shadow:0 4px 20px rgba(30,107,58,0.3);letter-spacing:0.02em}
-.submit-btn:hover{background:var(--green-dk);transform:translateY(-1px)}
-.submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
-.loading-layout{text-align:center;padding:3rem 1rem;display:flex;flex-direction:column;align-items:center;gap:1.25rem}
-.loading-spinner{width:48px;height:48px;border:2px solid rgba(255,255,255,0.08);border-top-color:#1E6B3A;border-radius:50%;animation:spin 0.8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:0.85rem;color:rgba(255,255,255,0.55);font-weight:300;min-height:1.2em}
-.loading-bar{width:180px;height:2px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden}
-.loading-bar-fill{height:100%;background:#1E6B3A;border-radius:999px;width:0%;transition:width 0.2s linear}
-.result-container{max-width:500px;margin:0 auto}
-.btn-volver{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.55);font-family:var(--font-body);font-size:0.76rem;padding:0.45rem 0.9rem;border-radius:999px;cursor:pointer;margin-bottom:0.75rem;transition:all 0.2s}
-.btn-volver:hover{background:rgba(255,255,255,0.09);color:rgba(255,255,255,0.9)}
-.result-impact{text-align:center;padding:1.25rem 0 1.75rem}
-.result-impact-eyebrow{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:rgba(255,255,255,0.22);margin-bottom:0.3rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.result-impact-eyebrow::before,.result-impact-eyebrow::after{content:'';display:block;width:20px;height:1px;background:rgba(255,255,255,0.12)}
-.result-impact-number{font-family:var(--font-head);font-size:clamp(4rem,14vw,7rem);font-weight:700;color:#ef2222;line-height:1;letter-spacing:-0.05em;animation:alarma 2s ease-in-out infinite}
-@keyframes alarma{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
-.result-impact-year{font-size:1rem;font-weight:300;color:rgba(239,34,34,0.65);margin-left:2px}
-.result-impact-sub{font-size:0.65rem;color:rgba(255,255,255,0.18);margin-top:0.25rem}
-.result-table-wrap{overflow-x:auto;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.15);margin-bottom:0.85rem}
-.result-table{width:100%;border-collapse:collapse;font-size:0.75rem}
-.result-table th,.result-table td{padding:0.5rem 0.8rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.04)}
-.result-table th{color:rgba(255,255,255,0.28);font-weight:500;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.05em}
-.result-table td{color:rgba(255,255,255,0.78)}
-.result-table tr:last-child td{border-bottom:none}
-.result-table .highlight{color:#4ade80;font-weight:600}
-.result-disclaimer{font-size:0.62rem;color:rgba(255,255,255,0.15);text-align:center;margin:0.5rem 0 1rem}
-.tarifa-rec-box{background:rgba(30,107,58,0.08);border:1px solid rgba(30,107,58,0.2);border-radius:14px;padding:1rem 1.25rem;margin-bottom:1rem}
-.tarifa-rec-eyebrow{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.28);display:block;margin-bottom:0.35rem}
-.tarifa-rec-nombre{font-family:var(--font-head);font-size:1.05rem;color:#fff;font-weight:500;margin-bottom:0.2rem}
-.tarifa-rec-ahorro{font-size:0.82rem;color:#4ade80;font-weight:500}
-.tarifa-rec-total{font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:0.1rem}
-.cambio-box{background:linear-gradient(135deg,rgba(30,107,58,0.12),rgba(30,107,58,0.05));border:1px solid rgba(74,222,128,0.18);border-radius:14px;padding:1.1rem;margin-bottom:1.5rem;display:flex;gap:0.9rem;align-items:flex-start}
-.cambio-box-icon{width:38px;height:38px;flex-shrink:0;background:linear-gradient(135deg,#1E6B3A,#2d8a4e);border-radius:10px;display:flex;align-items:center;justify-content:center}
-.cambio-box-icon svg{width:18px;height:18px;stroke:#fff;stroke-width:1.8}
-.cambio-box strong{display:block;font-family:var(--font-head);font-size:0.9rem;color:#fff;margin-bottom:0.25rem}
-.cambio-box p{font-size:0.73rem;color:rgba(255,255,255,0.38);line-height:1.7;margin:0}
-.extracted-badge{display:block;font-size:0.65rem;color:#4ade80;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.6rem}
-.extracted-group{background:rgba(255,255,255,0.02);border-radius:10px;padding:1rem;margin-bottom:1.25rem;border:1px solid rgba(255,255,255,0.05)}
-.confirmation-container{text-align:center;padding:2.5rem 1rem}
-.confirmation-icon{width:56px;height:56px;margin:0 auto 1.25rem;background:#1E6B3A;color:#fff;font-size:1.4rem;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.confirmation-title{font-family:var(--font-head);font-size:1.65rem;color:#fff;margin-bottom:0.65rem}
-.confirmation-text{font-size:0.85rem;color:rgba(255,255,255,0.55);max-width:360px;margin:0 auto;line-height:1.75;font-weight:300}
-.confirmation-note{font-size:0.82rem;color:#4ade80;font-weight:500;margin-top:0.6rem}
+.rec-input-group .form-label{display:block;font-size:0.8rem;color:rgba(255,255,255,0.7);margin-bottom:0.35rem}
+.rec-input-group input{width:100%;padding:0.8rem 0.9rem;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#fff}
+.rec-input-group input::placeholder{color:rgba(255,255,255,0.3)}
+.recordatorio-intro{font-size:0.86rem;color:rgba(255,255,255,0.7);line-height:1.65;margin-bottom:1rem}
 .rec-confirmation{text-align:center;padding:2.5rem 1rem}
-.rec-confirmation-icon{font-size:2.5rem;margin-bottom:1rem}
-.rec-confirmation-title{font-family:var(--font-head);font-size:1.4rem;color:#fff;margin-bottom:0.6rem}
-.rec-confirmation-text{font-size:0.85rem;color:rgba(255,255,255,0.5);max-width:340px;margin:0 auto;line-height:1.7;font-weight:300}
-.flow-step{transition:opacity 0.3s}
-.flow-step.hidden{display:none!important}
-.lp-footer{padding:1.25rem 1.5rem;text-align:center;font-size:0.68rem;color:#94a3b8;border-top:1px solid var(--border)}
-.lp-footer a{color:#94a3b8;text-decoration:underline;margin:0 0.4rem}
-@media(max-width:600px){
-  .lp-hero h1{font-size:1.9rem}
-  .lp-steps{flex-direction:column;gap:0.75rem}
-  .lp-step:not(:last-child)::after{content:'↓';position:static;display:block;margin-top:0.5rem}
-  .lp-testimonios{grid-template-columns:1fr}
-  .lp-header{padding:0.75rem 1rem}
-  .lp-header img{height:36px}
-}
+.rec-confirmation-icon{font-size:2.2rem;margin-bottom:1rem}
+.rec-confirmation-title{font-family:var(--font-head);font-size:1.35rem;color:#fff;margin-bottom:0.6rem}
+.rec-confirmation-text{font-size:0.85rem;color:rgba(255,255,255,0.55);max-width:360px;margin:0 auto;line-height:1.7;font-weight:300}
 </style>
-</head>
-<body>
 
-<header class="lp-header">
-  <img src="Logo_Quenotelacuelen.png" alt="Quenotelacuelen.com" />
-  <a href="#formulario" class="lp-header-cta">Analizar mi factura →</a>
-</header>
+</head> <body> <!-- NAV --> <nav> <a href="#" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Que no te la cuelen" style="height:61px;width:auto;"></a> </nav> <!-- HERO --> <section class="hero"> <div class="hero-inner"> <div class="hero-badge"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Servicio gratuito y sin compromiso </div> <h1>¿Estás pagando de más<br />en tu <em>factura de luz o gas</em>?</h1> <p class="hero-sub">Sube tu factura y en segundos nuestra IA te dirá si te la están colando</p> <div class="hero-actions"> <a href="#formulario" class="hero-cta">Sube tu factura ahora</a> </div> <p class="hero-note"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Tus datos están protegidos y no los compartimos con nadie </p> </div> <div class="hero-fade" aria-hidden="true"></div> </section> <!-- STATS BAR --> <div class="stats-bar"> <div class="stats-inner-single"> <div class="stat-single"> <span class="stat-single-number" id="statFacturas">1000+</span> <span class="stat-single-label">Facturas analizadas, de españoles que quisieron saber la verdad</span> </div> </div> </div> <!-- HOW IT WORKS --> <section id="como-funciona">
+  <div class="cf-inner">
+    <div class="cf-strip">
 
-<section class="lp-hero">
-  <div class="lp-badge">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:12px;height:12px"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-    Gratis · Sin compromiso · Sin llamadas
-  </div>
-  <h1>¿Te la están colando en tu <em>factura de luz o gas</em>?</h1>
-  <p>Sube tu factura y en segundos nuestra IA te dirá si te la están colando</p>
-  <a href="#formulario" class="lp-header-cta" style="display:inline-block; margin-bottom:1.6rem;">Sube tu factura ahora</a>
-  <div class="lp-trust">
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Datos cifrados · RGPD</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>1.000+ facturas analizadas</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Sin cortes de suministro</span>
-  </div>
-  <div class="lp-steps">
-    <div class="lp-step">
-      <div class="lp-step-num">1</div>
-      <strong>Sube tu factura</strong>
-      <span>PDF · 30 segundos</span>
-    </div>
-    <div class="lp-step">
-      <div class="lp-step-num">2</div>
-      <strong>La IA la analiza</strong>
-      <span>Compara con el mercado</span>
-    </div>
-    <div class="lp-step">
-      <div class="lp-step-num">3</div>
-      <strong>Ves el resultado</strong>
-      <span>Cuánto te están colando</span>
-    </div>
-  </div>
-</section>
-
-<section class="lp-form-section" id="formulario">
-  <div class="lp-form-inner">
-    <span class="lp-form-eyebrow">Empieza ahora — es gratis</span>
-    <h2 class="lp-form-title">¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2>
-    <p class="lp-form-sub">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p>
-
-    <div class="flow-step" id="lp-step1">
-      <div class="lp-tabs">
-        <button type="button" class="lp-tab active" data-panel="factura">📄 Tengo mi factura</button>
-        <button type="button" class="lp-tab" data-panel="recordatorio">🔔 No la tengo ahora</button>
-      </div>
-
-      <div class="lp-panel active" id="panel-factura">
-        <div class="toggle-buttons">
-          <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button>
-          <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button>
+      <div class="cf-strip-step">
+        <div class="cf-strip-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         </div>
-        <div class="file-drop" id="lp-fileDrop">
-          <input type="file" id="lp-factura-input" accept=".pdf" />
-          <div class="file-drop-inner">
-            <div class="file-drop-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            </div>
-            <div>
-              <p class="file-title">Arrastra o sube tu factura aquí</p>
-              <p class="file-sub">Solo PDF · Máx. 5 MB · Seguro y cifrado</p>
-            </div>
-          </div>
-          <p class="file-selected" id="lp-fileName"></p>
-        </div>
-        <label class="form-checkbox-label">
-          <input type="checkbox" id="lp-acepto" />
-          <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>.</span>
-        </label>
-        <button type="button" class="submit-btn" id="lp-btnAnalizar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;vertical-align:middle;margin-right:6px"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          Analizar mi factura gratis
-        </button>
-      </div>
-
-      <div class="lp-panel" id="panel-recordatorio">
-        <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p>
-        <span class="rec-option-label">¿Cómo te avisamos?</span>
-        <div class="rec-options">
-          <div class="rec-option" id="rec-opt-email" data-mode="email">
-            <span class="rec-option-icon">✉️</span>
-            <div class="rec-option-text">
-              <strong>Por correo electrónico</strong>
-              <span>Te mandamos un email con el enlace directo</span>
-            </div>
-          </div>
-          <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp">
-            <span class="rec-option-icon">💬</span>
-            <div class="rec-option-text">
-              <strong>Por WhatsApp</strong>
-              <span>Te enviamos un mensaje con recordatorio</span>
-            </div>
-          </div>
-        </div>
-        <div class="rec-input-group" id="rec-input-email">
-          <label class="form-label">Tu correo electrónico</label>
-          <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" />
-          <div class="field-error" id="rec-email-error"></div>
-        </div>
-        <div class="rec-input-group" id="rec-input-whatsapp">
-          <label class="form-label">Tu número de WhatsApp</label>
-          <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" />
-          <div class="field-error" id="rec-whatsapp-error"></div>
-        </div>
-        <button type="button" class="submit-btn" id="lp-btnRecordatorio" style="display:none">
-          Avisarme en unos días
-        </button>
-      </div>
-    </div>
-
-    <div class="flow-step hidden" id="lp-step2">
-      <div class="loading-layout">
-        <div class="loading-spinner"></div>
-        <p class="loading-text" id="lp-loadingText">Analizando tu factura...</p>
-        <div class="loading-bar"><div class="loading-bar-fill" id="lp-loadingBarFill"></div></div>
-      </div>
-    </div>
-
-    <div class="flow-step hidden" id="lp-step3">
-      <div class="result-container">
-        <button type="button" class="btn-volver" id="lp-btnVolver">← Analizar otra factura</button>
-        <div class="result-impact">
-          <p class="result-impact-eyebrow">En total te están colando</p>
-          <p class="result-impact-number"><span id="lp-totalColando">—</span><span class="result-impact-year"> €/año</span></p>
-          <p class="result-impact-sub">estimado según tu última factura</p>
-        </div>
-        <div class="result-table-wrap">
-          <table class="result-table">
-            <thead><tr><th>Concepto</th><th>Tu tarifa actual</th><th>Mejor tarifa encontrada hoy</th></tr></thead>
-            <tbody id="lp-resultTableBody"></tbody>
-          </table>
-        </div>
-        <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar.</p>
-        <button type="button" class="submit-btn" id="lp-btnSiguiente">Ver cómo cambiarme gratis →</button>
-      </div>
-    </div>
-
-    <div class="flow-step hidden" id="lp-step4">
-      <button type="button" class="btn-volver" id="lp-btnVolverStep4">← Volver</button>
-      <div class="tarifa-rec-box" id="lp-tarifaBox"></div>
-      <div class="cambio-box">
-        <div class="cambio-box-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-        </div>
-        <div>
-          <strong>Sin llamadas, sin cortes, sin gestiones</strong>
-          <p>Solo rellena tus datos y nosotros nos encargamos de todo el cambio. No tienes que avisar a tu compañía actual.</p>
+        <div class="cf-strip-text">
+          <span class="cf-strip-num">01</span>
+          <strong>Sube tu factura</strong>
+          <span>PDF.</span>
         </div>
       </div>
-      <form id="lp-contratacionForm" novalidate>
-        <div class="extracted-group">
-          <span class="extracted-badge">✓ Extraído de tu factura</span>
-          <label class="form-label">CUPS</label>
-          <input type="text" id="lp-cups" readonly class="extracted-field" placeholder="—" />
-          <label class="form-label">Dirección del suministro</label>
-          <input type="text" id="lp-direccion" readonly class="extracted-field" placeholder="—" />
-          <label class="form-label">Nombre del titular</label>
-          <input type="text" id="lp-nombre" readonly class="extracted-field" placeholder="—" />
-          <label class="form-label">DNI del titular</label>
-          <input type="text" id="lp-dni" readonly class="extracted-field" placeholder="—" />
+
+      <div class="cf-strip-connector">
+        <div class="cf-connector-track">
+          <div class="cf-connector-dot"></div>
         </div>
-        <label class="form-label">Tu correo electrónico</label>
-        <input type="text" id="lp-email" placeholder="tu@email.com" autocomplete="email" />
-        <div class="field-error" id="lp-email-error"></div>
-        <label class="form-label">Número de móvil</label>
-        <input type="tel" id="lp-telefono" placeholder="600000000" maxlength="9" inputmode="numeric" />
-        <div class="field-error" id="lp-tel-error"></div>
-        <label class="form-label">IBAN para domiciliar la factura</label>
-        <input type="text" id="lp-iban" placeholder="ES00 0000 0000 0000 0000 0000" autocomplete="off" />
-        <div class="field-error" id="lp-iban-error"></div>
-        <span class="field-note">En las próximas horas recibirás un SMS o correo de Gana Energía para autorizar el cambio.</span>
-        <label class="form-checkbox-label">
-          <input type="checkbox" id="lp-autorizo" />
-          <span>Autorizo a QNTLC a gestionar por mí el cambio de comercializadora</span>
-        </label>
-        <button type="submit" class="submit-btn">Solicitar cambio de tarifa gratis</button>
-      </form>
+      </div>
+
+      <div class="cf-strip-step">
+        <div class="cf-strip-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        </div>
+        <div class="cf-strip-text">
+          <span class="cf-strip-num">02</span>
+          <strong>La IA compara</strong>
+          <span>Tu tarifa vs la mejor que encuentra en el mercado.</span>
+        </div>
+      </div>
+
+      <div class="cf-strip-connector">
+        <div class="cf-connector-track">
+          <div class="cf-connector-dot"></div>
+        </div>
+      </div>
+
+      <div class="cf-strip-step cf-strip-step--accent">
+        <div class="cf-strip-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="cf-strip-text">
+          <span class="cf-strip-num">03</span>
+          <strong>Resultados</strong>
+          <span>Ves si te la están colando. Y cuánto.</span>
+        </div>
+      </div>
+
     </div>
 
-    <div class="flow-step hidden" id="lp-step5">
-      <div class="confirmation-container">
-        <div class="confirmation-icon">✓</div>
-        <h2 class="confirmation-title">¡Todo listo! 🎉</h2>
-        <p class="confirmation-text">En las próximas horas recibirás un SMS o correo de tu nueva comercializadora para que autorices el cambio. No tienes que hacer nada más — nosotros nos encargamos de todo.</p>
-        <p class="confirmation-note">Ahorro estimado: <span id="lp-ahorroConfirm">—</span> €/año</p>
+    <div class="cf-trust">
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Datos cifrados · RGPD
+      </div>
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        100% gratuito
+      </div>
+      <div class="trust-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Sin compromiso
       </div>
     </div>
-
-    <div class="flow-step hidden" id="lp-step6">
-      <div class="rec-confirmation">
-        <div class="rec-confirmation-icon">🔔</div>
-        <h2 class="rec-confirmation-title">¡Anotado!</h2>
-        <p class="rec-confirmation-text">Te avisamos en cuanto tengas la factura a mano. Solo tienes que subirla y en segundos sabrás cuánto puedes ahorrar.</p>
-      </div>
-    </div>
-
   </div>
 </section>
+<!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true"></div> <p class="section-label">Empieza ahora</p> <h2>¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step" id="step1" data-step="1"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>. Mis datos están seguros.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2"> <div class="loading-layout"> <div class="loading-ring"> <div class="loading-spinner"></div> </div> <p class="loading-text" id="loadingText">Leyendo factura</p> <div class="loading-bar"><div class="loading-bar-fill" id="loadingBarFill"></div></div> </div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Ver mi tarifa recomendada</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
+<div class="flow-step hidden" id="step4" data-step="4">
+  <button type="button" class="btn-volver" id="btnVolverStep4">← Volver</button>
 
-<div class="lp-testimonios">
-  <div class="lp-testi">
-    <div class="lp-testi-stars">★★★★★</div>
-    <p>"Ojalá lo hubiera mirado antes. Llevo meses pagando de más por pura pereza."</p>
-    <div class="lp-testi-autor"><strong>María G.</strong> · Madrid · Ahorro: 340 €/año</div>
+  <div class="tarifa-recomendada" id="tarifaRecomendadaBox"></div>
+
+  <div class="cambio-propuesta">
+    <div class="cambio-propuesta-inner">
+      <div class="cambio-propuesta-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+      </div>
+      <div>
+        <strong>Te cambiamos de tarifa sin ningún coste</strong>
+        <p>Sin llamadas, sin gestiones, sin cortes de suministro. Solo rellena tus datos y en unos días estarás en tu nueva tarifa. No tienes que avisar a tu actual comercializadora, nosotros nos encargamos de todo.</p>
+      </div>
+    </div>
   </div>
-  <div class="lp-testi">
-    <div class="lp-testi-stars">★★★★★</div>
-    <p>"Súper fácil de usar. Me daba pereza el tema de la luz pero aquí te lo dan mascado."</p>
-    <div class="lp-testi-autor"><strong>Carlos M.</strong> · Barcelona · Ahorro: 264 €/año</div>
-  </div>
-  <div class="lp-testi">
-    <div class="lp-testi-stars">★★★★★</div>
-    <p>"Resulta que le estaba regalando a la anterior empresa casi 200 euros al año"</p>
-    <div class="lp-testi-autor"><strong>Ana R.</strong> · Valencia · Ahorro: 180 €/año</div>
-  </div>
+
+  <h2 class="flow-step4-title">Rellena tus datos y listo</h2>
+  <form id="contratacionForm" class="contratacion-form" novalidate>
+    <div class="form-extracted-group">
+      <span class="extracted-badge">Extraído de tu factura</span>
+      <div class="form-grid form-grid-2">
+        <div class="form-group full">
+          <label for="cups">CUPS</label>
+          <input type="text" id="cups" name="cups" readonly class="extracted-field" placeholder="—" />
+        </div>
+        <div class="form-group full">
+          <label for="direccion">Dirección del suministro</label>
+          <input type="text" id="direccion" name="direccion" readonly class="extracted-field" placeholder="—" />
+        </div>
+        <div class="form-group">
+          <label for="nombre_titular">Nombre completo del titular</label>
+          <input type="text" id="nombre_titular" name="nombre_titular" readonly class="extracted-field" placeholder="—" />
+        </div>
+        <div class="form-group">
+          <label for="dni">DNI del titular</label>
+          <input type="text" id="dni" name="dni" readonly class="extracted-field" placeholder="—" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-manual-group">
+      <div class="form-grid form-grid-2">
+        <div class="form-group full">
+          <label for="email">Correo electrónico</label>
+          <input type="text" id="email" name="email" placeholder="tu@email.com" autocomplete="email" />
+          <span class="field-error" id="email_error" role="alert"></span>
+        </div>
+        <div class="form-group full">
+          <label for="telefono">Número móvil (recibirás un SMS para autorizar el cambio)</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="600000000" maxlength="9" inputmode="numeric" autocomplete="tel" />
+          <span class="field-error" id="telefono_error" role="alert"></span>
+        </div>
+        <div class="form-group full">
+          <label for="iban_cargo">IBAN</label>
+          <input type="text" id="iban_cargo" name="iban_cargo" placeholder="ES00 0000 0000 0000 0000 0000" autocomplete="off" />
+          <span class="field-error" id="iban_cargo_error" role="alert"></span>
+          <span class="field-note">Imprescindible para finalizar el trámite: en las próximas horas recibirás un SMS o un correo de Gana Energía para autorizar el cambio.</span>
+        </div>
+      </div>
+    </div>
+
+    <label class="autorizacion-check form-checkbox-label">
+      <input type="checkbox" id="autorizo_cambio" name="autorizo_cambio" />
+      <span>Autorizo a QNTLC a gestionar por mí el cambio de comercializadora</span>
+    </label>
+
+    <button type="submit" class="submit-btn submit-btn-green">Solicitar cambio de tarifa</button>
+  </form>
 </div>
+<!-- PASO 5: Confirmación --> <div class="flow-step hidden" id="step5" data-step="5"> <div class="confirmation-container"> <div class="confirmation-icon">✓</div> <h2 class="confirmation-title">¡Todo listo! 🎉</h2> <p class="confirmation-text">En las próximas horas (max. 12h) recibirás un SMS o un correo de tu nueva comercializadora para que autorices el cambio. Por lo demás no tienes que hacer nada, no hace falta avisar a tu antigua comercializadora, nosotros nos encargamos de todo.</p> </div> </div>  <div class="flow-step hidden" id="step6" data-step="6"> <div class="rec-confirmation"> <div class="rec-confirmation-icon">🔔</div> <h2 class="rec-confirmation-title">¡Anotado!</h2> <p class="rec-confirmation-text">Te avisamos en unos días para que puedas subir tu factura cuando la tengas a mano.</p> </div> </div> <div style="width:40px; height:1px; background:rgba(255,255,255,0.08); margin: 1rem auto 0;"></div> <p class="form-legal" style="margin-top:1.25rem;"> Tus datos se tratan conforme al <a href="politica-privacidad.html">Política de Privacidad</a> y nunca se comparten con terceros. </p> </div> </section>
 
-<footer class="lp-footer">
-  © 2026 Quenotelacuelen.com ·
-  <a href="aviso-legal.html">Aviso legal</a>
-  <a href="politica-privacidad.html">Privacidad</a>
-  <a href="politica-cookies.html">Cookies</a>
-</footer>
+<section style="background:#f8fafc; padding:3rem 1.5rem; border-top:1px solid #e2e8f0;">
+  <div style="max-width:860px; margin:0 auto;">
+    <p style="font-family:'DM Sans',sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:0.18em; color:#94a3b8; margin:0 0 1.5rem; font-weight:600; text-align:center;">Lo que dicen nuestros usuarios</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem;">
 
-<script>
-const SUPABASE_URL='https://zxdkdephdsjqqqzmeeuq.supabase.co';
-const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4ZGtkZXBoZHNqcXFxem1lZXVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNTQ2NTYsImV4cCI6MjA4OTgzMDY1Nn0.Szet-Du-xRKbBABgTzOQQrbosvN-noCr4QHyofklS_I';
-const _sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.25rem 1.25rem 1rem;">
+        <div style="margin-bottom:0.6rem;"><span style="color:#f59e0b; font-size:13px;">★★★★★</span></div>
+        <p style="font-size:0.88rem; color:#334155; line-height:1.65; margin:0 0 0.85rem;">"Ojalá lo hubiera mirado antes. Llevo meses pagando de más por pura pereza."</p>
+        <p style="font-size:0.75rem; color:#94a3b8; margin:0;"><strong style="color:#475569;">María G.</strong> · Madrid · Ahorro: 340 €/año</p>
+      </div>
 
-const PEAJE_2026={p:0.018920,l:0.013510,v:0.003980};
-const ALQ_DIA=0.026630,BONO_2026=0.012742,IMP_ELEC=0.0511269632,IVA=0.21;
+      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.25rem 1.25rem 1rem;">
+        <div style="margin-bottom:0.6rem;"><span style="color:#f59e0b; font-size:13px;">★★★★★</span></div>
+        <p style="font-size:0.88rem; color:#334155; line-height:1.65; margin:0 0 0.85rem;">"Súper fácil de usar. Me daba pereza el tema de la luz pero aquí te lo dan mascado."</p>
+        <p style="font-size:0.75rem; color:#94a3b8; margin:0;"><strong style="color:#475569;">Carlos M.</strong> · Barcelona · Ahorro: 264 €/año</p>
+      </div>
 
-let lpTipo='luz',lpExtracted=null,lpCalcResult=null,lpPdfBase64=null;
-window._lpAhorro=0;
+      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.25rem 1.25rem 1rem;">
+        <div style="margin-bottom:0.6rem;"><span style="color:#f59e0b; font-size:13px;">★★★★★</span></div>
+        <p style="font-size:0.88rem; color:#334155; line-height:1.65; margin:0 0 0.85rem;">"Resulta que le estaba regalando a la anterior empresa casi 200 euros al año"</p>
+        <p style="font-size:0.75rem; color:#94a3b8; margin:0;"><strong style="color:#475569;">Ana R.</strong> · Valencia · Ahorro: 180 €/año</p>
+      </div>
 
-// TABS
-document.querySelectorAll('.lp-tab').forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    document.querySelectorAll('.lp-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.lp-panel').forEach(p=>p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('panel-'+tab.dataset.panel).classList.add('active');
-  });
-});
+    </div>
+  </div>
+</section>
 
-// TOGGLE LUZ/GAS
-document.querySelectorAll('.toggle-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    lpTipo=btn.dataset.type;
-  });
-});
+<!-- FOOTER --> <footer>
+  <div class="footer-inner">
+    <div class="footer-row-main">
+      <a href="#" class="footer-logo">
+        <img src="Logo_Quenotelacuelen.png" alt="Quenotelacuelen.com" />
+      </a>
+      <div class="footer-contact-row">
+        <a href="tel:+34623756420">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.1 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92v2z"/></svg>
+          +34 623 756 420
+        </a>
+        <a href="mailto:info@quenotelacuelen.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          info@quenotelacuelen.com
+        </a>
+      </div>
+    </div>
+    <div class="footer-row-bottom">
+      <p class="footer-copy">© 2026 Quenotelacuelen.com · Todos los derechos reservados.</p>
+      <nav class="footer-links">
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="politica-privacidad.html">Política de privacidad</a>
+        <a href="politica-cookies.html">Política de cookies</a>
+      </nav>
+    </div>
+  </div>
+</footer> <script>
+  const SUPABASE_URL = 'https://zxdkdephdsjqqqzmeeuq.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4ZGtkZXBoZHNqcXFxem1lZXVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNTQ2NTYsImV4cCI6MjA4OTgzMDY1Nn0.Szet-Du-xRKbBABgTzOQQrbosvN-noCr4QHyofklS_I';
+  const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// FILE DROP
-const lpFileInput=document.getElementById('lp-factura-input');
-const lpFileNameEl=document.getElementById('lp-fileName');
-lpFileInput.addEventListener('change',()=>{
-  if(lpFileInput.files.length){
-    lpFileNameEl.textContent='✓ '+lpFileInput.files[0].name;
-    lpFileNameEl.style.display='block';
-  }
-});
-const lpFileDrop=document.getElementById('lp-fileDrop');
-lpFileDrop.addEventListener('dragover',e=>{e.preventDefault();lpFileDrop.style.borderColor='rgba(74,222,128,0.4)'});
-lpFileDrop.addEventListener('dragleave',()=>{lpFileDrop.style.borderColor=''});
-lpFileDrop.addEventListener('drop',e=>{
-  e.preventDefault();lpFileDrop.style.borderColor='';
-  if(e.dataTransfer.files.length){
-    lpFileInput.files=e.dataTransfer.files;
-    lpFileNameEl.textContent='✓ '+e.dataTransfer.files[0].name;
-    lpFileNameEl.style.display='block';
-  }
-});
+  // ── CONSTANTES FIJAS (peajes de red, no cambian con Gana) ──
+  const PEAJE_EN_2025 = { p: 0.020130, l: 0.014423, v: 0.004303 };
+  const PEAJE_EN_2026 = { p: 0.018920, l: 0.013510, v: 0.003980 };
+  const PEAJE_POT_2025 = { p1: 26.930550 / 365, p2: 0.697588 / 365 };
+  const PEAJE_POT_2026 = { p1: 26.200000 / 365, p2: 0.680000 / 365 };
+  const ALQ_DIA = 0.026630;
+  const BONO_2025 = 0.019121, BONO_2026 = 0.012742;
+  const IMP_ELEC = 0.0511269632;
+  const IVA = 0.21;
 
-// RECORDATORIO — selección modo
-let recMode=null;
-document.querySelectorAll('.rec-option').forEach(opt=>{
-  opt.addEventListener('click',()=>{
-    document.querySelectorAll('.rec-option').forEach(o=>o.classList.remove('selected'));
-    document.querySelectorAll('.rec-input-group').forEach(g=>g.classList.remove('visible'));
-    opt.classList.add('selected');
-    recMode=opt.dataset.mode;
-    document.getElementById('rec-input-'+recMode).classList.add('visible');
-    document.getElementById('lp-btnRecordatorio').style.display='block';
-  });
-});
+  const MARKET = {
+    '2025-07': { p: .1010, l: .0830, v: .0560 },
+    '2025-08': { p: .1080, l: .0880, v: .0590 },
+    '2025-09': { p: .1420, l: .1140, v: .0760 },
+    '2025-10': { p: .1650, l: .1280, v: .0880 },
+    '2025-11': { p: .2036, l: .1346, v: .1078 },
+    '2025-12': { p: .1820, l: .1380, v: .1040 },
+    '2026-01': { p: .2050, l: .1600, v: .1180 },
+    '2026-02': { p: .1650, l: .1250, v: .0880 },
+    '2026-03': { p: .1550, l: .1150, v: .0800 }
+  };
 
-document.getElementById('rec-whatsapp').addEventListener('input',e=>{
-  e.target.value=e.target.value.replace(/\D/g,'').slice(0,9);
-});
-
-// BOTÓN RECORDATORIO
-document.getElementById('lp-btnRecordatorio').addEventListener('click',async()=>{
-  if(!recMode){alert('Elige cómo quieres que te avisemos.');return;}
-  let contacto='',errEl,ok=false;
-  if(recMode==='email'){
-    contacto=document.getElementById('rec-email').value.trim();
-    errEl=document.getElementById('rec-email-error');
-    ok=contacto.includes('@');
-    errEl.textContent=ok?'':'Email no válido';
-  }else{
-    contacto=document.getElementById('rec-whatsapp').value.trim();
-    errEl=document.getElementById('rec-whatsapp-error');
-    ok=/^\d{9}$/.test(contacto);
-    errEl.textContent=ok?'':'Debe tener 9 dígitos';
-  }
-  if(!ok)return;
-  const btn=document.getElementById('lp-btnRecordatorio');
-  btn.disabled=true;btn.textContent='Guardando...';
-  try{
-    await _sb.from('recordatorios').insert({
-      canal:recMode,
-      contacto:contacto,
-      url_landing:window.location.href,
-      fuente:'lp-ads'
-    });
-  }catch(e){console.warn('Error guardando recordatorio:',e);}
-  lpShowStep(6);
-});
-
-// FLOW STEPS
-const lpStepIds=['lp-step1','lp-step2','lp-step3','lp-step4','lp-step5','lp-step6'];
-function lpShowStep(n){
-  lpStepIds.forEach((id,i)=>document.getElementById(id).classList.toggle('hidden',i+1!==n));
-  if(n===5&&typeof window.dataLayer!=='undefined'){
-    window.dataLayer.push({event:'solicitud_completada',tipo_factura:lpTipo,ahorro_estimado:window._lpAhorro});
-  }
-  window.scrollTo({top:document.getElementById('formulario').offsetTop-80,behavior:'smooth'});
-}
-
-function lpFileToBase64(file){
-  return new Promise((res,rej)=>{
-    const r=new FileReader();
-    r.onload=()=>res(r.result.split(',')[1]||'');
-    r.onerror=rej;r.readAsDataURL(file);
-  });
-}
-
-// TARIFAS Y CÁLCULO
-async function lpCargarTarifas(){
-  try{
-    const{data,error}=await _sb.from('tarifas_luz').select('*').eq('activa',true);
-    if(error||!data||!data.length)throw new Error();
-    return data;
-  }catch{
-    return[
-      {nombre:'Precio Mercado',tipo_energia:'mercado',margen_dia:0.167,potencia_p1_dia:0.075903,potencia_p2_dia:0.019880},
-      {nombre:'Tramos Horarios',tipo_energia:'fija',margen_dia:0.167,potencia_p1_dia:0.089434,potencia_p2_dia:0.089434,energia_punta:0.181,energia_llano:0.114,energia_valle:0.09},
-      {nombre:'24 Horas',tipo_energia:'unica',margen_dia:0.167,potencia_p1_dia:0.089434,potencia_p2_dia:0.089434,energia_unica:0.129}
-    ];
-  }
-}
-
-async function lpObtenerPreciosLuz(fi,ff){
-  try{
-    const{data,error}=await _sb.from('preciosluz').select('precio_punta,precio_llano,precio_valle').gte('fecha',fi).lte('fecha',ff);
-    if(error||!data||!data.length)return null;
-    const avg=arr=>arr.reduce((a,b)=>a+b,0)/arr.length;
-    return{
-      punta:avg(data.map(r=>parseFloat(r.precio_punta))),
-      llano:avg(data.map(r=>parseFloat(r.precio_llano))),
-      valle:avg(data.map(r=>parseFloat(r.precio_valle)))
-    };
-  }catch{return null;}
-}
-
-function lpCalcTarifa(t,d,pm){
-  const p1=parseFloat(d.potencia_p1)||0,p2=parseFloat(d.potencia_p2)||p1;
-  const dias=parseInt(d.dias)||30,pe=PEAJE_2026;
-  const pot=p1*t.potencia_p1_dia*dias+p2*t.potencia_p2_dia*dias;
-  const ep=parseFloat(d.kwh_punta)||0,el=parseFloat(d.kwh_llano)||0,ev=parseFloat(d.kwh_valle)||0;
-  const etotal=parseFloat(d.kwh_total)||(ep+el+ev);
-  const tieneH=d.tiene_discriminacion_horaria!==false&&(ep+el+ev)>0;
-  let ener=0;
-  if(t.tipo_energia==='mercado'){
-    if(pm){
-      ener=tieneH
-        ?ep*(pm.punta+pe.p)+el*(pm.llano+pe.l)+ev*(pm.valle+pe.v)
-        :etotal*((pm.punta+pm.llano+pm.valle)/3+(pe.p+pe.l+pe.v)/3);
-    }else{
-      const pu=parseFloat(d.precio_kwh_unico)||(d.termino_energia_euros&&d.kwh_total?parseFloat(d.termino_energia_euros)/parseFloat(d.kwh_total):0);
-      ener=tieneH
-        ?ep*(parseFloat(d.precio_kwh_punta)||pu)+el*(parseFloat(d.precio_kwh_llano)||pu)+ev*(parseFloat(d.precio_kwh_valle)||pu)
-        :etotal*pu;
+  function getWeightedPrices(iniStr, finStr) {
+    const d1 = new Date(iniStr + 'T12:00:00');
+    const d2 = new Date(finStr + 'T12:00:00');
+    let wp = { p: 0, l: 0, v: 0 }, count = 0;
+    const cur = new Date(d1);
+    while (cur < d2) {
+      const key = cur.getFullYear() + '-' + String(cur.getMonth() + 1).padStart(2, '0');
+      const pr = MARKET[key] || MARKET[Object.keys(MARKET).slice(-1)[0]];
+      wp.p += pr.p; wp.l += pr.l; wp.v += pr.v; count++;
+      cur.setDate(cur.getDate() + 1);
     }
-  }else if(t.tipo_energia==='fija'){
-    ener=tieneH
-      ?ep*(t.energia_punta+pe.p)+el*(t.energia_llano+pe.l)+ev*(t.energia_valle+pe.v)
-      :etotal*((t.energia_punta+t.energia_llano+t.energia_valle)/3+(pe.p+pe.l+pe.v)/3);
-  }else{
-    ener=etotal*(t.energia_unica+(pe.p+pe.l+pe.v)/3);
-  }
-  const margen=t.margen_dia*dias,bono=BONO_2026*dias;
-  const base=pot+ener+margen+bono,impEl=base*IMP_ELEC;
-  const alq=parseFloat(d.alquiler_contador_euros)||ALQ_DIA*dias;
-  const sub=base+impEl+alq,iva=sub*IVA;
-  return{total:sub+iva,pot,ener,impEl,alq,ivaG:iva,tarifa:t};
-}
-
-async function lpCalcularMejorLuz(d){
-  const tarifas=await lpCargarTarifas();
-  const pm=await lpObtenerPreciosLuz(d.fecha_inicio||'2026-01-01',d.fecha_fin||'2026-01-31');
-  const totalActual=parseFloat(d.total_factura)||0,dias=parseInt(d.dias)||30;
-  const resultados=tarifas.map(t=>{
-    const c=lpCalcTarifa(t,d,pm);
-    return{...c,ahorro:totalActual-c.total,ahorroAnual:((totalActual-c.total)/dias)*365};
-  }).sort((a,b)=>b.ahorro-a.ahorro);
-  return{...resultados[0],total_ib:totalActual,dias};
-}
-
-async function lpCalcularGas(d){
-  try{
-    const{data}=await _sb.from('preciosgas').select('precio_kwh').gte('fecha',d.fecha_inicio||'2026-01-01').lte('fecha',d.fecha_fin||'2026-01-31');
-    const pm=data&&data.length?data.reduce((a,b)=>a+parseFloat(b.precio_kwh),0)/data.length:parseFloat(d.precio_kwh_gas)||0;
-    const kwh=parseFloat(d.kwh_gas)||0,dias=parseInt(d.dias)||30;
-    const totalActual=parseFloat(d.total_factura)||0;
-    const peaje=0.018900,margen=0.011,hidro=0.00234,fijoMes=3.93;
-    const fijo=(fijoMes/30)*dias,consumo=kwh*(pm+peaje+margen+hidro);
-    const alq=parseFloat(d.alquiler_contador_euros)||0;
-    const totalG=(fijo+consumo+alq)*(1+IVA);
-    const ahorro=totalActual-totalG;
-    return{totalG,ahorro,ahorroAnual:(ahorro/dias)*365,total_ib:totalActual,dias,
-      tarifa:{nombre:'Gas Mercado'},fijo,consumo,ivaG:(fijo+consumo+alq)*IVA};
-  }catch{return null;}
-}
-
-// ANALIZAR
-document.getElementById('lp-btnAnalizar').addEventListener('click',async()=>{
-  const file=lpFileInput.files[0];
-  if(!file){alert('Por favor, sube tu factura en formato PDF.');return;}
-  if(!file.name.toLowerCase().endsWith('.pdf')){alert('Solo se aceptan archivos PDF.');return;}
-  if(file.size>5*1024*1024){alert('El PDF no puede superar 5 MB.');return;}
-  if(!document.getElementById('lp-acepto').checked){alert('Debes aceptar la política de privacidad para continuar.');return;}
-
-  lpShowStep(2);
-  const texts=['Leyendo tu factura...','Buscando la mejor tarifa del mercado...','Comparando precios...','Calculando tu ahorro...'];
-  let ti=0;
-  const ltEl=document.getElementById('lp-loadingText'),lbEl=document.getElementById('lp-loadingBarFill');
-  ltEl.textContent=texts[0];
-  const tInt=setInterval(()=>{ti=(ti+1)%texts.length;ltEl.textContent=texts[ti];},3000);
-  let prog=0;
-  const pInt=setInterval(()=>{prog+=2;if(prog<=100)lbEl.style.width=prog+'%';},200);
-  const minDelay=new Promise(r=>setTimeout(r,10000));
-  lpPdfBase64=await lpFileToBase64(file);
-  const apiP=fetch('/.netlify/functions/analizar',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({pdfBase64:lpPdfBase64})
-  }).then(r=>r.json()).catch(e=>({success:false,error:e.message}));
-  const[,result]=await Promise.all([minDelay,apiP]);
-  clearInterval(tInt);clearInterval(pInt);lbEl.style.width='100%';
-
-  if(!result.success||!result.data){
-    alert(result.error||'No pudimos analizar tu factura. Asegúrate de que es un PDF de factura de luz o gas.');
-    lpShowStep(1);return;
-  }
-  lpExtracted=result.data;
-  const esGas=lpTipo==='gas'||lpExtracted.tipo_factura==='gas';
-  lpCalcResult=esGas?await lpCalcularGas(lpExtracted):await lpCalcularMejorLuz(lpExtracted);
-
-  if(!lpCalcResult||lpCalcResult.ahorro<=0){
-    document.getElementById('lp-step3').innerHTML=`
-      <div style="text-align:center;padding:2rem 1rem">
-        <div style="font-size:2.5rem;margin-bottom:1rem">🎉</div>
-        <h3 style="font-family:var(--font-head);font-size:1.4rem;color:#4ade80;margin-bottom:0.65rem">¡No te la están colando!</h3>
-        <p style="font-size:0.85rem;color:rgba(255,255,255,0.55);max-width:320px;margin:0 auto 1.5rem;line-height:1.7">Tu tarifa actual ya es competitiva. No hemos encontrado nada más barato para tu perfil.</p>
-        <p style="font-size:0.75rem;color:rgba(255,255,255,0.25);max-width:300px;margin:0 auto 1.5rem;line-height:1.6">Los precios cambian cada mes. Vuelve a comprobarlo con tu próxima factura.</p>
-        <button onclick="lpShowStep(1)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);font-family:var(--font-body);font-size:0.78rem;padding:0.5rem 1.1rem;border-radius:999px;cursor:pointer">← Analizar otra factura</button>
-      </div>`;
-    lpShowStep(3);return;
+    return count > 0 ? { p: wp.p / count, l: wp.l / count, v: wp.v / count } : MARKET['2026-03'];
   }
 
-  const dias=parseInt(lpExtracted.dias)||30;
-  const totalActual=parseFloat(lpExtracted.total_factura)||0;
-  const ahorroAnual=Math.round(lpCalcResult.ahorroAnual||0);
-  window._lpAhorro=ahorroAnual;
-  document.getElementById('lp-totalColando').textContent=ahorroAnual+'';
-  const fmt=v=>(v!=null&&!isNaN(v))?parseFloat(v).toFixed(2).replace('.',',')+' €':'—';
-  const tbody=document.getElementById('lp-resultTableBody');
-  tbody.innerHTML='';
-  const rows=esGas?[ 
-    ['Consumo gas','—',fmt(lpCalcResult.consumo)],
-    ['Término fijo','—',fmt(lpCalcResult.fijo)],
-    ['IVA (21%)',fmt(lpExtracted.iva_euros),fmt(lpCalcResult.ivaG)],
-    ['Total factura',fmt(totalActual),fmt(lpCalcResult.totalG)]
-  ]:[
-    ['Término de potencia',fmt(lpExtracted.termino_potencia_euros),fmt(lpCalcResult.pot)],
-    ['Término de energía',fmt(lpExtracted.termino_energia_euros),fmt(lpCalcResult.ener)],
-    ['Imp. eléctrico',fmt(lpExtracted.impuesto_electrico_euros),fmt(lpCalcResult.impEl)],
-    ['Alquiler contador',fmt(lpExtracted.alquiler_contador_euros),fmt(lpCalcResult.alq)],
-    ['IVA',fmt(lpExtracted.iva_euros),fmt(lpCalcResult.ivaG)],
-    ['Total factura',fmt(totalActual),fmt(lpCalcResult.total||lpCalcResult.totalG)]
-  ];
-  rows.forEach(([c,tu,gana])=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${c}</td><td>${tu}</td><td class="${c==='Total factura'?'highlight':''}">${gana}</td>`;
-    tbody.appendChild(tr);
-  });
-  lpShowStep(3);
-});
-
-document.getElementById('lp-btnVolver').addEventListener('click',()=>lpShowStep(1));
-document.getElementById('lp-btnVolverStep4').addEventListener('click',()=>lpShowStep(3));
-
-document.getElementById('lp-btnSiguiente').addEventListener('click',()=>{
-  document.getElementById('lp-cups').value=lpExtracted?.cups||'';
-  document.getElementById('lp-direccion').value=lpExtracted?.direccion||'';
-  document.getElementById('lp-nombre').value=lpExtracted?.nombre_titular||'';
-  document.getElementById('lp-dni').value=lpExtracted?.dni||'';
-  const box=document.getElementById('lp-tarifaBox');
-  const nombre=lpCalcResult?.tarifa?.nombre||'Precio Mercado';
-  const ahorro=Math.round(lpCalcResult?.ahorroAnual||0);
-  const totalG=(lpCalcResult?.total||lpCalcResult?.totalG||0).toFixed(2).replace('.',',');
-  const totalA=parseFloat(lpExtracted?.total_factura||0).toFixed(2).replace('.',',');
-  box.innerHTML=`<span class="tarifa-rec-eyebrow">Tu tarifa recomendada</span><div class="tarifa-rec-nombre">Gana Energía — ${nombre}</div><div class="tarifa-rec-ahorro">Ahorro estimado: ${ahorro} €/año</div><div class="tarifa-rec-total">Factura estimada con Gana: ${totalG} € vs ${totalA} € actuales</div>`;
-  lpShowStep(4);
-});
-
-// VALIDACIÓN
-['lp-email','lp-telefono','lp-iban'].forEach(id=>{
-  const el=document.getElementById(id);
-  el.addEventListener('blur',()=>lpValidate(id));
-  if(id==='lp-telefono'){
-    el.addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,9);});
-  }
-});
-function lpValidate(id){
-  const v=document.getElementById(id).value;
-  const errMap={'lp-email':'lp-email-error','lp-telefono':'lp-tel-error','lp-iban':'lp-iban-error'};
-  const errEl=document.getElementById(errMap[id]);
-  if(id==='lp-email'){const ok=v.includes('@');if(errEl)errEl.textContent=ok?'':'Email no válido';return ok;}
-  if(id==='lp-telefono'){const ok=/^\d{9}$/.test(v);if(errEl)errEl.textContent=ok?'':'Debe tener 9 dígitos';return ok;}
-  if(id==='lp-iban'){const ok=v.replace(/\s/g,'').length===24;if(errEl)errEl.textContent=ok?'':'El IBAN debe tener 24 caracteres';return ok;}
-  return true;
-}
-
-// ENVÍO CONTRATACIÓN
-document.getElementById('lp-contratacionForm').addEventListener('submit',async e=>{
-  e.preventDefault();
-  if(!lpValidate('lp-email')||!lpValidate('lp-telefono')||!lpValidate('lp-iban'))return;
-  if(!document.getElementById('lp-autorizo').checked){alert('Debes autorizar la gestión del cambio para continuar.');return;}
-  const btn=e.target.querySelector('button[type="submit"]');
-  btn.disabled=true;btn.textContent='Enviando...';
-  try{
-    const email=document.getElementById('lp-email').value.trim();
-    const telefono=document.getElementById('lp-telefono').value.trim();
-    const iban=document.getElementById('lp-iban').value.trim();
-    const fd=lpExtracted||{};
-    const nombreNorm=(document.getElementById('lp-nombre').value||'').toUpperCase();
-    const cupsNorm=(fd.cups||'').replace(/\s/g,'').toUpperCase();
-
-    let cliente;
-    if(fd.dni){
-      const{data:exist}=await _sb.from('clientes').select('*').eq('dni',fd.dni).single();
-      cliente=exist;
+  async function cargarTarifasLuz() {
+    try {
+      const { data, error } = await _supabase
+        .from('tarifas_luz')
+        .select('*')
+        .eq('activa', true);
+      if (error || !data || data.length === 0) throw new Error('Sin datos');
+      return data;
+    } catch (e) {
+      console.warn('Usando tarifas fallback de luz:', e);
+      return [
+        { nombre: 'Precio Mercado', slug: 'mercado', tipo_energia: 'mercado', margen_dia: 0.167, potencia_p1_dia: 0.075903, potencia_p2_dia: 0.019880, energia_punta: null, energia_llano: null, energia_valle: null, energia_unica: null },
+        { nombre: 'Tramos Horarios', slug: 'tramos', tipo_energia: 'fija', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_punta: 0.181, energia_llano: 0.114, energia_valle: 0.09, energia_unica: null },
+        { nombre: '24 Horas', slug: '24horas', tipo_energia: 'unica', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_punta: null, energia_llano: null, energia_valle: null, energia_unica: 0.129 }
+      ];
     }
-    if(!cliente){
-      const{data:nuevo,error:cErr}=await _sb.from('clientes').insert({
-        nombre:nombreNorm,apellidos:'',dni:fd.dni||'',email,telefono
-      }).select().single();
-      if(cErr)throw cErr;
-      cliente=nuevo;
-    }
+  }
 
-    let facturaUrl=null;
-    if(lpPdfBase64){
-      try{
-        const blob=await fetch(`data:application/pdf;base64,${lpPdfBase64}`).then(r=>r.blob());
-        const fn=`${cliente.id}_${lpTipo}_${Date.now()}.pdf`;
-        const{error:upErr}=await _sb.storage.from('facturas').upload(fn,blob,{contentType:'application/pdf',upsert:false});
-        if(!upErr){
-          const{data:ud}=_sb.storage.from('facturas').getPublicUrl(fn);
-          facturaUrl=ud?.publicUrl||null;
+  async function obtenerPreciosLuzPeriodo(fechaInicio, fechaFin) {
+    try {
+      const { data, error } = await _supabase
+        .from('preciosluz')
+        .select('precio_punta, precio_llano, precio_valle')
+        .gte('fecha', fechaInicio)
+        .lte('fecha', fechaFin);
+
+      if (error || !data || data.length === 0) return null;
+
+      const avg = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+      return {
+        punta: avg(data.map(r => parseFloat(r.precio_punta))),
+        llano: avg(data.map(r => parseFloat(r.precio_llano))),
+        valle: avg(data.map(r => parseFloat(r.precio_valle)))
+      };
+    } catch (e) {
+      console.warn('No se pudieron obtener precios de luz de Supabase:', e);
+      return null;
+    }
+  }
+
+  async function obtenerPrecioGasPeriodo(fechaInicio, fechaFin) {
+    try {
+      const { data, error } = await _supabase
+        .from('preciosgas')
+        .select('precio_kwh')
+        .gte('fecha', fechaInicio)
+        .lte('fecha', fechaFin);
+
+      if (error || !data || data.length === 0) return null;
+
+      const avg = data.reduce((a, b) => a + parseFloat(b.precio_kwh), 0) / data.length;
+      return avg;
+    } catch (e) {
+      console.warn('No se pudieron obtener precios de gas de Supabase:', e);
+      return null;
+    }
+  }
+
+  function calcularConTarifa(tarifa, d, preciosMercadoReales) {
+    const p1kw = parseFloat(d.potencia_p1) || 0;
+    const p2kw = parseFloat(d.potencia_p2) || p1kw;
+    const dias = parseInt(d.dias) || 30;
+    const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
+    const pe = año >= 2026 ? PEAJE_EN_2026 : PEAJE_EN_2025;
+
+    const pot = (p1kw * tarifa.potencia_p1_dia * dias)
+              + (p2kw * tarifa.potencia_p2_dia * dias);
+
+    console.log('POTENCIA GANA:', {p1kw, p2kw, dias, p1_tarifa: tarifa.potencia_p1_dia, p2_tarifa: tarifa.potencia_p2_dia, pot_total: pot});
+
+    let ener = 0;
+    const ep = parseFloat(d.kwh_punta) || 0;
+    const el = parseFloat(d.kwh_llano) || 0;
+    const ev = parseFloat(d.kwh_valle) || 0;
+    const etotal = parseFloat(d.kwh_total) || (ep + el + ev);
+    const tieneHoraria = d.tiene_discriminacion_horaria !== false && (ep + el + ev) > 0;
+
+    if (tarifa.tipo_energia === 'mercado') {
+      if (preciosMercadoReales) {
+        // Precio OMIE puro — sumamos peajes BOE igual que tramos y 24H
+        if (tieneHoraria) {
+          ener = ep * (preciosMercadoReales.punta + pe.p)
+               + el * (preciosMercadoReales.llano + pe.l)
+               + ev * (preciosMercadoReales.valle + pe.v);
+        } else {
+          const avgMercado = (preciosMercadoReales.punta + preciosMercadoReales.llano + preciosMercadoReales.valle) / 3;
+          const avgPe = (pe.p + pe.l + pe.v) / 3;
+          ener = etotal * (avgMercado + avgPe);
         }
-      }catch{}
+      } else {
+        const precioCalculado = (d.termino_energia_euros && d.kwh_total && parseFloat(d.kwh_total) > 0)
+          ? parseFloat(d.termino_energia_euros) / parseFloat(d.kwh_total)
+          : null;
+        const precioUnico = parseFloat(d.precio_kwh_unico) || precioCalculado || 0;
+        const precioPunta = parseFloat(d.precio_kwh_punta) || precioUnico || 0;
+        const precioLlano = parseFloat(d.precio_kwh_llano) || precioUnico || 0;
+        const precioValle = parseFloat(d.precio_kwh_valle) || precioUnico || 0;
+        if (tieneHoraria) {
+          ener = ep * precioPunta + el * precioLlano + ev * precioValle;
+        } else {
+          ener = etotal * precioUnico;
+        }
+      }
+
+    } else if (tarifa.tipo_energia === 'fija') {
+      if (tieneHoraria) {
+        ener = ep * (tarifa.energia_punta + pe.p)
+             + el * (tarifa.energia_llano + pe.l)
+             + ev * (tarifa.energia_valle + pe.v);
+      } else {
+        const avgTarifa = (tarifa.energia_punta + tarifa.energia_llano + tarifa.energia_valle) / 3;
+        const avgPe = (pe.p + pe.l + pe.v) / 3;
+        ener = etotal * (avgTarifa + avgPe);
+      }
+
+    } else if (tarifa.tipo_energia === 'unica') {
+      const avgPe = (pe.p + pe.l + pe.v) / 3;
+      ener = etotal * (tarifa.energia_unica + avgPe);
     }
 
-    let insertarContrato=true;
-    if(cupsNorm){
-      const{data:dup}=await _sb.from('contratos').select('id').eq('cups',cupsNorm).limit(1);
-      if(dup&&dup.length>0)insertarContrato=false;
-    }
+    const margen = tarifa.margen_dia * dias;
+    const bonoFallback = (año >= 2026 ? BONO_2026 : BONO_2025) * dias;
+    const bonoG = (d.bono_social != null && parseFloat(d.bono_social) > 0)
+      ? parseFloat(d.bono_social)
+      : bonoFallback;
 
-    if(insertarContrato){
-      const{error:coErr}=await _sb.from('contratos').insert({
-        cliente_id:cliente.id,tipo:lpTipo,cups:cupsNorm,
-        direccion:(fd.direccion||'').toUpperCase(),
-        comercializadora_actual:(fd.comercializadora||'').toUpperCase(),
-        tarifa_actual:(fd.tarifa||'').toUpperCase(),
-        potencia_p1:fd.potencia_p1||null,potencia_p2:fd.potencia_p2||null,
-        kwh_punta:fd.kwh_punta||null,kwh_llano:fd.kwh_llano||null,kwh_valle:fd.kwh_valle||null,
-        total_factura:fd.total_factura||null,ahorro_estimado:window._lpAhorro||null,
-        iban_cargo:iban,iban_bono:'',estado:'pendiente_contrato',factura_url:facturaUrl
-      });
-      if(coErr)throw coErr;
-    }
+    const base = pot + ener + margen + bonoG;
+    const impEl = base * IMP_ELEC;
+    const alq = parseFloat(d.alquiler_contador_euros) || (ALQ_DIA * dias);
+    const sub = base + impEl + alq;
+    const ivaG = sub * IVA;
+    const total = sub + ivaG;
 
-    await fetch('/.netlify/functions/enviar-contrato',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nombre_titular:fd.nombre_titular||'',tipo:lpTipo,cups:fd.cups||''})
-    }).catch(()=>{});
+    console.log('CALCULO COMPLETO:', {pot, ener, margen, bonoG, impEl, alq, ivaG, total, tipo: tarifa.tipo_energia});
 
-    document.getElementById('lp-ahorroConfirm').textContent=window._lpAhorro||'—';
-    lpShowStep(5);
-  }catch(err){
-    console.error(err);
-    btn.disabled=false;btn.textContent='Solicitar cambio de tarifa gratis';
-    alert('Error al enviar. Por favor inténtalo de nuevo.');
+    return { total, pot, ener, margen, bonoG, alq, impEl, ivaG, tarifa };
   }
-});
+
+  async function calcularMejorTarifaLuz(d) {
+    const tarifas = await cargarTarifasLuz();
+    const totalActual = parseFloat(d.total_factura) || 0;
+    const dias = parseInt(d.dias) || 30;
+
+    const preciosMercado = await obtenerPreciosLuzPeriodo(
+      d.fecha_inicio || '2026-01-01',
+      d.fecha_fin || '2026-01-31'
+    );
+
+    if (preciosMercado) {
+      console.log('Precios reales de mercado obtenidos de Supabase para el período:', preciosMercado);
+    } else {
+      console.warn('No hay precios en Supabase para este período, usando precio de la factura como fallback');
+    }
+
+    const resultados = tarifas.map(t => {
+      const calc = calcularConTarifa(t, d, preciosMercado);
+      return {
+        ...calc,
+        enG: calc.ener,
+        totalG: calc.total,
+        ahorro: totalActual - calc.total,
+        ahorroAnual: ((totalActual - calc.total) / dias) * 365,
+        total_ib: totalActual,
+        dias,
+        comer: d.comercializadora || 'Tu tarifa'
+      };
+    });
+
+    resultados.sort((a, b) => b.ahorro - a.ahorro);
+    window._todasLasTarifas = resultados;
+    return resultados[0];
+  }
+
+  async function cargarPreciosGas() {
+    try {
+      const { data, error } = await _supabase.from('precios_gas').select('*');
+      if (error || !data) return null;
+      const precios = {};
+      data.forEach(row => {
+        precios[row.segmento] = {
+          precio_mercado: parseFloat(row.precio_mercado),
+          margen_gana: parseFloat(row.margen_gana),
+          termino_fijo: parseFloat(row.termino_fijo)
+        };
+      });
+      return precios;
+    } catch (e) { return null; }
+  }
+
+  async function calcularAhorroGanaGas(d, precios) {
+    const precioMercadoSupabase = await obtenerPrecioGasPeriodo(
+      d.fecha_inicio || '2026-01-01',
+      d.fecha_fin || '2026-01-31'
+    );
+
+    const precioMercado = precioMercadoSupabase || parseFloat(d.precio_kwh_gas) ||
+      (d.termino_variable_euros && d.kwh_gas
+        ? parseFloat(d.termino_variable_euros) / parseFloat(d.kwh_gas)
+        : 0);
+
+    console.log('Precio mercado gas usado:', precioMercado, precioMercadoSupabase ? '(Supabase)' : '(factura fallback)');
+
+    const kwhGas = parseFloat(d.kwh_gas) || 0;
+    const dias = parseInt(d.dias) || 30;
+    const totalActual = parseFloat(d.total_gas_euros)
+      ? parseFloat(d.total_gas_euros) * 1.21
+      : parseFloat(d.total_factura) || 0;
+    const segmento = (d.segmento_gas || 'RL.1').toUpperCase();
+    const IMP_HIDRO = 0.00234;
+    const IVA = 0.21;
+
+    const fallback = {
+      'RL.1': { margen_gana: 0.011, termino_fijo: 3.93 },
+      'RL.2': { margen_gana: 0.006, termino_fijo: 8.11 },
+      'RL.3': { margen_gana: 0.004, termino_fijo: 18.82 }
+    };
+
+    const p = (precios && precios[segmento]) ? precios[segmento] : (fallback[segmento] || fallback['RL.1']);
+
+    // Término fijo Gana (€/mes convertido a días)
+    const fijoGana = (p.termino_fijo / 30) * dias;
+
+    // Alquiler: mismo que factura original
+    const alq = parseFloat(d.alquiler_contador_euros) || 0;
+
+    const PEAJES_GAS_BOE = {
+      'RL.1': 0.018900,
+      'RL.2': 0.013500,
+      'RL.3': 0.015760
+    };
+
+    const peajeGas = PEAJES_GAS_BOE[segmento] || PEAJES_GAS_BOE['RL.1'];
+
+    console.log('GAS peaje BOE usado:', peajeGas, 'segmento:', segmento);
+
+    // Consumo: precio MIBGAS + peaje red + margen Gana + impuesto hidrocarburos
+    const consumo = kwhGas * (precioMercado + peajeGas + p.margen_gana + IMP_HIDRO);
+
+    console.log('GAS desglose precio:', {
+      mibgas: precioMercado,
+      peaje: peajeGas,
+      margen: p.margen_gana,
+      hidro: IMP_HIDRO,
+      total_kwh: precioMercado + peajeGas + p.margen_gana + IMP_HIDRO
+    });
+
+    const base = fijoGana + consumo + alq;
+    const iva = base * IVA;
+    const totalGana = base + iva;
+    const ahorro = totalActual - totalGana;
+    const ahorroAnual = (ahorro / dias) * 365;
+
+    return {
+      totalG: totalGana,
+      ahorro,
+      ahorroAnual,
+      fijo: fijoGana,
+      consumo,
+      alq,
+      iva,
+      total_ib: totalActual,
+      dias,
+      segmento,
+      kwhGas,
+      precioMercado,
+      margenGana: p.margen_gana,
+      comer: d.comercializadora || 'Tu tarifa'
+    };
+  }
+
+  let currentTipo = 'luz';
+  window._tipoFactura = 'luz';
+  let extractedData = null;
+  let calcResult = null;
+  let lastPdfBase64 = null;
+
+  const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3'), document.getElementById('step4'), document.getElementById('step5'), document.getElementById('step6')];
+  window._step3OriginalHtml = document.getElementById('step3').innerHTML;
+
+  function volverAlPaso1() {
+    const factura = document.getElementById('factura');
+    if (factura) factura.value = '';
+    const fileNameEl = document.getElementById('fileName');
+    if (fileNameEl) { fileNameEl.textContent = ''; fileNameEl.style.display = 'none'; }
+    extractedData = null;
+    calcResult = null;
+    lastPdfBase64 = null;
+    showStep(1);
+    setTimeout(() => {
+      const formulario = document.getElementById('formulario');
+      if (formulario) window.scrollTo({ top: formulario.offsetTop - 100, behavior: 'smooth' });
+    }, 50);
+  }
+
+  function showStep(n) {
+    if (n === 1) {
+      const step3 = document.getElementById('step3');
+      if (step3 && !step3.querySelector('.result-container')) {
+        // step3 fue reemplazado con el mensaje de no tarifa, restaurar estructura original no es necesario
+        // solo aseguramos que se oculta
+      }
+    }
+    steps.forEach((s, i) => { s.classList.toggle('hidden', i + 1 !== n); });
+    const headerEls = document.querySelectorAll('.form-section .section-label, .form-section h2, .form-section .section-desc, .form-deco-line');
+    headerEls.forEach(el => {
+      el.style.display = (n === 3 || n === 4 || n === 5 || n === 6) ? 'none' : '';
+    });
+  }
+
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentTipo = btn.dataset.type;
+      window._tipoFactura = btn.dataset.type;
+      const isGas = btn.dataset.type === 'gas';
+      document.getElementById('btnIconLuz').style.display = isGas ? 'none' : 'inline';
+      document.getElementById('btnIconGas').style.display = isGas ? 'inline-flex' : 'none';
+    });
+  });
+
+  document.querySelectorAll('.step1-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.step1-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.step1-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+    });
+  });
+
+  const fileInput = document.getElementById('factura');
+  const fileNameEl = document.getElementById('fileName');
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) {
+      fileNameEl.textContent = '✓ ' + fileInput.files[0].name;
+      fileNameEl.style.display = 'block';
+    }
+  });
+
+  const fileDrop = document.getElementById('fileDrop');
+  fileDrop.addEventListener('dragover', (e) => { e.preventDefault(); fileDrop.style.borderColor = 'rgba(255,255,255,0.5)'; });
+  fileDrop.addEventListener('dragleave', () => { fileDrop.style.borderColor = ''; });
+  fileDrop.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileDrop.style.borderColor = '';
+    if (e.dataTransfer.files.length) {
+      fileInput.files = e.dataTransfer.files;
+      fileNameEl.textContent = '✓ ' + e.dataTransfer.files[0].name;
+      fileNameEl.style.display = 'block';
+    }
+  });
+
+  let recMode = null;
+  document.querySelectorAll('.rec-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.rec-option').forEach(o => o.classList.remove('selected'));
+      document.querySelectorAll('.rec-input-group').forEach(g => g.classList.remove('visible'));
+      opt.classList.add('selected');
+      recMode = opt.dataset.mode;
+      document.getElementById('rec-input-' + recMode).classList.add('visible');
+      document.getElementById('btnRecordatorio').style.display = 'block';
+    });
+  });
+
+  const recWhatsapp = document.getElementById('rec-whatsapp');
+  if (recWhatsapp) {
+    recWhatsapp.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 9);
+    });
+  }
+
+  const btnRecordatorio = document.getElementById('btnRecordatorio');
+  if (btnRecordatorio) {
+    btnRecordatorio.addEventListener('click', async () => {
+      if (!recMode) { alert('Elige cómo quieres que te avisemos.'); return; }
+      let contacto = '', errEl, ok = false;
+      if (recMode === 'email') {
+        contacto = (document.getElementById('rec-email').value || '').trim();
+        errEl = document.getElementById('rec-email-error');
+        ok = contacto.includes('@');
+        if (errEl) errEl.textContent = ok ? '' : 'Email no válido';
+      } else {
+        contacto = (document.getElementById('rec-whatsapp').value || '').trim();
+        errEl = document.getElementById('rec-whatsapp-error');
+        ok = /^\d{9}$/.test(contacto);
+        if (errEl) errEl.textContent = ok ? '' : 'Debe tener 9 dígitos';
+      }
+      if (!ok) return;
+      btnRecordatorio.disabled = true;
+      btnRecordatorio.textContent = 'Guardando...';
+      try {
+        await _supabase.from('recordatorios').insert({
+          canal: recMode,
+          contacto,
+          url_landing: window.location.href,
+          fuente: 'web-principal'
+        });
+      } catch (e) {
+        console.warn('Error guardando recordatorio:', e);
+      }
+      showStep(6);
+    });
+  }
+
+  function fileToBase64(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => { const b = r.result.split(',')[1]; res(b || ''); };
+      r.onerror = rej;
+      r.readAsDataURL(file);
+    });
+  }
+
+  document.getElementById('btnAnalizar').addEventListener('click', async () => {
+    const file = fileInput.files[0];
+    if (!file) {
+      alert('Por favor, sube tu factura en formato PDF.');
+      return;
+    }
+    if (!file.type.includes('pdf') && !file.name.toLowerCase().endsWith('.pdf')) {
+      alert('Por favor, sube tu factura en formato PDF.');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      alert('El PDF no puede superar 5 MB.');
+      return;
+    }
+    if (!document.getElementById('acepto_privacidad').checked) {
+      alert('Debes aceptar la política de privacidad para continuar.');
+      return;
+    }
+
+    showStep(2);
+
+    const loadingTexts = ['Analizando tu factura', 'Buscando la mejor tarifa disponible en el mercado', 'Comparando tu tarifa con la mejor tarifa del mercado', 'Extrayendo conclusiones'];
+    let textIdx = 0;
+    const loadingTextEl = document.getElementById('loadingText');
+    const loadingBarFill = document.getElementById('loadingBarFill');
+    loadingTextEl.textContent = loadingTexts[0];
+
+    const textInterval = setInterval(() => {
+      textIdx = (textIdx + 1) % loadingTexts.length;
+      loadingTextEl.textContent = loadingTexts[textIdx];
+    }, 3333);
+
+    const minDelay = new Promise(r => setTimeout(r, 10000));
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+      progress += 2;
+      if (progress <= 100) loadingBarFill.style.width = progress + '%';
+    }, 200);
+
+    const base64pdf = await fileToBase64(file);
+    const apiPromise = fetch('/.netlify/functions/analizar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pdfBase64: base64pdf })
+    }).then(r => r.json()).catch(err => ({ success: false, error: err.message }));
+
+    const [, result] = await Promise.all([minDelay, apiPromise]);
+    console.log('DATOS EXTRAÍDOS:', JSON.stringify(result.data, null, 2));
+    clearInterval(textInterval);
+    clearInterval(progressInterval);
+    loadingBarFill.style.width = '100%';
+
+    
+    if (!result.success || !result.data) {
+      alert(result.error || 'No pudimos analizar tu factura. Intenta con otro PDF.');
+      showStep(1);
+      return;
+    }
+
+    extractedData = result.data;
+    window._facturaData = extractedData;
+    if (currentTipo === 'gas' || extractedData.tipo_factura === 'gas') {
+      const precios = await cargarPreciosGas();
+      calcResult = await calcularAhorroGanaGas(extractedData, precios);
+    } else {
+      calcResult = await calcularMejorTarifaLuz(extractedData);
+    }
+    lastPdfBase64 = base64pdf;
+
+    if (window._step3OriginalHtml) {
+      document.getElementById('step3').innerHTML = window._step3OriginalHtml;
+    }
+
+    if (calcResult.ahorro <= 0) {
+      document.getElementById('step3').innerHTML = `
+<div style="text-align:center; padding: 2.5rem 1rem;">
+  <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+  <h3 style="font-family: var(--font-head); font-size: 1.6rem; color: #4ade80; margin-bottom: 0.75rem; font-weight: 600; line-height: 1.3;">
+    ¡Enhorabuena! No te la están colando
+  </h3>
+  <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); max-width: 360px; margin: 0 auto 0.5rem; line-height: 1.7; font-weight: 300;">
+    Tu tarifa actual es buena. Hemos comparado tu factura con las mejores tarifas disponibles hoy en el mercado y no hemos encontrado nada más barato para tu perfil de consumo.
+  </p>
+  <p style="font-size: 0.78rem; color: rgba(255,255,255,0.3); max-width: 320px; margin: 0 auto 2rem; line-height: 1.6;">
+    Los precios cambian cada mes. Vuelve a comprobarlo cuando recibas tu próxima factura.
+  </p>
+  <button type="button" id="btnVolverNoTarifa" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);font-family:var(--font-body);font-size:0.78rem;font-weight:500;padding:0.55rem 1.2rem;border-radius:999px;cursor:pointer;">← Analizar otra factura</button>
+</div>
+`;
+      showStep(3);
+
+      setTimeout(() => {
+        const btnVolverNoTarifa = document.getElementById('btnVolverNoTarifa');
+        if (btnVolverNoTarifa) btnVolverNoTarifa.addEventListener('click', volverAlPaso1);
+      }, 0);
+      return;
+    }
+
+    const isGas = currentTipo === 'gas' || extractedData.tipo_factura === 'gas';
+
+    const dias = parseInt(extractedData.dias) || 30;
+    const totalFacturaReal = parseFloat(extractedData.total_factura) || 0;
+    const totalElec = isGas
+      ? (extractedData.total_electricidad_euros
+        ? parseFloat(extractedData.total_electricidad_euros) * 1.21
+        : calcResult.total_ib)
+      : totalFacturaReal;
+
+    const fmtEur = (n) => parseFloat(n).toFixed(2).replace('.', ',') + ' €';
+    const ahorroEnFactura = totalFacturaReal - (calcResult.total ?? calcResult.totalG);
+    const ahorroAnualReal = Math.round((ahorroEnFactura / dias) * 365);
+    const totalColandoAnual = ahorroAnualReal;
+    window._ahorroEstimado = ahorroAnualReal;
+
+    document.getElementById('resultTotalColandoAnual').textContent = totalColandoAnual + ' €';
+
+    const tbody = document.getElementById('resultTableBody');
+    tbody.innerHTML = '';
+    const fmt = (v) => (v != null && !isNaN(v)) ? parseFloat(v).toFixed(2).replace('.', ',') + ' €' : '—';
+    if (isGas) {
+      const rows = [
+        ['Segmento', calcResult.segmento, calcResult.segmento],
+        ['Consumo (' + calcResult.kwhGas + ' kWh)', '—', fmtEur(calcResult.consumo)],
+        ['Término fijo', '—', fmtEur(calcResult.fijo)],
+        ['IVA (21%)', fmt(extractedData.iva_euros), fmtEur(calcResult.iva)],
+        ['Total factura', fmtEur(totalElec), fmtEur(calcResult.totalG)]
+      ];
+      rows.forEach(([c, tu, gana]) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}">${gana}</td>`;
+        tbody.appendChild(tr);
+      });
+    } else {
+      const rows = [
+        ['Término de potencia', fmt(extractedData.termino_potencia_euros), fmtEur(calcResult.pot)],
+        ['Término de energía', fmt(extractedData.termino_energia_euros), fmtEur(calcResult.ener)],
+        ['Imp. eléctrico', fmt(extractedData.impuesto_electrico_euros), fmtEur(calcResult.impEl)],
+        ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
+        ['IVA', fmt(extractedData.iva_euros), fmtEur(calcResult.ivaG)],
+      ];
+      if (extractedData.detalle_servicios && extractedData.detalle_servicios.length > 0) {
+        extractedData.detalle_servicios.forEach(s => {
+          const prop = (parseFloat(s.importe_mes) || 0) * dias / 30;
+          rows.push([s.nombre || 'Servicio', fmtEur(prop), '—']);
+        });
+      }
+      rows.push(['Total factura', fmtEur(totalFacturaReal), fmtEur(calcResult.totalG)]);
+      rows.forEach(([c, tu, gana]) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}">${gana}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    showStep(3);
+  });
+
+  document.getElementById('formulario').addEventListener('click', (e) => {
+    if (e.target.closest('#btnVolver')) volverAlPaso1();
+  });
+
+  document.getElementById('formulario').addEventListener('click', (e) => {
+    // Botón "Ver mi tarifa recomendada" en paso 3
+    if (e.target.closest('#btnSiguiente')) {
+      const setExtracted = (el, val, canEdit) => {
+        el.value = val || '';
+        el.readOnly = !canEdit;
+        el.classList.toggle('extracted-field', !canEdit);
+        el.classList.toggle('editable', canEdit);
+      };
+      const hasCups = extractedData && extractedData.cups;
+      const hasDir = extractedData && extractedData.direccion;
+      const hasNombre = extractedData && extractedData.nombre_titular;
+      setExtracted(document.getElementById('cups'), extractedData?.cups || '', !hasCups);
+      setExtracted(document.getElementById('direccion'), extractedData?.direccion || '', !hasDir);
+      setExtracted(document.getElementById('nombre_titular'), extractedData?.nombre_titular || '', !hasNombre);
+      setExtracted(document.getElementById('dni'), extractedData?.dni || '', false);
+      document.getElementById('iban_cargo').value = '';
+      document.getElementById('telefono').value = '';
+      document.getElementById('email').value = '';
+      ['iban_cargo_error', 'telefono_error', 'email_error'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '';
+      });
+
+      // Mostrar tarifa recomendada
+      const box = document.getElementById('tarifaRecomendadaBox');
+      if (box && calcResult) {
+        const nombreTarifa = calcResult.tarifa?.nombre || 'Precio Mercado';
+        const totalGana = (calcResult.total || calcResult.totalG || 0).toFixed(2).replace('.', ',');
+        const ahorro = Math.round(calcResult.ahorroAnual || 0);
+        box.innerHTML = `
+        <span class="tarifa-rec-label">Tu tarifa recomendada</span>
+        <div class="tarifa-rec-nombre">Gana Energía — ${nombreTarifa}</div>
+        <div class="tarifa-rec-ahorro">Ahorro estimado: ${ahorro} €/año</div>
+        <div class="tarifa-rec-total">Factura estimada con Gana: ${totalGana} € (vs ${parseFloat(extractedData?.total_factura || 0).toFixed(2).replace('.', ',')} € actuales)</div>
+      `;
+      }
+      showStep(4);
+    }
+  });
+
+  const btnVolverStep4 = document.getElementById('btnVolverStep4');
+  if (btnVolverStep4) btnVolverStep4.addEventListener('click', () => showStep(3));
+
+  const IBAN_ERR_MSG = 'El IBAN debe tener 24 caracteres';
+  const TEL_ERR_MSG = 'El teléfono debe tener 9 dígitos';
+  const EMAIL_ERR_MSG = 'El email no es válido';
+
+  function ibanNonSpaceLen(v) {
+    return (v || '').replace(/\s/g, '').length;
+  }
+
+  function setContratacionFieldError(spanId, message) {
+    const span = document.getElementById(spanId);
+    if (span) span.textContent = message || '';
+  }
+
+  function validateIbanCargo() {
+    const ok = ibanNonSpaceLen(document.getElementById('iban_cargo')?.value) === 24;
+    setContratacionFieldError('iban_cargo_error', ok ? '' : IBAN_ERR_MSG);
+    return ok;
+  }
+
+  function validateTelefono() {
+    const v = document.getElementById('telefono')?.value || '';
+    const ok = /^\d{9}$/.test(v);
+    setContratacionFieldError('telefono_error', ok ? '' : TEL_ERR_MSG);
+    return ok;
+  }
+
+  function validateEmailContratacion() {
+    const v = (document.getElementById('email')?.value || '').trim();
+    const ok = v.includes('@');
+    setContratacionFieldError('email_error', ok ? '' : EMAIL_ERR_MSG);
+    return ok;
+  }
+
+  (function bindContratacionFieldValidation() {
+    const ibanC = document.getElementById('iban_cargo');
+    const tel = document.getElementById('telefono');
+    const em = document.getElementById('email');
+    if (!ibanC || !tel || !em) return;
+    ['input', 'blur'].forEach((evt) => {
+      ibanC.addEventListener(evt, validateIbanCargo);
+      em.addEventListener(evt, validateEmailContratacion);
+    });
+    tel.addEventListener('input', () => {
+      const digits = tel.value.replace(/\D/g, '').slice(0, 9);
+      tel.value = digits;
+      validateTelefono();
+    });
+    tel.addEventListener('blur', validateTelefono);
+  })();
+
+  document.getElementById('contratacionForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!validateIbanCargo() || !validateTelefono() || !validateEmailContratacion()) {
+      return;
+    }
+
+    const autorizo = document.getElementById('autorizo_cambio');
+    if (autorizo && !autorizo.checked) {
+      alert('Debes autorizar la gestión del cambio de comercializadora para continuar.');
+      return;
+    }
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    // 1. Recoger datos (formulario + factura analizada)
+    const facturaData = window._facturaData || {};
+    const cupsNorm = (facturaData.cups || '').replace(/\s/g, '').toUpperCase();
+    const direccionNorm = (facturaData.direccion || '').toUpperCase();
+    const comercNorm = (facturaData.comercializadora || '').toUpperCase();
+    const tarifaNorm = (facturaData.tarifa || '').toUpperCase();
+    const nombreNorm = (document.getElementById('nombre_titular')?.value || '').toUpperCase();
+    const email = document.getElementById('email').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const iban_cargo = document.getElementById('iban_cargo').value.trim();
+    const iban_bono = '';
+
+    /* Legacy Netlify: envío por email (desactivado; reactivar si hace falta)
+    const payload = {
+      tipo: currentTipo,
+      cups: document.getElementById('cups').value.trim(),
+      direccion: document.getElementById('direccion').value.trim(),
+      nombre_titular: document.getElementById('nombre_titular').value.trim(),
+      dni: document.getElementById('dni').value.trim(),
+      iban_cargo: iban_cargo,
+      iban_bono: iban_bono,
+      email: email,
+      pdfBase64: (lastPdfBase64 && lastPdfBase64.length < 5000000) ? lastPdfBase64 : ''
+    };
+    try {
+      const res = await fetch('/.netlify/functions/enviar-contrato', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || `Error ${res.status}: ${res.statusText}`);
+      showStep(5);
+    } catch (err) {
+      const msg = err.message || String(err);
+      alert('Error al enviar: ' + msg + '\n\nSi el problema continúa, revisa que RESEND_API_KEY esté configurada en Netlify.');
+    }
+    */
+
+    try {
+      // 2. Guardar en Supabase (clientes → contratos)
+      let clienteData;
+      const dniActual = facturaData.dni || '';
+
+      if (dniActual) {
+        // Buscar si ya existe un cliente con ese DNI
+        const { data: clienteExistente, error: buscarError } = await _supabase
+          .from('clientes')
+          .select('*')
+          .eq('dni', dniActual)
+          .single();
+
+        if (clienteExistente && !buscarError) {
+          // Cliente ya existe, lo reutilizamos
+          clienteData = clienteExistente;
+        } else {
+          // Cliente nuevo, lo creamos
+          const { data: nuevoCliente, error: clienteError } = await _supabase
+            .from('clientes')
+            .insert({
+              nombre: nombreNorm || '',
+              apellidos: '',
+              dni: dniActual,
+              email: email,
+              telefono: telefono,
+            })
+            .select()
+            .single();
+
+          if (clienteError) throw clienteError;
+          clienteData = nuevoCliente;
+        }
+      } else {
+        // Sin DNI, creamos cliente nuevo siempre
+        const { data: nuevoCliente, error: clienteError } = await _supabase
+          .from('clientes')
+          .insert({
+            nombre: nombreNorm || '',
+            apellidos: '',
+            dni: dniActual,
+            email: email,
+            telefono: telefono,
+          })
+          .select()
+          .single();
+
+        if (clienteError) throw clienteError;
+        clienteData = nuevoCliente;
+      }
+
+      const tipoActual = window._tipoFactura || 'luz';
+
+      let facturaUrl = null;
+      if (lastPdfBase64) {
+        try {
+          const pdfBlob = await fetch(`data:application/pdf;base64,${lastPdfBase64}`)
+            .then(r => r.blob());
+          const tipoFactura = window._tipoFactura || 'luz';
+          const fileName = `${clienteData.id}_${tipoFactura}_${Date.now()}.pdf`;
+          const { error: uploadError } = await _supabase
+            .storage
+            .from('facturas')
+            .upload(fileName, pdfBlob, {
+              contentType: 'application/pdf',
+              upsert: false
+            });
+          if (!uploadError) {
+            const { data: urlData } = _supabase
+              .storage
+              .from('facturas')
+              .getPublicUrl(fileName);
+            facturaUrl = urlData?.publicUrl || null;
+          }
+        } catch(e) {
+          console.warn('No se pudo subir el PDF:', e);
+        }
+      }
+
+      let insertarContrato = true;
+      if (cupsNorm) {
+        try {
+          const { data: cupsDuplicados, error: cupsDupError } = await _supabase
+            .from('contratos')
+            .select('id')
+            .eq('cups', cupsNorm)
+            .limit(1);
+
+          if (!cupsDupError && cupsDuplicados && cupsDuplicados.length > 0) {
+            insertarContrato = false;
+          }
+        } catch (cupsDupErr) {
+          // Si falla por error de red, continuamos e insertamos con normalidad
+        }
+      }
+
+      if (insertarContrato) {
+        const { error: contratoError } = await _supabase
+          .from('contratos')
+          .insert({
+            cliente_id: clienteData.id,
+            tipo: tipoActual,
+            cups: cupsNorm || '',
+            direccion: direccionNorm || '',
+            comercializadora_actual: comercNorm || '',
+            tarifa_actual: tarifaNorm || '',
+            potencia_p1: facturaData.potencia_p1 || null,
+            potencia_p2: facturaData.potencia_p2 || null,
+            kwh_punta: facturaData.kwh_punta || null,
+            kwh_llano: facturaData.kwh_llano || null,
+            kwh_valle: facturaData.kwh_valle || null,
+            total_factura: facturaData.total_factura || null,
+            ahorro_estimado: window._ahorroEstimado || null,
+            iban_cargo: iban_cargo,
+            iban_bono: iban_bono,
+            estado: 'pendiente_contrato',
+            factura_url: facturaUrl
+          });
+
+        if (contratoError) throw contratoError;
+      }
+
+      try {
+        await fetch('/.netlify/functions/enviar-contrato', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nombre_titular: facturaData.nombre_titular || '',
+            tipo: tipoActual,
+            cups: facturaData.cups || ''
+          })
+        });
+      } catch (emailErr) {
+        console.log('Error enviando email de aviso:', emailErr);
+      }
+
+      // 3. Mostrar paso 5 (confirmación)
+      showStep(5);
+
+    } catch (err) {
+      console.error('Error guardando en Supabase:', err);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar solicitud';
+      alert('Hubo un error al enviar tu solicitud. Por favor inténtalo de nuevo.');
+    }
+  });
+</script> <script>
+(function() {
+  function animateCount(el, target, duration, suffix) {
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { start = target; clearInterval(timer); }
+      el.textContent = Math.floor(start).toLocaleString('es-ES') + suffix;
+    }, 16);
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(document.getElementById('statFacturas'), 1000, 1200, '+');
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  const statsBar = document.querySelector('.stats-bar');
+  if (statsBar) observer.observe(statsBar);
+})();
 </script>
-</body>
-</html>
+<script>
+(function() {
+  const nav = document.querySelector('nav');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+})();
+</script>
+<script>
+(function() {
+  const steps = document.querySelectorAll('.cf-strip-step');
+  if (!steps.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('is-visible');
+    });
+  }, { threshold: 0.3 });
+  steps.forEach(step => observer.observe(step));
+})();
+</script>
+<script>
+(function() {
+  const formInner = document.querySelector('.form-inner');
+  if (!formInner) return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { formInner.classList.add('is-visible'); obs.disconnect(); } });
+  }, { threshold: 0.2 });
+  obs.observe(formInner);
+})();
+</script>
+
+</body> </html>
+
