@@ -171,7 +171,175 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 .footer-links { display: flex; gap: 1.5rem; }
 .footer-links a { font-size: 0.72rem !important; color: #94a3b8 !important; text-decoration: none !important; transition: color 0.2s !important; background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; animation: none !important; display: inline !important; }
 .footer-links a:hover { color: #475569 !important; }
-@media (max-width: 600px) { .footer-row-main { flex-direction: column; align-items: flex-start; } .footer-contact-row { flex-direction: column; align-items: flex-start; gap: 0.6rem; } .footer-row-bottom { flex-direction: column; } } /* ── MODAL 50€ ── */ .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; } .modal-overlay.is-open { display: flex; } .modal-card { background: #fff; max-width: 480px; width: 100%; border-radius: 12px; padding: 2rem; position: relative; border: 1px solid #e0ece4; box-shadow: 0 32px 64px -12px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04); } .modal-close { position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; border: none; border-radius: 50%; background: #f1f5f9; color: var(--muted); font-size: 1.1rem; cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 2; } .modal-close:hover { background: #e2e8f0; } .modal-header { background: linear-gradient(135deg, #eef5f0, #f8fdf9); margin: -2rem -2rem 1.5rem -2rem; padding: 1.75rem 2rem 1.5rem; border-bottom: 1px solid #e0ece4; border-radius: 12px 12px 0 0; } .modal-card h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; } .modal-subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; } .modal-header .modal-subtitle { margin-bottom: 0; } .modal-total { display: inline-flex; align-items: center; gap: 0.4rem; background: #1E6B3A; color: #fff; font-size: 0.82rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 999px; margin-top: 0.5rem; } .modal-total strong { font-weight: 700; } .modal-timeline { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.25rem; margin-bottom: 1.25rem; position: relative; } .modal-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2px; background: var(--border); z-index: 0; } .modal-hito { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; } .modal-hito-circle { width: 36px; height: 36px; border-radius: 50%; background: #1E6B3A; color: #fff; font-size: 0.65rem; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 0.4rem; box-shadow: 0 4px 12px rgba(30,107,58,0.3); transition: transform 0.2s; } .modal-hito-circle:hover { transform: scale(1.1); } .modal-hito-label { font-size: 0.7rem; color: var(--muted); text-align: center; } .modal-hito-amount { font-size: 0.95rem; font-weight: 600; color: #1E6B3A; } .modal-note { font-size: 0.75rem; color: var(--muted); line-height: 1.5; } /* ── RESPONSIVE ── */ @media (max-width: 600px) { /* NAV */ nav { padding: 0 1rem; height: 56px; justify-content: center; } nav a.cta-nav { display: none; } .logo img { height: 28px; } /* HERO */ .hero { padding: 2rem 1.25rem 3.5rem; } h1 { font-size: 2rem; letter-spacing: -0.02em; } .hero h1 { letter-spacing: -0.04em; } .hero-sub { font-size: 1.05rem; } .hero-cta-group { width: 100%; } .hero-cta { width: 100%; text-align: center; } .hero-cta-label { text-align: center; } .hero-badge { font-size: 0.75rem; } /* REWARD BANNER */ .reward-banner { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: nowrap; padding: 0.6rem 1rem; font-size: 0.82rem; } .hero-incentive-btn { flex-shrink: 0; } /* STATS */ .stats-bar { padding: 3rem 1.25rem; } .stat-single-number { font-size: 3rem; } .stat-single-label { font-size: 0.82rem; } /* SECCIONES */ .section { padding: 3rem 1.25rem; } h2 { font-size: 1.7rem; } .section-desc { font-size: 0.9rem; } } .field-error { color: #f87171; font-size: 0.72rem; margin-top: 0.35rem; } .field-error:empty { display: none; } .field-error:not(:empty) { display: block; } </style> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
+@media (max-width: 600px) { .footer-row-main { flex-direction: column; align-items: flex-start; } .footer-contact-row { flex-direction: column; align-items: flex-start; gap: 0.6rem; } .footer-row-bottom { flex-direction: column; } } /* ── MODAL 50€ ── */ .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; } .modal-overlay.is-open { display: flex; } .modal-card { background: #fff; max-width: 480px; width: 100%; border-radius: 12px; padding: 2rem; position: relative; border: 1px solid #e0ece4; box-shadow: 0 32px 64px -12px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04); } .modal-close { position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; border: none; border-radius: 50%; background: #f1f5f9; color: var(--muted); font-size: 1.1rem; cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 2; } .modal-close:hover { background: #e2e8f0; } .modal-header { background: linear-gradient(135deg, #eef5f0, #f8fdf9); margin: -2rem -2rem 1.5rem -2rem; padding: 1.75rem 2rem 1.5rem; border-bottom: 1px solid #e0ece4; border-radius: 12px 12px 0 0; } .modal-card h3 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; } .modal-subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; } .modal-header .modal-subtitle { margin-bottom: 0; } .modal-total { display: inline-flex; align-items: center; gap: 0.4rem; background: #1E6B3A; color: #fff; font-size: 0.82rem; font-weight: 500; padding: 0.35rem 0.9rem; border-radius: 999px; margin-top: 0.5rem; } .modal-total strong { font-weight: 700; } .modal-timeline { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.25rem; margin-bottom: 1.25rem; position: relative; } .modal-timeline::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 2px; background: var(--border); z-index: 0; } .modal-hito { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; } .modal-hito-circle { width: 36px; height: 36px; border-radius: 50%; background: #1E6B3A; color: #fff; font-size: 0.65rem; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 0.4rem; box-shadow: 0 4px 12px rgba(30,107,58,0.3); transition: transform 0.2s; } .modal-hito-circle:hover { transform: scale(1.1); } .modal-hito-label { font-size: 0.7rem; color: var(--muted); text-align: center; } .modal-hito-amount { font-size: 0.95rem; font-weight: 600; color: #1E6B3A; } .modal-note { font-size: 0.75rem; color: var(--muted); line-height: 1.5; } /* ── RESPONSIVE ── */ @media (max-width: 600px) { /* NAV */ nav { padding: 0 1rem; height: 56px; justify-content: center; } nav a.cta-nav { display: none; } .logo img { height: 28px; } /* HERO */ .hero { padding: 2rem 1.25rem 3.5rem; } h1 { font-size: 2rem; letter-spacing: -0.02em; } .hero h1 { letter-spacing: -0.04em; } .hero-sub { font-size: 1.05rem; } .hero-cta-group { width: 100%; } .hero-cta { width: 100%; text-align: center; } .hero-cta-label { text-align: center; } .hero-badge { font-size: 0.75rem; } /* REWARD BANNER */ .reward-banner { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: nowrap; padding: 0.6rem 1rem; font-size: 0.82rem; } .hero-incentive-btn { flex-shrink: 0; } /* STATS */ .stats-bar { padding: 3rem 1.25rem; } .stat-single-number { font-size: 3rem; } .stat-single-label { font-size: 0.82rem; } /* SECCIONES */ .section { padding: 3rem 1.25rem; } h2 { font-size: 1.7rem; } .section-desc { font-size: 0.9rem; } } .field-error { color: #f87171; font-size: 0.72rem; margin-top: 0.35rem; } .field-error:empty { display: none; } .field-error:not(:empty) { display: block; } 
+.loading-layout {
+  text-align: center;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+/* Anillo exterior giratorio */
+.loading-ring-outer {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+}
+.loading-ring-outer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(74,222,128,0.08);
+  animation: ring-pulse 2s ease-in-out infinite;
+}
+@keyframes ring-pulse {
+  0%,100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+/* SVG del anillo principal */
+.loading-svg {
+  width: 90px;
+  height: 90px;
+  transform: rotate(-90deg);
+}
+.loading-svg-track {
+  fill: none;
+  stroke: rgba(255,255,255,0.04);
+  stroke-width: 2;
+}
+.loading-svg-fill {
+  fill: none;
+  stroke: url(#spinGrad);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: dash-fill 2.4s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+@keyframes dash-fill {
+  0%   { stroke-dashoffset: 220; opacity: 0.4; }
+  50%  { stroke-dashoffset: 55;  opacity: 1;   }
+  100% { stroke-dashoffset: 220; opacity: 0.4; }
+}
+
+/* Icono central */
+.loading-center-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loading-center-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #4ade80;
+  animation: icon-breathe 2.4s ease-in-out infinite;
+}
+@keyframes icon-breathe {
+  0%,100% { opacity: 0.5; transform: scale(0.9); }
+  50%      { opacity: 1;   transform: scale(1.05); }
+}
+
+/* Puntos de datos flotantes */
+.loading-dots {
+  position: absolute;
+  inset: -16px;
+  pointer-events: none;
+}
+.loading-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #4ade80;
+  opacity: 0;
+}
+.loading-dot:nth-child(1) { top: 10%; left: 50%; animation: dot-orbit 2.4s ease-in-out infinite 0s; }
+.loading-dot:nth-child(2) { top: 50%; right: 8%; animation: dot-orbit 2.4s ease-in-out infinite 0.6s; }
+.loading-dot:nth-child(3) { bottom: 10%; left: 50%; animation: dot-orbit 2.4s ease-in-out infinite 1.2s; }
+.loading-dot:nth-child(4) { top: 50%; left: 8%; animation: dot-orbit 2.4s ease-in-out infinite 1.8s; }
+@keyframes dot-orbit {
+  0%,100% { opacity: 0; transform: scale(0.5); }
+  50%      { opacity: 1; transform: scale(1); }
+}
+
+/* Texto de estado */
+.loading-text {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  min-height: 1.2em;
+  letter-spacing: 0.04em;
+  animation: text-fade 0.4s ease;
+}
+@keyframes text-fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Barra de progreso */
+.loading-bar {
+  width: 200px;
+  height: 2px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 999px;
+  overflow: visible;
+  position: relative;
+}
+.loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1E6B3A, #4ade80);
+  border-radius: 999px;
+  width: 0%;
+  transition: width 0.2s linear;
+  position: relative;
+}
+.loading-bar-fill::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+}
+
+/* Chips de estado */
+.loading-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 320px;
+}
+.loading-chip {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  transition: color 0.4s, border-color 0.4s, box-shadow 0.4s;
+}
+.loading-chip.active {
+  color: #4ade80;
+  border-color: rgba(74,222,128,0.3);
+  box-shadow: 0 0 10px rgba(74,222,128,0.1);
+}
+
+</style> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
 <style>
 .step1-tabs{display:flex;background:rgba(255,255,255,0.05);border-radius:10px;padding:3px;gap:2px;border:1px solid rgba(255,255,255,0.08);margin-bottom:1.1rem}
 .step1-tab{flex:1;padding:0.6rem 0.5rem;border:none;background:transparent;color:rgba(255,255,255,0.55);font-family:var(--font-body);font-size:0.82rem;font-weight:500;border-radius:8px;cursor:pointer;transition:all 0.2s;text-align:center}
@@ -279,7 +447,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </section>
-<!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true"></div> <p class="section-label">Empieza ahora</p> <h2>¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step" id="step1" data-step="1"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="lp-fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>. Mis datos están seguros.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2"> <div class="loading-layout"> <div class="loading-ring"> <div class="loading-spinner"></div> </div> <p class="loading-text" id="loadingText">Leyendo factura</p> <div class="loading-bar"><div class="loading-bar-fill" id="loadingBarFill"></div></div> </div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Ver mi tarifa recomendada</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
+<!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true"></div> <p class="section-label">Empieza ahora</p> <h2>¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step" id="step1" data-step="1"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="lp-fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>. Mis datos están seguros.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="lp-step2" data-step="2"> <div class="loading-layout">
+  <div class="loading-ring-outer">
+    <svg class="loading-svg" viewBox="0 0 90 90">
+      <defs>
+        <linearGradient id="spinGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#1E6B3A"/>
+          <stop offset="100%" stop-color="#4ade80"/>
+        </linearGradient>
+      </defs>
+      <circle class="loading-svg-track" cx="45" cy="45" r="35"/>
+      <circle class="loading-svg-fill"  cx="45" cy="45" r="35"/>
+    </svg>
+    <div class="loading-center-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+      </svg>
+    </div>
+    <div class="loading-dots">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+    </div>
+  </div>
+
+  <p class="loading-text" id="lp-loadingText">Leyendo tu factura...</p>
+
+  <div class="loading-bar">
+    <div class="loading-bar-fill" id="lp-loadingBarFill"></div>
+  </div>
+
+  <div class="loading-chips">
+    <span class="loading-chip" id="lp-chip1">Extrayendo datos</span>
+    <span class="loading-chip" id="lp-chip2">Comparando tarifas</span>
+    <span class="loading-chip" id="lp-chip3">Calculando ahorro</span>
+  </div>
+</div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Ver mi tarifa recomendada</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
 <div class="flow-step hidden" id="step4" data-step="4">
   <button type="button" class="btn-volver" id="btnVolverStep4">← Volver</button>
 
@@ -726,7 +930,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   let calcResult = null;
   let lastPdfBase64 = null;
 
-  const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3'), document.getElementById('step4'), document.getElementById('step5'), document.getElementById('step6')];
+  const steps = [document.getElementById('step1'), document.getElementById('lp-step2'), document.getElementById('step3'), document.getElementById('step4'), document.getElementById('step5'), document.getElementById('step6')];
   window._step3OriginalHtml = document.getElementById('step3').innerHTML;
 
   function volverAlPaso1() {
@@ -931,14 +1135,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     const loadingTexts = ['Analizando tu factura', 'Buscando la mejor tarifa disponible en el mercado', 'Comparando tu tarifa con la mejor tarifa del mercado', 'Extrayendo conclusiones'];
     let textIdx = 0;
-    const loadingTextEl = document.getElementById('loadingText');
-    const loadingBarFill = document.getElementById('loadingBarFill');
+    const loadingTextEl = document.getElementById('lp-loadingText');
+    const loadingBarFill = document.getElementById('lp-loadingBarFill');
     loadingTextEl.textContent = loadingTexts[0];
 
     const textInterval = setInterval(() => {
       textIdx = (textIdx + 1) % loadingTexts.length;
       loadingTextEl.textContent = loadingTexts[textIdx];
     }, 3333);
+
+const chipIds = ['lp-chip1','lp-chip2','lp-chip3'];
+let chipIdx = 0;
+const chipInterval = setInterval(() => {
+  chipIds.forEach((id,i) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', i === chipIdx);
+  });
+  chipIdx = (chipIdx + 1) % chipIds.length;
+}, 3000);
 
     const minDelay = new Promise(r => setTimeout(r, 10000));
     let progress = 0;
@@ -958,6 +1172,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     console.log('DATOS EXTRAÍDOS:', JSON.stringify(result.data, null, 2));
     clearInterval(textInterval);
     clearInterval(progressInterval);
+    clearInterval(chipInterval);
     loadingBarFill.style.width = '100%';
 
     
