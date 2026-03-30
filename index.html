@@ -577,7 +577,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
   </div>
-</div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Cambiarme a la tarifa más barata</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
+</div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Quiero empezar a ahorrar</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
 <div class="flow-step hidden" id="step4" data-step="4">
   <button type="button" class="btn-volver" id="btnVolverStep4">← Volver</button>
 
@@ -1618,6 +1618,7 @@ fetch('/.netlify/functions/notificar-factura', {
       _supabase.from('leads_facturas').insert({
         nombre_titular: extractedData.nombre_titular || '',
         comercializadora_actual: extractedData.comercializadora || '',
+        provincia: extractedData.provincia || null,
         total_factura: parseFloat(extractedData.total_factura) || null,
         ahorro_estimado: Math.round((calcResult.ahorro / (parseInt(extractedData.dias) || 30)) * 365) || 0,
         tipo: currentTipo || 'luz',
@@ -1652,6 +1653,7 @@ fetch('/.netlify/functions/notificar-factura', {
     _supabase.from('leads_facturas').insert({
       nombre_titular: extractedData.nombre_titular || '',
       comercializadora_actual: extractedData.comercializadora || '',
+      provincia: extractedData.provincia || null,
       total_factura: parseFloat(extractedData.total_factura) || null,
       ahorro_estimado: ahorroAnualReal || 0,
       tipo: currentTipo || 'luz',
