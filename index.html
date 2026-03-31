@@ -1658,6 +1658,30 @@ function toggleFaqExtra() {
     clearInterval(progressInterval);
     setCircle(100);
 
+    // Subir PDF a Storage nada más analizar, sin esperar a contratación
+    if (base64pdf) {
+      try {
+        const pdfBlob = await fetch(`data:application/pdf;base64,${base64pdf}`).then(r => r.blob());
+        const tipoFactura = currentTipo || 'luz';
+        const fileName = `anonimo_${tipoFactura}_${Date.now()}.pdf`;
+        const { error: uploadError } = await _supabase
+          .storage
+          .from('facturas')
+          .upload(fileName, pdfBlob, { contentType: 'application/pdf', upsert: false });
+        if (!uploadError) {
+          const { data: urlData } = await _supabase
+            .storage
+            .from('facturas')
+            .createSignedUrl(fileName, 31536000);
+          window._facturaStorageUrl = urlData?.signedUrl || null;
+          window._facturaFileName = fileName;
+          console.log('PDF subido a Storage:', fileName);
+        }
+      } catch(e) {
+        console.warn('No se pudo subir el PDF en el paso 1:', e);
+      }
+    }
+
     
     if (!result.success || !result.data) {
       const esNoFactura = result.error && (
@@ -2023,28 +2047,27 @@ fetch('/.netlify/functions/notificar-factura', {
       const tipoActual = window._tipoFactura || 'luz';
 
       let facturaUrl = null;
-      if (lastPdfBase64) {
+      // Reutilizar el PDF ya subido en el paso 1, renombrarlo con el ID del cliente
+      if (window._facturaFileName) {
         try {
-          const pdfBlob = await fetch(`data:application/pdf;base64,${lastPdfBase64}`)
-            .then(r => r.blob());
           const tipoFactura = window._tipoFactura || 'luz';
-          const fileName = `${clienteData.id}_${tipoFactura}_${Date.now()}.pdf`;
-          const { error: uploadError } = await _supabase
+          const newFileName = `${clienteData.id}_${tipoFactura}_${Date.now()}.pdf`;
+          const { error: moveError } = await _supabase
             .storage
             .from('facturas')
-            .upload(fileName, pdfBlob, {
-              contentType: 'application/pdf',
-              upsert: false
-            });
-          if (!uploadError) {
+            .move(window._facturaFileName, newFileName);
+          if (!moveError) {
             const { data: urlData, error: urlError } = await _supabase
               .storage
               .from('facturas')
-              .createSignedUrl(fileName, 31536000);
+              .createSignedUrl(newFileName, 31536000);
             facturaUrl = (!urlError && urlData?.signedUrl) ? urlData.signedUrl : null;
+          } else {
+            facturaUrl = window._facturaStorageUrl || null;
           }
         } catch(e) {
-          console.warn('No se pudo subir el PDF:', e);
+          console.warn('No se pudo renombrar el PDF:', e);
+          facturaUrl = window._facturaStorageUrl || null;
         }
       }
 
