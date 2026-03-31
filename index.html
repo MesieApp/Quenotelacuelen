@@ -1589,9 +1589,18 @@ function toggleFaqExtra() {
           .from('facturas')
           .upload(fileName, pdfBlob, { contentType: 'application/pdf', upsert: false });
         if (!uploadError) {
-          window._facturaStorageUrl = fileName;
           window._facturaFileName = fileName;
-          console.log('PDF subido a Storage:', fileName);
+          window._facturaStorageUrl = fileName;
+          try {
+            const { data: urlData } = await _supabase
+              .storage
+              .from('facturas')
+              .createSignedUrl(fileName, 31536000);
+            window._facturaSignedUrl = urlData?.signedUrl || null;
+          } catch(e) {
+            window._facturaSignedUrl = null;
+          }
+          console.log('PDF subido a Storage:', fileName, window._facturaSignedUrl ? '(URL firmada OK)' : '(URL firmada fallida)');
         } else {
           console.warn('Error subiendo PDF:', uploadError);
         }
@@ -1677,7 +1686,8 @@ fetch('/.netlify/functions/notificar-factura', {
         tipo: currentTipo || 'luz',
         fuente: 'web',
         completado: false,
-        factura_url: window._facturaStorageUrl || null
+        factura_url: window._facturaSignedUrl || null,
+        factura_nombre: window._facturaFileName || null
       }).then(() => {}).catch(() => {});
       showStep(3);
 
@@ -1713,7 +1723,8 @@ fetch('/.netlify/functions/notificar-factura', {
       tipo: currentTipo || 'luz',
       fuente: 'web',
       completado: false,
-      factura_url: window._facturaStorageUrl || null
+      factura_url: window._facturaSignedUrl || null,
+      factura_nombre: window._facturaFileName || null
     }).then(() => {}).catch(() => {});
 
     document.getElementById('resultTotalColandoAnual').textContent = totalColandoAnual + ' €';
