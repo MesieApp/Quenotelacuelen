@@ -36,11 +36,9 @@
   :root { --green:#1E6B3A;--green-dk:#175430;--green-lt:#EBF5EF;--text:#0f172a;--muted:#64748b;--line:#e2e8f0;--font-head:'Lora',serif;--font-body:'DM Sans',system-ui,sans-serif; }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--font-body);color:var(--text);background:#f8fafc;line-height:1.7;-webkit-font-smoothing:antialiased}
-  nav{position:sticky;top:0;z-index:20;background:#0a1628;border-bottom:1px solid rgba(255,255,255,.08)}
-  .nav-inner{max-width:980px;margin:0 auto;padding:0.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
-  .nav-logo{color:#fff;text-decoration:none;font-weight:600;font-family:var(--font-head)}
-  .nav-cta{background:var(--green);color:#fff;text-decoration:none;font-size:0.82rem;font-weight:500;padding:0.45rem 1rem;border-radius:999px;transition:background 0.2s}
-  .nav-cta:hover{background:var(--green-dk)}
+  nav{position:sticky;top:0;z-index:100;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;min-height:56px;background:rgba(240,247,242,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background 0.3s ease,border-color 0.3s ease;border-bottom:1px solid transparent}
+  nav.scrolled{background:rgba(255,255,255,0.92);border-bottom:1px solid #E8ECEF}
+  .logo{font-family:var(--font-head);font-size:1.1rem;font-weight:600;color:var(--text);letter-spacing:-0.02em;text-decoration:none}
   .article-hero{background:linear-gradient(135deg,#0a1628 0%,#1a2e1a 100%);padding:3rem 1.5rem 2.5rem}
   .article-hero-inner{max-width:820px;margin:0 auto}
   .article-meta{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.25rem}
@@ -78,11 +76,9 @@
   </style>
 </head>
 <body>
+  <!-- NAV -->
   <nav>
-    <div class="nav-inner">
-      <a class="nav-logo" href="/">Quenotelacuelen.com</a>
-      <a class="nav-cta" href="https://www.quenotelacuelen.com/#formulario">Analizar mi factura gratis</a>
-    </div>
+    <a href="index.html" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Que no te la cuelen" style="height:61px;width:auto;"></a>
   </nav>
 
   <header class="article-hero">
@@ -202,5 +198,14 @@
       </div>
     </div>
   </footer>
+<script>
+(function() {
+  const nav = document.querySelector('nav');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
