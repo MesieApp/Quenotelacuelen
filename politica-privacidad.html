@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
   <title>Política de Privacidad | Quenotelacuelen.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --green: #1E6B3A; --navy: #0D1B2A; --muted: #64748B; --border: #E2E8F0; --bg: #FFFFFF; }
-    body { font-family: 'DM Sans', sans-serif; color: var(--navy); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
-    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; height: 68px; }
-    nav a { font-family: 'DM Sans', sans-serif; font-size: 0.875rem; color: var(--green); text-decoration: none; }
-    nav a:hover { text-decoration: underline; }
+    :root { --green: #1E6B3A; --navy: #0D1B2A; --muted: #64748B; --border: #E2E8F0; --bg: #FFFFFF; --primary: #1E6B3A; --text: #1a1a1a; --font-head: 'Lora', Georgia, serif; --font-body: 'DM Sans', sans-serif; }
+    body { font-family: var(--font-body); color: var(--navy); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    nav { position: sticky; top: 0; z-index: 100; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; min-height: 80px; background: rgba(240,247,242,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: background 0.3s ease, border-color 0.3s ease; border-bottom: 1px solid transparent; }
+    .logo { font-family: var(--font-head); font-size: 1.1rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; text-decoration: none; }
+    .logo img { display: block; height: 61px; width: auto; }
     .container { max-width: 780px; margin: 0 auto; padding: 4rem 2rem 6rem; }
     .doc-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.75rem; }
     h1 { font-family: 'Lora', Georgia, serif; font-size: 2.2rem; font-weight: 500; color: var(--navy); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
@@ -29,16 +30,34 @@
     .highlight p { margin: 0; font-size: 0.9rem; }
     .warning { background: #FFFBEB; border-left: 3px solid #B45309; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
     .warning p { margin: 0; font-size: 0.9rem; color: #92400E; }
-    footer { background: var(--navy); padding: 2rem; text-align: center; }
-    footer p { font-size: 0.78rem; color: #475569; margin: 0; }
-    footer a { color: #64748B; text-decoration: none; margin: 0 0.75rem; }
-    footer a:hover { color: #94A3B8; }
+    footer nav, footer nav * { background: transparent !important; animation: none !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; }
+    footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem; }
+    .footer-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+    .footer-row-main { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-logo { text-decoration: none; }
+    .footer-logo img { height: 44px; width: auto; display: block; opacity: 0.85; }
+    .footer-contact-row { display: flex; align-items: center; gap: 1.5rem; }
+    .footer-contact-row a { font-size: 0.8rem; color: #64748B; text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+    .footer-contact-row a:hover { color: #1E6B3A; }
+    .footer-contact-row svg { width: 13px; height: 13px; stroke: #1E6B3A; flex-shrink: 0; }
+    .footer-row-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 1.25rem; border-top: 1px solid #E2E8F0; }
+    .footer-copy { font-size: 0.7rem; color: #94a3b8; }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.72rem !important; color: #94a3b8 !important; text-decoration: none !important; transition: color 0.2s !important; background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; animation: none !important; display: inline !important; }
+    .footer-links a:hover { color: #475569 !important; }
+    @media (max-width: 600px) {
+      .footer-row-main { flex-direction: column; align-items: flex-start; }
+      .footer-contact-row { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+      .footer-row-bottom { flex-direction: column; align-items: flex-start; }
+      nav { padding: 0 1rem; min-height: 56px; justify-content: center; }
+      .logo img { height: 28px; width: auto; }
+    }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="index.html">← Volver a la web</a>
+  <a href="index.html" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Que no te la cuelen" style="height:61px;width:auto;"></a>
 </nav>
 
 <div class="container">
@@ -120,7 +139,15 @@
   <p>Quenotelacuelen.com no vende ni cede datos personales a terceros. No obstante, para la prestación del servicio puede ser necesario compartir datos con:</p>
   <ul>
     <li><strong>Comercializadoras de energía:</strong> Únicamente cuando el usuario decide contratar una nueva tarifa a través de nuestra recomendación y nos autoriza expresamente para ello. Solo se transferirán los datos estrictamente necesarios para formalizar el contrato.</li>
-    <li><strong>Proveedores tecnológicos:</strong> Servicios de alojamiento web, gestión de formularios y correo electrónico. Estos proveedores actúan como encargados del tratamiento bajo contrato y con las garantías adecuadas.</li>
+    <li>
+      <strong>Proveedores tecnológicos:</strong> Para la prestación del servicio utilizamos los siguientes encargados del tratamiento:
+      <ul>
+        <li><strong>Supabase Inc.</strong> (base de datos y almacenamiento de documentos). Política de privacidad: <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">https://supabase.com/privacy</a></li>
+        <li><strong>Anthropic PBC</strong> (análisis de facturas mediante inteligencia artificial). Los documentos aportados por el usuario son procesados por esta plataforma. Anthropic es una empresa estadounidense; la transferencia se realiza bajo las garantías adecuadas conforme al Art. 46 RGPD. Política de privacidad: <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer">https://www.anthropic.com/privacy</a></li>
+        <li><strong>Netlify Inc.</strong> (alojamiento web y ejecución de funciones del servicio). Política de privacidad: <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">https://www.netlify.com/privacy/</a></li>
+      </ul>
+      <p>Todos estos proveedores actúan como encargados del tratamiento bajo contrato y con las garantías adecuadas conforme al RGPD.</p>
+    </li>
     <li><strong>Administraciones públicas:</strong> Cuando exista obligación legal.</li>
   </ul>
   <p>Quenotelacuelen.com no realiza transferencias internacionales de datos fuera del Espacio Económico Europeo, salvo que los proveedores tecnológicos utilizados lo requieran, en cuyo caso se adoptarán las garantías adecuadas conforme al RGPD.</p>
@@ -157,6 +184,32 @@
 </div>
 
 <footer>
-  <p>
-    <a href="index.html">Inicio</a>
-    <a href="aviso-legal.htm
+  <div class="footer-inner">
+    <div class="footer-row-main">
+      <a href="index.html" class="footer-logo">
+        <img src="Logo_Quenotelacuelen.png" alt="Quenotelacuelen.com" />
+      </a>
+      <div class="footer-contact-row">
+        <a href="tel:+34623756420">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.1 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92v2z"/></svg>
+          +34 623 756 420
+        </a>
+        <a href="mailto:info@quenotelacuelen.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          info@quenotelacuelen.com
+        </a>
+      </div>
+    </div>
+    <div class="footer-row-bottom">
+      <p class="footer-copy">© 2026 Quenotelacuelen.com · Todos los derechos reservados.</p>
+      <nav class="footer-links">
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="politica-privacidad.html">Política de privacidad</a>
+        <a href="politica-cookies.html">Política de cookies</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
