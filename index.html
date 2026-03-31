@@ -1,12 +1,5 @@
 <!DOCTYPE html> <html lang="es"> <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-M5KN4NHD');</script>
-<!-- End Google Tag Manager -->
- <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <link rel="icon" type="image/png" href="Logo_Quenotelacuelen.png" fetchpriority="low"> <title>Comparador de tarifas de luz y gas gratis | Quenotelacuelen.com</title> <meta name="description" content="Sube tu factura y en segundos nuestra IA te dice cuánto estás pagando de más. Comparamos tu tarifa con las mejores del mercado. Gratis, sin compromiso, sin tecnicismos."> <meta name="robots" content="index, follow"> <link rel="canonical" href="https://www.quenotelacuelen.com/"><meta name="theme-color" content="#0a1628"><link rel="dns-prefetch" href="https://zxdkdephdsjqqqzmeeuq.supabase.co"><link rel="preconnect" href="https://zxdkdephdsjqqqzmeeuq.supabase.co"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta property="og:type" content="website">
+ <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" fetchpriority="low"> <title>Comparador de tarifas de luz y gas gratis | Quenotelacuelen.com</title> <meta name="description" content="Sube tu factura y en segundos nuestra IA te dice cuánto estás pagando de más. Comparamos tu tarifa con las mejores del mercado. Gratis, sin compromiso, sin tecnicismos."> <meta name="robots" content="index, follow"> <link rel="canonical" href="https://www.quenotelacuelen.com/"><meta name="theme-color" content="#0a1628"><link rel="dns-prefetch" href="https://zxdkdephdsjqqqzmeeuq.supabase.co"><link rel="preconnect" href="https://zxdkdephdsjqqqzmeeuq.supabase.co"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta property="og:type" content="website">
 <meta property="og:url" content="https://www.quenotelacuelen.com/">
 <meta property="og:title" content="¿Te la están colando en la factura de luz? Descúbrelo gratis en segundos">
 <meta property="og:description" content="Nuestra IA analiza tu factura y la compara con las mejores tarifas del mercado. Miles de españoles ya saben cuánto les estaban robando.">
@@ -416,12 +409,136 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 .rec-confirmation-text{font-size:0.85rem;color:rgba(255,255,255,0.55);max-width:360px;margin:0 auto;line-height:1.7;font-weight:300}
 </style>
 
+<style>
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: #0a1628;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+}
+.cookie-banner.is-visible { transform: translateY(0); }
+.cookie-banner-text {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+  max-width: 600px;
+  font-weight: 300;
+}
+.cookie-banner-text a {
+  color: rgba(255,255,255,0.65);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.cookie-banner-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+.cookie-btn-accept {
+  background: #1E6B3A;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.6rem 1.25rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cookie-btn-accept:hover { background: #175430; }
+.cookie-btn-reject {
+  background: transparent;
+  color: rgba(255,255,255,0.4);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  padding: 0.6rem 1.25rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.cookie-btn-reject:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); }
+@media (max-width: 600px) {
+  .cookie-banner { flex-direction: column; align-items: flex-start; padding: 1.25rem; }
+  .cookie-banner-actions { width: 100%; }
+  .cookie-btn-accept, .cookie-btn-reject { flex: 1; text-align: center; }
+}
+</style>
+
+<script>
+(function() {
+  const consent = localStorage.getItem('cookie_consent');
+  if (consent === 'accepted') {
+    loadGTM();
+  }
+  function loadGTM() {
+    if (window._gtmLoaded) return;
+    window._gtmLoaded = true;
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M5KN4NHD');
+  }
+  window._loadGTM = loadGTM;
+})();
+</script>
+
 </head> <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5KN4NHD"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
- <!-- NAV --> <nav> <a href="#" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Que no te la cuelen" style="height:61px;width:auto;"></a> </nav> <!-- HERO --> <section class="hero"> <div class="hero-inner"> <div class="hero-badge"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Servicio gratuito y sin compromiso </div> <h1>¿Estás pagando de más<br />en tu <em>factura de luz o gas</em>?</h1> <p class="hero-sub">Sube tu factura y en segundos nuestra IA te dirá si te la están colando</p> <div class="hero-actions"> <a href="#formulario" class="hero-cta">Sube tu factura ahora</a> </div> <p class="hero-note"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Tus datos están protegidos y no los compartimos con nadie </p> </div> <div class="hero-fade" aria-hidden="true"></div> </section> <!-- STATS BAR --> <div class="stats-bar"> <div class="stats-inner-single"> <div class="stat-single"> <span class="stat-single-number" id="statFacturas">1000+</span> <span class="stat-single-label">Facturas analizadas, de españoles que quisieron saber la verdad</span> </div> </div> </div> <!-- HOW IT WORKS --> <section id="como-funciona">
+<noscript id="gtm-noscript"></noscript>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-banner-text">
+    Usamos cookies propias y de terceros (Google Analytics vía Google Tag Manager) para analizar el uso del sitio y mejorar nuestro servicio. Puedes aceptarlas o rechazarlas. Más información en nuestra <a href="politica-cookies.html">Política de Cookies</a>.
+  </p>
+  <div class="cookie-banner-actions">
+    <button class="cookie-btn-reject" id="cookieBtnReject">Solo necesarias</button>
+    <button class="cookie-btn-accept" id="cookieBtnAccept">Aceptar cookies</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const banner = document.getElementById('cookieBanner');
+  const consent = localStorage.getItem('cookie_consent');
+
+  if (!consent) {
+    setTimeout(() => banner.classList.add('is-visible'), 800);
+  } else if (consent === 'accepted') {
+    const ns = document.getElementById('gtm-noscript');
+    if (ns) ns.innerHTML = '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5KN4NHD" height="0" width="0" style="display:none;visibility:hidden"></iframe>';
+  }
+
+  document.getElementById('cookieBtnAccept').addEventListener('click', () => {
+    localStorage.setItem('cookie_consent', 'accepted');
+    localStorage.setItem('cookie_consent_date', new Date().toISOString());
+    banner.classList.remove('is-visible');
+    window._loadGTM && window._loadGTM();
+    const ns = document.getElementById('gtm-noscript');
+    if (ns) ns.innerHTML = '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5KN4NHD" height="0" width="0" style="display:none;visibility:hidden"></iframe>';
+  });
+
+  document.getElementById('cookieBtnReject').addEventListener('click', () => {
+    localStorage.setItem('cookie_consent', 'rejected');
+    localStorage.setItem('cookie_consent_date', new Date().toISOString());
+    banner.classList.remove('is-visible');
+  });
+})();
+</script>
+ <!-- NAV --> <nav> <a href="index.html" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Que no te la cuelen" style="height:61px;width:auto;"></a> </nav> <!-- HERO --> <section class="hero"> <div class="hero-inner"> <div class="hero-badge"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Servicio gratuito y sin compromiso </div> <h1>¿Estás pagando de más<br />en tu <em>factura de luz o gas</em>?</h1> <p class="hero-sub">Sube tu factura y en segundos nuestra IA te dirá si te la están colando</p> <div class="hero-actions"> <a href="#formulario" class="hero-cta">Sube tu factura ahora</a> </div> <p class="hero-note"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Tus datos están protegidos y no los compartimos con nadie </p> </div> <div class="hero-fade" aria-hidden="true"></div> </section> <!-- STATS BAR --> <div class="stats-bar"> <div class="stats-inner-single"> <div class="stat-single"> <span class="stat-single-number" id="statFacturas">1000+</span> <span class="stat-single-label">Facturas analizadas, de españoles que quisieron saber la verdad</span> </div> </div> </div> <!-- HOW IT WORKS --> <section id="como-funciona">
   <div class="cf-inner">
     <div class="cf-strip">
 
@@ -505,7 +622,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </p>
 </div>
 </section>
-<!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true"></div> <p class="section-label">Empieza ahora</p> <h2>¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step" id="step1" data-step="1"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>. Mis datos están seguros.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2"> <div class="loading-layout">
+<!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true"></div> <p class="section-label">Empieza ahora</p> <h2>¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step" id="step1" data-step="1"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>.</span> </label> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_tratamiento_pdf" name="acepto_tratamiento_pdf" /> <span>Autorizo expresamente el tratamiento de los datos personales contenidos en el documento aportado (nombre, dirección, CUPS y datos de consumo) con la finalidad exclusiva de analizar mi factura y ofrecerme una comparativa de tarifas, conforme a la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a>.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2"> <div class="loading-layout">
   <div class="loading-grid">
 
     <!-- Cuadrante 1: arriba izquierda -->
@@ -927,7 +1044,7 @@ function toggleFaqExtra() {
 <!-- FOOTER --> <footer>
   <div class="footer-inner">
     <div class="footer-row-main">
-      <a href="#" class="footer-logo">
+      <a href="index.html" class="footer-logo">
         <img src="Logo_Quenotelacuelen.png" alt="Quenotelacuelen.com" />
       </a>
       <div class="footer-contact-row">
@@ -1470,6 +1587,10 @@ function toggleFaqExtra() {
       alert('Debes aceptar la política de privacidad para continuar.');
       return;
     }
+    if (!document.getElementById('acepto_tratamiento_pdf').checked) {
+      alert('Debes autorizar el tratamiento de los datos de tu factura para poder analizarla.');
+      return;
+    }
 
     showStep(2);
     const circumference = 376;
@@ -1916,11 +2037,11 @@ fetch('/.netlify/functions/notificar-factura', {
               upsert: false
             });
           if (!uploadError) {
-            const { data: urlData } = _supabase
+            const { data: urlData, error: urlError } = await _supabase
               .storage
               .from('facturas')
-              .getPublicUrl(fileName);
-            facturaUrl = urlData?.publicUrl || null;
+              .createSignedUrl(fileName, 31536000);
+            facturaUrl = (!urlError && urlData?.signedUrl) ? urlData.signedUrl : null;
           }
         } catch(e) {
           console.warn('No se pudo subir el PDF:', e);
