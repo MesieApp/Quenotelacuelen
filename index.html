@@ -1589,13 +1589,11 @@ function toggleFaqExtra() {
           .from('facturas')
           .upload(fileName, pdfBlob, { contentType: 'application/pdf', upsert: false });
         if (!uploadError) {
-          const { data: urlData } = await _supabase
-            .storage
-            .from('facturas')
-            .createSignedUrl(fileName, 31536000);
-          window._facturaStorageUrl = urlData?.signedUrl || null;
+          window._facturaStorageUrl = fileName;
           window._facturaFileName = fileName;
           console.log('PDF subido a Storage:', fileName);
+        } else {
+          console.warn('Error subiendo PDF:', uploadError);
         }
       } catch(e) {
         console.warn('No se pudo subir el PDF en el paso 1:', e);
@@ -1678,7 +1676,8 @@ fetch('/.netlify/functions/notificar-factura', {
         ahorro_estimado: Math.round((calcResult.ahorro / (parseInt(extractedData.dias) || 30)) * 365) || 0,
         tipo: currentTipo || 'luz',
         fuente: 'web',
-        completado: false
+        completado: false,
+        factura_url: window._facturaStorageUrl || null
       }).then(() => {}).catch(() => {});
       showStep(3);
 
@@ -1713,7 +1712,8 @@ fetch('/.netlify/functions/notificar-factura', {
       ahorro_estimado: ahorroAnualReal || 0,
       tipo: currentTipo || 'luz',
       fuente: 'web',
-      completado: false
+      completado: false,
+      factura_url: window._facturaStorageUrl || null
     }).then(() => {}).catch(() => {});
 
     document.getElementById('resultTotalColandoAnual').textContent = totalColandoAnual + ' €';
