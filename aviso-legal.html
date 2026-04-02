@@ -59,8 +59,33 @@
       .logo img { height: 28px; width: auto; }
     }
   </style>
+<script>
+(function() {
+  const consent = localStorage.getItem('cookie_consent');
+  if (consent === 'accepted') loadGTM();
+  function loadGTM() {
+    if (window._gtmLoaded) return;
+    window._gtmLoaded = true;
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M5KN4NHD');
+  }
+  window._loadGTM = loadGTM;
+})();
+</script>
 </head>
 <body>
+<noscript id="gtm-noscript"></noscript>
+<script>
+(function() {
+  if (localStorage.getItem('cookie_consent') === 'accepted') {
+    var ns = document.getElementById('gtm-noscript');
+    if (ns) ns.innerHTML = '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5KN4NHD" height="0" width="0" style="display:none;visibility:hidden"></iframe>';
+  }
+})();
+</script>
 
 <nav>
   <a href="index.html" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Que no te la cuelen" style="height:61px;width:auto;"></a>
