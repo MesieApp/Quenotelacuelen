@@ -1138,18 +1138,27 @@ function toggleFaqExtra() {
 
   async function cargarTarifasLuz() {
     try {
-      const { data, error } = await _supabase
-        .from('tarifas_luz')
-        .select('*')
-        .eq('activa', true);
-      if (error || !data || data.length === 0) throw new Error('Sin datos');
-      return data;
+      const [resGana, resBuala] = await Promise.all([
+        _supabase.from('tarifas_luz_gana').select('*').eq('activa', true),
+        _supabase.from('tarifas_luz_buala').select('*').eq('activa', true)
+      ]);
+
+      const tarifasGana = (resGana.data || []).map(t => ({ ...t, comercializadora: 'Gana Energía' }));
+      const tarifasBuala = (resBuala.data || []).map(t => ({ ...t, comercializadora: 'Buala Energía' }));
+
+      const todas = [...tarifasGana, ...tarifasBuala];
+
+      if (todas.length === 0) throw new Error('Sin datos');
+      return todas;
+
     } catch (e) {
       console.warn('Usando tarifas fallback de luz:', e);
       return [
-        { nombre: 'Precio Mercado', slug: 'mercado', tipo_energia: 'mercado', margen_dia: 0.167, potencia_p1_dia: 0.075903, potencia_p2_dia: 0.019880, energia_punta: null, energia_llano: null, energia_valle: null, energia_unica: null },
-        { nombre: 'Tramos Horarios', slug: 'tramos', tipo_energia: 'fija', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_punta: 0.181, energia_llano: 0.114, energia_valle: 0.09, energia_unica: null },
-        { nombre: '24 Horas', slug: '24horas', tipo_energia: 'unica', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_punta: null, energia_llano: null, energia_valle: null, energia_unica: 0.129 }
+        { nombre: 'Precio Mercado', slug: 'mercado', tipo_energia: 'mercado', margen_dia: 0.167, potencia_p1_dia: 0.075903, potencia_p2_dia: 0.019880, energia_unica: null, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' },
+        { nombre: 'Tramos Horarios', slug: 'tramos', tipo_energia: 'fija', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_punta: 0.181, energia_llano: 0.114, energia_valle: 0.09, energia_unica: null, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' },
+        { nombre: '24 Horas', slug: '24horas', tipo_energia: 'unica', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_unica: 0.129, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' },
+        { nombre: 'Mini Flex', slug: 'miniflex', tipo_energia: 'unica', margen_dia: 0, potencia_p1_dia: 0.085598, potencia_p2_dia: 0.085598, energia_unica: 0.1197, fee_kwh: 0, activa: true, comercializadora: 'Buala Energía' },
+        { nombre: 'Magic', slug: 'magic', tipo_energia: 'mercado', margen_dia: 0, potencia_p1_dia: 0.080041, potencia_p2_dia: 0.080041, energia_unica: null, fee_kwh: 0.010, activa: true, comercializadora: 'Buala Energía' }
       ];
     }
   }
@@ -1217,14 +1226,15 @@ function toggleFaqExtra() {
     if (tarifa.tipo_energia === 'mercado') {
       if (preciosMercadoReales) {
         // Precio OMIE puro — sumamos peajes BOE igual que tramos y 24H
+        const fee = parseFloat(tarifa.fee_kwh) || 0;
         if (tieneHoraria) {
-          ener = ep * (preciosMercadoReales.punta + pe.p)
-               + el * (preciosMercadoReales.llano + pe.l)
-               + ev * (preciosMercadoReales.valle + pe.v);
+          ener = ep * (preciosMercadoReales.punta + pe.p + fee)
+               + el * (preciosMercadoReales.llano + pe.l + fee)
+               + ev * (preciosMercadoReales.valle + pe.v + fee);
         } else {
           const avgMercado = (preciosMercadoReales.punta + preciosMercadoReales.llano + preciosMercadoReales.valle) / 3;
           const avgPe = (pe.p + pe.l + pe.v) / 3;
-          ener = etotal * (avgMercado + avgPe);
+          ener = etotal * (avgMercado + avgPe + fee);
         }
       } else {
         const precioCalculado = (d.termino_energia_euros && d.kwh_total && parseFloat(d.kwh_total) > 0)
@@ -1301,7 +1311,8 @@ function toggleFaqExtra() {
         ahorroAnual: ((totalActual - calc.total) / dias) * 365,
         total_ib: totalActual,
         dias,
-        comer: d.comercializadora || 'Tu tarifa'
+        comer: d.comercializadora || 'Tu tarifa',
+        comercializadora: t.comercializadora || 'Gana Energía'
       };
     });
 
@@ -1312,7 +1323,7 @@ function toggleFaqExtra() {
 
   async function cargarPreciosGas() {
     try {
-      const { data, error } = await _supabase.from('precios_gas').select('*');
+      const { data, error } = await _supabase.from('tarifas_gas_gana').select('*');
       if (error || !data) return null;
       const precios = {};
       data.forEach(row => {
@@ -1917,11 +1928,12 @@ fetch('/.netlify/functions/notificar-factura', {
       const box = document.getElementById('tarifaRecomendadaBox');
       if (box && calcResult) {
         const nombreTarifa = calcResult.tarifa?.nombre || 'Precio Mercado';
+        const nombreComercializadora = calcResult.comercializadora || 'Gana Energía';
         const totalGana = (calcResult.total || calcResult.totalG || 0).toFixed(2).replace('.', ',');
         const ahorro = Math.round(calcResult.ahorroAnual || 0);
         box.innerHTML = `
         <span class="tarifa-rec-label">Tu tarifa recomendada</span>
-        <div class="tarifa-rec-nombre">Gana Energía — ${nombreTarifa}</div>
+        <div class="tarifa-rec-nombre">${nombreComercializadora} — ${nombreTarifa}</div>
         <div class="tarifa-rec-ahorro">Ahorro estimado: ${ahorro} €/año</div>
         <div class="tarifa-rec-total">Factura estimada con Gana: ${totalGana} € (vs ${parseFloat(extractedData?.total_factura || 0).toFixed(2).replace('.', ',')} € actuales)</div>
       `;
