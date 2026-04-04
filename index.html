@@ -866,7 +866,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 
     <label class="autorizacion-check form-checkbox-label">
       <input type="checkbox" id="autorizo_cambio" name="autorizo_cambio" />
-      <span>Autorizo a QNTLC a gestionar por mí el cambio de comercializadora</span>
+      <span id="texto_autorizacion">Autorizo a Quenotelacuelen.com a gestionar el cambio de comercializadora en mi nombre</span>
     </label>
 
     <button type="submit" class="submit-btn submit-btn-green">Solicitar cambio de tarifa</button>
@@ -1939,6 +1939,17 @@ fetch('/.netlify/functions/notificar-factura', {
       `;
       }
       showStep(4);
+      // Actualizar textos según comercializadora ganadora
+      const comGanadora = calcResult.comercializadora || 'Gana Energía';
+      const textoAuth = document.getElementById('texto_autorizacion');
+      if (textoAuth) {
+        textoAuth.textContent = `Autorizo a Quenotelacuelen.com a gestionar el cambio de comercializadora a ${comGanadora} en mi nombre`;
+      }
+      const fieldNote = document.querySelector('#iban_cargo ~ .field-note') || document.querySelector('.field-note');
+      if (fieldNote) {
+        fieldNote.textContent = `Imprescindible para finalizar el trámite: en las próximas horas recibirás un SMS o un correo de ${comGanadora} para autorizar el cambio.`;
+      }
+      window._comercializadoraGanadora = comGanadora;
     }
   });
 
@@ -2179,7 +2190,8 @@ fetch('/.netlify/functions/notificar-factura', {
           body: JSON.stringify({
             nombre_titular: facturaData.nombre_titular || '',
             tipo: tipoActual,
-            cups: facturaData.cups || ''
+            cups: facturaData.cups || '',
+            comercializadora_nueva: window._comercializadoraGanadora || 'Gana Energía'
           })
         });
       } catch (emailErr) {
