@@ -1985,11 +1985,11 @@ fetch('/.netlify/functions/notificar-factura', {
       const hasCups = cupsRaw.length === 20 || cupsRaw.length === 22;
       const hasDir = extractedData && extractedData.direccion;
       const hasNombre = extractedData && extractedData.nombre_titular;
+      const dniRaw = (extractedData?.dni || '').trim().toUpperCase();
+      const hasDni = /^\d{8}[A-Z]$/.test(dniRaw);
       setExtracted(document.getElementById('cups'), extractedData?.cups || '', !hasCups);
       setExtracted(document.getElementById('direccion'), extractedData?.direccion || '', !hasDir);
       setExtracted(document.getElementById('nombre_titular'), extractedData?.nombre_titular || '', !hasNombre);
-      const dniRaw = (extractedData?.dni || '').trim().toUpperCase();
-      const hasDni = /^\d{8}[A-Z]$/.test(dniRaw);
       setExtracted(document.getElementById('dni'), extractedData?.dni || '', !hasDni);
       document.getElementById('iban_cargo').value = '';
       document.getElementById('telefono').value = '';
