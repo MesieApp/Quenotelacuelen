@@ -1884,7 +1884,7 @@ fetch('/.netlify/functions/notificar-factura', {
         completado: false,
         factura_url: window._facturaSignedUrl || null,
         factura_nombre: window._facturaFileName || null
-      }).then(() => {}).catch(() => {});
+      }).then((res) => { if (res.error) console.error('Supabase insert error:', JSON.stringify(res.error)); }).catch((e) => { console.error('Supabase insert catch:', e); });
       showStep(3);
 
       setTimeout(() => {
@@ -1922,7 +1922,7 @@ fetch('/.netlify/functions/notificar-factura', {
       completado: false,
       factura_url: window._facturaSignedUrl || null,
       factura_nombre: window._facturaFileName || null
-    }).then(() => {}).catch(() => {});
+    }).then((res) => { if (res.error) console.error('Supabase insert error:', JSON.stringify(res.error)); }).catch((e) => { console.error('Supabase insert catch:', e); });
 
     document.getElementById('resultTotalColandoAnual').textContent = totalColandoAnual + ' €';
     const btnSpan = document.getElementById('btnAhorroAnual');
