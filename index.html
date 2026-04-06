@@ -94,12 +94,13 @@ footer { padding: 1.25rem 2rem; }
   display: flex;
   align-items: flex-start;
   gap: 1.25rem;
-  background: linear-gradient(135deg, rgba(30,107,58,0.12) 0%, rgba(30,107,58,0.06) 100%);
-  border: 1px solid rgba(74,222,128,0.2);
   border-radius: 16px;
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(74,222,128,0.35) !important;
+  background: linear-gradient(135deg, rgba(30,107,58,0.2) 0%, rgba(30,107,58,0.1) 100%) !important;
+  box-shadow: 0 0 24px rgba(74,222,128,0.08) !important;
 }
 .cambio-propuesta-inner::before {
   content: '';
@@ -798,26 +799,26 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
     </div>
 
   </div>
-</div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Quiero empezar a ahorrar</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
+</div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div> <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Quiero que me cambien y ahorrar <span id="btnAhorroAnual"></span>/año →</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
 <div class="flow-step hidden" id="step4" data-step="4">
   <button type="button" class="btn-volver" id="btnVolverStep4">← Volver</button>
 
   <div class="tarifa-recomendada" id="tarifaRecomendadaBox"></div>
 
   <div class="cambio-propuesta">
-    <div class="cambio-propuesta-inner">
-      <div class="cambio-propuesta-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          <polyline points="9 12 11 14 15 10"/>
-        </svg>
-      </div>
-      <div>
-        <strong>Te cambiamos de tarifa sin ningún coste</strong>
-        <p>Sin llamadas, sin gestiones, sin cortes de suministro. Solo rellena tus datos y en unos días estarás en tu nueva tarifa. No tienes que avisar a tu actual comercializadora, nosotros nos encargamos de todo.</p>
-      </div>
+  <div class="cambio-propuesta-inner">
+    <div class="cambio-propuesta-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <polyline points="9 12 11 14 15 10"/>
+      </svg>
+    </div>
+    <div>
+      <strong>Nosotros gestionamos el cambio por ti — sin coste</strong>
+      <p>Nuestro servicio es detectar si te están cobrando de más. Cuando encontramos una tarifa mejor, también te ofrecemos hacer el cambio para que no tengas que preocuparte de nada. Sin llamadas, sin papeleo, sin cortes de suministro. Tú solo rellenas tus datos.</p>
     </div>
   </div>
+</div>
 
   <h2 class="flow-step4-title">Rellena tus datos y listo</h2>
   <form id="contratacionForm" class="contratacion-form" novalidate>
@@ -872,7 +873,32 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
     <button type="submit" class="submit-btn submit-btn-green">Solicitar cambio de tarifa</button>
   </form>
 </div>
-<!-- PASO 5: Confirmación --> <div class="flow-step hidden" id="step5" data-step="5"> <div class="confirmation-container"> <div class="confirmation-icon">✓</div> <h2 class="confirmation-title">¡Todo listo! 🎉</h2> <p class="confirmation-text">En las próximas horas (max. 12h) recibirás un SMS o un correo de tu nueva comercializadora para que autorices el cambio. Por lo demás no tienes que hacer nada, no hace falta avisar a tu antigua comercializadora, nosotros nos encargamos de todo.</p> </div> </div>  <div class="flow-step hidden" id="step6" data-step="6"> <div class="rec-confirmation"> <div class="rec-confirmation-icon">🔔</div> <h2 class="rec-confirmation-title">¡Anotado!</h2> <p class="rec-confirmation-text">Te avisamos en unos días para que puedas subir tu factura cuando la tengas a mano.</p> </div> </div> <div style="width:40px; height:1px; background:rgba(255,255,255,0.08); margin: 1rem auto 0;"></div> <p class="form-legal" style="margin-top:1.25rem;"> Tus datos se tratan conforme al <a href="politica-privacidad.html">Política de Privacidad</a> y nunca se comparten con terceros. </p> </div> </section>
+<!-- PASO 5: Confirmación -->
+<div class="flow-step hidden" id="step5" data-step="5">
+  <div class="confirmation-container" style="padding:2rem 1rem;">
+    <div class="confirmation-icon" style="font-size:1.5rem;">✓</div>
+    <h2 class="confirmation-title" style="font-size:1.4rem !important; margin-bottom:0.5rem !important;">¡Solicitud enviada!</h2>
+    <p class="confirmation-text" style="font-size:0.85rem; margin-bottom:1.25rem;">
+      En las próximas 12 horas recibirás un mensaje de <strong id="conf-comercializadora" style="color:#4ade80;">Gana Energía</strong> para autorizar el cambio. Solo tienes que aceptarlo — nosotros nos encargamos del resto.
+    </p>
+    <div style="display:flex; flex-direction:column; gap:0.6rem; max-width:320px; margin:0 auto 1.25rem;">
+      <div style="display:flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:0.65rem 1rem;">
+        <span style="font-size:1rem; flex-shrink:0;">📩</span>
+        <span style="font-size:0.78rem; color:rgba(255,255,255,0.55); line-height:1.4;">Revisa tu email y SMS en las próximas horas</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:0.65rem 1rem;">
+        <span style="font-size:1rem; flex-shrink:0;">🔄</span>
+        <span style="font-size:0.78rem; color:rgba(255,255,255,0.55); line-height:1.4;">El cambio se completa en 1-3 semanas sin cortes</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:0.65rem 1rem;">
+        <span style="font-size:1rem; flex-shrink:0;">🚫</span>
+        <span style="font-size:0.78rem; color:rgba(255,255,255,0.55); line-height:1.4;">No tienes que avisar a tu compañía actual</span>
+      </div>
+    </div>
+    <p class="confirmation-note" style="font-size:0.75rem;">Ahorro estimado: <span id="conf-ahorro" style="font-weight:700;">—</span> €/año</p>
+  </div>
+</div>
+  <div class="flow-step hidden" id="step6" data-step="6"> <div class="rec-confirmation"> <div class="rec-confirmation-icon">🔔</div> <h2 class="rec-confirmation-title">¡Anotado!</h2> <p class="rec-confirmation-text">Te avisamos en unos días para que puedas subir tu factura cuando la tengas a mano.</p> </div> </div> <div style="width:40px; height:1px; background:rgba(255,255,255,0.08); margin: 1rem auto 0;"></div> <p class="form-legal" style="margin-top:1.25rem;"> Tus datos se tratan conforme al <a href="politica-privacidad.html">Política de Privacidad</a> y nunca se comparten con terceros. </p> </div> </section>
 
 <section style="background:#f8fafc; padding:3rem 1.5rem; border-top:1px solid #e2e8f0;">
   <div style="max-width:860px; margin:0 auto;">
@@ -1854,6 +1880,8 @@ fetch('/.netlify/functions/notificar-factura', {
     }).then(() => {}).catch(() => {});
 
     document.getElementById('resultTotalColandoAnual').textContent = totalColandoAnual + ' €';
+    const btnSpan = document.getElementById('btnAhorroAnual');
+    if (btnSpan) btnSpan.textContent = totalColandoAnual + ' €';
 
     const tbody = document.getElementById('resultTableBody');
     tbody.innerHTML = '';
@@ -1930,13 +1958,12 @@ fetch('/.netlify/functions/notificar-factura', {
         const nombreTarifa = calcResult.tarifa?.nombre || 'Precio Mercado';
         const nombreComercializadora = calcResult.comercializadora || 'Gana Energía';
         const totalGana = (calcResult.total || calcResult.totalG || 0).toFixed(2).replace('.', ',');
-        const ahorro = Math.round(calcResult.ahorroAnual || 0);
         box.innerHTML = `
-        <span class="tarifa-rec-label">Tu tarifa recomendada</span>
-        <div class="tarifa-rec-nombre">${nombreComercializadora} — ${nombreTarifa}</div>
-        <div class="tarifa-rec-ahorro">Ahorro estimado: ${ahorro} €/año</div>
-        <div class="tarifa-rec-total">Factura estimada con Gana: ${totalGana} € (vs ${parseFloat(extractedData?.total_factura || 0).toFixed(2).replace('.', ',')} € actuales)</div>
-      `;
+          <span class="tarifa-rec-label">Tu tarifa recomendada</span>
+          <div class="tarifa-rec-nombre">${nombreComercializadora} — ${nombreTarifa}</div>
+          <div class="tarifa-rec-ahorro">💰 Empiezas a ahorrar ${((calcResult.ahorroAnual || 0) / 12).toFixed(2).replace('.', ',')} € en tu próxima factura</div>
+          <div class="tarifa-rec-total" style="margin-top:0.35rem;">Factura estimada: ${totalGana} € <span style="color:rgba(255,255,255,0.25)">vs ${parseFloat(extractedData?.total_factura || 0).toFixed(2).replace('.', ',')} € actuales</span></div>
+        `;
       }
       showStep(4);
       // Actualizar textos según comercializadora ganadora
@@ -2199,6 +2226,10 @@ fetch('/.netlify/functions/notificar-factura', {
       }
 
       // 3. Mostrar paso 5 (confirmación)
+      const confCom = document.getElementById('conf-comercializadora');
+      if (confCom) confCom.textContent = window._comercializadoraGanadora || 'Gana Energía';
+      const confAhorro = document.getElementById('conf-ahorro');
+      if (confAhorro) confAhorro.textContent = window._ahorroEstimado || '—';
       showStep(5);
 
     } catch (err) {
