@@ -29,7 +29,7 @@ exports.handler = async (event) => {
     } catch (_) {
       return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Body JSON inválido' }) };
     }
-    const { tipo, cups, direccion, nombre_titular, dni, iban_cargo, iban_bono, email, pdfBase64 } = body;
+    const { tipo, cups, direccion, nombre_titular, dni, iban_cargo, iban_bono, email, pdfBase64, comercializadora_nueva } = body;
 
     const isPayloadSimplificado =
       !!nombre_titular &&
@@ -53,8 +53,22 @@ exports.handler = async (event) => {
     }
 
     const html = isPayloadSimplificado
-      ? `Nueva solicitud recibida. Ver detalles en el programa interno:
-        <a href="https://resonant-rugelach-9fed79.netlify.app">Abrir programa interno</a>`
+      ? `
+        <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:20px;">
+          <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+            <span style="font-size:28px;">🚨</span>
+            <div>
+              <strong style="font-size:16px;color:#333;">Nueva solicitud de cambio de tarifa</strong><br>
+              <span style="font-size:13px;color:#666;">Comercializadora seleccionada: <strong style="color:#1E6B3A;">${comercializadora_nueva || 'Gana Energía'}</strong></span>
+            </div>
+          </div>
+          <p style="font-size:14px;color:#333;margin-bottom:6px;"><strong>Titular:</strong> ${nombre_titular || '—'}</p>
+          <p style="font-size:14px;color:#333;margin-bottom:6px;"><strong>Tipo:</strong> ${tipo || '—'}</p>
+          <p style="font-size:14px;color:#333;margin-bottom:20px;"><strong>CUPS:</strong> ${cups || '—'}</p>
+          <a href="https://resonant-rugelach-9fed79.netlify.app" style="display:inline-block;background:#1E6B3A;color:#fff;text-decoration:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;">Ver en el programa interno →</a>
+          <p style="font-size:11px;color:#aaa;margin-top:20px;">Enviado desde quenotelacuelen.com</p>
+        </div>
+      `
       : `
       <h2>Nuevo contrato Gana Energía</h2>
       <p><strong>Tipo:</strong> ${tipo || '—'}</p>
@@ -72,7 +86,7 @@ exports.handler = async (event) => {
     const resend = new Resend(apiKey);
     const from = process.env.RESEND_FROM || 'Quenotelacuelen <onboarding@resend.dev>';
     const subject = isPayloadSimplificado
-      ? 'Nueva solicitud de cambio a Gana Energía'
+      ? `🚨 Nueva solicitud — ${comercializadora_nueva || 'Gana Energía'}`
       : 'NUEVO CONTRATO GANA ENERGÍA – ' + (nombre_titular || 'Sin nombre');
     const emailPayload = { from, subject, html, attachments: attachments.length ? attachments : undefined };
 
