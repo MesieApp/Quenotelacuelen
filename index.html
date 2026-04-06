@@ -1885,6 +1885,7 @@ fetch('/.netlify/functions/notificar-factura', {
         factura_url: window._facturaSignedUrl || null,
         factura_nombre: window._facturaFileName || null
       }).then((res) => { if (res.error) console.error('Supabase insert error:', JSON.stringify(res.error)); }).catch((e) => { console.error('Supabase insert catch:', e); });
+      if (window.dataLayer) window.dataLayer.push({ event: 'resultado_sin_ahorro' });
       showStep(3);
 
       setTimeout(() => {
