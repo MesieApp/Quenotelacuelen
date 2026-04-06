@@ -1966,6 +1966,7 @@ fetch('/.netlify/functions/notificar-factura', {
       });
     }
 
+    if (window.dataLayer) window.dataLayer.push({ event: 'factura_analizada' });
     showStep(3);
   });
 
@@ -1976,6 +1977,7 @@ fetch('/.netlify/functions/notificar-factura', {
   document.getElementById('formulario').addEventListener('click', (e) => {
     // Botón "Ver mi tarifa recomendada" en paso 3
     if (e.target.closest('#btnSiguiente')) {
+      if (window.dataLayer) window.dataLayer.push({ event: 'clic_quiero_ahorrar' });
       const setExtracted = (el, val, canEdit) => {
         el.value = val || '';
         el.readOnly = !canEdit;
