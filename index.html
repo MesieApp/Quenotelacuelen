@@ -847,6 +847,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <div class="form-group full">
           <label for="cups">CUPS</label>
           <input type="text" id="cups" name="cups" readonly class="extracted-field" placeholder="—" />
+          <span class="field-note" id="cups_hint" style="display:none">Debe tener 20 o 22 caracteres y empieza por ES</span>
           <span class="field-error" id="cups_error" role="alert"></span>
         </div>
         <div class="form-group full">
@@ -1878,7 +1879,7 @@ fetch('/.netlify/functions/notificar-factura', {
         total_factura: parseFloat(extractedData.total_factura) || null,
         ahorro_estimado: Math.round((calcResult.ahorro / (parseInt(extractedData.dias) || 30)) * 365) || 0,
         tipo: currentTipo || 'luz',
-        jstarifa_recomendada: calcResult?.tarifa?.nombre || null,
+        tarifa_recomendada: calcResult?.tarifa?.nombre || null,
         fuente: 'web',
         completado: false,
         factura_url: window._facturaSignedUrl || null,
@@ -1916,7 +1917,7 @@ fetch('/.netlify/functions/notificar-factura', {
       total_factura: parseFloat(extractedData.total_factura) || null,
       ahorro_estimado: ahorroAnualReal || 0,
       tipo: currentTipo || 'luz',
-      jstarifa_recomendada: calcResult?.tarifa?.nombre || null,
+      tarifa_recomendada: calcResult?.tarifa?.nombre || null,
       fuente: 'web',
       completado: false,
       factura_url: window._facturaSignedUrl || null,
@@ -1988,6 +1989,8 @@ fetch('/.netlify/functions/notificar-factura', {
       const dniRaw = (extractedData?.dni || '').trim().toUpperCase();
       const hasDni = /^\d{8}[A-Z]$/.test(dniRaw);
       setExtracted(document.getElementById('cups'), extractedData?.cups || '', !hasCups);
+      const cupsHint = document.getElementById('cups_hint');
+      if (cupsHint) cupsHint.style.display = !hasCups ? 'block' : 'none';
       setExtracted(document.getElementById('direccion'), extractedData?.direccion || '', !hasDir);
       setExtracted(document.getElementById('nombre_titular'), extractedData?.nombre_titular || '', !hasNombre);
       setExtracted(document.getElementById('dni'), extractedData?.dni || '', !hasDni);
