@@ -847,6 +847,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <div class="form-group full">
           <label for="cups">CUPS</label>
           <input type="text" id="cups" name="cups" readonly class="extracted-field" placeholder="—" />
+          <span class="field-error" id="cups_error" role="alert"></span>
         </div>
         <div class="form-group full">
           <label for="direccion">Dirección del suministro</label>
@@ -859,6 +860,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <div class="form-group">
           <label for="dni">DNI del titular</label>
           <input type="text" id="dni" name="dni" readonly class="extracted-field" placeholder="—" />
+          <span class="field-error" id="dni_error" role="alert"></span>
         </div>
       </div>
     </div>
@@ -1876,6 +1878,7 @@ fetch('/.netlify/functions/notificar-factura', {
         total_factura: parseFloat(extractedData.total_factura) || null,
         ahorro_estimado: Math.round((calcResult.ahorro / (parseInt(extractedData.dias) || 30)) * 365) || 0,
         tipo: currentTipo || 'luz',
+        jstarifa_recomendada: calcResult?.tarifa?.nombre || null,
         fuente: 'web',
         completado: false,
         factura_url: window._facturaSignedUrl || null,
@@ -1913,6 +1916,7 @@ fetch('/.netlify/functions/notificar-factura', {
       total_factura: parseFloat(extractedData.total_factura) || null,
       ahorro_estimado: ahorroAnualReal || 0,
       tipo: currentTipo || 'luz',
+      jstarifa_recomendada: calcResult?.tarifa?.nombre || null,
       fuente: 'web',
       completado: false,
       factura_url: window._facturaSignedUrl || null,
@@ -1983,7 +1987,8 @@ fetch('/.netlify/functions/notificar-factura', {
       setExtracted(document.getElementById('cups'), extractedData?.cups || '', !hasCups);
       setExtracted(document.getElementById('direccion'), extractedData?.direccion || '', !hasDir);
       setExtracted(document.getElementById('nombre_titular'), extractedData?.nombre_titular || '', !hasNombre);
-      setExtracted(document.getElementById('dni'), extractedData?.dni || '', false);
+      const hasDni = extractedData && extractedData.dni;
+      setExtracted(document.getElementById('dni'), extractedData?.dni || '', !hasDni);
       document.getElementById('iban_cargo').value = '';
       document.getElementById('telefono').value = '';
       document.getElementById('email').value = '';
@@ -2075,6 +2080,29 @@ fetch('/.netlify/functions/notificar-factura', {
 
   document.getElementById('contratacionForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const cupsVal = (document.getElementById('cups')?.value || '').trim().replace(/\s/g, '');
+    const dniVal = (document.getElementById('dni')?.value || '').trim().toUpperCase();
+
+    if (!cupsVal || (cupsVal.length !== 20 && cupsVal.length !== 22)) {
+      const el = document.getElementById('cups_error');
+      if (el) el.textContent = 'El CUPS debe tener 20 o 22 caracteres (lo encontrarás en tu factura, empieza por ES)';
+      document.getElementById('cups')?.focus();
+      return;
+    } else {
+      const el = document.getElementById('cups_error');
+      if (el) el.textContent = '';
+    }
+
+    if (!dniVal || !/^\d{8}[A-Z]$/.test(dniVal)) {
+      const el = document.getElementById('dni_error');
+      if (el) el.textContent = 'El DNI debe tener 8 números seguidos de una letra (ejemplo: 54025030P)';
+      document.getElementById('dni')?.focus();
+      return;
+    } else {
+      const el = document.getElementById('dni_error');
+      if (el) el.textContent = '';
+    }
 
     if (!validateIbanCargo() || !validateTelefono() || !validateEmailContratacion()) {
       return;
