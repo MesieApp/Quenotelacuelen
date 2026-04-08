@@ -2234,14 +2234,18 @@ function toggleFaqExtra() {
     }
 
     extractedData = result.data;
-fetch('/.netlify/functions/notificar-factura', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    nombre_titular: result.data.nombre_titular || '',
-    fuente: 'web'
-  })
-}).catch(() => {});
+    fetch('/.netlify/functions/notificar-factura', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre_titular: result.data.nombre_titular || '',
+        fuente: 'web',
+        tipo: currentTipo || result.data.tipo_factura || 'luz',
+        comercializadora: result.data.comercializadora || '',
+        total_factura: result.data.total_factura || '',
+        ahorro_estimado: window._ahorroEstimado || ''
+      })
+    }).catch(() => {});
 
     if (!extractedData.tipo_factura && 
         !extractedData.total_factura && 
