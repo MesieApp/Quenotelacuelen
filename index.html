@@ -1236,76 +1236,112 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 
   <div class="tarifa-recomendada" id="tarifaRecomendadaBox"></div>
 
-  <div class="cambio-propuesta">
-  <div class="cambio-propuesta-inner">
-    <div class="cambio-propuesta-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        <polyline points="9 12 11 14 15 10"/>
-      </svg>
+  <!-- MICROPASO A: contacto -->
+  <div id="step4a">
+    <div style="text-align:center; margin-bottom:1.75rem;">
+      <h2 style="font-family:var(--font-head);font-size:1.4rem;color:#1a1a1a;font-weight:500;margin-bottom:0.4rem;">¿A dónde te mandamos la confirmación?</h2>
+      <p style="font-size:0.85rem;color:#64748b;font-weight:300;">Sin compromiso. Puedes cancelar en cualquier momento.</p>
     </div>
-    <div>
-      <strong>Nosotros gestionamos el cambio por ti — sin coste</strong>
-      <p>Nuestro servicio es detectar si te están cobrando de más. Cuando encontramos una tarifa mejor, también te ofrecemos hacer el cambio para que no tengas que preocuparte de nada. Sin llamadas, sin papeleo, sin cortes de suministro. Solo necesitamos tus datos.</p>
+    <div style="display:flex;flex-direction:column;gap:0.85rem;">
+      <div class="form-group">
+        <label for="email_a">Correo electrónico</label>
+        <input type="text" id="email_a" placeholder="tu@email.com" autocomplete="email"/>
+        <span class="field-error" id="email_a_error" role="alert"></span>
+      </div>
+      <div class="form-group">
+        <label for="telefono_a">Número de móvil</label>
+        <input type="tel" id="telefono_a" placeholder="600000000" maxlength="9" inputmode="numeric" autocomplete="tel"/>
+        <span class="field-error" id="telefono_a_error" role="alert"></span>
+      </div>
     </div>
+    <button type="button" class="submit-btn submit-btn-green" id="btnStep4aSiguiente" style="margin-top:1.25rem;">
+      Continuar →
+    </button>
+    <p style="font-size:0.68rem;color:#94a3b8;text-align:center;margin-top:0.75rem;">
+      🔒 Tus datos están protegidos y nunca se comparten con terceros
+    </p>
   </div>
-</div>
 
-  <h2 class="flow-step4-title">Rellena tus datos y listo</h2>
-  <form id="contratacionForm" class="contratacion-form" novalidate>
-    <div class="form-extracted-group">
-      <span class="extracted-badge">Extraído de tu factura</span>
-      <div class="form-grid form-grid-2">
-        <div class="form-group full">
-          <label for="cups">CUPS</label>
-          <input type="text" id="cups" name="cups" readonly class="extracted-field" placeholder="—" />
-          <span class="field-note" id="cups_hint" style="display:none">Debe tener 20 o 22 caracteres y empieza por ES</span>
-          <span class="field-error" id="cups_error" role="alert"></span>
+  <!-- MICROPASO B: IBAN + datos extraídos -->
+  <div id="step4b" style="display:none;">
+    <div class="cambio-propuesta" style="margin-bottom:1.25rem;">
+      <div class="cambio-propuesta-inner">
+        <div class="cambio-propuesta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
         </div>
-        <div class="form-group full">
-          <label for="direccion">Dirección del suministro</label>
-          <input type="text" id="direccion" name="direccion" readonly class="extracted-field" placeholder="—" />
-        </div>
-        <div class="form-group">
-          <label for="nombre_titular">Nombre completo del titular</label>
-          <input type="text" id="nombre_titular" name="nombre_titular" readonly class="extracted-field" placeholder="—" />
-        </div>
-        <div class="form-group">
-          <label for="dni">DNI del titular</label>
-          <input type="text" id="dni" name="dni" readonly class="extracted-field" placeholder="—" />
-          <span class="field-error" id="dni_error" role="alert"></span>
+        <div>
+          <strong>Nosotros gestionamos el cambio por ti — sin coste</strong>
+          <p>Sin llamadas, sin gestiones, sin cortes de suministro. Solo necesitamos un último dato para tramitar el cambio.</p>
         </div>
       </div>
     </div>
 
-    <div class="form-manual-group">
-      <div class="form-grid form-grid-2">
-        <div class="form-group full">
-          <label for="email">Correo electrónico</label>
-          <input type="text" id="email" name="email" placeholder="tu@email.com" autocomplete="email" />
-          <span class="field-error" id="email_error" role="alert"></span>
-        </div>
-        <div class="form-group full">
-          <label for="telefono">Número móvil (recibirás un SMS para autorizar el cambio)</label>
-          <input type="tel" id="telefono" name="telefono" placeholder="600000000" maxlength="9" inputmode="numeric" autocomplete="tel" />
-          <span class="field-error" id="telefono_error" role="alert"></span>
-        </div>
-        <div class="form-group full">
-          <label for="iban_cargo">IBAN</label>
-          <input type="text" id="iban_cargo" name="iban_cargo" placeholder="ES00 0000 0000 0000 0000 0000" autocomplete="off" />
-          <span class="field-error" id="iban_cargo_error" role="alert"></span>
-          <span class="field-note">Imprescindible para finalizar el trámite: en las próximas horas recibirás un SMS o un correo de Gana Energía para autorizar el cambio.</span>
+    <form id="contratacionForm" class="contratacion-form" novalidate>
+      <div class="form-extracted-group">
+        <span class="extracted-badge">Extraído de tu factura</span>
+        <div class="form-grid form-grid-2">
+          <div class="form-group full">
+            <label for="cups">CUPS</label>
+            <input type="text" id="cups" name="cups" readonly class="extracted-field" placeholder="—"/>
+            <span class="field-error" id="cups_error" role="alert"></span>
+          </div>
+          <div class="form-group full">
+            <label for="direccion">Dirección del suministro</label>
+            <input type="text" id="direccion" name="direccion" readonly class="extracted-field" placeholder="—"/>
+          </div>
+          <div class="form-group">
+            <label for="nombre_titular">Nombre completo del titular</label>
+            <input type="text" id="nombre_titular" name="nombre_titular" readonly class="extracted-field" placeholder="—"/>
+          </div>
+          <div class="form-group">
+            <label for="dni">DNI del titular</label>
+            <input type="text" id="dni" name="dni" readonly class="extracted-field" placeholder="—"/>
+            <span class="field-error" id="dni_error" role="alert"></span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <label class="autorizacion-check form-checkbox-label">
-      <input type="checkbox" id="autorizo_cambio" name="autorizo_cambio" />
-      <span id="texto_autorizacion">Autorizo a Quenotelacuelen.com a gestionar el cambio de comercializadora en mi nombre</span>
-    </label>
+      <input type="hidden" id="email" name="email"/>
+      <input type="hidden" id="telefono" name="telefono"/>
 
-    <button type="submit" class="submit-btn submit-btn-green">Solicitar cambio de tarifa</button>
-  </form>
+      <div style="margin-bottom:1rem;">
+        <label for="iban_cargo">IBAN para domiciliar tu factura</label>
+        <input type="text" id="iban_cargo" name="iban_cargo" 
+          placeholder="ES00 0000 0000 0000 0000 0000" 
+          autocomplete="off" style="margin-top:0.35rem;"/>
+        <span class="field-error" id="iban_cargo_error" role="alert"></span>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;background:#f0faf2;border:1px solid #d1e7d8;border-radius:8px;padding:0.6rem 0.85rem;">
+          <span style="font-size:0.9rem;flex-shrink:0;">🔒</span>
+          <span style="font-size:0.72rem;color:#475569;line-height:1.5;">Solo se usa para domiciliar tu nueva factura. <strong>No realizamos ningún cargo.</strong> El cambio lo autoriza la comercializadora directamente contigo.</span>
+        </div>
+      </div>
+
+      <label class="autorizacion-check form-checkbox-label" style="margin-bottom:1rem;">
+        <input type="checkbox" id="autorizo_cambio" name="autorizo_cambio"/>
+        <span id="texto_autorizacion">Autorizo a Quenotelacuelen.com a gestionar el cambio de comercializadora en mi nombre</span>
+      </label>
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;margin-bottom:1rem;display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.75rem;color:#475569;">
+          <span style="color:#1E6B3A;font-weight:700;font-size:0.9rem;">✓</span>
+          El cambio tarda entre 1 y 3 semanas — sin cortes de suministro
+        </div>
+        <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.75rem;color:#475569;">
+          <span style="color:#1E6B3A;font-weight:700;font-size:0.9rem;">✓</span>
+          Recibirás un SMS o email de la comercializadora para autorizar el cambio
+        </div>
+        <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.75rem;color:#475569;">
+          <span style="color:#1E6B3A;font-weight:700;font-size:0.9rem;">✓</span>
+          No tienes que avisar a tu compañía actual — nosotros nos encargamos
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn submit-btn-green">Solicitar cambio de tarifa</button>
+    </form>
+  </div>
 </div>
 <!-- PASO 5: Confirmación -->
 <div class="flow-step hidden" id="step5" data-step="5">
@@ -1931,6 +1967,12 @@ function toggleFaqExtra() {
         // solo aseguramos que se oculta
       }
     }
+    if (n === 4) {
+      const s4a = document.getElementById('step4a');
+      const s4b = document.getElementById('step4b');
+      if (s4a) s4a.style.display = '';
+      if (s4b) s4b.style.display = 'none';
+    }
     steps.forEach((s, i) => { s.classList.toggle('hidden', i + 1 !== n); });
     const headerEls = document.querySelectorAll('.form-section .section-label, .form-section h2, .form-section .section-desc, .form-deco-line');
     headerEls.forEach(el => {
@@ -2417,7 +2459,11 @@ function toggleFaqExtra() {
       document.getElementById('iban_cargo').value = '';
       document.getElementById('telefono').value = '';
       document.getElementById('email').value = '';
-      ['iban_cargo_error', 'telefono_error', 'email_error'].forEach((id) => {
+      const emailA = document.getElementById('email_a');
+      const telA = document.getElementById('telefono_a');
+      if (emailA) emailA.value = '';
+      if (telA) telA.value = '';
+      ['iban_cargo_error', 'telefono_error', 'email_error', 'email_a_error', 'telefono_a_error'].forEach((id) => {
         const el = document.getElementById(id);
         if (el) el.textContent = '';
       });
@@ -2435,6 +2481,12 @@ function toggleFaqExtra() {
           <div class="tarifa-rec-total" style="margin-top:0.35rem;">Factura estimada: ${totalGana} € <span style="color:rgba(255,255,255,0.25)">vs ${parseFloat(extractedData?.total_factura || 0).toFixed(2).replace('.', ',')} € actuales</span></div>
         `;
       }
+      document.getElementById('step4a').style.display = 'block';
+      document.getElementById('step4b').style.display = 'none';
+      document.getElementById('email_a').value = '';
+      document.getElementById('telefono_a').value = '';
+      document.getElementById('email_a_error').textContent = '';
+      document.getElementById('telefono_a_error').textContent = '';
       showStep(4);
       // Actualizar textos según comercializadora ganadora
       const comGanadora = calcResult.comercializadora || 'Gana Energía';
@@ -2442,7 +2494,7 @@ function toggleFaqExtra() {
       if (textoAuth) {
         textoAuth.textContent = `Autorizo a Quenotelacuelen.com a gestionar el cambio de comercializadora a ${comGanadora} en mi nombre`;
       }
-      const fieldNote = document.querySelector('#iban_cargo ~ .field-note') || document.querySelector('.field-note');
+      const fieldNote = document.querySelector('#step4b .field-note');
       if (fieldNote) {
         fieldNote.textContent = `Imprescindible para finalizar el trámite: en las próximas horas recibirás un SMS o un correo de ${comGanadora} para autorizar el cambio.`;
       }
@@ -2451,7 +2503,42 @@ function toggleFaqExtra() {
   });
 
   const btnVolverStep4 = document.getElementById('btnVolverStep4');
-  if (btnVolverStep4) btnVolverStep4.addEventListener('click', () => showStep(3));
+  if (btnVolverStep4) btnVolverStep4.addEventListener('click', () => {
+    const b = document.getElementById('step4b');
+    const a = document.getElementById('step4a');
+    if (b && b.style.display !== 'none') {
+      b.style.display = 'none';
+      a.style.display = 'block';
+    } else {
+      showStep(3);
+    }
+  });
+
+  document.getElementById('btnStep4aSiguiente').addEventListener('click', () => {
+    const emailVal = (document.getElementById('email_a').value || '').trim();
+    const telVal = (document.getElementById('telefono_a').value || '').trim();
+    const emailErr = document.getElementById('email_a_error');
+    const telErr = document.getElementById('telefono_a_error');
+    let ok = true;
+    if (!emailVal.includes('@')) {
+      emailErr.textContent = 'El email no es válido';
+      ok = false;
+    } else { emailErr.textContent = ''; }
+    if (!/^\d{9}$/.test(telVal)) {
+      telErr.textContent = 'El teléfono debe tener 9 dígitos';
+      ok = false;
+    } else { telErr.textContent = ''; }
+    if (!ok) return;
+    document.getElementById('email').value = emailVal;
+    document.getElementById('telefono').value = telVal;
+    document.getElementById('step4a').style.display = 'none';
+    document.getElementById('step4b').style.display = 'block';
+    window.scrollTo({ top: document.getElementById('formulario').offsetTop - 80, behavior: 'smooth' });
+  });
+
+  document.getElementById('telefono_a').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 9);
+  });
 
   const IBAN_ERR_MSG = 'El IBAN debe tener 24 caracteres';
   const TEL_ERR_MSG = 'El teléfono debe tener 9 dígitos';
@@ -2476,6 +2563,7 @@ function toggleFaqExtra() {
     const v = document.getElementById('telefono')?.value || '';
     const ok = /^\d{9}$/.test(v);
     setContratacionFieldError('telefono_error', ok ? '' : TEL_ERR_MSG);
+    setContratacionFieldError('telefono_a_error', ok ? '' : TEL_ERR_MSG);
     return ok;
   }
 
@@ -2483,24 +2571,39 @@ function toggleFaqExtra() {
     const v = (document.getElementById('email')?.value || '').trim();
     const ok = v.includes('@');
     setContratacionFieldError('email_error', ok ? '' : EMAIL_ERR_MSG);
+    setContratacionFieldError('email_a_error', ok ? '' : EMAIL_ERR_MSG);
     return ok;
   }
 
   (function bindContratacionFieldValidation() {
     const ibanC = document.getElementById('iban_cargo');
-    const tel = document.getElementById('telefono');
-    const em = document.getElementById('email');
-    if (!ibanC || !tel || !em) return;
+    const telA = document.getElementById('telefono_a');
+    const emA = document.getElementById('email_a');
+    if (!ibanC) return;
     ['input', 'blur'].forEach((evt) => {
       ibanC.addEventListener(evt, validateIbanCargo);
-      em.addEventListener(evt, validateEmailContratacion);
     });
-    tel.addEventListener('input', () => {
-      const digits = tel.value.replace(/\D/g, '').slice(0, 9);
-      tel.value = digits;
-      validateTelefono();
-    });
-    tel.addEventListener('blur', validateTelefono);
+    if (emA) {
+      ['input', 'blur'].forEach((evt) => {
+        emA.addEventListener(evt, () => {
+          const v = (emA.value || '').trim();
+          const ok = !v || v.includes('@');
+          setContratacionFieldError('email_a_error', ok ? '' : EMAIL_ERR_MSG);
+        });
+      });
+    }
+    if (telA) {
+      telA.addEventListener('input', () => {
+        const v = telA.value;
+        const ok = !v || /^\d{9}$/.test(v);
+        setContratacionFieldError('telefono_a_error', ok ? '' : TEL_ERR_MSG);
+      });
+      telA.addEventListener('blur', () => {
+        const v = (telA.value || '').replace(/\D/g, '');
+        const ok = /^\d{9}$/.test(v);
+        setContratacionFieldError('telefono_a_error', (telA.value && !ok) ? TEL_ERR_MSG : '');
+      });
+    }
   })();
 
   document.getElementById('contratacionForm').addEventListener('submit', async (e) => {
@@ -2530,6 +2633,20 @@ function toggleFaqExtra() {
     }
 
     if (!validateIbanCargo() || !validateTelefono() || !validateEmailContratacion()) {
+      const telOk = /^\d{9}$/.test(document.getElementById('telefono')?.value || '');
+      const emOk = (document.getElementById('email')?.value || '').trim().includes('@');
+      if (!telOk || !emOk) {
+        const tH = document.getElementById('telefono');
+        const tA = document.getElementById('telefono_a');
+        const eH = document.getElementById('email');
+        const eA = document.getElementById('email_a');
+        if (tH && tA) tA.value = (tH.value || '').replace(/\D/g, '').slice(0, 9);
+        if (eH && eA) eA.value = (eH.value || '').trim();
+        const s4a = document.getElementById('step4a');
+        const s4b = document.getElementById('step4b');
+        if (s4a) s4a.style.display = '';
+        if (s4b) s4b.style.display = 'none';
+      }
       return;
     }
 
