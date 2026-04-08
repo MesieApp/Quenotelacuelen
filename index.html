@@ -1249,11 +1249,6 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
     </div>
     <div style="display:flex;flex-direction:column;gap:0.85rem;">
       <div class="form-group">
-        <label for="email_a">Correo electrónico</label>
-        <input type="text" id="email_a" placeholder="tu@email.com" autocomplete="email"/>
-        <span class="field-error" id="email_a_error" role="alert"></span>
-      </div>
-      <div class="form-group">
         <label for="telefono_a">Número de móvil</label>
         <input type="tel" id="telefono_a" placeholder="600000000" maxlength="9" inputmode="numeric" autocomplete="tel"/>
         <span class="field-error" id="telefono_a_error" role="alert"></span>
@@ -1279,7 +1274,6 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         </div>
         <div>
           <strong>Nosotros gestionamos el cambio por ti — sin coste</strong>
-          <p>Sin llamadas, sin gestiones, sin cortes de suministro. Solo necesitamos un último dato para tramitar el cambio.</p>
         </div>
       </div>
     </div>
@@ -1312,6 +1306,12 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
       <input type="hidden" id="email" name="email"/>
       <input type="hidden" id="telefono" name="telefono"/>
 
+      <div class="form-group" style="margin-bottom:1rem">
+        <label for="email_b">Correo electrónico</label>
+        <input type="text" id="email_b" placeholder="tu@email.com" autocomplete="email"/>
+        <span class="field-error" id="email_b_error" role="alert"></span>
+      </div>
+
       <div style="margin-bottom:1rem;">
         <label for="iban_cargo">IBAN para domiciliar tu factura</label>
         <input type="text" id="iban_cargo" name="iban_cargo" 
@@ -1320,7 +1320,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <span class="field-error" id="iban_cargo_error" role="alert"></span>
         <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;background:#f0faf2;border:1px solid #d1e7d8;border-radius:8px;padding:0.6rem 0.85rem;">
           <span style="font-size:0.9rem;flex-shrink:0;">🔒</span>
-          <span style="font-size:0.72rem;color:#475569;line-height:1.5;">Solo se usa para domiciliar tu nueva factura. <strong>No realizamos ningún cargo.</strong> El cambio lo autoriza la comercializadora directamente contigo.</span>
+          <span style="font-size:0.72rem;color:#475569;line-height:1.5;">Exclusivamente para la domiciliación bancaria de tu nueva tarifa.</span>
         </div>
       </div>
 
@@ -1342,6 +1342,17 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
           <span style="color:#1E6B3A;font-weight:700;font-size:0.9rem;">✓</span>
           No tienes que avisar a tu compañía actual — nosotros nos encargamos
         </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:0.85rem 1rem;margin-bottom:1rem;">
+        <div style="display:flex;flex-direction:column;gap:0.15rem;">
+          <span style="font-size:0.72rem;font-weight:600;color:#475569;">¿Tienes alguna duda?</span>
+          <span style="font-size:0.75rem;color:#94a3b8;font-weight:300;">Estamos aquí para ayudarte</span>
+        </div>
+        <a href="https://wa.me/34623756420" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;text-decoration:none;font-family:var(--font-body);font-size:0.78rem;font-weight:600;padding:0.5rem 0.9rem;border-radius:999px;white-space:nowrap;box-shadow:0 2px 8px rgba(37,211,102,0.3);">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg" style="width:14px;height:14px;filter:brightness(0) invert(1);" alt="WhatsApp" />
+          Escríbenos
+        </a>
       </div>
 
       <button type="submit" class="submit-btn submit-btn-green">Solicitar cambio de tarifa</button>
@@ -2464,11 +2475,9 @@ function toggleFaqExtra() {
       document.getElementById('iban_cargo').value = '';
       document.getElementById('telefono').value = '';
       document.getElementById('email').value = '';
-      const emailA = document.getElementById('email_a');
       const telA = document.getElementById('telefono_a');
-      if (emailA) emailA.value = '';
       if (telA) telA.value = '';
-      ['iban_cargo_error', 'telefono_error', 'email_error', 'email_a_error', 'telefono_a_error'].forEach((id) => {
+      ['iban_cargo_error', 'telefono_error', 'email_error', 'email_b_error', 'telefono_a_error'].forEach((id) => {
         const el = document.getElementById(id);
         if (el) el.textContent = '';
       });
@@ -2488,16 +2497,20 @@ function toggleFaqExtra() {
       }
       document.getElementById('step4a').style.display = 'block';
       document.getElementById('step4b').style.display = 'none';
-      document.getElementById('email_a').value = '';
-      document.getElementById('telefono_a').value = '';
-      document.getElementById('email_a_error').textContent = '';
-      document.getElementById('telefono_a_error').textContent = '';
+      const emailB = document.getElementById('email_b');
+      const telefonoA = document.getElementById('telefono_a');
+      const emailBErr = document.getElementById('email_b_error');
+      const telefonoAErr = document.getElementById('telefono_a_error');
+      if (emailB) emailB.value = '';
+      if (telefonoA) telefonoA.value = '';
+      if (emailBErr) emailBErr.textContent = '';
+      if (telefonoAErr) telefonoAErr.textContent = '';
       showStep(4);
       // Actualizar textos según comercializadora ganadora
       const comGanadora = calcResult.comercializadora || 'Gana Energía';
       const textoAuth = document.getElementById('texto_autorizacion');
       if (textoAuth) {
-        textoAuth.textContent = `Autorizo a Quenotelacuelen.com a gestionar el cambio de comercializadora a ${comGanadora} en mi nombre`;
+        textoAuth.textContent = 'Autorizo a Quenotelacuelen.com a gestionar el cambio de comercializadora';
       }
       const fieldNote = document.querySelector('#step4b .field-note');
       if (fieldNote) {
@@ -2520,21 +2533,14 @@ function toggleFaqExtra() {
   });
 
   document.getElementById('btnStep4aSiguiente').addEventListener('click', () => {
-    const emailVal = (document.getElementById('email_a').value || '').trim();
     const telVal = (document.getElementById('telefono_a').value || '').trim();
-    const emailErr = document.getElementById('email_a_error');
     const telErr = document.getElementById('telefono_a_error');
     let ok = true;
-    if (!emailVal.includes('@')) {
-      emailErr.textContent = 'El email no es válido';
-      ok = false;
-    } else { emailErr.textContent = ''; }
     if (!/^\d{9}$/.test(telVal)) {
       telErr.textContent = 'El teléfono debe tener 9 dígitos';
       ok = false;
     } else { telErr.textContent = ''; }
     if (!ok) return;
-    document.getElementById('email').value = emailVal;
     document.getElementById('telefono').value = telVal;
     document.getElementById('step4a').style.display = 'none';
     document.getElementById('step4b').style.display = 'block';
@@ -2576,27 +2582,17 @@ function toggleFaqExtra() {
     const v = (document.getElementById('email')?.value || '').trim();
     const ok = v.includes('@');
     setContratacionFieldError('email_error', ok ? '' : EMAIL_ERR_MSG);
-    setContratacionFieldError('email_a_error', ok ? '' : EMAIL_ERR_MSG);
+    setContratacionFieldError('email_b_error', ok ? '' : EMAIL_ERR_MSG);
     return ok;
   }
 
   (function bindContratacionFieldValidation() {
     const ibanC = document.getElementById('iban_cargo');
     const telA = document.getElementById('telefono_a');
-    const emA = document.getElementById('email_a');
     if (!ibanC) return;
     ['input', 'blur'].forEach((evt) => {
       ibanC.addEventListener(evt, validateIbanCargo);
     });
-    if (emA) {
-      ['input', 'blur'].forEach((evt) => {
-        emA.addEventListener(evt, () => {
-          const v = (emA.value || '').trim();
-          const ok = !v || v.includes('@');
-          setContratacionFieldError('email_a_error', ok ? '' : EMAIL_ERR_MSG);
-        });
-      });
-    }
     if (telA) {
       telA.addEventListener('input', () => {
         const v = telA.value;
@@ -2637,16 +2633,23 @@ function toggleFaqExtra() {
       if (el) el.textContent = '';
     }
 
+    const emailBVal = (document.getElementById('email_b')?.value || '').trim();
+    const emailBErr = document.getElementById('email_b_error');
+    if (!emailBVal.includes('@')) {
+      if (emailBErr) emailBErr.textContent = EMAIL_ERR_MSG;
+      return;
+    } else {
+      if (emailBErr) emailBErr.textContent = '';
+      document.getElementById('email').value = emailBVal;
+    }
+
     if (!validateIbanCargo() || !validateTelefono() || !validateEmailContratacion()) {
       const telOk = /^\d{9}$/.test(document.getElementById('telefono')?.value || '');
       const emOk = (document.getElementById('email')?.value || '').trim().includes('@');
       if (!telOk || !emOk) {
         const tH = document.getElementById('telefono');
         const tA = document.getElementById('telefono_a');
-        const eH = document.getElementById('email');
-        const eA = document.getElementById('email_a');
         if (tH && tA) tA.value = (tH.value || '').replace(/\D/g, '').slice(0, 9);
-        if (eH && eA) eA.value = (eH.value || '').trim();
         const s4a = document.getElementById('step4a');
         const s4b = document.getElementById('step4b');
         if (s4a) s4a.style.display = '';
