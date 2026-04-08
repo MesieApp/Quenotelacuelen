@@ -1264,19 +1264,6 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 
   <!-- MICROPASO B: IBAN + datos extraídos -->
   <div id="step4b" style="display:none;">
-    <div class="cambio-propuesta" style="margin-bottom:1.25rem;">
-      <div class="cambio-propuesta-inner">
-        <div class="cambio-propuesta-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            <polyline points="9 12 11 14 15 10"/>
-          </svg>
-        </div>
-        <div>
-          <strong>Nosotros gestionamos el cambio por ti — sin coste</strong>
-        </div>
-      </div>
-    </div>
 
     <form id="contratacionForm" class="contratacion-form" novalidate>
       <div class="form-extracted-group">
@@ -1312,11 +1299,11 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <span class="field-error" id="email_b_error" role="alert"></span>
       </div>
 
-      <div style="margin-bottom:1rem;">
+      <div style="margin-bottom:1rem;display:flex;flex-direction:column;gap:0.35rem;">
         <label for="iban_cargo">IBAN para domiciliar tu factura</label>
         <input type="text" id="iban_cargo" name="iban_cargo" 
           placeholder="ES00 0000 0000 0000 0000 0000" 
-          autocomplete="off" style="margin-top:0.35rem;"/>
+          autocomplete="off"/>
         <span class="field-error" id="iban_cargo_error" role="alert"></span>
         <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;background:#f0faf2;border:1px solid #d1e7d8;border-radius:8px;padding:0.6rem 0.85rem;">
           <span style="font-size:0.9rem;flex-shrink:0;">🔒</span>
@@ -1349,10 +1336,13 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
           <span style="font-size:0.72rem;font-weight:600;color:#475569;">¿Tienes alguna duda?</span>
           <span style="font-size:0.75rem;color:#94a3b8;font-weight:300;">Estamos aquí para ayudarte</span>
         </div>
-        <a href="https://wa.me/34623756420" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;text-decoration:none;font-family:var(--font-body);font-size:0.78rem;font-weight:600;padding:0.5rem 0.9rem;border-radius:999px;white-space:nowrap;box-shadow:0 2px 8px rgba(37,211,102,0.3);">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg" style="width:14px;height:14px;filter:brightness(0) invert(1);" alt="WhatsApp" />
-          Escríbenos
-        </a>
+        <div>
+          <a href="https://wa.me/34623756420" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;text-decoration:none;font-family:var(--font-body);font-size:0.78rem;font-weight:600;padding:0.5rem 0.9rem;border-radius:999px;white-space:nowrap;box-shadow:0 2px 8px rgba(37,211,102,0.3);">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg" style="width:14px;height:14px;filter:brightness(0) invert(1);" alt="WhatsApp" />
+            Escríbenos
+          </a>
+          <span style="font-size:0.68rem;color:#94a3b8;text-align:center;display:block;margin-top:0.3rem;">623 756 420</span>
+        </div>
       </div>
 
       <button type="submit" class="submit-btn submit-btn-green">Solicitar cambio de tarifa</button>
@@ -2541,6 +2531,11 @@ function toggleFaqExtra() {
       ok = false;
     } else { telErr.textContent = ''; }
     if (!ok) return;
+    const telParaGuardar = telVal;
+    _supabase.from('leads_facturas')
+      .update({ telefono: telParaGuardar })
+      .eq('factura_nombre', window._facturaFileName || '')
+      .then(() => {}).catch(() => {});
     document.getElementById('telefono').value = telVal;
     document.getElementById('step4a').style.display = 'none';
     document.getElementById('step4b').style.display = 'block';
