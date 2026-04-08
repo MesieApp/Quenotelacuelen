@@ -1214,19 +1214,24 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 
   </div>
 </div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div>
-<div class="result-propuesta">
-  <p style="font-size:0.82rem; color:#475569; line-height:1.65; margin:0 0 0.5rem;">
-    Hemos analizado tu factura y encontrado una tarifa mejor. Nuestro servicio es gratuito y completamente independiente — si quieres, también gestionamos el cambio por ti para que no tengas que hacer nada.
-  </p>
-  <div style="display:flex; flex-direction:column; gap:0.3rem;">
-    <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.75rem; color:#475569;">
-      <span style="color:#1E6B3A; font-weight:700;">✓</span> Sin llamadas ni trámites
+<div class="result-propuesta" style="background:#f0faf2; border:1px solid #d1e7d8; border-radius:14px; padding:1.25rem; margin-top:0.25rem; display:flex; flex-direction:column; gap:0.75rem;">
+  <div style="display:flex; align-items:center; gap:0.75rem;">
+    <span style="background:#1E6B3A; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="width:18px; height:18px;">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </span>
+    <p style="font-size:0.95rem; font-weight:600; color:#1a1a1a; font-family:var(--font-head); margin:0; line-height:1.35;">¿Quieres que hagamos el cambio de compañía por ti? Rellena tus datos en la siguiente pantalla. 100% gratuito.</p>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:0.4rem;">
+    <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.78rem; color:#475569;">
+      <span style="color:#1E6B3A; font-weight:700; font-size:1rem;">✓</span> Sin llamadas ni papeleo — lo gestionamos nosotros
     </div>
-    <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.75rem; color:#475569;">
-      <span style="color:#1E6B3A; font-weight:700;">✓</span> Sin cortes de suministro
+    <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.78rem; color:#475569;">
+      <span style="color:#1E6B3A; font-weight:700; font-size:1rem;">✓</span> Sin interrupciones en tu suministro
     </div>
-    <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.75rem; color:#475569;">
-      <span style="color:#1E6B3A; font-weight:700;">✓</span> No tienes que avisar a tu compañía actual
+    <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.78rem; color:#475569;">
+      <span style="color:#1E6B3A; font-weight:700; font-size:1rem;">✓</span> No es necesario avisar a tu compañía actual
     </div>
   </div>
 </div>
