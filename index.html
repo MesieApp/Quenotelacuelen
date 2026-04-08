@@ -2234,18 +2234,6 @@ function toggleFaqExtra() {
     }
 
     extractedData = result.data;
-    fetch('/.netlify/functions/notificar-factura', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nombre_titular: result.data.nombre_titular || '',
-        fuente: 'web',
-        tipo: currentTipo || result.data.tipo_factura || 'luz',
-        comercializadora: result.data.comercializadora || '',
-        total_factura: result.data.total_factura || '',
-        ahorro_estimado: window._ahorroEstimado || ''
-      })
-    }).catch(() => {});
 
     if (!extractedData.tipo_factura && 
         !extractedData.total_factura && 
@@ -2326,6 +2314,18 @@ function toggleFaqExtra() {
     const ahorroAnualReal = Math.round((ahorroEnFactura / dias) * 365);
     const totalColandoAnual = ahorroAnualReal;
     window._ahorroEstimado = ahorroAnualReal;
+    fetch('/.netlify/functions/notificar-factura', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre_titular: extractedData.nombre_titular || '',
+        fuente: 'web',
+        tipo: currentTipo || extractedData.tipo_factura || 'luz',
+        comercializadora: extractedData.comercializadora || '',
+        total_factura: extractedData.total_factura || '',
+        ahorro_estimado: ahorroAnualReal || 0
+      })
+    }).catch(() => {});
 
     _supabase.from('leads_facturas').insert({
       nombre_titular: extractedData.nombre_titular || '',
