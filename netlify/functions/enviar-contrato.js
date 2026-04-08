@@ -54,19 +54,46 @@ exports.handler = async (event) => {
 
     const html = isPayloadSimplificado
       ? `
-        <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:20px;">
-          <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+        <div style="font-family:'Segoe UI',sans-serif;max-width:480px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">
+          
+          <div style="background:#dc2626;padding:20px 24px;display:flex;align-items:center;gap:12px;">
             <span style="font-size:28px;">🚨</span>
             <div>
-              <strong style="font-size:16px;color:#333;">Nueva solicitud de cambio de tarifa</strong><br>
-              <span style="font-size:13px;color:#666;">Comercializadora seleccionada: <strong style="color:#1E6B3A;">${comercializadora_nueva || 'Gana Energía'}</strong></span>
+              <div style="color:#fff;font-size:16px;font-weight:700;line-height:1.2;">Solicitud de cambio de tarifa</div>
+              <div style="color:rgba(255,255,255,0.75);font-size:12px;margin-top:2px;">${new Date().toLocaleString('es-ES')}</div>
             </div>
           </div>
-          <p style="font-size:14px;color:#333;margin-bottom:6px;"><strong>Titular:</strong> ${nombre_titular || '—'}</p>
-          <p style="font-size:14px;color:#333;margin-bottom:6px;"><strong>Tipo:</strong> ${tipo || '—'}</p>
-          <p style="font-size:14px;color:#333;margin-bottom:20px;"><strong>CUPS:</strong> ${cups || '—'}</p>
-          <a href="https://resonant-rugelach-9fed79.netlify.app" style="display:inline-block;background:#1E6B3A;color:#fff;text-decoration:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;">Ver en el programa interno →</a>
-          <p style="font-size:11px;color:#aaa;margin-top:20px;">Enviado desde quenotelacuelen.com</p>
+
+          <div style="padding:16px 24px 0;">
+            <span style="display:inline-flex;align-items:center;gap:6px;background:${String(tipo||'luz').toLowerCase()==='gas'?'#ef444418':'#f59e0b18'};color:${String(tipo||'luz').toLowerCase()==='gas'?'#ef4444':'#f59e0b'};border:1px solid ${String(tipo||'luz').toLowerCase()==='gas'?'#ef444430':'#f59e0b30'};border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;">
+              ${String(tipo||'luz').toLowerCase()==='gas'?'🔥 Gas':'⚡ Luz'}
+            </span>
+          </div>
+
+          <div style="padding:16px 24px;display:flex;flex-direction:column;gap:10px;">
+
+            <div style="background:#f8fafc;border-radius:10px;padding:14px 16px;">
+              <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Titular</div>
+              <div style="font-size:15px;font-weight:600;color:#1a1a1a;">${nombre_titular || '—'}</div>
+            </div>
+
+            <div style="background:#f8fafc;border-radius:10px;padding:14px 16px;">
+              <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">CUPS</div>
+              <div style="font-size:13px;font-weight:500;color:#334155;font-family:monospace;">${cups || '—'}</div>
+            </div>
+
+            <div style="background:#fef0f0;border:1px solid #fecaca;border-radius:10px;padding:14px 16px;">
+              <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Comercializadora nueva</div>
+              <div style="font-size:15px;font-weight:700;color:#1E6B3A;">${comercializadora_nueva || 'Gana Energía'}</div>
+            </div>
+
+          </div>
+
+          <div style="padding:12px 24px 16px;border-top:1px solid #f1f5f9;">
+            <a href="https://resonant-rugelach-9fed79.netlify.app" style="display:inline-block;background:#dc2626;color:#fff;text-decoration:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;">Ver en el programa →</a>
+            <div style="font-size:11px;color:#94a3b8;margin-top:8px;">quenotelacuelen.com</div>
+          </div>
+
         </div>
       `
       : `
