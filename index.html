@@ -2323,7 +2323,8 @@ function toggleFaqExtra() {
         tipo: currentTipo || extractedData.tipo_factura || 'luz',
         comercializadora: extractedData.comercializadora || '',
         total_factura: extractedData.total_factura || '',
-        ahorro_estimado: ahorroAnualReal || 0
+        ahorro_estimado: ahorroAnualReal || 0,
+        factura_url: window._facturaStorageUrl || ''
       })
     }).catch(() => {});
 
