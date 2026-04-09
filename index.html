@@ -1241,29 +1241,8 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 
   <div class="tarifa-recomendada" id="tarifaRecomendadaBox"></div>
 
-  <!-- MICROPASO A: contacto -->
-  <div id="step4a">
-    <div style="text-align:center; margin-bottom:1.75rem;">
-      <h2 style="font-family:var(--font-head);font-size:1.4rem;color:#1a1a1a;font-weight:500;margin-bottom:0.4rem;">¿A dónde te mandamos la confirmación?</h2>
-      <p style="font-size:0.85rem;color:#64748b;font-weight:300;">Sin compromiso. Puedes cancelar en cualquier momento.</p>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:0.85rem;">
-      <div class="form-group">
-        <label for="telefono_a">Número de móvil</label>
-        <input type="tel" id="telefono_a" placeholder="600000000" maxlength="9" inputmode="numeric" autocomplete="tel"/>
-        <span class="field-error" id="telefono_a_error" role="alert"></span>
-      </div>
-    </div>
-    <button type="button" class="submit-btn submit-btn-green" id="btnStep4aSiguiente" style="margin-top:1.25rem;">
-      Continuar →
-    </button>
-    <p style="font-size:0.68rem;color:#94a3b8;text-align:center;margin-top:0.75rem;">
-      🔒 Tus datos están protegidos y nunca se comparten con terceros
-    </p>
-  </div>
-
-  <!-- MICROPASO B: IBAN + datos extraídos -->
-  <div id="step4b" style="display:none;">
+  <!-- PASO 4B: formulario final -->
+  <div id="step4b">
 
     <form id="contratacionForm" class="contratacion-form" novalidate>
       <div class="form-extracted-group">
@@ -1297,6 +1276,12 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <label for="email_b">Correo electrónico</label>
         <input type="text" id="email_b" placeholder="tu@email.com" autocomplete="email"/>
         <span class="field-error" id="email_b_error" role="alert"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="telefono_b">Número de móvil</label>
+        <input type="tel" id="telefono_b" placeholder="600000000" maxlength="9" inputmode="numeric" autocomplete="tel"/>
+        <span class="field-error" id="telefono_b_error"></span>
       </div>
 
       <div style="margin-bottom:1rem;display:flex;flex-direction:column;gap:0.35rem;">
@@ -1976,10 +1961,8 @@ function toggleFaqExtra() {
       }
     }
     if (n === 4) {
-      const s4a = document.getElementById('step4a');
       const s4b = document.getElementById('step4b');
-      if (s4a) s4a.style.display = '';
-      if (s4b) s4b.style.display = 'none';
+      if (s4b) s4b.style.display = '';
     }
     steps.forEach((s, i) => { s.classList.toggle('hidden', i + 1 !== n); });
     const headerEls = document.querySelectorAll('.form-section .section-label, .form-section h2, .form-section .section-desc, .form-deco-line');
@@ -2467,9 +2450,9 @@ function toggleFaqExtra() {
       document.getElementById('iban_cargo').value = '';
       document.getElementById('telefono').value = '';
       document.getElementById('email').value = '';
-      const telA = document.getElementById('telefono_a');
-      if (telA) telA.value = '';
-      ['iban_cargo_error', 'telefono_error', 'email_error', 'email_b_error', 'telefono_a_error'].forEach((id) => {
+      const telB = document.getElementById('telefono_b');
+      if (telB) telB.value = '';
+      ['iban_cargo_error', 'telefono_error', 'email_error', 'email_b_error', 'telefono_b_error'].forEach((id) => {
         const el = document.getElementById(id);
         if (el) el.textContent = '';
       });
@@ -2487,16 +2470,14 @@ function toggleFaqExtra() {
           <div class="tarifa-rec-total" style="margin-top:0.35rem;">Factura estimada: ${totalGana} € <span style="color:rgba(255,255,255,0.25)">vs ${parseFloat(extractedData?.total_factura || 0).toFixed(2).replace('.', ',')} € actuales</span></div>
         `;
       }
-      document.getElementById('step4a').style.display = 'block';
-      document.getElementById('step4b').style.display = 'none';
       const emailB = document.getElementById('email_b');
-      const telefonoA = document.getElementById('telefono_a');
+      const telefonoB = document.getElementById('telefono_b');
       const emailBErr = document.getElementById('email_b_error');
-      const telefonoAErr = document.getElementById('telefono_a_error');
+      const telefonoBErr = document.getElementById('telefono_b_error');
       if (emailB) emailB.value = '';
-      if (telefonoA) telefonoA.value = '';
+      if (telefonoB) telefonoB.value = '';
       if (emailBErr) emailBErr.textContent = '';
-      if (telefonoAErr) telefonoAErr.textContent = '';
+      if (telefonoBErr) telefonoBErr.textContent = '';
       showStep(4);
       // Actualizar textos según comercializadora ganadora
       const comGanadora = calcResult.comercializadora || 'Gana Energía';
@@ -2514,39 +2495,15 @@ function toggleFaqExtra() {
 
   const btnVolverStep4 = document.getElementById('btnVolverStep4');
   if (btnVolverStep4) btnVolverStep4.addEventListener('click', () => {
-    const b = document.getElementById('step4b');
-    const a = document.getElementById('step4a');
-    if (b && b.style.display !== 'none') {
-      b.style.display = 'none';
-      a.style.display = 'block';
-    } else {
-      showStep(3);
-    }
+    showStep(3);
   });
 
-  document.getElementById('btnStep4aSiguiente').addEventListener('click', () => {
-    const telVal = (document.getElementById('telefono_a').value || '').trim();
-    const telErr = document.getElementById('telefono_a_error');
-    let ok = true;
-    if (!/^\d{9}$/.test(telVal)) {
-      telErr.textContent = 'El teléfono debe tener 9 dígitos';
-      ok = false;
-    } else { telErr.textContent = ''; }
-    if (!ok) return;
-    const telParaGuardar = telVal;
-    _supabase.from('leads_facturas')
-      .update({ telefono: telParaGuardar })
-      .eq('factura_nombre', window._facturaFileName || '')
-      .then(() => {}).catch(() => {});
-    document.getElementById('telefono').value = telVal;
-    document.getElementById('step4a').style.display = 'none';
-    document.getElementById('step4b').style.display = 'block';
-    window.scrollTo({ top: document.getElementById('formulario').offsetTop - 80, behavior: 'smooth' });
-  });
-
-  document.getElementById('telefono_a').addEventListener('input', (e) => {
-    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 9);
-  });
+  const telefonoBInput = document.getElementById('telefono_b');
+  if (telefonoBInput) {
+    telefonoBInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 9);
+    });
+  }
 
   const IBAN_ERR_MSG = 'El IBAN debe tener 24 caracteres';
   const TEL_ERR_MSG = 'El teléfono debe tener 9 dígitos';
@@ -2571,7 +2528,7 @@ function toggleFaqExtra() {
     const v = document.getElementById('telefono')?.value || '';
     const ok = /^\d{9}$/.test(v);
     setContratacionFieldError('telefono_error', ok ? '' : TEL_ERR_MSG);
-    setContratacionFieldError('telefono_a_error', ok ? '' : TEL_ERR_MSG);
+    setContratacionFieldError('telefono_b_error', ok ? '' : TEL_ERR_MSG);
     return ok;
   }
 
@@ -2585,21 +2542,21 @@ function toggleFaqExtra() {
 
   (function bindContratacionFieldValidation() {
     const ibanC = document.getElementById('iban_cargo');
-    const telA = document.getElementById('telefono_a');
     if (!ibanC) return;
     ['input', 'blur'].forEach((evt) => {
       ibanC.addEventListener(evt, validateIbanCargo);
     });
-    if (telA) {
-      telA.addEventListener('input', () => {
-        const v = telA.value;
+    const telB = document.getElementById('telefono_b');
+    if (telB) {
+      telB.addEventListener('input', () => {
+        const v = telB.value;
         const ok = !v || /^\d{9}$/.test(v);
-        setContratacionFieldError('telefono_a_error', ok ? '' : TEL_ERR_MSG);
+        setContratacionFieldError('telefono_b_error', ok ? '' : TEL_ERR_MSG);
       });
-      telA.addEventListener('blur', () => {
-        const v = (telA.value || '').replace(/\D/g, '');
+      telB.addEventListener('blur', () => {
+        const v = (telB.value || '').replace(/\D/g, '');
         const ok = /^\d{9}$/.test(v);
-        setContratacionFieldError('telefono_a_error', (telA.value && !ok) ? TEL_ERR_MSG : '');
+        setContratacionFieldError('telefono_b_error', (telB.value && !ok) ? TEL_ERR_MSG : '');
       });
     }
   })();
@@ -2639,18 +2596,27 @@ function toggleFaqExtra() {
       if (emailBErr) emailBErr.textContent = '';
       document.getElementById('email').value = emailBVal;
     }
+    const telefonoBVal = (document.getElementById('telefono_b')?.value || '').trim();
+    const telefonoBErr = document.getElementById('telefono_b_error');
+    if (!/^\d{9}$/.test(telefonoBVal)) {
+      if (telefonoBErr) telefonoBErr.textContent = TEL_ERR_MSG;
+      return;
+    } else {
+      if (telefonoBErr) telefonoBErr.textContent = '';
+      document.getElementById('telefono').value = telefonoBVal;
+    }
+    _supabase.from('leads_facturas')
+      .update({ telefono: telefonoBVal })
+      .eq('factura_nombre', window._facturaFileName || '')
+      .then(() => {}).catch(() => {});
 
     if (!validateIbanCargo() || !validateTelefono() || !validateEmailContratacion()) {
       const telOk = /^\d{9}$/.test(document.getElementById('telefono')?.value || '');
       const emOk = (document.getElementById('email')?.value || '').trim().includes('@');
       if (!telOk || !emOk) {
         const tH = document.getElementById('telefono');
-        const tA = document.getElementById('telefono_a');
-        if (tH && tA) tA.value = (tH.value || '').replace(/\D/g, '').slice(0, 9);
-        const s4a = document.getElementById('step4a');
-        const s4b = document.getElementById('step4b');
-        if (s4a) s4a.style.display = '';
-        if (s4b) s4b.style.display = 'none';
+        const tB = document.getElementById('telefono_b');
+        if (tH && tB) tB.value = (tH.value || '').replace(/\D/g, '').slice(0, 9);
       }
       return;
     }
