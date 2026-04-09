@@ -1943,6 +1943,8 @@ function toggleFaqExtra() {
 
   let currentTipo = 'luz';
   window._tipoFactura = 'luz';
+  const refParam = new URLSearchParams(window.location.search).get('ref');
+  if (refParam) sessionStorage.setItem('referido', refParam);
   let extractedData = null;
   let calcResult = null;
   let lastPdfBase64 = null;
@@ -2817,7 +2819,8 @@ function toggleFaqExtra() {
             iban_cargo: iban_cargo,
             iban_bono: iban_bono,
             estado: 'pendiente_contrato',
-            factura_url: facturaUrl
+            factura_url: facturaUrl,
+            referido: sessionStorage.getItem('referido') || null
           });
 
         if (contratoError) throw contratoError;
