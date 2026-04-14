@@ -1352,20 +1352,20 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <div class="form-grid form-grid-2">
           <div class="form-group full">
             <label for="cups">CUPS</label>
-            <input type="text" id="cups" name="cups" readonly class="extracted-field" placeholder="—"/>
+            <input type="text" id="cups" name="cups" placeholder="—"/>
             <span class="field-error" id="cups_error" role="alert"></span>
           </div>
           <div class="form-group full">
             <label for="direccion">Dirección del suministro</label>
-            <input type="text" id="direccion" name="direccion" readonly class="extracted-field" placeholder="—"/>
+            <input type="text" id="direccion" name="direccion" placeholder="—"/>
           </div>
           <div class="form-group">
             <label for="nombre_titular">Nombre completo del titular</label>
-            <input type="text" id="nombre_titular" name="nombre_titular" readonly class="extracted-field" placeholder="—"/>
+            <input type="text" id="nombre_titular" name="nombre_titular" placeholder="—"/>
           </div>
           <div class="form-group">
-            <label for="dni">DNI del titular</label>
-            <input type="text" id="dni" name="dni" readonly class="extracted-field" placeholder="—"/>
+            <label for="dni">DNI o CIF Titular</label>
+            <input type="text" id="dni" name="dni" placeholder="—"/>
             <span class="field-error" id="dni_error" role="alert"></span>
           </div>
         </div>
@@ -1512,7 +1512,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 
     <p style="font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#1E6B3A; margin-bottom:0.4rem; text-align:center;">Quiénes somos</p>
     <h2 style="font-family:'Lora',Georgia,serif; font-size:clamp(1.4rem,3vw,1.9rem); font-weight:500; line-height:1.2; letter-spacing:-0.02em; color:#1a1a1a; margin-bottom:0.6rem; text-align:center;">Las personas detrás de quenotelacuelen</h2>
-    <p style="font-size:0.88rem; color:#64748b; font-weight:300; max-width:480px; margin:0 auto 2.5rem; text-align:center; line-height:1.7;">Somos dos personas que se hartaron de ver cómo las comercializadoras cobran de más sin que nadie lo cuestione. Así que creamos una herramienta para cambiarlo.</p>
+    <p style="font-size:0.88rem; color:#64748b; font-weight:300; max-width:480px; margin:0 auto 2.5rem; text-align:center; line-height:1.7;">Todo empezó cuando descubrimos que a nuestros abuelos les estaban colando una tarifa desactualizada y servicios añadidos innecesarios. Les bajamos la factura, luego se las bajamos a sus amigos, y después hicimos esta web para que cualquiera pueda reducir su factura en 2 minutos.</p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; max-width:560px; margin:0 auto;">
 
@@ -2598,12 +2598,12 @@ function toggleFaqExtra() {
       const hasNombre = extractedData && extractedData.nombre_titular;
       const dniRaw = (extractedData?.dni || '').trim().toUpperCase();
       const hasDni = /^\d{8}[A-Z]$/.test(dniRaw);
-      setExtracted(document.getElementById('cups'), extractedData?.cups || '', !hasCups);
+      setExtracted(document.getElementById('cups'), extractedData?.cups || '', true);
       const cupsHint = document.getElementById('cups_hint');
       if (cupsHint) cupsHint.style.display = !hasCups ? 'block' : 'none';
-      setExtracted(document.getElementById('direccion'), extractedData?.direccion || '', !hasDir);
-      setExtracted(document.getElementById('nombre_titular'), extractedData?.nombre_titular || '', !hasNombre);
-      setExtracted(document.getElementById('dni'), extractedData?.dni || '', !hasDni);
+      setExtracted(document.getElementById('direccion'), extractedData?.direccion || '', true);
+      setExtracted(document.getElementById('nombre_titular'), extractedData?.nombre_titular || '', true);
+      setExtracted(document.getElementById('dni'), extractedData?.dni || '', true);
       document.getElementById('iban_cargo').value = '';
       document.getElementById('telefono').value = '';
       document.getElementById('email').value = '';
