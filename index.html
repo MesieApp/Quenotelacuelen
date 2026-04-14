@@ -812,10 +812,9 @@ input:not([type="checkbox"]):focus, select:focus {
 .step-item.visible {
   animation: stepIn 0.5s ease forwards;
 }
-.step-item.visible:nth-child(1) { animation-delay: 0s; }
-.step-item.visible:nth-child(3) { animation-delay: 0.15s; }
-.step-item.visible:nth-child(5) { animation-delay: 0.3s; }
-.step-item.visible:nth-child(7) { animation-delay: 0.45s; }
+.step-item.visible:nth-child(2) { animation-delay: 0s; }
+.step-item.visible:nth-child(4) { animation-delay: 0.15s; }
+.step-item.visible:nth-child(6) { animation-delay: 0.3s; }
 @keyframes stepIn {
   from { opacity: 0; transform: translateX(-10px); }
   to   { opacity: 1; transform: translateX(0); }
@@ -1202,25 +1201,17 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 
   <div style="display:flex; flex-direction:column; gap:0; padding-top:0; align-self:center; justify-content:center;">
 
+  <p style="font-size:0.68rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#1E6B3A; margin-bottom:1rem;">
+    Así funciona
+  </p>
+
   <div class="step-item">
     <div class="step-icon-pulse" style="width:44px; height:44px; border-radius:50%; border:0.5px solid #d1e7d8; background:#f0faf2; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
       <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="1.8" style="width:20px;height:20px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
     </div>
     <div>
       <div style="font-size:0.88rem; font-weight:500; color:#1a1a1a;">Sube tu factura</div>
-      <div style="font-size:0.75rem; color:#94a3b8; margin-top:1px;">PDF · 30 segundos</div>
-    </div>
-  </div>
-
-  <div class="step-connector-animated"></div>
-
-  <div class="step-item">
-    <div style="width:44px; height:44px; border-radius:50%; border:0.5px solid #d1e7d8; background:#f0faf2; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="1.8" style="width:20px;height:20px;"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-    </div>
-    <div>
-      <div style="font-size:0.88rem; font-weight:500; color:#1a1a1a;">La IA analiza</div>
-      <div style="font-size:0.75rem; color:#94a3b8; margin-top:1px;">Tu tarifa vs. el mercado</div>
+      <div style="font-size:0.75rem; color:#94a3b8; margin-top:1px;"></div>
     </div>
   </div>
 
@@ -1231,8 +1222,8 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
       <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="1.8" style="width:20px;height:20px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
     </div>
     <div>
-      <div style="font-size:0.88rem; font-weight:500; color:#1a1a1a;">Ves cuánto pagas de más</div>
-      <div style="font-size:0.75rem; color:#94a3b8; margin-top:1px;">Exactamente cuánto y por qué</div>
+      <div style="font-size:0.88rem; font-weight:500; color:#1a1a1a;">Descubre cuánto pagas de más y por qué</div>
+      <div style="font-size:0.75rem; color:#94a3b8; margin-top:1px;">Resultado en menos de 30 segundos</div>
     </div>
   </div>
 
