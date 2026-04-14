@@ -2581,7 +2581,20 @@ function toggleFaqExtra() {
       rows.push(['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((calcResult.totalG / dias) * 365)]);
       rows.forEach(([c, tu, gana]) => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${c}</td><td style="${c === 'Coste anual' ? 'font-weight:600;' : ''}">${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}" style="${c === 'Coste anual' ? 'font-weight:600;background:#f0faf2;' : ''}">${gana}</td>`;
+        const concept = c === 'Total factura'
+          ? `Total factura<span style="font-size:0.68rem;color:#94a3b8;font-weight:400;display:block;">(factura de ${dias} días)</span>`
+          : c;
+        const tuStyle = c === 'Total factura'
+          ? 'color:#ef4444;font-weight:600;'
+          : c === 'Coste anual'
+          ? 'color:#ef4444;font-weight:700;'
+          : '';
+        const ganaStyle = c === 'Total factura'
+          ? 'color:#1E6B3A;font-weight:600;'
+          : c === 'Coste anual'
+          ? 'color:#1E6B3A;font-weight:700;background:#f0faf2;'
+          : '';
+        tr.innerHTML = `<td>${concept}</td><td style="${tuStyle}">${tu}</td><td style="${ganaStyle}">${gana}</td>`;
         tbody.appendChild(tr);
       });
     } else {
@@ -2602,7 +2615,20 @@ function toggleFaqExtra() {
       rows.push(['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((calcResult.totalG / dias) * 365)]);
       rows.forEach(([c, tu, gana]) => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${c}</td><td style="${c === 'Coste anual' ? 'font-weight:600;' : ''}">${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}" style="${c === 'Coste anual' ? 'font-weight:600;background:#f0faf2;' : ''}">${gana}</td>`;
+        const concept = c === 'Total factura'
+          ? `Total factura<span style="font-size:0.68rem;color:#94a3b8;font-weight:400;display:block;">(factura de ${dias} días)</span>`
+          : c;
+        const tuStyle = c === 'Total factura'
+          ? 'color:#ef4444;font-weight:600;'
+          : c === 'Coste anual'
+          ? 'color:#ef4444;font-weight:700;'
+          : '';
+        const ganaStyle = c === 'Total factura'
+          ? 'color:#1E6B3A;font-weight:600;'
+          : c === 'Coste anual'
+          ? 'color:#1E6B3A;font-weight:700;background:#f0faf2;'
+          : '';
+        tr.innerHTML = `<td>${concept}</td><td style="${tuStyle}">${tu}</td><td style="${ganaStyle}">${gana}</td>`;
         tbody.appendChild(tr);
       });
     }
