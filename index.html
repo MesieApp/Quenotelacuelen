@@ -802,6 +802,56 @@ input:not([type="checkbox"]):focus, select:focus {
   50% { transform: scale(1.04); text-shadow: 0 0 40px rgba(239,34,34,0.4); }
 }
 
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.step-item.visible {
+  animation: stepIn 0.5s ease forwards;
+}
+.step-item.visible:nth-child(1) { animation-delay: 0s; }
+.step-item.visible:nth-child(3) { animation-delay: 0.15s; }
+.step-item.visible:nth-child(5) { animation-delay: 0.3s; }
+.step-item.visible:nth-child(7) { animation-delay: 0.45s; }
+@keyframes stepIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(30,107,58,0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(30,107,58,0); }
+  100% { box-shadow: 0 0 0 0 rgba(30,107,58,0); }
+}
+@keyframes flow-down {
+  0%   { background-position: 0 -24px; }
+  100% { background-position: 0 24px; }
+}
+.step-connector-animated {
+  width: 2px;
+  height: 28px;
+  margin-left: 21px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #1E6B3A 0px,
+    #1E6B3A 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  background-size: 2px 12px;
+  animation: flow-down 2.5s linear infinite;
+}
+.step-icon-pulse {
+  animation: pulse-ring 3.5s ease-out infinite;
+}
+
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr !important; }
+}
+
 @media (max-width: 600px) {
   .form-section { padding: 3rem 1.25rem; }
   .step1-toggle-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
@@ -1078,19 +1128,15 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 </script>
  <!-- NAV --> <nav> <a href="index.html" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Quenotelacuelen.com" width="918" height="158" style="height:61px;width:auto;" fetchpriority="high"></a> </nav> <!-- HERO -->
 <section class="hero" style="padding:1.75rem 2rem 2rem; max-width:100%; background:#fff;">
-  <div class="hero-inner" style="max-width:520px; margin:0 auto;">
-
-    <h1 style="font-size:clamp(1.6rem,4vw,2.4rem); margin-bottom:0.5rem; letter-spacing:-0.03em; line-height:1.15; text-align:center;">
-      ¿Te están cobrando de más<br/>en la <em>luz o el gas</em>?
-    </h1>
-
-    <p style="font-size:0.95rem; color:#475569; font-weight:300; margin-bottom:1.5rem; line-height:1.55; text-align:center;">
-      Sube tu factura y en 30 segundos te decimos exactamente cuánto.
-    </p>
+  <h1 style="font-size:clamp(1.6rem,4vw,2.4rem); margin-bottom:1.5rem; letter-spacing:-0.03em; line-height:1.15; text-align:center;">
+    ¿Te están cobrando de más<br/>en la <em>luz o el gas</em>?
+  </h1>
+  <div class="hero-inner" style="max-width:1000px; margin:0 auto; display:grid; grid-template-columns:520px 1fr; gap:3rem; align-items:center;">
+  <div style="min-width:0;">
 
     <!-- FORMULARIO DIRECTO -->
     <div class="flow-step" id="step1" data-step="1">
-    <div style="background:#fff; border:1.5px solid #e2e8f0; border-radius:16px; padding:1.25rem; box-shadow:0 2px 16px rgba(30,107,58,0.07);">
+    <div style="background:#fff; border:1.5px solid #d1e7d8; border-radius:16px; padding:1.5rem; box-shadow:0 8px 40px rgba(30,107,58,0.12), 0 2px 8px rgba(30,107,58,0.06);">
 
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; gap:1rem;">
         <span style="font-size:0.82rem; color:#475569; font-weight:500;">Tipo de factura</span>
@@ -1153,99 +1199,58 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
     </div>
     </div>
   </div>
-</section>
-<!-- HOW IT WORKS --> <section id="como-funciona">
-  <div class="cf-inner">
-    <div class="cf-strip">
 
-  <div class="cf-strip-step">
-    <div class="cf-strip-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+  <div style="display:flex; flex-direction:column; gap:0; padding-top:0; align-self:center; justify-content:center;">
+
+  <div class="step-item">
+    <div class="step-icon-pulse" style="width:44px; height:44px; border-radius:50%; border:0.5px solid #d1e7d8; background:#f0faf2; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="1.8" style="width:20px;height:20px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
     </div>
-    <div class="cf-strip-text">
-      <span class="cf-strip-num">01</span>
-      <strong>Sube tu factura</strong>
-      <span>PDF.</span>
+    <div>
+      <div style="font-size:0.88rem; font-weight:500; color:#1a1a1a;">Sube tu factura</div>
+      <div style="font-size:0.75rem; color:#94a3b8; margin-top:1px;">PDF · 30 segundos</div>
     </div>
   </div>
 
-  <div class="cf-strip-connector">
-    <div class="cf-connector-track"><div class="cf-connector-dot"></div></div>
-  </div>
+  <div class="step-connector-animated"></div>
 
-  <div class="cf-strip-step">
-    <div class="cf-strip-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  <div class="step-item">
+    <div style="width:44px; height:44px; border-radius:50%; border:0.5px solid #d1e7d8; background:#f0faf2; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="1.8" style="width:20px;height:20px;"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
     </div>
-    <div class="cf-strip-text">
-      <span class="cf-strip-num">02</span>
-      <strong>La IA compara</strong>
-      <span>Tu tarifa vs. la mejor que encuentra en el mercado.</span>
+    <div>
+      <div style="font-size:0.88rem; font-weight:500; color:#1a1a1a;">La IA analiza</div>
+      <div style="font-size:0.75rem; color:#94a3b8; margin-top:1px;">Tu tarifa vs. el mercado</div>
     </div>
   </div>
 
-  <div class="cf-strip-connector">
-    <div class="cf-connector-track"><div class="cf-connector-dot"></div></div>
-  </div>
+  <div class="step-connector-animated"></div>
 
-  <div class="cf-strip-step">
-    <div class="cf-strip-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  <div class="step-item">
+    <div style="width:44px; height:44px; border-radius:50%; border:0.5px solid #d1e7d8; background:#f0faf2; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="1.8" style="width:20px;height:20px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
     </div>
-    <div class="cf-strip-text">
-      <span class="cf-strip-num">03</span>
-      <strong>Ves la verdad</strong>
-      <span>Cuánto te están cobrando de más.</span>
+    <div>
+      <div style="font-size:0.88rem; font-weight:500; color:#1a1a1a;">Ves cuánto pagas de más</div>
+      <div style="font-size:0.75rem; color:#94a3b8; margin-top:1px;">Exactamente cuánto y por qué</div>
     </div>
   </div>
 
-  <div class="cf-strip-connector">
-    <div class="cf-connector-track"><div class="cf-connector-dot"></div></div>
-  </div>
+  <div class="step-connector-animated"></div>
 
-  <div class="cf-strip-step cf-strip-step--accent">
-    <div class="cf-strip-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+  <div class="step-item">
+    <div style="width:44px; height:44px; border-radius:50%; background:#1E6B3A; border:0.5px solid #1E6B3A; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" style="width:20px;height:20px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
     </div>
-    <div class="cf-strip-text">
-      <span class="cf-strip-num">04</span>
-      <strong>Nos encargamos</strong>
-      <span>Si quieres, cambiamos tu tarifa sin que tengas que hacer nada.</span>
+    <div>
+      <div style="font-size:0.88rem; font-weight:500; color:#1a1a1a;">Nos encargamos</div>
+      <div style="font-size:0.75rem; color:#94a3b8; margin-top:1px;">Si quieres, gestionamos el cambio por ti</div>
     </div>
   </div>
 
 </div>
 
-    <div class="cf-trust">
-      <div class="trust-chip">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Datos cifrados · RGPD
-      </div>
-      <div class="trust-chip">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        100% gratuito
-      </div>
-      <div class="trust-chip">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Sin compromiso
-      </div>
-      <div class="trust-chip">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Resultado en segundos
-      </div>
-      <div class="trust-chip">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        Sin registro
-      </div>
-    </div>
   </div>
-
-  <div style="position:absolute;bottom:-1px;left:0;right:0;line-height:0;z-index:2;">
-    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:80px;">
-      <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="#0f3d22"/>
-    </svg>
-  </div>
-
 </section>
  <!-- STATS BAR --> <div class="stats-bar"> <div class="stats-inner-single"> <div class="stat-single"> <span class="stat-single-number" id="statFacturas">1000+</span> <span class="stat-single-label">Facturas analizadas, de españoles que quisieron saber la verdad</span> </div> </div> <div style="position:absolute;bottom:-1px;left:0;right:0;line-height:0;z-index:2;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:80px;"><path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="#f8faf8"/></svg></div> </div>
 <!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true" style="display:none"></div> <p class="section-label" style="display:none">Empieza ahora</p> <h2 style="display:none">¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc" style="display:none">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step hidden" id="step1-old" data-step="1" style="display:none !important;"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>.</span> </label> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_tratamiento_pdf" name="acepto_tratamiento_pdf" /> <span>Autorizo el tratamiento de los datos de mi factura para recibir un análisis personalizado, conforme a la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a>.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2">
@@ -3066,6 +3071,15 @@ function toggleFaqExtra() {
     entries.forEach(e => { if (e.isIntersecting) { formInner.classList.add('is-visible'); obs.disconnect(); } });
   }, { threshold: 0.2 });
   obs.observe(formInner);
+})();
+</script>
+<script>
+(function() {
+  const items = document.querySelectorAll('.step-item');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.3 });
+  items.forEach(el => obs.observe(el));
 })();
 </script>
 
