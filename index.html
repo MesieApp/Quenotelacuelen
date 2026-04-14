@@ -31,23 +31,28 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "¿Es gratis analizar mi factura de luz o gas?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sí, completamente gratis y sin compromiso. Sube tu factura en PDF, nuestra IA la analiza en segundos y te dice cuánto podrías ahorrar. No tienes que contratar nada." }
+        "name": "¿Es seguro subir mi factura?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Tu factura se procesa con cifrado de extremo a extremo y nunca se comparte con terceros. Cumplimos con el RGPD." }
       },
       {
         "@type": "Question",
-        "name": "¿Cuánto puedo ahorrar cambiando de tarifa de luz?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Depende de tu consumo y tu tarifa actual. La mayoría de usuarios que analizamos ahorra entre 100 y 400 euros al año cambiando a una tarifa más barata." }
+        "name": "¿Hay algún coste oculto?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Ninguno. El análisis y el cambio de tarifa son 100% gratuitos. Recibimos una comisión de la comercializadora, sin que eso afecte al precio que pagas tú." }
       },
       {
         "@type": "Question",
-        "name": "¿Tengo que llamar a mi compañía actual para cambiar de tarifa?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Nosotros gestionamos el cambio completo. No hay cortes de suministro, no tienes que avisar a tu compañía actual, y el proceso tarda menos de 24 horas en iniciarse." }
+        "name": "¿Cuánto tarda el cambio de compañía?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Entre 1 y 3 semanas. Sin cortes de suministro en ningún momento." }
       },
       {
         "@type": "Question",
-        "name": "¿Es seguro subir mi factura de luz?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sí. Tu factura se analiza de forma segura y nunca se comparte con terceros. Cumplimos con el RGPD y los datos se cifran en todo momento." }
+        "name": "¿Tengo que avisar a mi compañía actual?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Nosotros nos encargamos de todo. Tú solo autorizas el cambio con un SMS o email." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Funciona también con facturas de gas?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí. El proceso es idéntico al de la luz. Sube tu factura de gas en PDF y en segundos ves cuánto podrías ahorrar." }
       }
     ]
   }
@@ -1151,7 +1156,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
   });
 })();
 </script>
- <!-- NAV --> <nav> <a href="index.html" class="logo"><img src="Logo_Quenotelacuelen.png" alt="Quenotelacuelen.com" width="918" height="158" style="height:61px;width:auto;" fetchpriority="high"></a> </nav> <!-- HERO -->
+ <!-- NAV --> <nav> <a href="index.html" class="logo"><img src="Logo_Quenotelacuelen_New.png" alt="Quenotelacuelen.com" width="918" height="158" style="height:61px;width:auto;" fetchpriority="high"></a> </nav> <!-- HERO -->
 <section class="hero" style="padding:1.75rem 2rem 2rem; max-width:100%; background:#fff;">
   <h1 style="font-size:clamp(1.6rem,4vw,2.4rem); margin-bottom:1.5rem; letter-spacing:-0.03em; line-height:1.15; text-align:center;">
     Comprueba si te la están<br/>colando con la <em>luz o el gas</em>
@@ -1308,29 +1313,85 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
     </div>
 
   </div>
-</div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div>
-<div class="result-propuesta" style="background:#f0faf2; border:1px solid #d1e7d8; border-radius:14px; padding:1.25rem; margin-top:0.25rem; display:flex; flex-direction:column; gap:0.75rem;">
-  <div style="display:flex; align-items:center; gap:0.75rem;">
-    <span style="background:#1E6B3A; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="width:18px; height:18px;">
-        <polyline points="20 6 9 17 4 12"></polyline>
-      </svg>
-    </span>
-    <p style="font-size:0.95rem; font-weight:600; color:#1a1a1a; font-family:var(--font-head); margin:0; line-height:1.35;">¿Quieres que hagamos el cambio de compañía por ti? Rellena tus datos en la siguiente pantalla. 100% gratuito.</p>
+</div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3">
+<div class="result-container">
+
+  <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button>
+
+  <div style="text-align:center; padding:1.25rem 0 1.5rem;">
+    <p style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.2em; color:#94a3b8; margin-bottom:0.5rem; display:flex; align-items:center; justify-content:center; gap:0.75rem;">
+      <span style="display:block; width:24px; height:1px; background:#e2e8f0;"></span>
+      En total te están colando
+      <span style="display:block; width:24px; height:1px; background:#e2e8f0;"></span>
+    </p>
+    <p class="result-impact-number">
+      <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> €/año</span>
+    </p>
+
+    <div style="display:flex; align-items:center; justify-content:center; gap:1.5rem; margin-top:1rem;">
+      <div style="text-align:center;">
+        <p style="font-size:0.65rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem;">Pagas ahora</p>
+        <p id="res-total-actual" style="font-family:'Lora',Georgia,serif; font-size:1.15rem; color:#ef4444; font-weight:500; text-decoration:line-through; opacity:0.7;">—</p>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2" style="width:18px;height:18px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span style="font-size:0.6rem; color:#1E6B3A; font-weight:600; letter-spacing:0.05em;">AHORRO</span>
+      </div>
+      <div style="text-align:center;">
+        <p style="font-size:0.65rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem;">Con nosotros</p>
+        <p id="res-total-gana" style="font-family:'Lora',Georgia,serif; font-size:1.15rem; color:#1E6B3A; font-weight:500;">—</p>
+      </div>
+    </div>
   </div>
-  <div style="display:flex; flex-direction:column; gap:0.4rem;">
-    <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.78rem; color:#475569;">
-      <span style="color:#1E6B3A; font-weight:700; font-size:1rem;">✓</span> Sin llamadas ni papeleo — lo gestionamos nosotros
-    </div>
-    <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.78rem; color:#475569;">
-      <span style="color:#1E6B3A; font-weight:700; font-size:1rem;">✓</span> Sin interrupciones en tu suministro
-    </div>
-    <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.78rem; color:#475569;">
-      <span style="color:#1E6B3A; font-weight:700; font-size:1rem;">✓</span> No es necesario avisar a tu compañía actual
+
+  <div class="result-cards">
+    <div class="result-table-wrap">
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th>Tu tarifa actual</th>
+            <th id="thMejorTarifa">Mejor tarifa encontrada hoy</th>
+          </tr>
+        </thead>
+        <tbody id="resultTableBody"></tbody>
+      </table>
     </div>
   </div>
+
+  <div style="background:linear-gradient(135deg,#f0faf2 0%,#e8f5ed 100%); border:1px solid #d1e7d8; border-radius:16px; padding:1.5rem; margin-top:0.5rem;">
+    <div style="display:flex; align-items:flex-start; gap:1rem; margin-bottom:1rem;">
+      <div style="width:36px; height:36px; background:#1E6B3A; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="width:16px;height:16px;"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <p style="font-family:'Lora',Georgia,serif; font-size:0.95rem; font-weight:500; color:#1a1a1a; line-height:1.4; margin-bottom:0.25rem;">¿Quieres que hagamos el cambio por ti?</p>
+        <p style="font-size:0.78rem; color:#475569; font-weight:300; line-height:1.6;">Gestionamos todo el proceso sin que tengas que hacer una sola llamada. Sin cortes de suministro, sin papeleo, sin coste.</p>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:0.4rem; padding-left:3rem;">
+      <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.75rem; color:#475569;">
+        <span style="color:#1E6B3A; font-weight:700;">✓</span> Sin llamadas ni papeleo — lo gestionamos nosotros
+      </div>
+      <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.75rem; color:#475569;">
+        <span style="color:#1E6B3A; font-weight:700;">✓</span> Sin interrupciones en tu suministro
+      </div>
+      <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.75rem; color:#475569;">
+        <span style="color:#1E6B3A; font-weight:700;">✓</span> No tienes que avisar a tu compañía actual
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="submit-btn submit-btn-green" id="btnSiguiente" style="margin-top:0.75rem; font-size:1rem; padding:1.1rem; border-radius:14px; position:relative; overflow:hidden;">
+    <span style="position:relative; z-index:1;">Quiero ahorrar <span id="btnAhorroAnual"></span> €/año →</span>
+  </button>
+
+  <div class="result-footer-notes" style="margin-top:0.5rem;">
+    <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p>
+  </div>
+
 </div>
-<button type="button" class="submit-btn submit-btn-green" id="btnSiguiente">Quiero ahorrar <span id="btnAhorroAnual"></span>/año →</button> <div class="result-footer-notes"> <p class="result-disclaimer">* Cálculos orientativos basados en tu última factura. El ahorro real puede variar según el período, precios del mercado y condiciones de tu contrato.</p> </div> </div> </div> <!-- PASO 4: Formulario contratación -->
+</div> <!-- PASO 4: Formulario contratación -->
 <div class="flow-step hidden" id="step4" data-step="4">
   <button type="button" class="btn-volver" id="btnVolverStep4">← Volver</button>
 
@@ -1530,151 +1591,116 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
   </div>
 </section>
 
-<section style="background:#f8fafc; padding:3rem 1.5rem; border-top:1px solid #e2e8f0;">
+<!-- TESTIMONIOS -->
+<section style="padding:2.5rem 1.5rem; background:#fff; border-top:1px solid #e2e8f0;">
   <div style="max-width:860px; margin:0 auto;">
-    <p style="font-family:'DM Sans',sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:0.18em; color:#94a3b8; margin:0 0 1.5rem; font-weight:600; text-align:center;">Lo que dicen nuestros usuarios</p>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem;">
+    <p style="font-size:0.68rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#94a3b8; text-align:center; margin-bottom:1.5rem;">Lo que dicen nuestros usuarios</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;">
+      <div style="padding:1.1rem 1.25rem; border:1px solid #f1f5f9; border-radius:12px; background:#fafbfc;">
+        <div style="color:#f59e0b; font-size:11px; margin-bottom:0.6rem;">★★★★★</div>
+        <p style="font-size:0.82rem; color:#334155; line-height:1.6; margin-bottom:0.75rem;">"Ojalá lo hubiera mirado antes. Llevo meses pagando de más por pura pereza."</p>
+        <p style="font-size:0.7rem; color:#94a3b8;"><strong style="color:#475569;">María G.</strong> · Madrid · <span style="color:#1E6B3A;">340 €/año</span></p>
+      </div>
+      <div style="padding:1.1rem 1.25rem; border:1px solid #f1f5f9; border-radius:12px; background:#fafbfc;">
+        <div style="color:#f59e0b; font-size:11px; margin-bottom:0.6rem;">★★★★★</div>
+        <p style="font-size:0.82rem; color:#334155; line-height:1.6; margin-bottom:0.75rem;">"Me daba pereza el tema de la luz pero aquí te lo dan mascado. Súper fácil."</p>
+        <p style="font-size:0.7rem; color:#94a3b8;"><strong style="color:#475569;">Carlos M.</strong> · Barcelona · <span style="color:#1E6B3A;">264 €/año</span></p>
+      </div>
+      <div style="padding:1.1rem 1.25rem; border:1px solid #f1f5f9; border-radius:12px; background:#fafbfc;">
+        <div style="color:#f59e0b; font-size:11px; margin-bottom:0.6rem;">★★★★★</div>
+        <p style="font-size:0.82rem; color:#334155; line-height:1.6; margin-bottom:0.75rem;">"Resulta que le estaba regalando a la anterior empresa casi 200 euros al año."</p>
+        <p style="font-size:0.7rem; color:#94a3b8;"><strong style="color:#475569;">Ana R.</strong> · Valencia · <span style="color:#1E6B3A;">180 €/año</span></p>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.25rem 1.25rem 1rem;">
-        <div style="margin-bottom:0.6rem;"><span style="color:#f59e0b; font-size:13px;">★★★★★</span></div>
-        <p style="font-size:0.88rem; color:#334155; line-height:1.65; margin:0 0 0.85rem;">"Ojalá lo hubiera mirado antes. Llevo meses pagando de más por pura pereza."</p>
-        <p style="font-size:0.75rem; color:#94a3b8; margin:0;"><strong style="color:#475569;">María G.</strong> · Madrid · Ahorro: 340 €/año</p>
+<!-- FAQ -->
+<section id="faq" style="padding:2.5rem 1.5rem; background:#f8faf8; border-top:1px solid #e2e8f0;">
+  <div style="max-width:640px; margin:0 auto;">
+    <p style="font-size:0.68rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#94a3b8; text-align:center; margin-bottom:1.5rem;">Preguntas frecuentes</p>
+    <div style="display:flex; flex-direction:column; gap:0.4rem;">
+
+      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.85rem 1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
+          <span>¿Es seguro subir mi factura?</span>
+          <svg style="width:14px;height:14px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div style="display:none; padding:0 1rem 0.85rem;">
+          <p style="font-size:0.78rem; color:#64748b; line-height:1.65; margin:0;">Tu factura se procesa con cifrado de extremo a extremo y nunca se comparte con terceros. Cumplimos con el RGPD.</p>
+        </div>
       </div>
 
-      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.25rem 1.25rem 1rem;">
-        <div style="margin-bottom:0.6rem;"><span style="color:#f59e0b; font-size:13px;">★★★★★</span></div>
-        <p style="font-size:0.88rem; color:#334155; line-height:1.65; margin:0 0 0.85rem;">"Súper fácil de usar. Me daba pereza el tema de la luz pero te lo dan mascado."</p>
-        <p style="font-size:0.75rem; color:#94a3b8; margin:0;"><strong style="color:#475569;">Carlos M.</strong> · Barcelona · Ahorro: 264 €/año</p>
+      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.85rem 1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
+          <span>¿Hay algún coste oculto?</span>
+          <svg style="width:14px;height:14px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div style="display:none; padding:0 1rem 0.85rem;">
+          <p style="font-size:0.78rem; color:#64748b; line-height:1.65; margin:0;">Ninguno. El análisis y el cambio de tarifa son 100% gratuitos. Recibimos una comisión de la comercializadora, sin que eso afecte al precio que pagas tú.</p>
+        </div>
       </div>
 
-      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:1.25rem 1.25rem 1rem;">
-        <div style="margin-bottom:0.6rem;"><span style="color:#f59e0b; font-size:13px;">★★★★★</span></div>
-        <p style="font-size:0.88rem; color:#334155; line-height:1.65; margin:0 0 0.85rem;">"Resulta que le estaba regalando a la anterior empresa casi 200 euros al año"</p>
-        <p style="font-size:0.75rem; color:#94a3b8; margin:0;"><strong style="color:#475569;">Ana R.</strong> · Valencia · Ahorro: 180 €/año</p>
+      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.85rem 1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
+          <span>¿Cuánto tarda el cambio de compañía?</span>
+          <svg style="width:14px;height:14px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div style="display:none; padding:0 1rem 0.85rem;">
+          <p style="font-size:0.78rem; color:#64748b; line-height:1.65; margin:0;">Entre 1 y 3 semanas. Sin cortes de suministro en ningún momento.</p>
+        </div>
+      </div>
+
+      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.85rem 1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
+          <span>¿Tengo que avisar a mi compañía actual?</span>
+          <svg style="width:14px;height:14px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div style="display:none; padding:0 1rem 0.85rem;">
+          <p style="font-size:0.78rem; color:#64748b; line-height:1.65; margin:0;">No. Nosotros nos encargamos de todo. Tú solo autorizas el cambio con un SMS o email.</p>
+        </div>
+      </div>
+
+      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; overflow:hidden;">
+        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.85rem 1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
+          <span>¿Funciona también con facturas de gas?</span>
+          <svg style="width:14px;height:14px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div style="display:none; padding:0 1rem 0.85rem;">
+          <p style="font-size:0.78rem; color:#64748b; line-height:1.65; margin:0;">Sí. El proceso es idéntico al de la luz. Sube tu factura de gas en PDF y en segundos ves cuánto podrías ahorrar.</p>
+        </div>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- FAQ — SEO + Rich Snippets -->
-<section id="faq" style="background:#f8fafc; padding:2.5rem 1.5rem 3rem; position:relative;">
-  <div style="max-width:780px; margin:0 auto;">
-    <p style="font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#1E6B3A; margin-bottom:0.4rem;">Preguntas frecuentes</p>
-    <h2 style="font-family:'Lora',Georgia,serif; font-size:clamp(1.4rem,3vw,1.9rem); font-weight:500; line-height:1.2; letter-spacing:-0.02em; color:#1a1a1a; margin-bottom:1.5rem;">Todo lo que necesitas saber</h2>
-
-    <div style="display:flex; flex-direction:column; gap:0.5rem;">
-
-      <div class="faq-hidden" style="display:none; background:#fff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.9rem 1.1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
-          <span>¿Es gratis analizar mi factura de luz o gas?</span>
-          <svg style="width:16px;height:16px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div style="display:none; padding:0 1.1rem 0.9rem;">
-          <p style="font-size:0.84rem; color:#475569; line-height:1.7; margin:0;">Sí, completamente gratis y sin ningún compromiso. Solo tienes que subir tu factura en PDF — nuestra IA la analiza en segundos y te muestra exactamente cuánto estás pagando de más. No tienes que dejar ningún dato de pago ni contratar nada para ver el resultado.</p>
-        </div>
-      </div>
-
-      <div class="faq-hidden" style="display:none; background:#fff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.9rem 1.1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
-          <span>¿Cuánto dinero puedo ahorrar cambiando de tarifa de luz?</span>
-          <svg style="width:16px;height:16px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div style="display:none; padding:0 1.1rem 0.9rem;">
-          <p style="font-size:0.84rem; color:#475569; line-height:1.7; margin:0;">Depende de tu consumo y tu tarifa actual. La mayoría de usuarios ahorra entre 100 y 400 euros al año. El ahorro más habitual viene de estar pagando un precio por kWh más caro de lo necesario, o tener servicios adicionales que no necesitas.</p>
-        </div>
-      </div>
-
-      <div class="faq-hidden" style="display:none; background:#fff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.9rem 1.1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
-          <span>¿Tengo que llamar a mi compañía actual para cambiar de tarifa?</span>
-          <svg style="width:16px;height:16px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div style="display:none; padding:0 1.1rem 0.9rem;">
-          <p style="font-size:0.84rem; color:#475569; line-height:1.7; margin:0;">No. Nosotros gestionamos el cambio completo por ti. Sin llamadas, sin trámites, sin cortes de suministro. Solo autorizas el cambio con un SMS o correo y nosotros nos encargamos de todo.</p>
-        </div>
-      </div>
-
-      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.9rem 1.1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
-          <span>¿Es seguro subir mi factura? ¿Qué hacéis con mis datos?</span>
-          <svg style="width:16px;height:16px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div style="display:none; padding:0 1.1rem 0.9rem;">
-          <p style="font-size:0.84rem; color:#475569; line-height:1.7; margin:0;">Tu factura se procesa con cifrado de extremo a extremo y nunca se comparte con terceros más allá de lo estrictamente necesario. Cumplimos con el RGPD y puedes solicitar la eliminación de tus datos en cualquier momento.</p>
-        </div>
-      </div>
-
-      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.9rem 1.1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
-          <span>¿Hay algún coste oculto o comisión para el usuario?</span>
-          <svg style="width:16px;height:16px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div style="display:none; padding:0 1.1rem 0.9rem;">
-          <p style="font-size:0.84rem; color:#475569; line-height:1.7; margin:0;">Ninguno. El servicio es 100% gratuito. Si decides cambiar de tarifa a través de nosotros recibimos una comisión de la comercializadora, sin que eso afecte al precio que pagas tú ni a la objetividad del análisis.</p>
-        </div>
-      </div>
-
-      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.9rem 1.1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
-          <span>¿Cuánto tiempo tarda el cambio de compañía de luz?</span>
-          <svg style="width:16px;height:16px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div style="display:none; padding:0 1.1rem 0.9rem;">
-          <p style="font-size:0.84rem; color:#475569; line-height:1.7; margin:0;">Entre 1 y 3 semanas según los plazos regulados. Durante ese tiempo sigues con tu compañía actual sin ninguna interrupción. No hay cortes de luz en ningún momento.</p>
-        </div>
-      </div>
-
-      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden;">
-        <button onclick="toggleFaq(this)" style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:0.9rem 1.1rem; background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; color:#1a1a1a; text-align:left; gap:1rem;">
-          <span>¿Puedo analizar también mi factura de gas?</span>
-          <svg style="width:16px;height:16px;flex-shrink:0;stroke:#1E6B3A;transition:transform 0.25s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div style="display:none; padding:0 1.1rem 0.9rem;">
-          <p style="font-size:0.84rem; color:#475569; line-height:1.7; margin:0;">Sí. El proceso es idéntico al de la luz: sube tu factura de gas en PDF y en segundos ves cuánto podrías ahorrar. Si tienes ambas, analízalas por separado para obtener el resultado más preciso.</p>
-        </div>
-      </div>
-
-    </div>
-
-    <div style="text-align:center; margin-top:1rem;">
-      <button id="faqToggleBtn" onclick="toggleFaqExtra()" style="display:inline-flex; align-items:center; gap:0.5rem; background:transparent; border:1px solid #e2e8f0; color:#64748B; font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:500; padding:0.5rem 1.1rem; border-radius:999px; cursor:pointer; transition:all 0.2s;">
-        <span id="faqToggleText">Ver más preguntas</span>
-        <svg id="faqToggleIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;transition:transform 0.3s"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-    </div>
-  </div>
-</section>
-
-<section style="background:#fff; padding:2.5rem 1.5rem; border-top:1px solid #eef0f2; position:relative;">
-  <div style="max-width:780px; margin:0 auto;">
-    <p style="font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#94a3b8; margin-bottom:1.25rem;">Nuestros artículos</p>
-    <div style="display:flex; flex-direction:column; gap:0;">
-
-      <a href="/blog-trucos-ahorrar-luz.html" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1rem 0; border-bottom:1px solid #f1f5f9; text-decoration:none; transition:all 0.2s;">
+<!-- ARTÍCULOS -->
+<section style="padding:2rem 1.5rem; background:#fff; border-top:1px solid #e2e8f0;">
+  <div style="max-width:640px; margin:0 auto;">
+    <p style="font-size:0.68rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#94a3b8; margin-bottom:1.25rem;">Nuestros artículos</p>
+    <div style="display:flex; flex-direction:column;">
+      <a href="/blog-trucos-ahorrar-luz.html" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:0.85rem 0; border-bottom:1px solid #f1f5f9; text-decoration:none;">
         <div>
-          <p style="font-size:0.72rem; color:#94a3b8; margin:0 0 0.25rem; font-weight:400;">Ahorro energético · Marzo 2026</p>
-          <p style="font-size:0.9rem; color:#1a1a1a; margin:0; font-weight:500; line-height:1.4;">Trucos para ahorrar en la factura de la luz (que de verdad funcionan en 2026)</p>
+          <p style="font-size:0.65rem; color:#94a3b8; margin:0 0 0.2rem;">Ahorro energético · Marzo 2026</p>
+          <p style="font-size:0.85rem; color:#1a1a1a; margin:0; font-weight:500; line-height:1.35;">Trucos para ahorrar en la factura de la luz (que de verdad funcionan en 2026)</p>
         </div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2" style="width:16px;height:16px;flex-shrink:0;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#d1e7d8" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-
-      <a href="/blog-apagon-espana.html" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1rem 0; border-bottom:1px solid #f1f5f9; text-decoration:none; transition:all 0.2s;">
+      <a href="/blog-apagon-espana.html" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:0.85rem 0; border-bottom:1px solid #f1f5f9; text-decoration:none;">
         <div>
-          <p style="font-size:0.72rem; color:#94a3b8; margin:0 0 0.25rem; font-weight:400;">Mercado energético · Marzo 2026</p>
-          <p style="font-size:0.9rem; color:#1a1a1a; margin:0; font-weight:500; line-height:1.4;">¿Por qué ocurrió el apagón? ¿Puede volver a ocurrir?</p>
+          <p style="font-size:0.65rem; color:#94a3b8; margin:0 0 0.2rem;">Mercado energético · Marzo 2026</p>
+          <p style="font-size:0.85rem; color:#1a1a1a; margin:0; font-weight:500; line-height:1.35;">¿Por qué ocurrió el apagón? ¿Puede volver a ocurrir?</p>
         </div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2" style="width:16px;height:16px;flex-shrink:0;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#d1e7d8" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-
-      <a href="/blog-iva-luz-10-por-ciento.html" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1rem 0; text-decoration:none; transition:all 0.2s;">
+      <a href="/blog-iva-luz-10-por-ciento.html" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:0.85rem 0; text-decoration:none;">
         <div>
-          <p style="font-size:0.72rem; color:#94a3b8; margin:0 0 0.25rem; font-weight:400;">Actualidad energética · 26 marzo 2026</p>
-          <p style="font-size:0.9rem; color:#1a1a1a; margin:0; font-weight:500; line-height:1.4;">Baja el IVA de la luz al 10%: cuánto vas a ahorrar exactamente en tu factura</p>
+          <p style="font-size:0.65rem; color:#94a3b8; margin:0 0 0.2rem;">Actualidad energética · 26 marzo 2026</p>
+          <p style="font-size:0.85rem; color:#1a1a1a; margin:0; font-weight:500; line-height:1.35;">Baja el IVA de la luz al 10%: cuánto vas a ahorrar exactamente en tu factura</p>
         </div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2" style="width:16px;height:16px;flex-shrink:0;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#d1e7d8" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-
     </div>
   </div>
 </section>
@@ -1705,6 +1731,7 @@ function toggleFaqExtra() {
   const btn    = document.getElementById('faqToggleBtn');
   const txt    = document.getElementById('faqToggleText');
   const icon   = document.getElementById('faqToggleIcon');
+  if (!btn || !txt || !icon) return;
   const isOpen = btn.dataset.open === 'true';
 
   hidden.forEach(el => {
@@ -1728,7 +1755,7 @@ function toggleFaqExtra() {
   <div class="footer-inner">
     <div class="footer-row-main">
       <a href="index.html" class="footer-logo">
-        <img src="Logo_Quenotelacuelen.png" alt="Quenotelacuelen.com" width="918" height="158" style="height:61px;width:auto;">
+        <img src="Logo_Quenotelacuelen_New.png" alt="Quenotelacuelen.com" width="918" height="158" style="height:61px;width:auto;">
       </a>
       <div class="footer-contact-row">
         <a href="tel:+34623756420">
@@ -2532,9 +2559,13 @@ function toggleFaqExtra() {
       factura_nombre: window._facturaFileName || null
     }).then((res) => { if (res.error) console.error('Supabase insert error:', JSON.stringify(res.error)); }).catch((e) => { console.error('Supabase insert catch:', e); });
 
-    document.getElementById('resultTotalColandoAnual').textContent = totalColandoAnual + ' €';
+    document.getElementById('resultTotalColandoAnual').textContent = totalColandoAnual;
+    const resActual = document.getElementById('res-total-actual');
+    const resGanaEl = document.getElementById('res-total-gana');
+    if (resActual) resActual.textContent = totalFacturaReal.toFixed(2).replace('.', ',') + ' €';
+    if (resGanaEl) resGanaEl.textContent = (calcResult.total || calcResult.totalG || 0).toFixed(2).replace('.', ',') + ' €';
     const btnSpan = document.getElementById('btnAhorroAnual');
-    if (btnSpan) btnSpan.textContent = totalColandoAnual + ' €';
+    if (btnSpan) btnSpan.textContent = String(totalColandoAnual);
 
     const tbody = document.getElementById('resultTableBody');
     tbody.innerHTML = '';
