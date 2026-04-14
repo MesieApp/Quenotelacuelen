@@ -475,10 +475,10 @@ footer { padding: 1.25rem 2rem; }
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #475569;
   margin-bottom: 0.5rem;
 }
 .result-impact-label-line { display: block; width: 24px; height: 1px; background: #e2e8f0; flex-shrink: 0; }
@@ -1338,7 +1338,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <span style="font-size:0.6rem; color:#1E6B3A; font-weight:600; letter-spacing:0.05em;">AHORRO</span>
       </div>
       <div style="text-align:center;">
-        <p style="font-size:0.65rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem;">Con nosotros</p>
+        <p style="font-size:0.65rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem;">SI TE CAMBIAS</p>
         <p id="res-total-gana" style="font-family:'Lora',Georgia,serif; font-size:1.15rem; color:#1E6B3A; font-weight:500;">—</p>
       </div>
     </div>
@@ -1350,7 +1350,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <thead>
           <tr>
             <th>Concepto</th>
-            <th>Tu tarifa actual</th>
+            <th id="thTarifaActual">Tu tarifa actual</th>
             <th id="thMejorTarifa">Mejor tarifa encontrada hoy</th>
           </tr>
         </thead>
@@ -2603,6 +2603,15 @@ function toggleFaqExtra() {
         tr.innerHTML = `<td>${c}</td><td>${tu}</td><td class="${c === 'Total factura' ? 'highlight' : ''}">${gana}</td>`;
         tbody.appendChild(tr);
       });
+    }
+
+    const thTarifaActual = document.getElementById('thTarifaActual');
+    if (thTarifaActual) {
+      thTarifaActual.innerHTML = `TU TARIFA ACTUAL<span style="font-size:0.7rem;color:#475569;font-weight:400;text-transform:none;letter-spacing:normal;display:block;">${extractedData.comercializadora || ''}</span>`;
+    }
+    const thMejorTarifa = document.getElementById('thMejorTarifa');
+    if (thMejorTarifa) {
+      thMejorTarifa.innerHTML = `MEJOR TARIFA ENCONTRADA HOY<span style="font-size:0.7rem;color:#1E6B3A;font-weight:500;text-transform:none;letter-spacing:normal;display:block;">${(calcResult.comercializadora || 'Gana Energía') + ' — ' + (calcResult.tarifa?.nombre || '')}</span>`;
     }
 
     if (window.dataLayer) window.dataLayer.push({ event: 'factura_analizada' });
