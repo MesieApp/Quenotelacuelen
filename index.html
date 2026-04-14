@@ -2327,10 +2327,6 @@ function toggleFaqExtra() {
     const circleEl  = document.getElementById('circleProgress');
     const pctEl     = document.getElementById('circlePercent');
 
-    const phaseTargets = [25, 50, 75, 99];
-    let currentPhase = 0;
-    let currentPct   = 0;
-
     function setCircle(pct) {
       const clamped = Math.min(Math.max(pct, 0), 100);
       if (circleEl) 
@@ -2364,20 +2360,17 @@ function toggleFaqExtra() {
     }
 
     activatePhase(0);
-
-    const phaseInterval = setInterval(() => {
-      currentPhase++;
-      if (currentPhase < 4) activatePhase(currentPhase);
-      else clearInterval(phaseInterval);
-    }, 5000);
-
-    const progressInterval = setInterval(() => {
-      const target = phaseTargets[Math.min(currentPhase, 3)];
-      if (currentPct < target - 1) {
-        currentPct += 0.35;
-        setCircle(currentPct);
-      }
-    }, 200);
+    const phaseTimeouts = [
+      setTimeout(() => activatePhase(1), 5000),
+      setTimeout(() => activatePhase(2), 10000),
+      setTimeout(() => activatePhase(3), 15000)
+    ];
+    const progressStart = Date.now();
+    const progressTicker = setInterval(() => {
+      const elapsed = Date.now() - progressStart;
+      const pct = Math.min((elapsed / 20000) * 99, 99);
+      setCircle(pct);
+    }, 100);
 
     const minDelay = new Promise(r => setTimeout(r, 20000));
 
@@ -2391,8 +2384,8 @@ function toggleFaqExtra() {
 
     const [, result] = await Promise.all([minDelay, apiPromise]);
     console.log('DATOS EXTRAÍDOS:', JSON.stringify(result.data, null, 2));
-    clearInterval(phaseInterval);
-    clearInterval(progressInterval);
+    clearInterval(progressTicker);
+    phaseTimeouts.forEach(clearTimeout);
     setCircle(100);
 
     // Subir PDF a Storage nada más analizar, sin esperar a contratación
@@ -2564,8 +2557,8 @@ function toggleFaqExtra() {
     const resGanaEl = document.getElementById('res-total-gana');
     const costeAnualActual = (totalFacturaReal / dias) * 365;
     const costeAnualGana = (calcResult.totalG / dias) * 365;
-    if (resActual) resActual.textContent = costeAnualActual.toFixed(2).replace('.', ',') + ' €';
-    if (resGanaEl) resGanaEl.textContent = costeAnualGana.toFixed(2).replace('.', ',') + ' €';
+    if (resActual) resActual.textContent = costeAnualActual.toFixed(2).replace('.', ',') + ' € /año';
+    if (resGanaEl) resGanaEl.textContent = costeAnualGana.toFixed(2).replace('.', ',') + ' € /año';
     const btnSpan = document.getElementById('btnAhorroAnual');
     if (btnSpan) btnSpan.textContent = String(totalColandoAnual);
 
