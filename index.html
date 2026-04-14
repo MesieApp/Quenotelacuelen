@@ -847,6 +847,28 @@ input:not([type="checkbox"]):focus, select:focus {
   animation: pulse-ring 3.5s ease-out infinite;
 }
 
+.load-pill {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #94a3b8;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  transition: all 0.4s ease;
+  white-space: nowrap;
+}
+.load-pill.active {
+  color: #1E6B3A;
+  background: #f0faf2;
+  border-color: #d1e7d8;
+}
+.load-pill.done {
+  color: #94a3b8;
+  background: #fff;
+  border-color: #e2e8f0;
+}
+
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr !important; }
 }
@@ -1249,73 +1271,44 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 </section>
  <!-- STATS BAR --> <div class="stats-bar"> <div class="stats-inner-single"> <div class="stat-single"> <span class="stat-single-number" id="statFacturas">1000+</span> <span class="stat-single-label">Facturas analizadas, de españoles que quisieron saber la verdad</span> </div> </div> <div style="position:absolute;bottom:-1px;left:0;right:0;line-height:0;z-index:2;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:80px;"><path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="#f8faf8"/></svg></div> </div>
 <!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true" style="display:none"></div> <p class="section-label" style="display:none">Empieza ahora</p> <h2 style="display:none">¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc" style="display:none">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step hidden" id="step1-old" data-step="1" style="display:none !important;"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="fileDrop"> <input type="file" id="factura" accept=".pdf" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>.</span> </label> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_tratamiento_pdf" name="acepto_tratamiento_pdf" /> <span>Autorizo el tratamiento de los datos de mi factura para recibir un análisis personalizado, conforme a la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a>.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2">
-<div style="text-align:center; padding-top:2rem; margin-bottom:-1rem;">
-  <p style="font-family:var(--font-head); font-size:1.25rem; font-weight:500; color:#1a1a1a; letter-spacing:-0.02em;">Estamos revisando tu factura</p>
-  <p style="font-size:0.8rem; color:#94a3b8; font-weight:300; margin-top:0.25rem;">Esto puede tardar unos segundos...</p>
-</div>
- <div class="loading-layout">
-  <div class="loading-grid">
+  <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:3rem 1rem; min-height:340px; text-align:center;">
 
-    <!-- Cuadrante 1: arriba izquierda -->
-    <div class="lq lq-left lq-tl active" id="phase0">
-      <div class="lq-connector"></div>
-      <div class="lq-head">
-        <span class="lq-num">1</span>
-        <span class="lq-title">Analizando tu factura</span>
-      </div>
-      <span class="lq-sub">Leyendo los datos del PDF...</span>
-    </div>
-
-    <!-- Círculo central -->
-    <div class="loading-circle-wrap">
-      <svg class="loading-circle-svg" viewBox="0 0 180 180">
+    <div style="position:relative; width:120px; height:120px; margin-bottom:2rem;">
+      <svg width="120" height="120" viewBox="0 0 120 120">
         <defs>
           <linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#1E6B3A"/>
             <stop offset="100%" stop-color="#4ade80"/>
           </linearGradient>
         </defs>
-        <circle class="loading-circle-track" cx="90" cy="90" r="76"/>
-        <circle class="loading-circle-prog"  cx="90" cy="90" r="76" id="circleProgress"/>
+        <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(30,107,58,0.08)" stroke-width="6"/>
+        <circle cx="60" cy="60" r="54" fill="none" stroke="url(#circleGrad)" stroke-width="6"
+          stroke-linecap="round"
+          stroke-dasharray="339"
+          stroke-dashoffset="339"
+          id="circleProgress"
+          style="transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); transform:rotate(-90deg); transform-origin:center;"/>
       </svg>
-      <div class="loading-circle-center">
-        <span class="loading-circle-pct" id="circlePercent">0%</span>
-        <span class="loading-circle-sublabel">completado</span>
+      <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <span id="circlePercent" style="font-family:'Lora',Georgia,serif; font-size:1.6rem; font-weight:500; color:#1a1a1a; letter-spacing:-0.04em; line-height:1;">0%</span>
       </div>
     </div>
 
-    <!-- Cuadrante 2: arriba derecha -->
-    <div class="lq lq-right lq-tr waiting" id="phase1">
-      <div class="lq-connector"></div>
-      <div class="lq-head">
-        <span class="lq-num">2</span>
-        <span class="lq-title">Buscando la mejor tarifa del mercado</span>
-      </div>
-      <span class="lq-sub">Rastreando el mercado...</span>
-    </div>
+    <p style="font-family:'Lora',Georgia,serif; font-size:1.15rem; font-weight:500; color:#1a1a1a; margin-bottom:0.4rem;">Estamos revisando tu factura</p>
+    <p id="loading-status" style="font-size:0.82rem; color:#94a3b8; font-weight:300; margin-bottom:2rem; min-height:1.2em; transition:opacity 0.4s ease;">Leyendo los datos del PDF...</p>
 
-    <!-- Cuadrante 3: abajo izquierda -->
-    <div class="lq lq-left lq-bl waiting" id="phase2">
-      <div class="lq-connector"></div>
-      <div class="lq-head">
-        <span class="lq-num">3</span>
-        <span class="lq-title">Comparando: Tu tarifa vs. La mejor tarifa encontrada</span>
-      </div>
-      <span class="lq-sub">Calculando cuánto pagas de más...</span>
-    </div>
-
-    <!-- Cuadrante 4: abajo derecha -->
-    <div class="lq lq-right lq-br waiting" id="phase3">
-      <div class="lq-connector"></div>
-      <div class="lq-head">
-        <span class="lq-num">4</span>
-        <span class="lq-title">Extrayendo conclusiones</span>
-      </div>
-      <span class="lq-sub">Preparando tu resultado...</span>
+    <div style="display:flex; align-items:center; gap:0.5rem;">
+      <div class="load-pill active" id="pill0">Leyendo factura</div>
+      <div style="width:16px; height:1px; background:#e2e8f0;"></div>
+      <div class="load-pill" id="pill1">Buscando tarifas</div>
+      <div style="width:16px; height:1px; background:#e2e8f0;"></div>
+      <div class="load-pill" id="pill2">Calculando ahorro</div>
+      <div style="width:16px; height:1px; background:#e2e8f0;"></div>
+      <div class="load-pill" id="pill3">Preparando resultado</div>
     </div>
 
   </div>
-</div> </div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div>
+</div> <!-- PASO 3: Resultado --> <div class="flow-step hidden" id="step3" data-step="3"> <div class="result-container"> <button type="button" id="btnVolver" class="btn-volver">← Analizar otra factura</button> <div class="result-impact"> <p class="result-impact-label"> <span class="result-impact-label-line"></span> En total te están colando <span class="result-impact-label-line"></span> </p> <p class="result-impact-number"> <span id="resultTotalColandoAnual">—</span><span class="result-impact-year"> /año</span> </p> </div> <div class="result-cards"> <div class="result-table-wrap"> <table class="result-table"> <thead> <tr><th>Concepto</th><th>Tu tarifa actual</th><th id="thMejorTarifa">Mejor tarifa encontrada hoy — Gana Energía</th></tr> </thead> <tbody id="resultTableBody"></tbody> </table> </div> </div>
 <div class="result-propuesta" style="background:#f0faf2; border:1px solid #d1e7d8; border-radius:14px; padding:1.25rem; margin-top:0.25rem; display:flex; flex-direction:column; gap:0.75rem;">
   <div style="display:flex; align-items:center; gap:0.75rem;">
     <span style="background:#1E6B3A; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
@@ -2303,7 +2296,7 @@ function toggleFaqExtra() {
       const formulario = document.getElementById('formulario');
       if (formulario) formulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 150);
-    const circumference = 478;
+    const circumference = 339;
     const circleEl  = document.getElementById('circleProgress');
     const pctEl     = document.getElementById('circlePercent');
 
@@ -2320,19 +2313,26 @@ function toggleFaqExtra() {
     }
 
     function activatePhase(idx) {
+      const statusTexts = [
+        'Leyendo los datos del PDF...',
+        'Comparando con las mejores tarifas del mercado...',
+        'Calculando cuánto pagas de más...',
+        'Preparando tu resultado...'
+      ];
+      const statusEl = document.getElementById('loading-status');
+      if (statusEl) {
+        statusEl.style.opacity = '0';
+        setTimeout(() => {
+          statusEl.textContent = statusTexts[idx] || '';
+          statusEl.style.opacity = '1';
+        }, 200);
+      }
       [0,1,2,3].forEach(i => {
-        const el = document.getElementById('phase' + i);
-        if (!el) return;
-        const dot = el.querySelector('.lq-num');
-        const isLeft = el.classList.contains('lq-left');
-        el.className = 'lq ' + 
-          (isLeft ? 'lq-left ' : 'lq-right ') +
-          (el.classList.contains('lq-tl') ? 'lq-tl' :
-           el.classList.contains('lq-tr') ? 'lq-tr' :
-           el.classList.contains('lq-bl') ? 'lq-bl' : 'lq-br') +
-          (i < idx  ? ' done' :
-           i === idx ? ' active' : ' waiting');
-        if (dot) dot.textContent = i < idx ? '✓' : (i + 1);
+        const pill = document.getElementById('pill' + i);
+        if (!pill) return;
+        if (i < idx) pill.className = 'load-pill done';
+        else if (i === idx) pill.className = 'load-pill active';
+        else pill.className = 'load-pill';
       });
     }
 
