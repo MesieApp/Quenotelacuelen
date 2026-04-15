@@ -1798,27 +1798,18 @@ function toggleFaqExtra() {
 
   async function cargarTarifasLuz() {
     try {
-      const [resGana, resBuala] = await Promise.all([
-        _supabase.from('tarifas_luz_gana').select('*').eq('activa', true),
-        _supabase.from('tarifas_luz_buala').select('*').eq('activa', true)
-      ]);
+      const resGana = await _supabase.from('tarifas_luz_gana').select('*').eq('activa', true);
 
       const tarifasGana = (resGana.data || []).map(t => ({ ...t, comercializadora: 'Gana Energía' }));
-      const tarifasBuala = (resBuala.data || []).map(t => ({ ...t, comercializadora: 'Buala Energía' }));
-
-      const todas = [...tarifasGana, ...tarifasBuala];
-
-      if (todas.length === 0) throw new Error('Sin datos');
-      return todas;
+      if (tarifasGana.length === 0) throw new Error('Sin datos');
+      return tarifasGana;
 
     } catch (e) {
       console.warn('Usando tarifas fallback de luz:', e);
       return [
         { nombre: 'Precio Mercado', slug: 'mercado', tipo_energia: 'mercado', margen_dia: 0.167, potencia_p1_dia: 0.075903, potencia_p2_dia: 0.019880, energia_unica: null, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' },
         { nombre: 'Tramos Horarios', slug: 'tramos', tipo_energia: 'fija', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_punta: 0.181, energia_llano: 0.114, energia_valle: 0.09, energia_unica: null, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' },
-        { nombre: '24 Horas', slug: '24horas', tipo_energia: 'unica', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_unica: 0.129, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' },
-        { nombre: 'Mini Flex', slug: 'miniflex', tipo_energia: 'unica', margen_dia: 0, potencia_p1_dia: 0.085598, potencia_p2_dia: 0.085598, energia_unica: 0.1197, fee_kwh: 0, activa: true, comercializadora: 'Buala Energía' },
-        { nombre: 'Magic', slug: 'magic', tipo_energia: 'mercado', margen_dia: 0, potencia_p1_dia: 0.080041, potencia_p2_dia: 0.080041, energia_unica: null, fee_kwh: 0.010, activa: true, comercializadora: 'Buala Energía' }
+        { nombre: '24 Horas', slug: '24horas', tipo_energia: 'unica', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_unica: 0.129, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' }
       ];
     }
   }
@@ -1869,6 +1860,12 @@ function toggleFaqExtra() {
     const p2kw = parseFloat(d.potencia_p2) || p1kw;
     const dias = parseInt(d.dias) || 30;
     const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
+    const fechaFin = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
+    const ivaRate = (fechaFin && !isNaN(fechaFin.getTime()) && fechaFin > new Date('2026-03-20T23:59:59')) ? 0.10 : 0.21;
+    const provincia = (d.provincia || '').trim().toUpperCase();
+    const esCanarias = provincia === 'LAS PALMAS' || provincia === 'SANTA CRUZ DE TENERIFE';
+    const dniVal = (d.dni || '').trim().toUpperCase();
+    const esEmpresa = /^[A-Z]/.test(dniVal);
     const pe = año >= 2026 ? PEAJE_EN_2026 : PEAJE_EN_2025;
 
     const pot = (p1kw * tarifa.potencia_p1_dia * dias)
@@ -1937,7 +1934,19 @@ function toggleFaqExtra() {
     const impEl = base * IMP_ELEC;
     const alq = parseFloat(d.alquiler_contador_euros) || (ALQ_DIA * dias);
     const sub = base + impEl + alq;
-    const ivaG = sub * IVA;
+    let ivaG = 0;
+    if (esCanarias) {
+      if (esEmpresa) {
+        ivaG = sub * 0.03;
+      } else {
+        const baseSinAlquiler = base + impEl;
+        const igicBase = baseSinAlquiler * 0;
+        const igicAlquiler = alq * 0.07;
+        ivaG = igicBase + igicAlquiler;
+      }
+    } else {
+      ivaG = sub * ivaRate;
+    }
     const total = sub + ivaG;
 
     console.log('CALCULO COMPLETO:', {pot, ener, margen, bonoG, impEl, alq, ivaG, total, tipo: tarifa.tipo_energia});
@@ -2645,6 +2654,8 @@ function toggleFaqExtra() {
       setExtracted(document.getElementById('direccion'), extractedData?.direccion || '', true);
       setExtracted(document.getElementById('nombre_titular'), extractedData?.nombre_titular || '', true);
       setExtracted(document.getElementById('dni'), extractedData?.dni || '', true);
+      const esDniEmpresa = /^[A-Za-z]/.test(dniRaw);
+      const dniLabel = document.querySelector('label[for="dni"]');
       document.getElementById('iban_cargo').value = '';
       document.getElementById('telefono').value = '';
       document.getElementById('email').value = '';
@@ -2655,14 +2666,16 @@ function toggleFaqExtra() {
         if (el) el.textContent = '';
       });
       const esEmpresaReset = document.getElementById('es_empresa');
-      if (esEmpresaReset) esEmpresaReset.checked = false;
+      if (esEmpresaReset) esEmpresaReset.checked = esDniEmpresa;
       const apodFields = document.getElementById('apoderado-fields');
-      if (apodFields) apodFields.style.display = 'none';
+      if (apodFields) apodFields.style.display = esDniEmpresa ? 'block' : 'none';
       const empLabel = document.getElementById('empresaCheckLabel');
       if (empLabel) {
+        empLabel.style.display = 'none';
         empLabel.style.borderColor = '#e2e8f0';
         empLabel.style.background = '#fff';
       }
+      if (dniLabel) dniLabel.textContent = esDniEmpresa ? 'CIF de la empresa' : 'DNI o CIF Titular';
       const nomAp = document.getElementById('nombre_apoderado');
       const dniAp = document.getElementById('dni_apoderado');
       if (nomAp) nomAp.value = '';
@@ -2804,6 +2817,8 @@ function toggleFaqExtra() {
 
     const cupsVal = (document.getElementById('cups')?.value || '').trim().replace(/\s/g, '');
     const dniVal = (document.getElementById('dni')?.value || '').trim().toUpperCase();
+    const apoderadoVisible = document.getElementById('apoderado-fields')?.style.display !== 'none';
+    const esEmpresaDni = document.getElementById('es_empresa')?.checked || apoderadoVisible;
 
     if (!cupsVal || (cupsVal.length !== 20 && cupsVal.length !== 22)) {
       const el = document.getElementById('cups_error');
@@ -2815,9 +2830,9 @@ function toggleFaqExtra() {
       if (el) el.textContent = '';
     }
 
-    if (!dniVal || !/^\d{8}[A-Z]$/.test(dniVal)) {
+    if ((!esEmpresaDni && (!dniVal || !/^\d{8}[A-Z]$/.test(dniVal))) || (esEmpresaDni && !dniVal)) {
       const el = document.getElementById('dni_error');
-      if (el) el.textContent = 'El DNI debe tener 8 números seguidos de una letra (ejemplo: 54025030P)';
+      if (el) el.textContent = esEmpresaDni ? 'El CIF de la empresa es obligatorio' : 'El DNI debe tener 8 números seguidos de una letra (ejemplo: 54025030P)';
       document.getElementById('dni')?.focus();
       return;
     } else {
