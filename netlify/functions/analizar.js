@@ -78,7 +78,7 @@ SOLO SI ES LUZ:
 - precio_kwh_llano: precio €/kWh en hora llano si aparece desglosado por tramos
 - precio_kwh_valle: precio €/kWh en hora valle si aparece desglosado por tramos
 
-IMPORTANTE: Si la factura tiene un único precio de energía para todos los kWh (como "232 kWh x 0,108000 €/kWh"), rellena precio_kwh_unico con ese valor y deja los otros tres como null. Si tiene precios distintos por tramo, deja precio_kwh_unico como null y rellena los tres tramos.
+IMPORTANTE: Si la factura de luz es de precio fijo (un único precio €/kWh para todas las horas, sin discriminación horaria punta/llano/valle), rellena precio_kwh_unico con ese valor y deja precio_kwh_punta, precio_kwh_llano y precio_kwh_valle como null. Si tiene discriminación horaria (precios distintos por tramo), precio_kwh_unico debe ser null y hay que rellenar los tres tramos.
 
 SOLO SI ES GAS:
 - kwh_gas: kWh totales de gas consumidos

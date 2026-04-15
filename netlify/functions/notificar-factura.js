@@ -26,14 +26,14 @@ exports.handler = async (event) => {
       return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Body JSON inválido' }) };
     }
 
-    const { nombre_titular, fuente, tipo, comercializadora, total_factura, ahorro_estimado, resultado, factura_url } = body;
+    const { nombre_titular, fuente, tipo, comercializadora, total_factura, ahorro_estimado, resultado, factura_url, precio_kwh_fijo } = body;
 
     const esLuz = String(tipo || 'luz').toLowerCase() !== 'gas';
     const tipoIcon = esLuz ? '⚡' : '🔥';
     const tipoLabel = esLuz ? 'Luz' : 'Gas';
     const tipoColor = esLuz ? '#f59e0b' : '#ef4444';
 
-    const ahorroNum = parseFloat(ahorro_estimado) || 0;
+    const ahorroNum = parseFloat(ahorro_estimado ?? 0);
     const totalNum = parseFloat(total_factura) || 0;
 
     const resend = new Resend(apiKey);
@@ -54,6 +54,7 @@ exports.handler = async (event) => {
             <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Nombre titular:</strong> ${nombre_titular || '—'}</div>
             <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Comercializadora actual:</strong> ${comercializadora || '—'}</div>
             <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Tipo de factura:</strong> ${tipoLabel}</div>
+            ${precio_kwh_fijo != null ? `<p><strong>Precio kWh (tarifa fija):</strong> ${parseFloat(precio_kwh_fijo).toFixed(4).replace('.', ',')} €/kWh</p>` : ''}
             <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Total factura:</strong> ${totalNum ? totalNum.toFixed(2) + ' €' : '—'}</div>
             <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Ahorro estimado:</strong> 0 €</div>
             <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Fecha y hora del análisis:</strong> ${new Date().toLocaleString('es-ES')}</div>
@@ -101,6 +102,7 @@ exports.handler = async (event) => {
               <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Comercializadora actual</div>
               <div style="font-size:14px;font-weight:500;color:#334155;">${comercializadora || '—'}</div>
             </div>
+            ${precio_kwh_fijo != null ? `<p><strong>Precio kWh (tarifa fija):</strong> ${parseFloat(precio_kwh_fijo).toFixed(4).replace('.', ',')} €/kWh</p>` : ''}
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
               <div style="background:#f8fafc;border-radius:10px;padding:14px 16px;">
