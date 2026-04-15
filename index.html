@@ -1025,6 +1025,14 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
   .reward-banner { flex-direction: row; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: nowrap; padding: 0.6rem 1rem; font-size: 0.82rem; }
   .hero-incentive-btn { flex-shrink: 0; }
 }
+@keyframes checkPop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+@keyframes ringPulse {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0;   }
+}
 </style>
 
 <style>
@@ -2461,18 +2469,88 @@ function toggleFaqExtra() {
 
     if (calcResult.ahorro <= 0) {
       document.getElementById('step3').innerHTML = `
-<div style="text-align:center; padding: 2.5rem 1rem;">
-  <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
-  <h3 style="font-family: var(--font-head); font-size: 1.6rem; color: #4ade80; margin-bottom: 0.75rem; font-weight: 600; line-height: 1.3;">
-    ¡Enhorabuena! No te la están colando
-  </h3>
-  <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); max-width: 360px; margin: 0 auto 0.5rem; line-height: 1.7; font-weight: 300;">
-    Tu tarifa actual es buena. Hemos comparado tu factura con las mejores tarifas disponibles hoy en el mercado y no hemos encontrado nada más barato para tu perfil de consumo.
-  </p>
-  <p style="font-size: 0.78rem; color: rgba(255,255,255,0.3); max-width: 320px; margin: 0 auto 2rem; line-height: 1.6;">
-    Los precios cambian cada mes. Vuelve a comprobarlo cuando recibas tu próxima factura.
-  </p>
-  <button type="button" id="btnVolverNoTarifa" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);font-family:var(--font-body);font-size:0.78rem;font-weight:500;padding:0.55rem 1.2rem;border-radius:999px;cursor:pointer;">← Analizar otra factura</button>
+<div style="max-width:520px; margin:0 auto; padding:0;">
+
+  <button type="button" id="btnVolverNoTarifa" style="display:inline-flex;align-items:center;gap:0.5rem;background:#fff;border:1px solid #e2e8f0;color:#64748b;font-family:var(--font-body);font-size:0.78rem;font-weight:500;padding:0.5rem 1rem;border-radius:999px;cursor:pointer;margin-bottom:1.5rem;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.04);">← Analizar otra factura</button>
+
+  <!-- Hero del resultado positivo -->
+  <div style="text-align:center; padding:2.5rem 1.5rem 2rem; background:linear-gradient(135deg,#f0faf2 0%,#e8f5ed 100%); border-radius:20px; border:1px solid #d1e7d8; margin-bottom:1rem; position:relative; overflow:hidden;">
+    
+    <!-- Detalles decorativos de fondo -->
+    <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(30,107,58,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-30px;left:-30px;width:140px;height:140px;background:radial-gradient(circle,rgba(30,107,58,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <!-- Icono animado -->
+    <div style="position:relative;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
+      <div style="width:80px;height:80px;background:#1E6B3A;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(30,107,58,0.3);animation:checkPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px;"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <!-- Anillos de pulso -->
+      <div style="position:absolute;width:80px;height:80px;border-radius:50%;border:2px solid rgba(30,107,58,0.2);animation:ringPulse 2s ease-out infinite;"></div>
+      <div style="position:absolute;width:80px;height:80px;border-radius:50%;border:2px solid rgba(30,107,58,0.1);animation:ringPulse 2s ease-out infinite 0.5s;"></div>
+    </div>
+
+    <p style="font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#1E6B3A;margin-bottom:0.6rem;opacity:0.7;">Resultado del análisis</p>
+    
+    <h3 style="font-family:'Lora',Georgia,serif;font-size:clamp(1.6rem,5vw,2.2rem);font-weight:600;color:#1a1a1a;line-height:1.2;margin-bottom:0.75rem;letter-spacing:-0.03em;">
+      Tu tarifa es<br/><em style="color:#1E6B3A;font-style:italic;">de las mejores</em>
+    </h3>
+    
+    <p style="font-size:0.9rem;color:#475569;max-width:340px;margin:0 auto 1.5rem;line-height:1.7;font-weight:300;">
+      Hemos comparado tu factura con todas las tarifas del mercado y no hemos encontrado nada más barato para tu perfil de consumo.
+    </p>
+
+    <!-- Pill de verificación -->
+    <div style="display:inline-flex;align-items:center;gap:0.5rem;background:#fff;border:1px solid #d1e7d8;border-radius:999px;padding:0.5rem 1rem;box-shadow:0 2px 8px rgba(30,107,58,0.08);">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2" style="width:13px;height:13px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+      <span style="font-size:0.72rem;color:#475569;font-weight:500;">Análisis completado · Mercado revisado hoy</span>
+    </div>
+  </div>
+
+  <!-- Tarjetas de tranquilidad -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1rem;">
+    
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:1rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <div style="width:36px;height:36px;background:#f0faf2;border-radius:10px;border:1px solid #d1e7d8;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="1.8" style="width:18px;height:18px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <p style="font-size:0.8rem;font-weight:600;color:#1a1a1a;margin:0;line-height:1.3;">Sin sorpresas ocultas</p>
+      <p style="font-size:0.72rem;color:#64748b;margin:0;line-height:1.5;font-weight:300;">Tu compañía no te está cobrando de más en los conceptos principales.</p>
+    </div>
+
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:1rem;display:flex;flex-direction:column;gap:0.5rem;">
+      <div style="width:36px;height:36px;background:#f0faf2;border-radius:10px;border:1px solid #d1e7d8;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="1.8" style="width:18px;height:18px;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <p style="font-size:0.8rem;font-weight:600;color:#1a1a1a;margin:0;line-height:1.3;">Precios de hoy</p>
+      <p style="font-size:0.72rem;color:#64748b;margin:0;line-height:1.5;font-weight:300;">La comparativa usa las tarifas vigentes en este momento en el mercado.</p>
+    </div>
+
+  </div>
+
+  <!-- Consejo -->
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:1.1rem 1.25rem;margin-bottom:1rem;display:flex;align-items:flex-start;gap:0.85rem;">
+    <div style="width:32px;height:32px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+      <span style="font-size:1rem;">💡</span>
+    </div>
+    <div>
+      <p style="font-size:0.8rem;font-weight:600;color:#1a1a1a;margin:0 0 0.25rem;">Los precios cambian cada mes</p>
+      <p style="font-size:0.73rem;color:#64748b;margin:0;line-height:1.6;font-weight:300;">Vuelve a comprobarlo cuando recibas tu próxima factura. En un par de meses la situación del mercado puede haber cambiado.</p>
+    </div>
+  </div>
+
+  <!-- CTA compartir -->
+  <div style="background:linear-gradient(135deg,#0f3d22 0%,#1E6B3A 100%);border-radius:16px;padding:1.25rem;text-align:center;">
+    <p style="font-size:0.78rem;color:rgba(255,255,255,0.6);margin-bottom:0.35rem;font-weight:300;">¿Tienes amigos o familia que sí paguen de más?</p>
+    <p style="font-family:'Lora',Georgia,serif;font-size:1rem;font-weight:500;color:#fff;margin-bottom:1rem;line-height:1.4;">Pásales el enlace — el análisis es gratis y tarda 30 segundos</p>
+    <a href="https://wa.me/?text=${encodeURIComponent('Acabo de comprobar mi factura de la luz con esta web y es gratis y muy fácil. Pruébala: https://www.quenotelacuelen.com')}"
+       target="_blank" rel="noopener"
+       style="display:inline-flex;align-items:center;gap:0.6rem;background:#25D366;color:#fff;text-decoration:none;font-family:var(--font-body);font-size:0.88rem;font-weight:600;padding:0.75rem 1.5rem;border-radius:999px;box-shadow:0 4px 16px rgba(37,211,102,0.35);transition:transform 0.15s,box-shadow 0.2s;">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg" style="width:16px;height:16px;filter:brightness(0) invert(1);" alt="WhatsApp"/>
+      Mandar a un amigo
+    </a>
+  </div>
+
 </div>
 `;
       _supabase.from('leads_facturas').insert({
@@ -2489,6 +2567,20 @@ function toggleFaqExtra() {
         factura_nombre: window._facturaFileName || null
       }).then((res) => { if (res.error) console.error('Supabase insert error:', JSON.stringify(res.error)); }).catch((e) => { console.error('Supabase insert catch:', e); });
       if (window.dataLayer) window.dataLayer.push({ event: 'resultado_sin_ahorro' });
+      fetch('/.netlify/functions/notificar-factura', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre_titular: extractedData.nombre_titular || '',
+          fuente: 'web',
+          tipo: currentTipo || extractedData.tipo_factura || 'luz',
+          comercializadora: extractedData.comercializadora || '',
+          total_factura: extractedData.total_factura || '',
+          ahorro_estimado: 0,
+          resultado: 'NO_SE_LA_ESTAN_COLANDO',
+          factura_url: window._facturaStorageUrl || ''
+        })
+      }).catch(() => {});
       showStep(3);
 
       setTimeout(() => {
