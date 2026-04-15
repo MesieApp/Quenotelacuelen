@@ -40,7 +40,7 @@ CAMPOS COMUNES:
 - fecha_inicio: fecha inicio del período en formato YYYY-MM-DD
 - fecha_fin: fecha fin del período en formato YYYY-MM-DD
 - dias: número exacto de días del período facturado
-- total_factura: importe total a pagar CON IVA incluido
+- total_factura: importe total final con IVA incluido (el "TOTAL IMPORTE FACTURA" o equivalente final a pagar)
 - tarifa: nombre de la tarifa contratada
 - cups: código CUPS completo (empieza por ES)
 - direccion: dirección completa del punto de suministro
@@ -84,9 +84,11 @@ SOLO SI ES GAS:
 - kwh_gas: kWh totales de gas consumidos
 - precio_kwh_gas: precio €/kWh del consumo de gas SIN incluir impuesto de hidrocarburos. Está en el detalle de la factura como "X kWh x 0.XXXXXX €/kWh". Ejemplo en esta factura: "4.611 kWh x 0,062460 €/kWh" → extraer 0.062460. Es OBLIGATORIO extraer este campo si aparece en la factura.
 - segmento_gas: segmento de consumo. IMPORTANTE: búscalo en la factura. Puede aparecer como "RL.1" (consumo anual hasta 5.000 kWh), "RL.2" (entre 5.000 y 50.000 kWh) o "RL.3" (más de 50.000 kWh). Si no aparece explícitamente, dedúcelo del consumo anual estimado o del término fijo
-- termino_fijo_euros: término fijo sin IVA
-- termino_variable_euros: término variable sin IVA
-- impuesto_hidrocarburos_euros: importe del impuesto sobre hidrocarburos`
+- termino_fijo_euros: importe total del término fijo en la factura, sin IVA
+- termino_variable_euros: importe total del término variable/consumo de gas en la factura, sin IVA
+- impuesto_hidrocarburos_euros: importe del impuesto sobre hidrocarburos
+- detalle_servicios: array de objetos {nombre, importe_mes, importe_total} con servicios adicionales que NO sean energía, término fijo ni alquiler de contador (seguros, packs mantenimiento, protección de pagos, etc.). Si no hay, []
+- descuentos: array de objetos {nombre, importe} con descuentos detectados como líneas de resta (importe negativo). Si no hay, []`
           }
         ]
       }]

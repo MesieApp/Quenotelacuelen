@@ -2021,12 +2021,13 @@ function toggleFaqExtra() {
 
     const kwhGas = parseFloat(d.kwh_gas) || 0;
     const dias = parseInt(d.dias) || 30;
-    const totalActual = parseFloat(d.total_gas_euros)
-      ? parseFloat(d.total_gas_euros) * 1.21
-      : parseFloat(d.total_factura) || 0;
+    const totalActual = parseFloat(d.total_factura) || 0;
     const segmento = (d.segmento_gas || 'RL.1').toUpperCase();
     const IMP_HIDRO = 0.00234;
-    const IVA = 0.21;
+    const fechaFinGas = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
+    const ivaRate = (fechaFinGas && !isNaN(fechaFinGas.getTime()) && fechaFinGas > new Date('2026-03-20T23:59:59'))
+      ? 0.10
+      : 0.21;
 
     const fallback = {
       'RL.1': { margen_gana: 0.011, termino_fijo: 3.93 },
@@ -2064,7 +2065,7 @@ function toggleFaqExtra() {
     });
 
     const base = fijoGana + consumo + alq;
-    const iva = base * IVA;
+    const iva = base * ivaRate;
     const totalGana = base + iva;
     const ahorro = totalActual - totalGana;
     const ahorroAnual = (ahorro / dias) * 365;
@@ -2077,6 +2078,7 @@ function toggleFaqExtra() {
       consumo,
       alq,
       iva,
+      ivaRate,
       total_ib: totalActual,
       dias,
       segmento,
@@ -2555,11 +2557,26 @@ function toggleFaqExtra() {
     if (isGas) {
       const rows = [
         ['Segmento', calcResult.segmento, calcResult.segmento],
-        ['Consumo (' + calcResult.kwhGas + ' kWh)', '—', fmtEur(calcResult.consumo)],
-        ['Término fijo', '—', fmtEur(calcResult.fijo)],
-        ['IVA (21%)', fmt(extractedData.iva_euros), fmtEur(calcResult.iva)],
-        ['Total factura', fmtEur(totalElec), fmtEur(calcResult.totalG)]
+        ['Consumo (' + calcResult.kwhGas + ' kWh)', fmt(extractedData.termino_variable_euros), fmtEur(calcResult.consumo)],
+        ['Término fijo', fmt(extractedData.termino_fijo_euros), fmtEur(calcResult.fijo)],
+        ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
       ];
+      if (extractedData.detalle_servicios && extractedData.detalle_servicios.length > 0) {
+        extractedData.detalle_servicios.forEach(s => {
+          const importeTotal = parseFloat(s.importe_total) ||
+                               (parseFloat(s.importe_mes) || 0) * (parseInt(extractedData.dias) || 30) / 30;
+          rows.push([s.nombre || 'Servicio adicional', fmtEur(importeTotal), '—']);
+        });
+      }
+      if (extractedData.descuentos && extractedData.descuentos.length > 0) {
+        extractedData.descuentos.forEach(d => {
+          rows.push([d.nombre || 'Descuento', fmtEur(parseFloat(d.importe)), '—']);
+        });
+      }
+      rows.push(
+        ['IVA (' + Math.round((calcResult.ivaRate || 0.21) * 100) + '%)', fmt(extractedData.iva_euros), fmtEur(calcResult.iva)],
+        ['Total factura', fmtEur(totalElec), fmtEur(calcResult.totalG)]
+      );
       rows.push(['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((calcResult.totalG / dias) * 365)]);
       rows.forEach(([c, tu, gana]) => {
         const tr = document.createElement('tr');
