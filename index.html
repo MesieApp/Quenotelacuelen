@@ -2551,6 +2551,11 @@ function toggleFaqExtra() {
         factura_nombre: window._facturaFileName || null
       }).then((res) => { if (res.error) console.error('Supabase insert error:', JSON.stringify(res.error)); }).catch((e) => { console.error('Supabase insert catch:', e); });
       if (window.dataLayer) window.dataLayer.push({ event: 'resultado_sin_ahorro' });
+      console.log('DEBUG ahorro negativo:', {
+        ahorro: calcResult.ahorro,
+        dias: extractedData.dias,
+        ahorroAnual: Math.round((calcResult.ahorro / (parseInt(extractedData.dias) || 30)) * 365)
+      });
       fetch('/.netlify/functions/notificar-factura', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -2561,6 +2566,9 @@ function toggleFaqExtra() {
           comercializadora: extractedData.comercializadora || '',
           total_factura: extractedData.total_factura || '',
           ahorro_estimado: Math.round((calcResult.ahorro / (parseInt(extractedData.dias) || 30)) * 365),
+          precio_kwh_fijo: (currentTipo === 'luz' && extractedData.precio_kwh_unico)
+            ? parseFloat(extractedData.precio_kwh_unico)
+            : null,
           resultado: 'NO_SE_LA_ESTAN_COLANDO',
           factura_url: window._facturaStorageUrl || ''
         })
@@ -2599,6 +2607,9 @@ function toggleFaqExtra() {
         comercializadora: extractedData.comercializadora || '',
         total_factura: extractedData.total_factura || '',
         ahorro_estimado: ahorroAnualReal || 0,
+        precio_kwh_fijo: (currentTipo === 'luz' && extractedData.precio_kwh_unico)
+          ? parseFloat(extractedData.precio_kwh_unico)
+          : null,
         factura_url: window._facturaStorageUrl || ''
       })
     }).catch(() => {});
