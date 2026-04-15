@@ -26,7 +26,7 @@ exports.handler = async (event) => {
       return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Body JSON inválido' }) };
     }
 
-    const { nombre_titular, fuente, tipo, comercializadora, total_factura, ahorro_estimado } = body;
+    const { nombre_titular, fuente, tipo, comercializadora, total_factura, ahorro_estimado, resultado, factura_url } = body;
 
     const esLuz = String(tipo || 'luz').toLowerCase() !== 'gas';
     const tipoIcon = esLuz ? '⚡' : '🔥';
@@ -39,11 +39,38 @@ exports.handler = async (event) => {
     const resend = new Resend(apiKey);
     const from = process.env.RESEND_FROM || 'Quenotelacuelen <onboarding@resend.dev>';
 
-    await resend.emails.send({
-      from,
-      to: ['gp.mesie@gmail.com'],
-      subject: `📄 ${tipoIcon} Nueva factura analizada — ${nombre_titular || 'Desconocido'}`,
-      html: `
+    if (resultado === 'NO_SE_LA_ESTAN_COLANDO') {
+      await resend.emails.send({
+        from,
+        to: ['gp.mesie@gmail.com'],
+        subject: '✅ Resultado negativo — No se la están colando',
+        html: `
+        <div style="font-family:'Segoe UI',sans-serif;max-width:520px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">
+          <div style="background:#1E6B3A;padding:20px 24px;">
+            <div style="color:#fff;font-size:17px;font-weight:700;line-height:1.2;">✅ Resultado negativo</div>
+            <div style="color:rgba(255,255,255,0.75);font-size:13px;margin-top:4px;">Esta persona NO tiene ahorro potencial actualmente.</div>
+          </div>
+          <div style="padding:16px 24px;display:flex;flex-direction:column;gap:10px;">
+            <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Nombre titular:</strong> ${nombre_titular || '—'}</div>
+            <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Comercializadora actual:</strong> ${comercializadora || '—'}</div>
+            <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Tipo de factura:</strong> ${tipoLabel}</div>
+            <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Total factura:</strong> ${totalNum ? totalNum.toFixed(2) + ' €' : '—'}</div>
+            <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Ahorro estimado:</strong> 0 €</div>
+            <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>Fecha y hora del análisis:</strong> ${new Date().toLocaleString('es-ES')}</div>
+            ${factura_url ? `<div style="background:#f8fafc;border-radius:10px;padding:12px 14px;"><strong>URL factura:</strong> <a href="${factura_url}" target="_blank" rel="noopener">${factura_url}</a></div>` : ''}
+          </div>
+          <div style="padding:12px 24px 16px;border-top:1px solid #f1f5f9;font-size:11px;color:#94a3b8;">
+            quenotelacuelen.com · ${fuente === 'lp' ? 'Landing Ads' : 'Web principal'}
+          </div>
+        </div>
+      `
+      });
+    } else {
+      await resend.emails.send({
+        from,
+        to: ['gp.mesie@gmail.com'],
+        subject: `📄 ${tipoIcon} Nueva factura analizada — ${nombre_titular || 'Desconocido'}`,
+        html: `
         <div style="font-family:'Segoe UI',sans-serif;max-width:480px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">
           
           <!-- HEADER -->
@@ -96,7 +123,8 @@ exports.handler = async (event) => {
 
         </div>
       `
-    });
+      });
+    }
 
     return { statusCode: 200, headers: corsHeaders, body: JSON.stringify({ success: true }) };
 
