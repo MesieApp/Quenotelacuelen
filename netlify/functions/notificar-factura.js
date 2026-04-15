@@ -27,6 +27,7 @@ exports.handler = async (event) => {
     }
 
     const { nombre_titular, fuente, tipo, comercializadora, total_factura, ahorro_estimado, resultado, factura_url, precio_kwh_fijo } = body;
+    console.log('NOTIFICAR recibido ahorro_estimado:', body.ahorro_estimado);
 
     const esLuz = String(tipo || 'luz').toLowerCase() !== 'gas';
     const tipoIcon = esLuz ? '⚡' : '🔥';
