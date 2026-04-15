@@ -2461,6 +2461,12 @@ function toggleFaqExtra() {
     } else {
       calcResult = await calcularMejorTarifaLuz(extractedData);
     }
+
+    // Si la comercializadora actual ya es Gana Energía, forzar resultado positivo
+    const comercializadoraActual = (extractedData.comercializadora || '').toLowerCase();
+    if (comercializadoraActual.includes('gana')) {
+      calcResult = { ...calcResult, ahorro: -1 };
+    }
     lastPdfBase64 = base64pdf;
 
     if (window._step3OriginalHtml) {
@@ -2519,7 +2525,7 @@ function toggleFaqExtra() {
       Al 80% de tus amigos y familiares se la están colando.
     </p>
     <p style="font-size:0.82rem;color:rgba(255,255,255,0.6);margin-bottom:1.25rem;font-weight:300;">
-      Envíales el enlace para que lo comprueben gratis.
+      Envíales el enlace a este análisis gratuito.
     </p>
     <a href="https://wa.me/?text=${encodeURIComponent('Comprueba si te están colando en la factura de la luz o gas. Es gratis y tarda 30 segundos: https://www.quenotelacuelen.com')}"
        target="_blank" rel="noopener"
@@ -2529,9 +2535,9 @@ function toggleFaqExtra() {
     </a>
     <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:1rem;margin-top:0.25rem;">
       <p style="font-size:0.68rem;color:rgba(255,255,255,0.4);margin-bottom:0.35rem;letter-spacing:0.05em;text-transform:uppercase;font-weight:500;">O comparte el enlace directamente</p>
-      <a href="https://www.quenotelacuelen.com" style="font-size:0.88rem;color:rgba(255,255,255,0.85);font-weight:600;letter-spacing:0.01em;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:1px;">
+      <span style="font-size:0.88rem;color:rgba(255,255,255,0.85);font-weight:600;letter-spacing:0.01em;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:1px;">
         www.quenotelacuelen.com
-      </a>
+      </span>
     </div>
   </div>
 
@@ -2551,10 +2557,12 @@ function toggleFaqExtra() {
         factura_nombre: window._facturaFileName || null
       }).then((res) => { if (res.error) console.error('Supabase insert error:', JSON.stringify(res.error)); }).catch((e) => { console.error('Supabase insert catch:', e); });
       if (window.dataLayer) window.dataLayer.push({ event: 'resultado_sin_ahorro' });
-      console.log('DEBUG ahorro negativo:', {
+      console.log('DEBUG AHORRO NEGATIVO:', {
         ahorro: calcResult.ahorro,
+        totalG: calcResult.totalG,
+        total_factura: extractedData.total_factura,
         dias: extractedData.dias,
-        ahorroAnual: Math.round((calcResult.ahorro / (parseInt(extractedData.dias) || 30)) * 365)
+        ahorroAnualCalculado: Math.round((calcResult.ahorro / (parseInt(extractedData.dias) || 30)) * 365)
       });
       fetch('/.netlify/functions/notificar-factura', {
         method: 'POST',
