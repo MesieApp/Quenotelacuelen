@@ -1807,7 +1807,7 @@ function toggleFaqExtra() {
     } catch (e) {
       console.warn('Usando tarifas fallback de luz:', e);
       return [
-        { nombre: 'Precio Mercado', slug: 'mercado', tipo_energia: 'mercado', margen_dia: 0.167, potencia_p1_dia: 0.075903, potencia_p2_dia: 0.019880, energia_unica: null, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' },
+        { nombre: 'Precio Mercado', slug: 'mercado', tipo_energia: 'mercado', margen_dia: 0.167, potencia_p1_dia: 0.075903, potencia_p2_dia: 0.001988, energia_unica: null, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' },
         { nombre: 'Tramos Horarios', slug: 'tramos', tipo_energia: 'fija', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_punta: 0.181, energia_llano: 0.114, energia_valle: 0.09, energia_unica: null, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' },
         { nombre: '24 Horas', slug: '24horas', tipo_energia: 'unica', margen_dia: 0.167, potencia_p1_dia: 0.089434, potencia_p2_dia: 0.089434, energia_unica: 0.129, fee_kwh: 0, activa: true, comercializadora: 'Gana Energía' }
       ];
