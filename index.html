@@ -1282,7 +1282,7 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
 
   </div>
 </section>
- <!-- STATS BAR --> <div class="stats-bar"> <div class="stats-inner-single"> <div class="stat-single"> <span class="stat-single-number" id="statFacturas">1000+</span> <span class="stat-single-label">Facturas analizadas, de españoles que quisieron saber la verdad</span> </div> </div> <div style="position:absolute;bottom:-1px;left:0;right:0;line-height:0;z-index:2;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:80px;"><path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="#f8faf8"/></svg></div> </div>
+ <!-- STATS BAR --> <div class="stats-bar"> <div class="stats-inner-single"> <div class="stat-single"> <span class="stat-single-number">+250€</span> <span class="stat-single-label">de ahorro medio al año descubierto<br/>con nuestro análisis</span> </div> </div> <div style="position:absolute;bottom:-1px;left:0;right:0;line-height:0;z-index:2;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:80px;"><path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="#f8faf8"/></svg></div> </div>
 <!-- FORM / FLUJO 5 PASOS --> <section class="form-section" id="formulario"> <div class="form-inner"> <div class="form-deco-line" aria-hidden="true" style="display:none"></div> <p class="section-label" style="display:none">Empieza ahora</p> <h2 style="display:none">¿Te la están colando?<br/>Descúbrelo gratis en segundos.</h2> <p class="section-desc" style="display:none">Nuestra IA analiza tu factura y rastrea el mercado en tiempo real para comparar tu tarifa con las mejores disponibles.</p> <!-- PASO 1: Formulario inicial --> <div class="flow-step hidden" id="step1-old" data-step="1" style="display:none !important;"> <div class="step1-layout"> <div class="step1-tabs"> <button type="button" class="step1-tab active" data-panel="factura">📄 Tengo mi factura</button> <button type="button" class="step1-tab" data-panel="recordatorio">🔔 No la tengo ahora</button> </div> <div class="step1-panel active" id="panel-factura"> <div class="step1-toggle-row"> <span class="step1-toggle-label">Tipo de factura</span> <div class="toggle-buttons"> <button type="button" class="toggle-btn active" data-type="luz">⚡ Luz</button> <button type="button" class="toggle-btn" data-type="gas">🔥 Gas</button> </div> </div> <div class="file-drop" id="fileDrop"> <input type="file" id="factura" accept=".pdf,.jpg,.jpeg,.png,.webp,image/*" /> <div class="file-drop-inner"> <div class="file-drop-icon"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> </div> <div class="file-drop-text"> <p class="file-title">Arrastra o sube tu factura aquí</p> <p class="file-sub">PDF o foto</p> </div> </div> <p class="file-selected" id="fileName"></p> </div> <div class="step1-footer"> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" /> <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> y el <a href="aviso-legal.html" target="_blank">Aviso Legal</a>.</span> </label> <label class="form-checkbox-label"> <input type="checkbox" id="acepto_tratamiento_pdf" name="acepto_tratamiento_pdf" /> <span>Autorizo el tratamiento de los datos de mi factura para recibir un análisis personalizado, conforme a la <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a>.</span> </label> <button type="button" class="submit-btn" id="btnAnalizar"> <svg id="btnIconLuz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg> Analizar mi factura </button> </div> </div> <div class="step1-panel" id="panel-recordatorio"> <p class="recordatorio-intro">Encontrarás tu factura en el correo que te envía tu actual comercializadora cada mes, o en su portal de clientes. Si quieres, podemos avisarte en unos días por si ya la tienes a mano.</p> <span class="rec-option-label">¿Cómo te avisamos?</span> <div class="rec-options"> <div class="rec-option" id="rec-opt-email" data-mode="email"> <span class="rec-option-icon">✉️</span> <div class="rec-option-text"><strong>Por correo electrónico</strong><span>Te mandamos un email con el enlace directo</span></div> </div> <div class="rec-option" id="rec-opt-whatsapp" data-mode="whatsapp"> <span class="rec-option-icon">💬</span> <div class="rec-option-text"><strong>Por WhatsApp</strong><span>Te enviamos un mensaje con recordatorio</span></div> </div> </div> <div class="rec-input-group" id="rec-input-email"> <label class="form-label">Tu correo electrónico</label> <input type="text" id="rec-email" placeholder="tu@email.com" autocomplete="email" /> <div class="field-error" id="rec-email-error"></div> </div> <div class="rec-input-group" id="rec-input-whatsapp"> <label class="form-label">Tu número de WhatsApp</label> <input type="tel" id="rec-whatsapp" placeholder="600000000" maxlength="9" inputmode="numeric" /> <div class="field-error" id="rec-whatsapp-error"></div> </div> <button type="button" class="submit-btn" id="btnRecordatorio" style="display:none">Avisarme en unos días</button> </div> </div> </div> <!-- PASO 2: Loading --> <div class="flow-step hidden" id="step2" data-step="2">
   <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:3rem 1rem; min-height:340px; text-align:center;">
 
@@ -2449,8 +2449,8 @@ function toggleFaqExtra() {
       );
       mostrarToastError(
         esNoFactura
-          ? 'Este documento no parece una factura de luz o gas. Por favor sube la factura correcta en PDF.'
-          : 'No pudimos analizar tu factura. Asegúrate de que es un PDF legible de tu compañía eléctrica o de gas.'
+          ? 'No hemos podido leer tu factura. Comprueba que es una factura de luz o gas, en PDF o en foto.'
+          : 'No hemos podido leer tu factura. Comprueba que es una factura de luz o gas, en PDF o en foto.'
       );
       showStep(1);
       return;
@@ -2464,8 +2464,7 @@ function toggleFaqExtra() {
         !extractedData.kwh_total && 
         !extractedData.kwh_gas) {
       mostrarToastError(
-        'Este documento no parece una factura de luz o gas. ' +
-        'Sube el PDF de tu factura eléctrica o de gas natural.'
+        'No hemos podido leer tu factura. Comprueba que es una factura de luz o gas, en PDF o en foto.'
       );
       showStep(1);
       return;
@@ -3227,28 +3226,6 @@ function toggleFaqExtra() {
       alert('Hubo un error al enviar tu solicitud. Por favor inténtalo de nuevo.');
     }
   });
-</script> <script>
-(function() {
-  function animateCount(el, target, duration, suffix) {
-    let start = 0;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { start = target; clearInterval(timer); }
-      el.textContent = Math.floor(start).toLocaleString('es-ES') + suffix;
-    }, 16);
-  }
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCount(document.getElementById('statFacturas'), 1000, 1200, '+');
-        observer.disconnect();
-      }
-    });
-  }, { threshold: 0.5 });
-  const statsBar = document.querySelector('.stats-bar');
-  if (statsBar) observer.observe(statsBar);
-})();
 </script>
 <script>
 (function() {
