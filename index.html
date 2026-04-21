@@ -2002,7 +2002,14 @@ function toggleFaqExtra() {
     }
 
     // Comparar siempre con todas las tarifas excepto Tramos Horarios
-    const tarifasParaComparar = tarifas.filter(t => t.tipo_energia !== 'fija');
+    const tieneConsumoPorTramos = (parseFloat(d.kwh_punta) > 0) && 
+      (parseFloat(d.kwh_llano) > 0 || parseFloat(d.kwh_valle) > 0);
+
+    const tarifasParaComparar = tarifas.filter(t => {
+      if (t.tipo_energia === 'fija') return false;
+      if (t.tipo_energia === 'mercado' && !tieneConsumoPorTramos) return false;
+      return true;
+    });
     
     const resultados = tarifasParaComparar.map(t => {
       const calc = calcularConTarifa(t, d, preciosMercado);
