@@ -1945,10 +1945,11 @@ function toggleFaqExtra() {
     }
 
     const margen = tarifa.margen_dia * dias;
-    const bonoFallback = (año >= 2026 ? BONO_2026 : BONO_2025) * dias;
+    // Bono social: usar el de la factura si existe, si no usar el de Gana (0.019122/día)
+    const BONO_GANA_DIA = 0.019122;
     const bonoG = (d.bono_social != null && parseFloat(d.bono_social) > 0)
       ? parseFloat(d.bono_social)
-      : bonoFallback;
+      : BONO_GANA_DIA * dias;
 
     const base = pot + ener + margen + bonoG;
     const impElecRate = (fechaFin && !isNaN(fechaFin.getTime()) && fechaFin > new Date('2026-03-20T23:59:59'))
@@ -2743,7 +2744,12 @@ function mostrarAvisoBanner(msg) {
       const rows = [
         ['Término de potencia', fmt(extractedData.termino_potencia_euros), fmtEur(calcResult.pot)],
         ['Término de energía', fmt(extractedData.termino_energia_euros), fmtEur(calcResult.ener)],
-        ['Imp. eléctrico (5,11%)', fmt(extractedData.impuesto_electrico_euros), fmtEur(impElGana)],
+        ['Imp. eléctrico', 
+          (extractedData.impuesto_electrico_euros != null 
+            ? fmt(extractedData.impuesto_electrico_euros) 
+            : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Incluido en Término Energía</span>'),
+          fmtEur(impElGana)
+        ],
         ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
         ...serviciosRows,
         ['Base imponible', fmtEur(baseImponibleActual), fmtEur(baseImponibleGana)],
