@@ -1198,6 +1198,29 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <p class="file-selected" id="fileName"></p>
       </div>
 
+      <div id="secondImageWrap" style="display:none; margin-top:0.75rem; animation: fadeUp 0.4s ease both;">
+        <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:0.75rem 1rem; margin-bottom:0.75rem; font-size:0.78rem; color:#92400e; line-height:1.5; display:flex; align-items:flex-start; gap:0.5rem;">
+          <span style="flex-shrink:0; font-size:1rem;">⚠️</span>
+          <span>Con la primera cara no es suficiente para calcular tu ahorro. Sube también la segunda cara de la factura.</span>
+        </div>
+        <div class="file-drop" id="fileDrop2" style="padding:1.25rem 1rem;">
+          <input type="file" id="factura2" accept=".jpg,.jpeg,.png,.webp,image/*" />
+          <div class="file-drop-inner">
+            <div class="file-drop-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <div class="file-drop-text">
+              <p class="file-title" style="font-size:0.85rem;">Sube la 2ª cara aquí</p>
+              <p class="file-sub">JPG, PNG o WEBP</p>
+            </div>
+          </div>
+          <p class="file-selected" id="fileName2"></p>
+        </div>
+        <button type="button" class="submit-btn" id="btnAnalizar2" style="margin-top:0.75rem; border-radius:10px;">
+          Analizar con la 2ª cara
+        </button>
+      </div>
+
       <div style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem;">
         <label class="form-checkbox-label">
           <input type="checkbox" id="acepto_privacidad" name="acepto_privacidad" />
@@ -2120,6 +2143,13 @@ function toggleFaqExtra() {
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 50);
+    window._dataParcial = null;
+    window._base64img1 = null;
+    const f2input = document.getElementById('factura2');
+    if (f2input) f2input.value = '';
+    const fn2el = document.getElementById('fileName2');
+    if (fn2el) { fn2el.textContent = ''; fn2el.style.display = 'none'; }
+    document.getElementById('secondImageWrap').style.display = 'none';
   }
 
   function showStep(n) {
@@ -2182,6 +2212,27 @@ function toggleFaqExtra() {
       fileInput.files = e.dataTransfer.files;
       fileNameEl.textContent = '✓ ' + e.dataTransfer.files[0].name;
       fileNameEl.style.display = 'block';
+    }
+  });
+
+  const fileInput2 = document.getElementById('factura2');
+  const fileNameEl2 = document.getElementById('fileName2');
+  fileInput2.addEventListener('change', () => {
+    if (fileInput2.files.length > 0) {
+      fileNameEl2.textContent = '✓ ' + fileInput2.files[0].name;
+      fileNameEl2.style.display = 'block';
+    }
+  });
+  const fileDrop2 = document.getElementById('fileDrop2');
+  fileDrop2.addEventListener('dragover', (e) => { e.preventDefault(); fileDrop2.style.borderColor = 'rgba(30,107,58,0.5)'; });
+  fileDrop2.addEventListener('dragleave', () => { fileDrop2.style.borderColor = ''; });
+  fileDrop2.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileDrop2.style.borderColor = '';
+    if (e.dataTransfer.files.length) {
+      fileInput2.files = e.dataTransfer.files;
+      fileNameEl2.textContent = '✓ ' + e.dataTransfer.files[0].name;
+      fileNameEl2.style.display = 'block';
     }
   });
 
@@ -2259,6 +2310,17 @@ function toggleFaqExtra() {
     return null;
   }
 
+  function faltanDatosParaCalculo(data, tipo) {
+    if (!data) return true;
+    if (!data.total_factura) return true;
+    if (tipo === 'gas') {
+      return !data.kwh_gas;
+    } else {
+      const tieneConsumo = data.kwh_total || (data.kwh_punta != null && data.kwh_llano != null && data.kwh_valle != null);
+      return !data.potencia_p1 || !tieneConsumo;
+    }
+  }
+
 
   function mostrarErrorArchivo(msg) {
     const drop = document.getElementById('fileDrop');
@@ -2300,162 +2362,7 @@ function toggleFaqExtra() {
     }, 6000);
   }
 
-  document.getElementById('btnAnalizar').addEventListener('click', async () => {
-    const file = fileInput.files[0];
-    if (!file) {
-      alert('Por favor, sube tu factura en formato PDF.');
-      return;
-    }
-    // Validación tipo archivo
-    const mediaType = getFileMediaType(file);
-    if (!mediaType) {
-      mostrarErrorArchivo('Formato no soportado. Sube tu factura en PDF, JPG, PNG o WEBP.');
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      mostrarErrorArchivo('El archivo no puede superar 5 MB. Comprime el PDF e inténtalo de nuevo.');
-      return;
-    }
-    if (!document.getElementById('acepto_privacidad').checked) {
-      alert('Debes aceptar la política de privacidad para continuar.');
-      return;
-    }
-    if (!document.getElementById('acepto_tratamiento_pdf').checked) {
-      alert('Debes autorizar el tratamiento de los datos de tu factura para poder analizarla.');
-      return;
-    }
-
-    showStep(2);
-    setTimeout(() => {
-      const formulario = document.getElementById('formulario');
-      if (formulario) formulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 150);
-    const circumference = 339;
-    const circleEl  = document.getElementById('circleProgress');
-    const pctEl     = document.getElementById('circlePercent');
-
-    function setCircle(pct) {
-      const clamped = Math.min(Math.max(pct, 0), 100);
-      if (circleEl) 
-        circleEl.style.strokeDashoffset = 
-          circumference - (clamped / 100) * circumference;
-      if (pctEl) pctEl.textContent = Math.round(clamped) + '%';
-    }
-
-    function activatePhase(idx) {
-      const statusTexts = [
-        'Leyendo los datos del PDF...',
-        'Comparando con las mejores tarifas del mercado...',
-        'Calculando cuánto pagas de más...',
-        'Preparando tu resultado...'
-      ];
-      const statusEl = document.getElementById('loading-status');
-      if (statusEl) {
-        statusEl.style.opacity = '0';
-        setTimeout(() => {
-          statusEl.textContent = statusTexts[idx] || '';
-          statusEl.style.opacity = '1';
-        }, 200);
-      }
-      [0,1,2,3].forEach(i => {
-        const pill = document.getElementById('pill' + i);
-        if (!pill) return;
-        if (i < idx) pill.className = 'load-pill done';
-        else if (i === idx) pill.className = 'load-pill active';
-        else pill.className = 'load-pill';
-      });
-    }
-
-    activatePhase(0);
-    const phaseTimeouts = [
-      setTimeout(() => activatePhase(1), 5000),
-      setTimeout(() => activatePhase(2), 10000),
-      setTimeout(() => activatePhase(3), 15000)
-    ];
-    const progressStart = Date.now();
-    const progressTicker = setInterval(() => {
-      const elapsed = Date.now() - progressStart;
-      const pct = Math.min((elapsed / 20000) * 99, 99);
-      setCircle(pct);
-    }, 100);
-
-    const minDelay = new Promise(r => setTimeout(r, 20000));
-
-
-    const base64pdf = await fileToBase64(file);
-    const isPdf = mediaType === 'pdf';
-    const apiPromise = fetch('/.netlify/functions/analizar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(isPdf 
-        ? { pdfBase64: base64pdf }
-        : { imageBase64: base64pdf, imageMediaType: mediaType }
-      )
-    }).then(r => r.json()).catch(err => ({ success: false, error: err.message }));
-
-    const [, result] = await Promise.all([minDelay, apiPromise]);
-    console.log('DATOS EXTRAÍDOS:', JSON.stringify(result.data, null, 2));
-    clearInterval(progressTicker);
-    phaseTimeouts.forEach(clearTimeout);
-    setCircle(100);
-
-    // Subir PDF a Storage nada más analizar, sin esperar a contratación
-    if (base64pdf) {
-      try {
-        const mimeType = isPdf ? 'application/pdf' : (mediaType || 'image/jpeg');
-        const ext = isPdf ? 'pdf' : (mediaType.split('/')[1] || 'jpg');
-        const pdfBlob = await fetch(`data:${mimeType};base64,${base64pdf}`).then(r => r.blob());
-        const tipoFactura = currentTipo || 'luz';
-        const comercializadora = (result.data?.comercializadora || 'desc')
-          .replace(/[^a-zA-Z0-9]/g, '')
-          .substring(0, 12)
-          .toLowerCase();
-        const ahora = new Date();
-        const fecha = ahora.toISOString().slice(0, 10);
-        const hora = ahora.toTimeString().slice(0, 5).replace(':', 'h');
-        const fileName = `${fecha}_${hora}_${tipoFactura}_${comercializadora}.${ext}`;
-        const { error: uploadError } = await _supabase
-          .storage
-          .from('facturas')
-          .upload(fileName, pdfBlob, { contentType: mimeType, upsert: false });
-        if (!uploadError) {
-          window._facturaFileName = fileName;
-          window._facturaStorageUrl = fileName;
-          try {
-            const { data: urlData } = await _supabase
-              .storage
-              .from('facturas')
-              .createSignedUrl(fileName, 31536000);
-            window._facturaSignedUrl = urlData?.signedUrl || null;
-          } catch(e) {
-            window._facturaSignedUrl = null;
-          }
-          console.log('PDF subido a Storage:', fileName, window._facturaSignedUrl ? '(URL firmada OK)' : '(URL firmada fallida)');
-        } else {
-          console.warn('Error subiendo PDF:', uploadError);
-        }
-      } catch(e) {
-        console.warn('No se pudo subir el PDF en el paso 1:', e);
-      }
-    }
-
-    
-    if (!result.success || !result.data) {
-      const esNoFactura = result.error && (
-        result.error.toLowerCase().includes('no es una factura') ||
-        result.error.toLowerCase().includes('not a bill') ||
-        result.error.toLowerCase().includes('no se ha podido') ||
-        result.error.toLowerCase().includes('documento no válido')
-      );
-      mostrarToastError(
-        esNoFactura
-          ? 'No hemos podido leer tu factura. Comprueba que es una factura de luz o gas, en PDF o en foto.'
-          : 'No hemos podido leer tu factura. Comprueba que es una factura de luz o gas, en PDF o en foto.'
-      );
-      showStep(1);
-      return;
-    }
-
+  async function procesarResultadoAnalisis(result, base64File, mediaType) {
     extractedData = result.data;
 
     if (!extractedData.tipo_factura && 
@@ -2482,7 +2389,7 @@ function toggleFaqExtra() {
     if (comercializadoraActual.includes('gana')) {
       calcResult = { ...calcResult, ahorro: -1 };
     }
-    lastPdfBase64 = base64pdf;
+    lastPdfBase64 = base64File;
 
     if (window._step3OriginalHtml) {
       document.getElementById('step3').innerHTML = window._step3OriginalHtml;
@@ -2753,6 +2660,247 @@ function toggleFaqExtra() {
 
     if (window.dataLayer) window.dataLayer.push({ event: 'factura_analizada' });
     showStep(3);
+  }
+
+  document.getElementById('btnAnalizar').addEventListener('click', async () => {
+    const file = fileInput.files[0];
+    if (!file) {
+      alert('Por favor, sube tu factura en formato PDF.');
+      return;
+    }
+    // Validación tipo archivo
+    const mediaType = getFileMediaType(file);
+    if (!mediaType) {
+      mostrarErrorArchivo('Formato no soportado. Sube tu factura en PDF, JPG, PNG o WEBP.');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      mostrarErrorArchivo('El archivo no puede superar 5 MB. Comprime el PDF e inténtalo de nuevo.');
+      return;
+    }
+    if (!document.getElementById('acepto_privacidad').checked) {
+      alert('Debes aceptar la política de privacidad para continuar.');
+      return;
+    }
+    if (!document.getElementById('acepto_tratamiento_pdf').checked) {
+      alert('Debes autorizar el tratamiento de los datos de tu factura para poder analizarla.');
+      return;
+    }
+
+    showStep(2);
+    setTimeout(() => {
+      const formulario = document.getElementById('formulario');
+      if (formulario) formulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+    const circumference = 339;
+    const circleEl  = document.getElementById('circleProgress');
+    const pctEl     = document.getElementById('circlePercent');
+
+    function setCircle(pct) {
+      const clamped = Math.min(Math.max(pct, 0), 100);
+      if (circleEl) 
+        circleEl.style.strokeDashoffset = 
+          circumference - (clamped / 100) * circumference;
+      if (pctEl) pctEl.textContent = Math.round(clamped) + '%';
+    }
+
+    function activatePhase(idx) {
+      const statusTexts = [
+        'Leyendo los datos del PDF...',
+        'Comparando con las mejores tarifas del mercado...',
+        'Calculando cuánto pagas de más...',
+        'Preparando tu resultado...'
+      ];
+      const statusEl = document.getElementById('loading-status');
+      if (statusEl) {
+        statusEl.style.opacity = '0';
+        setTimeout(() => {
+          statusEl.textContent = statusTexts[idx] || '';
+          statusEl.style.opacity = '1';
+        }, 200);
+      }
+      [0,1,2,3].forEach(i => {
+        const pill = document.getElementById('pill' + i);
+        if (!pill) return;
+        if (i < idx) pill.className = 'load-pill done';
+        else if (i === idx) pill.className = 'load-pill active';
+        else pill.className = 'load-pill';
+      });
+    }
+
+    activatePhase(0);
+    const phaseTimeouts = [
+      setTimeout(() => activatePhase(1), 5000),
+      setTimeout(() => activatePhase(2), 10000),
+      setTimeout(() => activatePhase(3), 15000)
+    ];
+    const progressStart = Date.now();
+    const progressTicker = setInterval(() => {
+      const elapsed = Date.now() - progressStart;
+      const pct = Math.min((elapsed / 20000) * 99, 99);
+      setCircle(pct);
+    }, 100);
+
+    const minDelay = new Promise(r => setTimeout(r, 20000));
+
+
+    const base64pdf = await fileToBase64(file);
+    const isPdf = mediaType === 'pdf';
+    const apiPromise = fetch('/.netlify/functions/analizar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(isPdf 
+        ? { pdfBase64: base64pdf }
+        : { imageBase64: base64pdf, imageMediaType: mediaType }
+      )
+    }).then(r => r.json()).catch(err => ({ success: false, error: err.message }));
+
+    const [, result] = await Promise.all([minDelay, apiPromise]);
+    console.log('DATOS EXTRAÍDOS:', JSON.stringify(result.data, null, 2));
+    clearInterval(progressTicker);
+    phaseTimeouts.forEach(clearTimeout);
+    setCircle(100);
+
+    // Subir PDF a Storage nada más analizar, sin esperar a contratación
+    if (base64pdf) {
+      try {
+        const mimeType = isPdf ? 'application/pdf' : (mediaType || 'image/jpeg');
+        const ext = isPdf ? 'pdf' : (mediaType.split('/')[1] || 'jpg');
+        const pdfBlob = await fetch(`data:${mimeType};base64,${base64pdf}`).then(r => r.blob());
+        const tipoFactura = currentTipo || 'luz';
+        const comercializadora = (result.data?.comercializadora || 'desc')
+          .replace(/[^a-zA-Z0-9]/g, '')
+          .substring(0, 12)
+          .toLowerCase();
+        const ahora = new Date();
+        const fecha = ahora.toISOString().slice(0, 10);
+        const hora = ahora.toTimeString().slice(0, 5).replace(':', 'h');
+        const fileName = `${fecha}_${hora}_${tipoFactura}_${comercializadora}.${ext}`;
+        const { error: uploadError } = await _supabase
+          .storage
+          .from('facturas')
+          .upload(fileName, pdfBlob, { contentType: mimeType, upsert: false });
+        if (!uploadError) {
+          window._facturaFileName = fileName;
+          window._facturaStorageUrl = fileName;
+          try {
+            const { data: urlData } = await _supabase
+              .storage
+              .from('facturas')
+              .createSignedUrl(fileName, 31536000);
+            window._facturaSignedUrl = urlData?.signedUrl || null;
+          } catch(e) {
+            window._facturaSignedUrl = null;
+          }
+          console.log('PDF subido a Storage:', fileName, window._facturaSignedUrl ? '(URL firmada OK)' : '(URL firmada fallida)');
+        } else {
+          console.warn('Error subiendo PDF:', uploadError);
+        }
+      } catch(e) {
+        console.warn('No se pudo subir el PDF en el paso 1:', e);
+      }
+    }
+
+    
+    if (!result.success || !result.data) {
+      const esNoFactura = result.error && (
+        result.error.toLowerCase().includes('no es una factura') ||
+        result.error.toLowerCase().includes('not a bill') ||
+        result.error.toLowerCase().includes('no se ha podido') ||
+        result.error.toLowerCase().includes('documento no válido')
+      );
+      mostrarToastError(
+        esNoFactura
+          ? 'No hemos podido leer tu factura. Comprueba que es una factura de luz o gas, en PDF o en foto.'
+          : 'No hemos podido leer tu factura. Comprueba que es una factura de luz o gas, en PDF o en foto.'
+      );
+      showStep(1);
+      return;
+    }
+
+    // Si es imagen y faltan datos clave, pedir segunda cara
+    const archivoEsImagen = mediaType && mediaType !== 'pdf';
+    if (archivoEsImagen && faltanDatosParaCalculo(result.data, currentTipo)) {
+      window._dataParcial = result.data;
+      window._base64img1 = base64pdf;
+      document.getElementById('secondImageWrap').style.display = 'block';
+      showStep(1);
+      setTimeout(() => {
+        document.getElementById('secondImageWrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+      return;
+    }
+
+    await procesarResultadoAnalisis(result, base64pdf, mediaType);
+  });
+
+  document.getElementById('btnAnalizar2').addEventListener('click', async () => {
+    const file2 = fileInput2.files[0];
+    if (!file2) {
+      mostrarErrorArchivo('Sube la segunda cara de la factura para continuar.');
+      return;
+    }
+    if (!document.getElementById('acepto_privacidad').checked) {
+      alert('Debes aceptar la política de privacidad para continuar.');
+      return;
+    }
+    if (!document.getElementById('acepto_tratamiento_pdf').checked) {
+      alert('Debes autorizar el tratamiento de los datos de tu factura para poder analizarla.');
+      return;
+    }
+
+    document.getElementById('secondImageWrap').style.display = 'none';
+    showStep(2);
+    setTimeout(() => {
+      const formulario = document.getElementById('formulario');
+      if (formulario) formulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+
+    const circumference = 339;
+    const circleEl = document.getElementById('circleProgress');
+    const pctEl = document.getElementById('circlePercent');
+    function setCircle(pct) {
+      const clamped = Math.min(Math.max(pct, 0), 100);
+      if (circleEl) circleEl.style.strokeDashoffset = circumference - (clamped / 100) * circumference;
+      if (pctEl) pctEl.textContent = Math.round(clamped) + '%';
+    }
+    const progressStart = Date.now();
+    const progressTicker = setInterval(() => {
+      const elapsed = Date.now() - progressStart;
+      const pct = Math.min((elapsed / 20000) * 99, 99);
+      setCircle(pct);
+    }, 100);
+    const minDelay = new Promise(r => setTimeout(r, 20000));
+
+    const base64img1 = window._base64img1;
+    const base64img2 = await fileToBase64(file2);
+    const mt = getFileMediaType(fileInput.files[0]);
+
+    const apiPromise = fetch('/.netlify/functions/analizar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imageBase64: base64img1, imageBase64_2: base64img2, imageMediaType: mt })
+    }).then(r => r.json()).catch(err => ({ success: false, error: err.message }));
+
+    const [, result] = await Promise.all([minDelay, apiPromise]);
+    clearInterval(progressTicker);
+    setCircle(100);
+
+    if (!result.success || !result.data) {
+      mostrarToastError('No hemos podido leer tu factura. Comprueba que es una factura de luz o gas, en PDF o en foto.');
+      showStep(1);
+      return;
+    }
+
+    // Continuar con el flujo normal a partir de extractedData
+    // Reutilizar la función processResult si existe, o duplicar la lógica mínima:
+    window._base64img1 = null;
+    window._dataParcial = null;
+    // Disparar el flujo normal pasando result como si fuera el resultado del análisis principal
+    window._pendingResult = result;
+    window._pendingBase64 = base64img2; // para storage
+    window._pendingMediaType = mt;
+    procesarResultadoAnalisis(result, base64img2, mt);
   });
 
   document.getElementById('formulario').addEventListener('click', (e) => {
