@@ -2728,6 +2728,7 @@ function mostrarAvisoBanner(msg) {
       const totalGanaTabla = calcResult.totalG ?? calcResult.total;
       const baseImponibleGana = totalGanaTabla - ivaGana;
       const baseImponibleActual = parseFloat(extractedData.total_factura) - parseFloat(extractedData.iva_euros || 0);
+      const impElGana = calcResult.impEl;
       
       // Servicios adicionales
       const serviciosRows = [];
