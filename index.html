@@ -1928,8 +1928,24 @@ function toggleFaqExtra() {
       }
 
     } else if (tarifa.tipo_energia === 'unica') {
-      const avgPe = (pe.p + pe.l + pe.v) / 3;
-      ener = etotal * (tarifa.energia_unica + avgPe);
+  // El precio publicado por Gana ya incluye peajes de red.
+  // Para potencia >10kW usar precios alternativos si existen en Supabase.
+  const p1kw = parseFloat(d.potencia_p1) || 0;
+  const esGranPotencia = p1kw > 10;
+  const precioUnico = esGranPotencia
+    ? (tarifa.energia_unica_gt10 || tarifa.energia_unica)
+    : tarifa.energia_unica;
+  const potP1Dia = esGranPotencia
+    ? (tarifa.potencia_p1_dia_gt10 || tarifa.potencia_p1_dia)
+    : tarifa.potencia_p1_dia;
+  const potP2Dia = esGranPotencia
+    ? (tarifa.potencia_p2_dia_gt10 || tarifa.potencia_p2_dia)
+    : tarifa.potencia_p2_dia;
+  ener = etotal * precioUnico;
+  if (esGranPotencia && tarifa.energia_unica_gt10) {
+    const p2kw = parseFloat(d.potencia_p2) || p1kw;
+    pot = (p1kw * potP1Dia * dias) + (p2kw * potP2Dia * dias);
+  }
     }
 
     const margen = tarifa.margen_dia * dias;
