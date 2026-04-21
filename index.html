@@ -1869,10 +1869,12 @@ function toggleFaqExtra() {
     const dias = parseInt(d.dias) || 30;
     const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
     const fechaFin = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
-    const ivaRate = parseFloat(d.iva_electricidad_pct) ||
-      (fechaFin && !isNaN(fechaFin.getTime()) && fechaFin >= new Date('2026-03-21T00:00:00')
-        ? 0.10
-        : 0.21);
+    const _ivaPct = parseFloat(d.iva_electricidad_pct);
+    const ivaRate = (_ivaPct > 0 && _ivaPct <= 1)
+      ? _ivaPct
+      : (fechaFin && !isNaN(fechaFin.getTime()) && fechaFin >= new Date('2026-03-21T00:00:00')
+          ? 0.10
+          : 0.21);
     const provincia = (d.provincia || '').trim().toUpperCase();
     const esCanarias = provincia === 'LAS PALMAS' || provincia === 'SANTA CRUZ DE TENERIFE';
     const dniVal = (d.dni || '').trim().toUpperCase();
@@ -2732,8 +2734,8 @@ function mostrarAvisoBanner(msg) {
       // IVA Gana: recalcular sobre la base imponible correcta
       const ivaGana = baseImponibleGana * (calcResult.ivaRate || 0.21);
       
-      // Total Gana: base + IVA
-      const totalGana = baseImponibleGana + ivaGana;
+      // Total Gana: usar el mismo valor del cálculo principal para cuadrar con ahorro
+      const totalGana = calcResult.totalG ?? calcResult.total;
       
       // Servicios adicionales
       const serviciosRows = [];
