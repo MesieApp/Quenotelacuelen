@@ -2792,7 +2792,11 @@ function mostrarAvisoBanner(msg) {
 
     const thTarifaActual = document.getElementById('thTarifaActual');
     if (thTarifaActual) {
-      thTarifaActual.innerHTML = `TU TARIFA ACTUAL<span style="font-size:0.7rem;color:#475569;font-weight:400;text-transform:none;letter-spacing:normal;display:block;">${extractedData.comercializadora || ''}</span>`;
+      const nombreTarifaActual = extractedData.tarifa 
+        ? `${extractedData.comercializadora || ''} — ${extractedData.tarifa}`
+        : (extractedData.comercializadora || '');
+
+      thTarifaActual.innerHTML = `TU TARIFA ACTUAL<span style="font-size:0.7rem;color:#475569;font-weight:400;text-transform:none;letter-spacing:normal;display:block;">${nombreTarifaActual}</span>`;
     }
     const thMejorTarifa = document.getElementById('thMejorTarifa');
     if (thMejorTarifa) {
