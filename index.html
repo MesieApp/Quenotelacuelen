@@ -2307,14 +2307,15 @@ function faltanDatosAnalisis(data, tipo) {
   if (tipo === 'gas') {
     if (!data.kwh_gas) return true;
   } else {
-    const tieneConsumo = data.kwh_total || (data.kwh_punta != null && data.kwh_llano != null);
-    if (!data.potencia_p1 || !tieneConsumo) return true;
+    const tieneConsumo = data.kwh_total ||
+      (data.kwh_punta != null && data.kwh_llano != null) ||
+      (data.termino_energia_euros != null);
+    if (!tieneConsumo) return true;
+    if (!data.potencia_p1) return true;
   }
-  const cupsRaw = (data.cups || '').replace(/\s/g, '');
-  if (cupsRaw.length !== 20 && cupsRaw.length !== 22) return true;
-  if (!data.dni) return true;
-  if (!data.nombre_titular) return true;
-  if (!data.direccion) return true;
+  if (!data.cups || data.cups.trim().length === 0) return true;
+  if (!data.dni || data.dni.trim().length === 0) return true;
+  if (!data.direccion || data.direccion.trim().length === 0) return true;
   return false;
 }
 
@@ -2358,6 +2359,48 @@ function faltanDatosAnalisis(data, tipo) {
       setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
     }, 6000);
   }
+
+function mostrarAvisoBanner(msg) {
+  const existing = document.getElementById('avisoBanner');
+  if (existing) existing.remove();
+
+  const banner = document.createElement('div');
+  banner.id = 'avisoBanner';
+  banner.innerHTML = `
+    <div style="display:flex; align-items:flex-start; gap:0.75rem;">
+      <span style="font-size:1.4rem; flex-shrink:0; margin-top:2px;">⚠️</span>
+      <div>
+        <p style="font-size:1rem; font-weight:700; color:#92400e; margin:0 0 0.2rem;">${msg}</p>
+        <p style="font-size:0.82rem; color:#b45309; margin:0; font-weight:400;">Las facturas tienen varias caras. Sube todas para que podamos leer el CUPS, el DNI y el consumo.</p>
+      </div>
+      <button onclick="document.getElementById('avisoBanner').remove()" style="margin-left:auto; flex-shrink:0; background:none; border:none; cursor:pointer; color:#b45309; font-size:1.2rem; line-height:1; padding:0 4px;">✕</button>
+    </div>
+  `;
+  banner.style.cssText = [
+    'position:fixed',
+    'top:72px',
+    'left:50%',
+    'transform:translateX(-50%)',
+    'width:min(520px, 92vw)',
+    'background:#fffbeb',
+    'border:1.5px solid #fbbf24',
+    'border-radius:14px',
+    'padding:1.1rem 1.25rem',
+    'box-shadow:0 8px 32px rgba(0,0,0,0.12)',
+    'z-index:9999',
+    'animation:toastIn 0.3s ease'
+  ].join(';');
+
+  document.body.appendChild(banner);
+
+  setTimeout(() => {
+    if (banner.parentNode) {
+      banner.style.opacity = '0';
+      banner.style.transition = 'opacity 0.4s';
+      setTimeout(() => { if (banner.parentNode) banner.remove(); }, 400);
+    }
+  }, 7000);
+}
 
   async function procesarResultadoAnalisis(result, base64File, mediaType) {
     extractedData = result.data;
@@ -2837,7 +2880,7 @@ function faltanDatosAnalisis(data, tipo) {
       renderFileList();
       const fi = document.getElementById('factura');
       if (fi) fi.value = '';
-      setTimeout(() => mostrarToastError('Error. Sube fotos de todas las caras de tu factura.'), 400);
+      setTimeout(() => mostrarAvisoBanner('Error. Sube fotos de todas las caras de tu factura.'), 400);
       return;
     }
 
