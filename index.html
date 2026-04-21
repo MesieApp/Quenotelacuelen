@@ -2724,19 +2724,10 @@ function mostrarAvisoBanner(msg) {
         tbody.appendChild(tr);
       });
     } else {
-      const baseGana = calcResult.pot + calcResult.ener + calcResult.bonoG;
-      const impElGana = baseGana * IMP_ELEC;
-      
-      // Base imponible Iberdrola: usar exactamente lo que dice la factura
-      const baseImponibleActual = parseFloat(extractedData.total_factura) - parseFloat(extractedData.iva_euros || 0);
-      
-      // Base imponible Gana: pot + ener + bono + imp.electrico + alquiler + servicios (0 para Gana)
-      const baseImponibleGana = calcResult.pot + calcResult.ener + calcResult.bonoG + impElGana + calcResult.alq;
-      
       const ivaGana = calcResult.ivaG;
-      
-      // Total Gana: usar el mismo valor del cálculo principal para cuadrar con ahorro
-      const totalGana = calcResult.totalG ?? calcResult.total;
+      const totalGanaTabla = calcResult.totalG ?? calcResult.total;
+      const baseImponibleGana = totalGanaTabla - ivaGana;
+      const baseImponibleActual = parseFloat(extractedData.total_factura) - parseFloat(extractedData.iva_euros || 0);
       
       // Servicios adicionales
       const serviciosRows = [];
@@ -2772,8 +2763,8 @@ function mostrarAvisoBanner(msg) {
         ['Base imponible', fmtEur(baseImponibleActual), fmtEur(baseImponibleGana)],
         ['IVA', fmt(extractedData.iva_euros), fmtEur(ivaGana)],
       ];
-      rows.push(['Total factura', fmtEur(totalFacturaReal), fmtEur(totalGana)]);
-      rows.push(['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((totalGana / dias) * 365)]);
+      rows.push(['Total factura', fmtEur(totalFacturaReal), fmtEur(totalGanaTabla)]);
+      rows.push(['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((totalGanaTabla / dias) * 365)]);
       rows.forEach(([c, tu, gana]) => {
         const tr = document.createElement('tr');
         const concept = c === 'Total factura'
