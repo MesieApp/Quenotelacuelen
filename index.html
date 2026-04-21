@@ -2109,21 +2109,19 @@ function toggleFaqExtra() {
   window._step3OriginalHtml = document.getElementById('step3').innerHTML;
 
   function volverAlPaso1() {
-    const factura = document.getElementById('factura');
-    if (factura) factura.value = '';
-    const fileNameEl = document.getElementById('fileName');
-    if (fileNameEl) { fileNameEl.textContent = ''; fileNameEl.style.display = 'none'; }
-    extractedData = null;
-    calcResult = null;
-    lastPdfBase64 = null;
-    showStep(1);
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 50);
-    selectedFiles = [];
-    renderFileList();
-    const fi = document.getElementById('factura');
-    if (fi) fi.value = '';
+  selectedFiles = [];
+  renderFileList();
+  const factura = document.getElementById('factura');
+  if (factura) factura.value = '';
+  const fileNameEl = document.getElementById('fileName');
+  if (fileNameEl) { fileNameEl.textContent = ''; fileNameEl.style.display = 'none'; }
+  extractedData = null;
+  calcResult = null;
+  lastPdfBase64 = null;
+  showStep(1);
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 50);
   }
 
   function showStep(n) {
@@ -2833,11 +2831,13 @@ function faltanDatosAnalisis(data, tipo) {
     }
 
     if (!isPdf && faltanDatosAnalisis(result.data, currentTipo)) {
-      mostrarToastError('Error. Sube fotos de todas las caras de tu factura.');
       showStep(1);
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      selectedFiles = [];
+      renderFileList();
+      const fi = document.getElementById('factura');
+      if (fi) fi.value = '';
+      setTimeout(() => mostrarToastError('Error. Sube fotos de todas las caras de tu factura.'), 400);
       return;
     }
 
