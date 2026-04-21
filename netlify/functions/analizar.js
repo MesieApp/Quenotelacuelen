@@ -67,8 +67,20 @@ SOLO SI ES LUZ:
 - kwh_llano: kWh consumidos en hora llano
 - kwh_valle: kWh consumidos en hora valle
 - kwh_total: kWh totales consumidos (suma de los tres tramos o total si no hay discriminación horaria)
-- termino_potencia_euros: importe del término de potencia sin IVA. En facturas Naturgy aparece como la suma de "Término potencia P1" y "Término potencia P2". Súmalos y ponlos aquí. Si no aparece desglosado, busca cualquier concepto relacionado con potencia contratada.
-- termino_energia_euros: importe del término de energía sin IVA. En facturas Naturgy aparece como "Consumo electricidad" o "Energía consumida". No incluyas el bono social ni el mínimo comunitario.
+- termino_potencia_euros: importe TOTAL del término de potencia sin IVA. 
+  Es la suma de todos los términos de potencia (P1 + P2 + P3 si los hay). 
+  En facturas Naturgy aparece como "Término potencia P1" y "Término potencia P2" — 
+  súmalos. En facturas Iberdrola aparece como "Total importe potencia". 
+  Devuelve siempre un único número con la suma total.
+- termino_energia_euros: importe del consumo de energía sin IVA, sin incluir 
+  potencia, bono social, mínimo comunitario ni impuestos. En Naturgy aparece 
+  como "Consumo electricidad". En Iberdrola como "Energía consumida". 
+  Solo el importe puro del kWh consumido.
+- otros_conceptos_euros: array de objetos con cualquier otro concepto que 
+  aparezca en la factura que NO sea potencia, energía, bono social, impuesto 
+  eléctrico, alquiler contador, servicios adicionales ni IVA. Por ejemplo 
+  "Mínimo comunitario". Cada objeto tiene "nombre" e "importe". 
+  Si no hay ninguno, array vacío [].
 - impuesto_electrico_euros: importe del impuesto sobre electricidad
 - imp_electrico_pct: porcentaje del impuesto eléctrico como decimal (normalmente 0.0511269632)
 - bono_social: importe del bono social en euros si aparece, null si no aplica

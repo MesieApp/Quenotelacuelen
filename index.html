@@ -1869,9 +1869,11 @@ function toggleFaqExtra() {
     const dias = parseInt(d.dias) || 30;
     const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
     const fechaFin = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
-    const fechaFinStr = d.fecha_fin || '';
-    const fechaFinDate = fechaFinStr ? new Date(fechaFinStr + 'T12:00:00') : null;
-    const ivaRate = (fechaFinDate && !isNaN(fechaFinDate.getTime()) && fechaFinDate >= new Date('2026-03-21T00:00:00')) ? 0.10 : 0.21;
+    const fechaFinParseada = d.fecha_fin ? new Date(d.fecha_fin + 'T12:00:00') : null;
+    const ivaRate = (fechaFinParseada && fechaFinParseada.getFullYear() === 2026 && 
+      (fechaFinParseada.getMonth() > 2 || 
+       (fechaFinParseada.getMonth() === 2 && fechaFinParseada.getDate() >= 21)))
+      ? 0.10 : 0.21;
     const provincia = (d.provincia || '').trim().toUpperCase();
     const esCanarias = provincia === 'LAS PALMAS' || provincia === 'SANTA CRUZ DE TENERIFE';
     const dniVal = (d.dni || '').trim().toUpperCase();
@@ -2762,6 +2764,9 @@ function mostrarAvisoBanner(msg) {
         ],
         ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
         ...serviciosRows,
+        ...((extractedData.otros_conceptos_euros || []).map(c => 
+          [c.nombre, fmtEur(parseFloat(c.importe)), '—']
+        )),
         ['Base imponible', fmtEur(baseImponibleActual), fmtEur(baseImponibleGana)],
         ['IVA', fmt(extractedData.iva_euros), fmtEur(ivaGana)],
       ];
