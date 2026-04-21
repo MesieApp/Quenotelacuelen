@@ -2001,58 +2001,8 @@ function toggleFaqExtra() {
       console.warn('No hay precios en Supabase para este período, usando precio de la factura como fallback');
     }
 
-    // Detectar si la tarifa actual del usuario es fija, indexada o desconocida
-    function detectarTipoTarifaUsuario(extractedData) {
-      const tarifa = (extractedData.tarifa || '').toLowerCase();
-      
-      // Señales explícitas de tarifa indexada/mercado
-      const esIndexada = tarifa.includes('indexad') ||
-        tarifa.includes('mercado') ||
-        tarifa.includes('omie') ||
-        tarifa.includes('pool') ||
-        tarifa.includes('pvpc') ||
-        tarifa.includes('variable') ||
-        tarifa.includes('precio mercado') ||
-        tarifa.includes('por uso');
-
-      // Señales de tarifa fija: precio extraído O nombre de tarifa fija
-      const tienePrecioFijo = extractedData.precio_kwh_unico != null ||
-        extractedData.precio_kwh_punta != null ||
-        extractedData.termino_energia_euros != null;
-
-      const esFijaPorNombre = tarifa.includes('fij') ||
-        tarifa.includes('estable') ||
-        tarifa.includes('plana') ||
-        tarifa.includes('24h') ||
-        tarifa.includes('24 h') ||
-        tarifa.includes('plan') ||
-        tarifa.includes('one') ||
-        tarifa.includes('always');
-
-      const esFija = !esIndexada && (tienePrecioFijo || esFijaPorNombre);
-
-      if (esIndexada) return 'mercado';
-      if (esFija) return 'fija';
-      return 'desconocida';
-    }
-    
-    const tipoTarifaUsuario = detectarTipoTarifaUsuario(d);
-    console.log('Tipo tarifa usuario detectado:', tipoTarifaUsuario);
-    const tarifasFiltradas = tarifas.filter(t => {
-      // Nunca recomendar Tramos Horarios
-      if (t.tipo_energia === 'fija') return false;
-    
-      if (tipoTarifaUsuario === 'mercado') {
-        return t.tipo_energia === 'mercado';
-      }
-      if (tipoTarifaUsuario === 'fija') {
-        return t.tipo_energia === 'unica';
-      }
-      // Desconocida: todas excepto fija (ya excluida arriba)
-      return true;
-    });
-    
-    const tarifasParaComparar = tarifasFiltradas.length > 0 ? tarifasFiltradas : tarifas.filter(t => t.tipo_energia !== 'fija');
+    // Comparar siempre con todas las tarifas excepto Tramos Horarios
+    const tarifasParaComparar = tarifas.filter(t => t.tipo_energia !== 'fija');
     
     const resultados = tarifasParaComparar.map(t => {
       const calc = calcularConTarifa(t, d, preciosMercado);
