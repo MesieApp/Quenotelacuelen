@@ -1875,6 +1875,7 @@ function toggleFaqExtra() {
       : (fechaFin && !isNaN(fechaFin.getTime()) && fechaFin >= new Date('2026-03-21T00:00:00')
           ? 0.10
           : 0.21);
+    console.log('ivaRate calculado:', ivaRate, 'iva_electricidad_pct recibido:', d.iva_electricidad_pct);
     const provincia = (d.provincia || '').trim().toUpperCase();
     const esCanarias = provincia === 'LAS PALMAS' || provincia === 'SANTA CRUZ DE TENERIFE';
     const dniVal = (d.dni || '').trim().toUpperCase();
@@ -1963,6 +1964,7 @@ function toggleFaqExtra() {
     const impEl = base * impElecRate;
     const alq = parseFloat(d.alquiler_contador_euros) || (ALQ_DIA * dias);
     const sub = base + impEl + alq;
+    console.log('sub antes de IVA:', sub, 'ivaRate aplicado:', ivaRate);
     let ivaG = 0;
     if (esCanarias) {
       if (esEmpresa) {
