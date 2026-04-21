@@ -2733,8 +2733,7 @@ function mostrarAvisoBanner(msg) {
       // Base imponible Gana: pot + ener + bono + imp.electrico + alquiler + servicios (0 para Gana)
       const baseImponibleGana = calcResult.pot + calcResult.ener + calcResult.bonoG + impElGana + calcResult.alq;
       
-      // IVA Gana: recalcular sobre la base imponible correcta
-      const ivaGana = baseImponibleGana * (calcResult.ivaRate || 0.21);
+      const ivaGana = calcResult.ivaG;
       
       // Total Gana: usar el mismo valor del cálculo principal para cuadrar con ahorro
       const totalGana = calcResult.totalG ?? calcResult.total;
