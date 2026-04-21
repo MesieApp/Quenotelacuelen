@@ -46,7 +46,7 @@ CAMPOS COMUNES:
 - direccion: dirección completa del punto de suministro
 - provincia: provincia del punto de suministro extraída de la dirección. Usar nombre oficial español en mayúsculas. Ejemplos: "MADRID", "BARCELONA", "VALENCIA", "SEVILLA". Si no aparece explícitamente, deducirla de la dirección o del municipio. Si no es posible deducirla, null.
 - nombre_titular: nombre completo del titular del contrato
-- dni: DNI o NIF del titular
+- dni: DNI, NIF o CIF del titular del contrato. En facturas Iberdrola aparece como "NIF titular del contrato" en la sección "Información adicional". Puede aparecer también como "NIF", "CIF", "DNI" o "Identificación fiscal". Extrae siempre el valor alfanumérico completo (ejemplos: 54025030P, B12345678, X1234567A). Es OBLIGATORIO extraer este campo si aparece en la factura bajo cualquiera de esos nombres.
 - alquiler_contador_euros: importe del alquiler del contador sin IVA
 - iva_euros: importe total del IVA
 - total_electricidad_euros: importe total de electricidad SIN IVA (solo el suministro eléctrico puro, sin servicios adicionales como seguros). En facturas Naturgy es el campo "Total electricidad".
