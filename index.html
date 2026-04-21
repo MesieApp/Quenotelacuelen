@@ -2719,12 +2719,20 @@ function mostrarAvisoBanner(msg) {
     } else {
       const baseGana = calcResult.pot + calcResult.ener + calcResult.bonoG;
       const impElGana = baseGana * IMP_ELEC;
-      const baseIberdrolaParaImpEl = (parseFloat(extractedData.termino_potencia_euros) || 0) +
-        (parseFloat(extractedData.termino_energia_euros) || 0) +
-        (parseFloat(extractedData.bono_social) || 0);
-      const impElActual = baseIberdrolaParaImpEl * IMP_ELEC;
       
-      // Servicios adicionales de la factura actual
+      // Base imponible Iberdrola: usar exactamente lo que dice la factura
+      const baseImponibleActual = parseFloat(extractedData.total_factura) - parseFloat(extractedData.iva_euros || 0);
+      
+      // Base imponible Gana: pot + ener + bono + imp.electrico + alquiler + servicios (0 para Gana)
+      const baseImponibleGana = calcResult.pot + calcResult.ener + calcResult.bonoG + impElGana + calcResult.alq;
+      
+      // IVA Gana: recalcular sobre la base imponible correcta
+      const ivaGana = baseImponibleGana * (calcResult.ivaRate || 0.21);
+      
+      // Total Gana: base + IVA
+      const totalGana = baseImponibleGana + ivaGana;
+      
+      // Servicios adicionales
       const serviciosRows = [];
       if (extractedData.detalle_servicios && extractedData.detalle_servicios.length > 0) {
         extractedData.detalle_servicios.forEach(s => {
@@ -2733,25 +2741,17 @@ function mostrarAvisoBanner(msg) {
         });
       }
       
-      const totalSinIvaActual = (parseFloat(extractedData.termino_potencia_euros) || 0) +
-        (parseFloat(extractedData.termino_energia_euros) || 0) +
-        impElActual +
-        (parseFloat(extractedData.alquiler_contador_euros) || 0) +
-        serviciosRows.reduce((acc, r) => acc + (parseFloat((r[1] || '0').replace(',', '.').replace(' €', '')) || 0), 0);
-      
-      const totalSinIvaGana = calcResult.pot + calcResult.ener + impElGana + calcResult.alq;
-      
       const rows = [
         ['Término de potencia', fmt(extractedData.termino_potencia_euros), fmtEur(calcResult.pot)],
         ['Término de energía', fmt(extractedData.termino_energia_euros), fmtEur(calcResult.ener)],
         ['Imp. eléctrico (5,11%)', fmt(extractedData.impuesto_electrico_euros), fmtEur(impElGana)],
         ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
         ...serviciosRows,
-        ['Base imponible', fmtEur(totalSinIvaActual), fmtEur(totalSinIvaGana)],
-        ['IVA', fmt(extractedData.iva_euros), fmtEur(calcResult.ivaG)],
+        ['Base imponible', fmtEur(baseImponibleActual), fmtEur(baseImponibleGana)],
+        ['IVA', fmt(extractedData.iva_euros), fmtEur(ivaGana)],
       ];
-      rows.push(['Total factura', fmtEur(totalFacturaReal), fmtEur(calcResult.totalG)]);
-      rows.push(['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((calcResult.totalG / dias) * 365)]);
+      rows.push(['Total factura', fmtEur(totalFacturaReal), fmtEur(totalGana)]);
+      rows.push(['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((totalGana / dias) * 365)]);
       rows.forEach(([c, tu, gana]) => {
         const tr = document.createElement('tr');
         const concept = c === 'Total factura'
