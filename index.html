@@ -2717,19 +2717,39 @@ function mostrarAvisoBanner(msg) {
         tbody.appendChild(tr);
       });
     } else {
-      const rows = [
-        ['Término de potencia', fmt(extractedData.termino_potencia_euros), fmtEur(calcResult.pot)],
-        ['Término de energía', fmt(extractedData.termino_energia_euros), fmtEur(calcResult.ener)],
-        ['Imp. eléctrico', fmt(extractedData.impuesto_electrico_euros), fmtEur(calcResult.impEl)],
-        ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
-        ['IVA', fmt(extractedData.iva_euros), fmtEur(calcResult.ivaG)],
-      ];
+      const baseGana = calcResult.pot + calcResult.ener + calcResult.bonoG;
+      const impElGana = baseGana * IMP_ELEC;
+      const baseIberdrolaParaImpEl = (parseFloat(extractedData.termino_potencia_euros) || 0) +
+        (parseFloat(extractedData.termino_energia_euros) || 0) +
+        (parseFloat(extractedData.bono_social) || 0);
+      const impElActual = baseIberdrolaParaImpEl * IMP_ELEC;
+      
+      // Servicios adicionales de la factura actual
+      const serviciosRows = [];
       if (extractedData.detalle_servicios && extractedData.detalle_servicios.length > 0) {
         extractedData.detalle_servicios.forEach(s => {
           const prop = (parseFloat(s.importe_mes) || 0) * dias / 30;
-          rows.push([s.nombre || 'Servicio', fmtEur(prop), '—']);
+          serviciosRows.push([s.nombre || 'Servicio', fmtEur(prop), '—']);
         });
       }
+      
+      const totalSinIvaActual = (parseFloat(extractedData.termino_potencia_euros) || 0) +
+        (parseFloat(extractedData.termino_energia_euros) || 0) +
+        impElActual +
+        (parseFloat(extractedData.alquiler_contador_euros) || 0) +
+        serviciosRows.reduce((acc, r) => acc + (parseFloat((r[1] || '0').replace(',', '.').replace(' €', '')) || 0), 0);
+      
+      const totalSinIvaGana = calcResult.pot + calcResult.ener + impElGana + calcResult.alq;
+      
+      const rows = [
+        ['Término de potencia', fmt(extractedData.termino_potencia_euros), fmtEur(calcResult.pot)],
+        ['Término de energía', fmt(extractedData.termino_energia_euros), fmtEur(calcResult.ener)],
+        ['Imp. eléctrico (5,11%)', fmt(extractedData.impuesto_electrico_euros), fmtEur(impElGana)],
+        ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
+        ...serviciosRows,
+        ['Base imponible', fmtEur(totalSinIvaActual), fmtEur(totalSinIvaGana)],
+        ['IVA', fmt(extractedData.iva_euros), fmtEur(calcResult.ivaG)],
+      ];
       rows.push(['Total factura', fmtEur(totalFacturaReal), fmtEur(calcResult.totalG)]);
       rows.push(['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((calcResult.totalG / dias) * 365)]);
       rows.forEach(([c, tu, gana]) => {
@@ -2737,12 +2757,16 @@ function mostrarAvisoBanner(msg) {
         const concept = c === 'Total factura'
           ? `Total factura<span style="font-size:0.68rem;color:#94a3b8;font-weight:400;display:block;">(factura de ${dias} días)</span>`
           : c;
-        const tuStyle = c === 'Total factura'
+        const tuStyle = c === 'Base imponible'
+          ? 'font-weight:600;background:#f8fafc;'
+          : c === 'Total factura'
           ? 'color:#ef4444;font-weight:600;'
           : c === 'Coste anual'
           ? 'color:#ef4444;font-weight:700;'
           : '';
-        const ganaStyle = c === 'Total factura'
+        const ganaStyle = c === 'Base imponible'
+          ? 'font-weight:600;background:#f8fafc;'
+          : c === 'Total factura'
           ? 'color:#1E6B3A;font-weight:600;'
           : c === 'Coste anual'
           ? 'color:#1E6B3A;font-weight:700;background:#f0faf2;'
