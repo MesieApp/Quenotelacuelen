@@ -1955,7 +1955,10 @@ function toggleFaqExtra() {
       : bonoFallback;
 
     const base = pot + ener + margen + bonoG;
-    const impEl = base * IMP_ELEC;
+    const impElecRate = (fechaFin && !isNaN(fechaFin.getTime()) && fechaFin > new Date('2026-03-20T23:59:59'))
+      ? 0.005
+      : 0.0511269632;
+    const impEl = base * impElecRate;
     const alq = parseFloat(d.alquiler_contador_euros) || (ALQ_DIA * dias);
     const sub = base + impEl + alq;
     let ivaG = 0;
@@ -2986,7 +2989,18 @@ function mostrarAvisoBanner(msg) {
       return;
     }
 
-    await procesarResultadoAnalisis(result, base64ForStorage, mediaType);
+    try {
+      await procesarResultadoAnalisis(result, base64ForStorage, mediaType);
+    } catch(err) {
+      console.error('Error procesando resultado:', err);
+      console.error('Stack:', err.stack);
+      mostrarToastError('No hemos podido procesar el resultado. Inténtalo de nuevo.');
+      showStep(1);
+      selectedFiles = [];
+      renderFileList();
+      const fi = document.getElementById('factura');
+      if (fi) fi.value = '';
+    }
   });
 
 
