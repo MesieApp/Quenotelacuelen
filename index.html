@@ -2873,7 +2873,22 @@ function mostrarAvisoBanner(msg) {
       return;
     }
 
-    if (!isPdf && faltanDatosAnalisis(result.data, currentTipo)) {
+    const archivoEsImagen = mediaType && mediaType !== 'pdf';
+    console.log('DATOS EXTRAÍDOS PARA VALIDACIÓN:', JSON.stringify({
+      total_factura: result.data.total_factura,
+      kwh_total: result.data.kwh_total,
+      kwh_punta: result.data.kwh_punta,
+      kwh_llano: result.data.kwh_llano,
+      termino_energia_euros: result.data.termino_energia_euros,
+      potencia_p1: result.data.potencia_p1,
+      cups: result.data.cups,
+      dni: result.data.dni,
+      direccion: result.data.direccion,
+      tipo_factura: result.data.tipo_factura
+    }, null, 2));
+    console.log('faltanDatos:', faltanDatosAnalisis(result.data, currentTipo));
+
+    if (archivoEsImagen && faltanDatosAnalisis(result.data, currentTipo)) {
       showStep(1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       selectedFiles = [];
