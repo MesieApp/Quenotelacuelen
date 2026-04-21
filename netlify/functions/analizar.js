@@ -49,6 +49,11 @@ CAMPOS COMUNES:
 - dni: DNI, NIF o CIF del titular del contrato. En facturas Iberdrola aparece como "NIF titular del contrato" en la sección "Información adicional". Puede aparecer también como "NIF", "CIF", "DNI" o "Identificación fiscal". Extrae siempre el valor alfanumérico completo (ejemplos: 54025030P, B12345678, X1234567A). Es OBLIGATORIO extraer este campo si aparece en la factura bajo cualquiera de esos nombres.
 - alquiler_contador_euros: importe del alquiler del contador sin IVA
 - iva_euros: importe total del IVA
+- iva_electricidad_pct: porcentaje de IVA aplicado SOLO al suministro eléctrico 
+  (no a servicios adicionales), como decimal. Ejemplos: 0.10 si aplica IVA 10%, 
+  0.21 si aplica IVA 21%. En facturas Naturgy post-marzo-2026 aparece como 
+  "IVA (10%)" sobre la base de electricidad. En facturas Iberdrola aparece como 
+  "21% s/XX€" o "10% s/XX€". Es OBLIGATORIO extraer este campo.
 - total_electricidad_euros: importe total de electricidad SIN IVA (solo el suministro eléctrico puro, sin servicios adicionales como seguros). En facturas Naturgy es el campo "Total electricidad".
 - servicios_adicionales_euros: importe total de servicios adicionales SIN IVA (seguros, mantenimientos, etc. que no son suministro eléctrico). Si no hay servicios adicionales, null.
 - detalle_servicios: array de objetos con los servicios adicionales detectados. Cada objeto tiene "nombre" y "importe_mes" (importe mensual neto con descuentos aplicados). Si no hay servicios, array vacío [].
@@ -68,10 +73,12 @@ SOLO SI ES LUZ:
 - kwh_valle: kWh consumidos en hora valle
 - kwh_total: kWh totales consumidos (suma de los tres tramos o total si no hay discriminación horaria)
 - termino_potencia_euros: importe TOTAL del término de potencia sin IVA. 
-  Es la suma de todos los términos de potencia (P1 + P2 + P3 si los hay). 
-  En facturas Naturgy aparece como "Término potencia P1" y "Término potencia P2" — 
-  súmalos. En facturas Iberdrola aparece como "Total importe potencia". 
-  Devuelve siempre un único número con la suma total.
+  IMPORTANTE: en facturas Naturgy hay dos líneas separadas "Término potencia P1" 
+  y "Término potencia P2". Debes SUMARLAS y devolver el total. 
+  Ejemplo: si P1=24,45€ y P2=7,42€ → termino_potencia_euros = 31.87.
+  En facturas Iberdrola busca "Total importe potencia".
+  Nunca devuelvas solo P1 o solo P2, siempre la suma de todos los términos 
+  de potencia que aparezcan.
 - termino_energia_euros: importe del consumo de energía sin IVA, sin incluir 
   potencia, bono social, mínimo comunitario ni impuestos. En Naturgy aparece 
   como "Consumo electricidad". En Iberdrola como "Energía consumida". 
