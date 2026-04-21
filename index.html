@@ -1876,8 +1876,16 @@ function toggleFaqExtra() {
     const esEmpresa = /^[A-Z]/.test(dniVal);
     const pe = año >= 2026 ? PEAJE_EN_2026 : PEAJE_EN_2025;
 
-    const pot = (p1kw * tarifa.potencia_p1_dia * dias)
-              + (p2kw * tarifa.potencia_p2_dia * dias);
+    const p1kwLocal = parseFloat(d.potencia_p1) || 0;
+    const p2kwLocal = parseFloat(d.potencia_p2) || p1kwLocal;
+    const esGranPotenciaLocal = p1kwLocal > 10;
+    const potP1 = esGranPotenciaLocal && tarifa.potencia_p1_dia_gt10
+      ? parseFloat(tarifa.potencia_p1_dia_gt10)
+      : parseFloat(tarifa.potencia_p1_dia);
+    const potP2 = esGranPotenciaLocal && tarifa.potencia_p2_dia_gt10
+      ? parseFloat(tarifa.potencia_p2_dia_gt10)
+      : parseFloat(tarifa.potencia_p2_dia);
+    const pot = (p1kwLocal * potP1 * dias) + (p2kwLocal * potP2 * dias);
 
     console.log('POTENCIA GANA:', {p1kw, p2kw, dias, p1_tarifa: tarifa.potencia_p1_dia, p2_tarifa: tarifa.potencia_p2_dia, pot_total: pot});
 
@@ -1928,24 +1936,12 @@ function toggleFaqExtra() {
       }
 
     } else if (tarifa.tipo_energia === 'unica') {
-  // El precio publicado por Gana ya incluye peajes de red.
-  // Para potencia >10kW usar precios alternativos si existen en Supabase.
   const p1kw = parseFloat(d.potencia_p1) || 0;
   const esGranPotencia = p1kw > 10;
   const precioUnico = esGranPotencia
-    ? (tarifa.energia_unica_gt10 || tarifa.energia_unica)
-    : tarifa.energia_unica;
-  const potP1Dia = esGranPotencia
-    ? (tarifa.potencia_p1_dia_gt10 || tarifa.potencia_p1_dia)
-    : tarifa.potencia_p1_dia;
-  const potP2Dia = esGranPotencia
-    ? (tarifa.potencia_p2_dia_gt10 || tarifa.potencia_p2_dia)
-    : tarifa.potencia_p2_dia;
+    ? (parseFloat(tarifa.energia_unica_gt10) || parseFloat(tarifa.energia_unica))
+    : parseFloat(tarifa.energia_unica);
   ener = etotal * precioUnico;
-  if (esGranPotencia && tarifa.energia_unica_gt10) {
-    const p2kw = parseFloat(d.potencia_p2) || p1kw;
-    pot = (p1kw * potP1Dia * dias) + (p2kw * potP2Dia * dias);
-  }
     }
 
     const margen = tarifa.margen_dia * dias;
