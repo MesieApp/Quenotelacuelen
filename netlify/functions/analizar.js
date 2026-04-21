@@ -67,8 +67,8 @@ SOLO SI ES LUZ:
 - kwh_llano: kWh consumidos en hora llano
 - kwh_valle: kWh consumidos en hora valle
 - kwh_total: kWh totales consumidos (suma de los tres tramos o total si no hay discriminación horaria)
-- termino_potencia_euros: importe del término de potencia sin IVA
-- termino_energia_euros: importe del término de energía sin IVA
+- termino_potencia_euros: importe del término de potencia sin IVA. En facturas Naturgy aparece como la suma de "Término potencia P1" y "Término potencia P2". Súmalos y ponlos aquí. Si no aparece desglosado, busca cualquier concepto relacionado con potencia contratada.
+- termino_energia_euros: importe del término de energía sin IVA. En facturas Naturgy aparece como "Consumo electricidad" o "Energía consumida". No incluyas el bono social ni el mínimo comunitario.
 - impuesto_electrico_euros: importe del impuesto sobre electricidad
 - imp_electrico_pct: porcentaje del impuesto eléctrico como decimal (normalmente 0.0511269632)
 - bono_social: importe del bono social en euros si aparece, null si no aplica

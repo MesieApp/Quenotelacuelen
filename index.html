@@ -1869,7 +1869,9 @@ function toggleFaqExtra() {
     const dias = parseInt(d.dias) || 30;
     const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
     const fechaFin = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
-    const ivaRate = (fechaFin && !isNaN(fechaFin.getTime()) && fechaFin > new Date('2026-03-20T23:59:59')) ? 0.10 : 0.21;
+    const fechaFinStr = d.fecha_fin || '';
+    const fechaFinDate = fechaFinStr ? new Date(fechaFinStr + 'T12:00:00') : null;
+    const ivaRate = (fechaFinDate && !isNaN(fechaFinDate.getTime()) && fechaFinDate >= new Date('2026-03-21T00:00:00')) ? 0.10 : 0.21;
     const provincia = (d.provincia || '').trim().toUpperCase();
     const esCanarias = provincia === 'LAS PALMAS' || provincia === 'SANTA CRUZ DE TENERIFE';
     const dniVal = (d.dni || '').trim().toUpperCase();
@@ -2742,8 +2744,16 @@ function mostrarAvisoBanner(msg) {
       }
       
       const rows = [
-        ['Término de potencia', fmt(extractedData.termino_potencia_euros), fmtEur(calcResult.pot)],
-        ['Término de energía', fmt(extractedData.termino_energia_euros), fmtEur(calcResult.ener)],
+        ['Término de potencia', 
+          extractedData.termino_potencia_euros != null 
+            ? fmt(extractedData.termino_potencia_euros) 
+            : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Ver factura</span>',
+          fmtEur(calcResult.pot)],
+        ['Término de energía', 
+          extractedData.termino_energia_euros != null 
+            ? fmt(extractedData.termino_energia_euros) 
+            : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Ver factura</span>',
+          fmtEur(calcResult.ener)],
         ['Imp. eléctrico', 
           (extractedData.impuesto_electrico_euros != null 
             ? fmt(extractedData.impuesto_electrico_euros) 
