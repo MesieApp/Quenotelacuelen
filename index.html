@@ -1978,7 +1978,54 @@ function toggleFaqExtra() {
       console.warn('No hay precios en Supabase para este período, usando precio de la factura como fallback');
     }
 
-    const resultados = tarifas.map(t => {
+    // Detectar si la tarifa actual del usuario es fija, indexada o desconocida
+    function detectarTipoTarifaUsuario(extractedData) {
+      const tarifa = (extractedData.tarifa || '').toLowerCase();
+      
+      // Señales de tarifa indexada/mercado
+      const esIndexada = tarifa.includes('indexad') ||
+        tarifa.includes('mercado') ||
+        tarifa.includes('omie') ||
+        tarifa.includes('pool') ||
+        tarifa.includes('pvpc') ||
+        tarifa.includes('variable') ||
+        tarifa.includes('precio mercado');
+      
+      // Señales de tarifa fija
+      const esFija = !esIndexada && (
+        extractedData.precio_kwh_unico != null ||
+        extractedData.precio_kwh_punta != null ||
+        tarifa.includes('fij') ||
+        tarifa.includes('estable') ||
+        tarifa.includes('plana') ||
+        tarifa.includes('24h') ||
+        tarifa.includes('24 h')
+      );
+    
+      if (esIndexada) return 'mercado';
+      if (esFija) return 'fija';
+      return 'desconocida';
+    }
+    
+    const tipoTarifaUsuario = detectarTipoTarifaUsuario(d);
+    console.log('Tipo tarifa usuario detectado:', tipoTarifaUsuario);
+    const tarifasFiltradas = tarifas.filter(t => {
+      // Nunca recomendar Tramos Horarios
+      if (t.tipo_energia === 'fija') return false;
+    
+      if (tipoTarifaUsuario === 'mercado') {
+        return t.tipo_energia === 'mercado';
+      }
+      if (tipoTarifaUsuario === 'fija') {
+        return t.tipo_energia === 'unica';
+      }
+      // Desconocida: todas excepto fija (ya excluida arriba)
+      return true;
+    });
+    
+    const tarifasParaComparar = tarifasFiltradas.length > 0 ? tarifasFiltradas : tarifas.filter(t => t.tipo_energia !== 'fija');
+    
+    const resultados = tarifasParaComparar.map(t => {
       const calc = calcularConTarifa(t, d, preciosMercado);
       return {
         ...calc,
@@ -2371,7 +2418,7 @@ function mostrarAvisoBanner(msg) {
       <span style="font-size:1.4rem; flex-shrink:0; margin-top:2px;">⚠️</span>
       <div>
         <p style="font-size:1rem; font-weight:700; color:#92400e; margin:0 0 0.2rem;">${msg}</p>
-        <p style="font-size:0.82rem; color:#b45309; margin:0; font-weight:400;">Las facturas tienen varias caras. Sube todas para que podamos leer el CUPS, el DNI y el consumo.</p>
+        <p style="font-size:0.82rem; color:#b45309; margin:0; font-weight:400;">Sube todas las caras para que podamos leer todos los datos correctamente.</p>
       </div>
       <button onclick="document.getElementById('avisoBanner').remove()" style="margin-left:auto; flex-shrink:0; background:none; border:none; cursor:pointer; color:#b45309; font-size:1.2rem; line-height:1; padding:0 4px;">✕</button>
     </div>
