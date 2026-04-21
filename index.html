@@ -1201,23 +1201,19 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
       <div id="secondImageWrap" style="display:none; margin-top:0.75rem; animation: fadeUp 0.4s ease both;">
         <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:0.75rem 1rem; margin-bottom:0.75rem; font-size:0.78rem; color:#92400e; line-height:1.5; display:flex; align-items:flex-start; gap:0.5rem;">
           <span style="flex-shrink:0; font-size:1rem;">⚠️</span>
-          <span>Con la primera cara no es suficiente para calcular tu ahorro. Sube también la segunda cara de la factura.</span>
+          <span>Faltan datos de tu factura. Sube las demás caras para que podamos calcularlo todo correctamente (CUPS, DNI, consumo...).</span>
         </div>
-        <div class="file-drop" id="fileDrop2" style="padding:1.25rem 1rem;">
-          <input type="file" id="factura2" accept=".jpg,.jpeg,.png,.webp,image/*" />
-          <div class="file-drop-inner">
-            <div class="file-drop-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            </div>
-            <div class="file-drop-text">
-              <p class="file-title" style="font-size:0.85rem;">Sube la 2ª cara aquí</p>
-              <p class="file-sub">JPG, PNG o WEBP</p>
-            </div>
-          </div>
-          <p class="file-selected" id="fileName2"></p>
-        </div>
+
+        <div id="extraImagesContainer" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
+
+        <button type="button" id="btnAddExtraImage"
+          style="width:100%; margin-top:0.6rem; padding:0.65rem; border:1.5px dashed #d1e7d8; border-radius:10px; background:transparent; color:#1E6B3A; font-family:var(--font-body); font-size:0.82rem; font-weight:500; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:0.4rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Añadir otra cara
+        </button>
+
         <button type="button" class="submit-btn" id="btnAnalizar2" style="margin-top:0.75rem; border-radius:10px;">
-          Analizar con la 2ª cara
+          Analizar con las caras añadidas
         </button>
       </div>
 
@@ -2145,10 +2141,8 @@ function toggleFaqExtra() {
     }, 50);
     window._dataParcial = null;
     window._base64img1 = null;
-    const f2input = document.getElementById('factura2');
-    if (f2input) f2input.value = '';
-    const fn2el = document.getElementById('fileName2');
-    if (fn2el) { fn2el.textContent = ''; fn2el.style.display = 'none'; }
+    extraImageFiles = [];
+    renderExtraImages();
     document.getElementById('secondImageWrap').style.display = 'none';
   }
 
@@ -2212,27 +2206,6 @@ function toggleFaqExtra() {
       fileInput.files = e.dataTransfer.files;
       fileNameEl.textContent = '✓ ' + e.dataTransfer.files[0].name;
       fileNameEl.style.display = 'block';
-    }
-  });
-
-  const fileInput2 = document.getElementById('factura2');
-  const fileNameEl2 = document.getElementById('fileName2');
-  fileInput2.addEventListener('change', () => {
-    if (fileInput2.files.length > 0) {
-      fileNameEl2.textContent = '✓ ' + fileInput2.files[0].name;
-      fileNameEl2.style.display = 'block';
-    }
-  });
-  const fileDrop2 = document.getElementById('fileDrop2');
-  fileDrop2.addEventListener('dragover', (e) => { e.preventDefault(); fileDrop2.style.borderColor = 'rgba(30,107,58,0.5)'; });
-  fileDrop2.addEventListener('dragleave', () => { fileDrop2.style.borderColor = ''; });
-  fileDrop2.addEventListener('drop', (e) => {
-    e.preventDefault();
-    fileDrop2.style.borderColor = '';
-    if (e.dataTransfer.files.length) {
-      fileInput2.files = e.dataTransfer.files;
-      fileNameEl2.textContent = '✓ ' + e.dataTransfer.files[0].name;
-      fileNameEl2.style.display = 'block';
     }
   });
 
@@ -2310,15 +2283,14 @@ function toggleFaqExtra() {
     return null;
   }
 
-  function faltanDatosParaCalculo(data, tipo) {
+  function faltanDatosImagen(data, tipo) {
     if (!data) return true;
-    if (!data.total_factura) return true;
-    if (tipo === 'gas') {
-      return !data.kwh_gas;
-    } else {
-      const tieneConsumo = data.kwh_total || (data.kwh_punta != null && data.kwh_llano != null && data.kwh_valle != null);
-      return !data.potencia_p1 || !tieneConsumo;
-    }
+    // Datos de cálculo
+    const faltaCalculo = !data.total_factura ||
+      (tipo === 'gas' ? !data.kwh_gas : (!data.potencia_p1 || !(data.kwh_total || (data.kwh_punta != null && data.kwh_llano != null))));
+    // Datos de formulario
+    const faltaFormulario = !data.cups || !data.dni || !data.nombre_titular;
+    return faltaCalculo || faltaFormulario;
   }
 
 
@@ -2818,11 +2790,12 @@ function toggleFaqExtra() {
       return;
     }
 
-    // Si es imagen y faltan datos clave, pedir segunda cara
     const archivoEsImagen = mediaType && mediaType !== 'pdf';
-    if (archivoEsImagen && faltanDatosParaCalculo(result.data, currentTipo)) {
+    if (archivoEsImagen && faltanDatosImagen(result.data, currentTipo)) {
       window._dataParcial = result.data;
       window._base64img1 = base64pdf;
+      extraImageFiles = [];
+      renderExtraImages();
       document.getElementById('secondImageWrap').style.display = 'block';
       showStep(1);
       setTimeout(() => {
@@ -2834,10 +2807,48 @@ function toggleFaqExtra() {
     await procesarResultadoAnalisis(result, base64pdf, mediaType);
   });
 
+  let extraImageFiles = [];
+
+  document.getElementById('btnAddExtraImage').addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.jpg,.jpeg,.png,.webp,image/*';
+    input.style.display = 'none';
+    document.body.appendChild(input);
+    input.addEventListener('change', () => {
+      if (input.files[0]) {
+        extraImageFiles.push(input.files[0]);
+        renderExtraImages();
+      }
+      document.body.removeChild(input);
+    });
+    input.click();
+  });
+
+  function renderExtraImages() {
+    const container = document.getElementById('extraImagesContainer');
+    container.innerHTML = '';
+    extraImageFiles.forEach((f, idx) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; background:#f0faf2; border:1px solid #d1e7d8; border-radius:8px; padding:0.5rem 0.75rem; font-size:0.78rem; color:#1a1a1a;';
+      row.innerHTML = `
+        <span style="display:flex;align-items:center;gap:0.4rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2" style="width:13px;height:13px;flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>
+          ${f.name}
+        </span>
+        <button type="button" data-idx="${idx}" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:1rem;padding:0 4px;line-height:1;">✕</button>
+      `;
+      row.querySelector('button').addEventListener('click', (e) => {
+        extraImageFiles.splice(parseInt(e.target.dataset.idx), 1);
+        renderExtraImages();
+      });
+      container.appendChild(row);
+    });
+  }
+
   document.getElementById('btnAnalizar2').addEventListener('click', async () => {
-    const file2 = fileInput2.files[0];
-    if (!file2) {
-      mostrarErrorArchivo('Sube la segunda cara de la factura para continuar.');
+    if (extraImageFiles.length === 0) {
+      mostrarErrorArchivo('Añade al menos una cara más de la factura para continuar.');
       return;
     }
     if (!document.getElementById('acepto_privacidad').checked) {
@@ -2872,14 +2883,17 @@ function toggleFaqExtra() {
     }, 100);
     const minDelay = new Promise(r => setTimeout(r, 20000));
 
-    const base64img1 = window._base64img1;
-    const base64img2 = await fileToBase64(file2);
     const mt = getFileMediaType(fileInput.files[0]);
+    const extraBase64s = await Promise.all(extraImageFiles.map(f => fileToBase64(f)));
 
     const apiPromise = fetch('/.netlify/functions/analizar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64: base64img1, imageBase64_2: base64img2, imageMediaType: mt })
+      body: JSON.stringify({
+        imageBase64: window._base64img1,
+        imageMediaType: mt,
+        extraImages: extraBase64s
+      })
     }).then(r => r.json()).catch(err => ({ success: false, error: err.message }));
 
     const [, result] = await Promise.all([minDelay, apiPromise]);
@@ -2892,16 +2906,12 @@ function toggleFaqExtra() {
       return;
     }
 
-    // Continuar con el flujo normal a partir de extractedData
-    // Reutilizar la función processResult si existe, o duplicar la lógica mínima:
     window._base64img1 = null;
     window._dataParcial = null;
-    // Disparar el flujo normal pasando result como si fuera el resultado del análisis principal
-    window._pendingResult = result;
-    window._pendingBase64 = base64img2; // para storage
-    window._pendingMediaType = mt;
-    procesarResultadoAnalisis(result, base64img2, mt);
+    extraImageFiles = [];
+    await procesarResultadoAnalisis(result, null, mt);
   });
+
 
   document.getElementById('formulario').addEventListener('click', (e) => {
     if (e.target.closest('#btnVolver')) volverAlPaso1();

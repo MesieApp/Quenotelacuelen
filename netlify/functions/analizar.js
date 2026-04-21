@@ -6,7 +6,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { pdfBase64, imageBase64, imageBase64_2, imageMediaType } = JSON.parse(event.body);
+    const { pdfBase64, imageBase64, imageMediaType, extraImages } = JSON.parse(event.body);
 
     if (!pdfBase64 && !imageBase64) {
       return {
@@ -27,7 +27,7 @@ exports.handler = async (event) => {
           pdfBase64
             ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 } }
             : { type: 'image', source: { type: 'base64', media_type: imageMediaType || 'image/jpeg', data: imageBase64 } },
-          ...(imageBase64_2 ? [{ type: 'image', source: { type: 'base64', media_type: imageMediaType || 'image/jpeg', data: imageBase64_2 } }] : []),
+          ...((extraImages || []).map(b64 => ({ type: 'image', source: { type: 'base64', media_type: imageMediaType || 'image/jpeg', data: b64 } }))),
           {
             type: 'text',
             text: `Eres un experto en facturas energéticas españolas. Analiza esta factura y extrae los datos en formato JSON puro, sin texto adicional, sin bloques de código, sin explicaciones. Solo el JSON.
