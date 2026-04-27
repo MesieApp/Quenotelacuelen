@@ -2253,6 +2253,7 @@ function toggleFaqExtra() {
     `).join('');
     preview.querySelectorAll('button[data-idx]').forEach(btn => {
       btn.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
         selectedFiles.splice(parseInt(btn.dataset.idx), 1);
         renderFileList();
