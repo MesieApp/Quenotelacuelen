@@ -1190,6 +1190,13 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         </div>
       </div>
 
+      <div style="background:#f0faf2; border:1px solid #d1e7d8; border-radius:10px; padding:0.75rem 1rem; margin-bottom:1rem; display:flex; align-items:flex-start; gap:0.6rem;">
+        <span style="font-size:1rem; flex-shrink:0;">🔒</span>
+        <p style="font-size:0.75rem; color:#475569; margin:0; line-height:1.6;">
+          <strong style="color:#1E6B3A;">Solo usamos tu factura para el análisis.</strong> Sin llamadas, Sin spam, no vendemos tus datos a terceros. Ni ahora ni nunca.
+        </p>
+      </div>
+
       <div class="file-drop" id="fileDrop">
         <input type="file" id="factura" accept=".pdf,.jpg,.jpeg,.png,.webp,image/*" multiple />
         <div class="file-drop-inner">
@@ -1220,6 +1227,36 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         <svg id="btnIconGas" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;width:15px;height:15px;vertical-align:middle;margin-right:6px;"><path d="M12 2c0 0-5 5.5-5 10a5 5 0 0010 0C17 7.5 12 2 12 2z"/><path d="M12 12c0 0-2 2-2 4a2 2 0 004 0c0-2-2-4-2-4z"/></svg>
         Analizar mi factura gratis
       </button>
+
+      <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid #e8f0eb; text-align:center;">
+        <p style="font-size:0.78rem; color:#94a3b8; margin-bottom:0.6rem;">¿No tienes la factura a mano?</p>
+        <div id="noTengoFacturaToggle" style="display:none; margin-top:0.75rem;">
+          <div style="background:#fff; border:1.5px solid #d1e7d8; border-radius:12px; padding:1rem;">
+            <p style="font-size:0.78rem; color:#475569; margin-bottom:0.75rem; line-height:1.6;">
+              Déjanos tu número y te mandamos un <strong>WhatsApp</strong> recordándote el servicio cuando lo necesites.<br/>
+              <span style="color:#1E6B3A; font-weight:500;">No te llamaremos. Solo WhatsApp si nos lo pides.</span>
+            </p>
+            <div style="display:flex; gap:0.5rem;">
+              <input type="tel" id="telefonoRecordatorio" placeholder="600 000 000" maxlength="9" inputmode="numeric"
+                style="flex:1; background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; color:#1a1a1a; font-family:var(--font-body); font-size:0.88rem; padding:0.7rem 0.9rem; outline:none;"/>
+              <button type="button" id="btnGuardarTelefono"
+                style="background:#1E6B3A; color:#fff; border:none; border-radius:10px; font-family:var(--font-body); font-size:0.85rem; font-weight:600; padding:0.7rem 1rem; cursor:pointer; white-space:nowrap;">
+                Enviar
+              </button>
+            </div>
+            <div id="telefonoRecordatorioConfirm" style="display:none; background:#f0faf2; border:1px solid #d1e7d8; border-radius:10px; padding:1rem; margin-top:0.75rem; text-align:center;">
+              <p style="font-size:1.1rem; margin:0 0 0.35rem;">✅</p>
+              <p style="font-size:0.85rem; font-weight:600; color:#1E6B3A; margin:0 0 0.25rem;">¡Anotado!</p>
+              <p style="font-size:0.78rem; color:#475569; margin:0; line-height:1.6;">En los próximos días te escribimos por WhatsApp para ayudarte a encontrar la mejor tarifa. Sin llamadas, sin spam.</p>
+            </div>
+            <p style="font-size:0.68rem; color:#94a3b8; margin-top:0.6rem; text-align:center;">Sin llamadas · Solo WhatsApp si nos lo pides · Puedes darte de baja cuando quieras</p>
+          </div>
+        </div>
+        <button type="button" onclick="document.getElementById('noTengoFacturaToggle').style.display = document.getElementById('noTengoFacturaToggle').style.display === 'none' ? 'block' : 'none'"
+          style="background:none; border:1px solid #d1e7d8; border-radius:999px; color:#1E6B3A; font-family:var(--font-body); font-size:0.78rem; font-weight:500; padding:0.45rem 1rem; cursor:pointer;">
+          Avísame por WhatsApp →
+        </button>
+      </div>
 
       <div style="display:flex; align-items:center; justify-content:center; gap:1rem; margin-top:0.85rem; flex-wrap:wrap;">
         <span style="font-size:0.7rem; color:#94a3b8; display:flex; align-items:center; gap:0.3rem;">
@@ -2321,6 +2358,44 @@ function toggleFaqExtra() {
       showStep(6);
     });
   }
+
+  document.getElementById('btnGuardarTelefono').addEventListener('click', async () => {
+    const tel = (document.getElementById('telefonoRecordatorio').value || '').replace(/\D/g, '');
+    if (!/^\d{9}$/.test(tel)) {
+      document.getElementById('telefonoRecordatorio').style.borderColor = '#ef4444';
+      return;
+    }
+    document.getElementById('telefonoRecordatorio').style.borderColor = '#d1e7d8';
+    const btn = document.getElementById('btnGuardarTelefono');
+    try {
+      await _supabase.from('recordatorios').insert({
+        canal: 'whatsapp',
+        contacto: tel,
+        url_landing: window.location.href,
+        fuente: 'no-tengo-factura'
+      });
+
+      // Solo bloqueamos si Supabase fue bien
+      document.getElementById('telefonoRecordatorioConfirm').style.display = 'block';
+      document.getElementById('telefonoRecordatorio').disabled = true;
+      btn.disabled = true;
+      btn.textContent = 'Enviado ✓';
+
+      // Email — ignoramos si falla (no bloquea nada)
+      fetch('/.netlify/functions/notificar-telefono', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telefono: tel })
+      }).catch(() => {});
+
+    } catch(err) {
+      console.warn('Error guardando teléfono:', err);
+      btn.disabled = false;
+      btn.textContent = 'Enviar';
+      document.getElementById('telefonoRecordatorio').disabled = false;
+      document.getElementById('telefonoRecordatorio').style.borderColor = '#ef4444';
+    }
+  });
 
   function fileToBase64(file) {
     return new Promise((res, rej) => {
