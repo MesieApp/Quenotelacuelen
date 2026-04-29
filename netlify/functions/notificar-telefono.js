@@ -1,16 +1,41 @@
 const { Resend } = require('resend');
 
+const corsHeaders = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*'
+};
+
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: { ...corsHeaders, 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type' }, body: '' };
+  }
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method not allowed' };
+    return { statusCode: 405, headers: corsHeaders, body: JSON.stringify({ error: 'Method Not Allowed' }) };
+  }
+
+  const apiKey = process.env.RESEND_API_KEY || process.env.resend_api_key;
+  if (!apiKey) {
+    console.error('RESEND_API_KEY no configurada');
+    return {
+      statusCode: 500,
+      headers: corsHeaders,
+      body: JSON.stringify({ error: 'RESEND_API_KEY no configurada en Netlify.' })
+    };
   }
 
   try {
-    const { telefono } = JSON.parse(event.body);
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    let body = {};
+    try {
+      body = typeof event.body === 'string' ? JSON.parse(event.body) : (event.body || {});
+    } catch (_) {
+      return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Body JSON inválido' }) };
+    }
+
+    const { telefono } = body;
+    const resend = new Resend(apiKey);
 
     await resend.emails.send({
-      from: process.env.RESEND_FROM,
+      from: process.env.RESEND_FROM || 'Quenotelacuelen <onboarding@resend.dev>',
       to: 'gp.mesie@gmail.com',
       subject: '📱 Nuevo número de WhatsApp — quenotelacuelen.com',
       html: `
@@ -32,9 +57,9 @@ exports.handler = async (event) => {
       `
     });
 
-    return { statusCode: 200, body: JSON.stringify({ ok: true }) };
+    return { statusCode: 200, headers: corsHeaders, body: JSON.stringify({ ok: true }) };
   } catch (err) {
     console.error('Error notificar-telefono:', err);
-    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+    return { statusCode: 500, headers: corsHeaders, body: JSON.stringify({ error: err.message }) };
   }
 };
