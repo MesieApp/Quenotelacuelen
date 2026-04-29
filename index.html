@@ -1229,32 +1229,47 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
       </button>
 
       <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid #e8f0eb; text-align:center;">
-        <p style="font-size:0.78rem; color:#94a3b8; margin-bottom:0.6rem;">¿No tienes la factura a mano?</p>
+        <p style="font-size:0.78rem; color:#94a3b8; margin-bottom:0.6rem;">Sin factura, sin problema</p>
         <div id="noTengoFacturaToggle" style="display:none; margin-top:0.75rem;">
           <div style="background:#fff; border:1.5px solid #d1e7d8; border-radius:12px; padding:1rem;">
-            <p style="font-size:0.78rem; color:#475569; margin-bottom:0.75rem; line-height:1.6;">
-              Déjanos tu número y te mandamos un <strong>WhatsApp</strong> recordándote el servicio cuando lo necesites.<br/>
-              <span style="color:#1E6B3A; font-weight:500;">No te llamaremos. Solo WhatsApp si nos lo pides.</span>
-            </p>
+            <p style="font-size:0.88rem; font-weight:600; color:#1a1a1a; margin:0 0 0.25rem;">¿Cómo prefieres que te contactemos?</p>
+            <p style="font-size:0.78rem; color:#475569; margin:0 0 1rem; line-height:1.6;">Calculamos tu ahorro juntos.</p>
+
+            <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+              <button type="button" id="btnOpcionWhatsapp"
+                style="flex:1; padding:0.65rem 0.5rem; border:1.5px solid #1E6B3A; border-radius:10px; background:#f0faf2; font-family:var(--font-body); font-size:0.78rem; font-weight:500; color:#1E6B3A; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:0.4rem;">
+                <svg viewBox="0 0 24 24" fill="#25D366" style="width:16px;height:16px;flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.564 4.14 1.534 5.876L0 24l6.29-1.51A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.366l-.36-.214-3.733.897.934-3.617-.235-.372A9.818 9.818 0 1112 21.818z"/></svg>
+                WhatsApp
+              </button>
+              <button type="button" id="btnOpcionLlamada"
+                style="flex:1; padding:0.65rem 0.5rem; border:1.5px solid #d1e7d8; border-radius:10px; background:#fff; font-family:var(--font-body); font-size:0.78rem; font-weight:500; color:#475569; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:0.4rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1E6B3A" stroke-width="2" style="width:16px;height:16px;flex-shrink:0;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.1 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92v2z"/></svg>
+                Llamada
+              </button>
+            </div>
+
             <div style="display:flex; gap:0.5rem;">
               <input type="tel" id="telefonoRecordatorio" placeholder="600 000 000" maxlength="9" inputmode="numeric"
                 style="flex:1; background:#fff; border:1.5px solid #e2e8f0; border-radius:10px; color:#1a1a1a; font-family:var(--font-body); font-size:0.88rem; padding:0.7rem 0.9rem; outline:none;"/>
               <button type="button" id="btnGuardarTelefono"
-                style="background:#1E6B3A; color:#fff; border:none; border-radius:10px; font-family:var(--font-body); font-size:0.85rem; font-weight:600; padding:0.7rem 1rem; cursor:pointer; white-space:nowrap;">
+                style="background:#1E6B3A; color:#fff; border:none; border-radius:10px; font-family:var(--font-body); font-size:0.85rem; font-weight:600; padding:0.7rem 1rem; cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center; justify-content:center; gap:0.35rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:15px;height:15px;flex-shrink:0;"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 Enviar
               </button>
             </div>
+
             <div id="telefonoRecordatorioConfirm" style="display:none; background:#f0faf2; border:1px solid #d1e7d8; border-radius:10px; padding:1rem; margin-top:0.75rem; text-align:center;">
               <p style="font-size:1.1rem; margin:0 0 0.35rem;">✅</p>
               <p style="font-size:0.85rem; font-weight:600; color:#1E6B3A; margin:0 0 0.25rem;">¡Anotado!</p>
-              <p style="font-size:0.78rem; color:#475569; margin:0; line-height:1.6;">En los próximos días te escribimos por WhatsApp para ayudarte a encontrar la mejor tarifa. Sin llamadas, sin spam.</p>
+              <p id="telefonoRecordatorioConfirmTexto" style="font-size:0.78rem; color:#475569; margin:0; line-height:1.6;"></p>
             </div>
-            <p style="font-size:0.68rem; color:#94a3b8; margin-top:0.6rem; text-align:center;">Sin llamadas · Solo WhatsApp si nos lo pides · Puedes darte de baja cuando quieras</p>
+
+            <p style="font-size:0.68rem; color:#94a3b8; margin-top:0.75rem; text-align:center;">Tu número no se comparte con terceros</p>
           </div>
         </div>
         <button type="button" onclick="document.getElementById('noTengoFacturaToggle').style.display = document.getElementById('noTengoFacturaToggle').style.display === 'none' ? 'block' : 'none'"
           style="background:none; border:1px solid #d1e7d8; border-radius:999px; color:#1E6B3A; font-family:var(--font-body); font-size:0.78rem; font-weight:500; padding:0.45rem 1rem; cursor:pointer;">
-          Avísame por WhatsApp →
+          Contáctanos →
         </button>
       </div>
 
@@ -2359,39 +2374,66 @@ function toggleFaqExtra() {
     });
   }
 
-  document.getElementById('btnGuardarTelefono').addEventListener('click', async () => {
+  let opcionContacto = 'whatsapp';
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#btnOpcionWhatsapp')) {
+      opcionContacto = 'whatsapp';
+      document.getElementById('btnOpcionWhatsapp').style.cssText += 'border-color:#1E6B3A;background:#f0faf2;color:#1E6B3A;';
+      document.getElementById('btnOpcionLlamada').style.cssText += 'border-color:#d1e7d8;background:#fff;color:#475569;';
+      document.getElementById('telefonoRecordatorio').placeholder = '600 000 000';
+    }
+    if (e.target.closest('#btnOpcionLlamada')) {
+      opcionContacto = 'llamada';
+      document.getElementById('btnOpcionLlamada').style.cssText += 'border-color:#1E6B3A;background:#f0faf2;color:#1E6B3A;';
+      document.getElementById('btnOpcionWhatsapp').style.cssText += 'border-color:#d1e7d8;background:#fff;color:#475569;';
+      document.getElementById('telefonoRecordatorio').placeholder = '600 000 000';
+    }
+  });
+
+  const _htmlBtnEnviarRecordatorio = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:15px;height:15px;flex-shrink:0;"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar';
+
+  document.addEventListener('click', async (e) => {
+    if (!e.target.closest('#btnGuardarTelefono')) return;
+
     const tel = (document.getElementById('telefonoRecordatorio').value || '').replace(/\D/g, '');
     if (!/^\d{9}$/.test(tel)) {
       document.getElementById('telefonoRecordatorio').style.borderColor = '#ef4444';
       return;
     }
     document.getElementById('telefonoRecordatorio').style.borderColor = '#d1e7d8';
+
     const btn = document.getElementById('btnGuardarTelefono');
+    btn.disabled = true;
+    btn.innerHTML = 'Guardando...';
+
     try {
       await _supabase.from('recordatorios').insert({
-        canal: 'whatsapp',
+        canal: opcionContacto,
         contacto: tel,
         url_landing: window.location.href,
         fuente: 'no-tengo-factura'
       });
 
-      // Solo bloqueamos si Supabase fue bien
+      const textoConfirm = opcionContacto === 'llamada'
+        ? 'En los próximos días te llamamos para calcular tu ahorro. Sin spam, sin sorpresas.'
+        : 'En los próximos días te escribimos por WhatsApp. Sin spam, sin sorpresas.';
+      document.getElementById('telefonoRecordatorioConfirmTexto').textContent = textoConfirm;
       document.getElementById('telefonoRecordatorioConfirm').style.display = 'block';
       document.getElementById('telefonoRecordatorio').disabled = true;
       btn.disabled = true;
-      btn.textContent = 'Enviado ✓';
+      btn.innerHTML = 'Enviado ✓';
 
-      // Email — ignoramos si falla (no bloquea nada)
       fetch('/.netlify/functions/notificar-telefono', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ telefono: tel })
+        body: JSON.stringify({ telefono: tel, opcion: opcionContacto })
       }).catch(() => {});
 
     } catch(err) {
       console.warn('Error guardando teléfono:', err);
       btn.disabled = false;
-      btn.textContent = 'Enviar';
+      btn.innerHTML = _htmlBtnEnviarRecordatorio;
       document.getElementById('telefonoRecordatorio').disabled = false;
       document.getElementById('telefonoRecordatorio').style.borderColor = '#ef4444';
     }
