@@ -31,7 +31,8 @@ exports.handler = async (event) => {
       return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Body JSON inválido' }) };
     }
 
-    const { telefono } = body;
+    const { telefono, opcion } = body;
+    const opcionTexto = opcion === 'llamada' ? '📞 Prefiere que le llamen' : '💬 Prefiere WhatsApp';
     const resend = new Resend(apiKey);
 
     await resend.emails.send({
@@ -47,6 +48,7 @@ exports.handler = async (event) => {
           <div style="background:#f0faf2; border:1px solid #d1e7d8; border-radius:10px; padding:1.25rem; margin:1.5rem 0; text-align:center;">
             <p style="font-size:0.75rem; color:#64748b; margin:0 0 0.5rem; text-transform:uppercase; letter-spacing:0.05em;">Número de WhatsApp</p>
             <p style="font-size:2rem; font-weight:700; color:#1E6B3A; margin:0;">+34 ${telefono}</p>
+            <p style="font-size:1rem; color:#475569; text-align:center; margin:0.5rem 0 1.5rem;">${opcionTexto}</p>
           </div>
           <a href="https://wa.me/34${telefono}" 
              style="display:block; background:#25D366; color:#fff; text-decoration:none; text-align:center; padding:1rem; border-radius:10px; font-weight:600; font-size:1rem;">
