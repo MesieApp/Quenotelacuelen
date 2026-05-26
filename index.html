@@ -2008,12 +2008,14 @@ function toggleFaqExtra() {
       }
 
     } else if (tarifa.tipo_energia === 'unica') {
-      const potencia = (p1kw * 0.098877 * dias) + (p2kw * 0.098877 * dias);
+      const potP1 = p1kw * 0.098877 * dias;
+      const potP2 = p2kw * 0.098877 * dias;
+      const potencia = potP1 + potP2;
       const energia = etotal * 0.13155;
       const bonoSocial = parseFloat(d.bono_social) || 0;
       const impElectrico = parseFloat(d.impuesto_electrico_euros) || 0;
-      const alq = parseFloat(d.alquiler_contador_euros) || 0;
-      const baseImponible = potencia + energia + bonoSocial + impElectrico + alq;
+      const alqUnica = parseFloat(d.alquiler_contador_euros) || 0;
+      const baseImponible = potencia + energia + bonoSocial + impElectrico + alqUnica;
       const _ivaPct2 = parseFloat(d.iva_electricidad_pct);
       const fechaFin2 = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
       const ivaRate2 = (_ivaPct2 > 0 && _ivaPct2 <= 1)
@@ -2022,7 +2024,7 @@ function toggleFaqExtra() {
             ? 0.10 : 0.21);
       const ivaG2 = baseImponible * ivaRate2;
       const total = baseImponible + ivaG2;
-      return { total, pot: potencia, ener: energia, margen: 0, bonoG: bonoSocial, alq, impEl: impElectrico, ivaG: ivaG2, tarifa };
+      return { total, pot: potencia, ener: energia, margen: 0, bonoG: bonoSocial, alq: alqUnica, impEl: impElectrico, ivaG: ivaG2, tarifa };
     }
 
     const margen = tarifa.margen_dia * dias;
@@ -2076,14 +2078,13 @@ function toggleFaqExtra() {
       console.warn('No hay precios en Supabase para este período, usando precio de la factura como fallback');
     }
 
-    // Comparar siempre con todas las tarifas excepto Tramos Horarios
-    const tieneConsumoPorTramos = (parseFloat(d.kwh_punta) > 0) && 
+    const tieneConsumoPorTramos = (parseFloat(d.kwh_punta) > 0) &&
       (parseFloat(d.kwh_llano) > 0 || parseFloat(d.kwh_valle) > 0);
 
     const tarifasParaComparar = tarifas.filter(t => {
-      if (t.tipo_energia === 'fija') return false;
-      if (t.tipo_energia === 'mercado' && !tieneConsumoPorTramos) return false;
-      return true;
+      if (t.tipo_energia === 'fija') return false; // Tramos Horarios excluida siempre por ahora
+      if (t.tipo_energia === 'mercado' && !tieneConsumoPorTramos) return false; // Precio Mercado solo si hay datos de tramos
+      return true; // unica (24 Horas) siempre incluida
     });
     
     const resultados = tarifasParaComparar.map(t => {
@@ -2845,22 +2846,23 @@ function mostrarAvisoBanner(msg) {
       }
       
       const rows = [
-        ['Potencia P1 (' + (parseFloat(extractedData.potencia_p1)||0) + ' kW × ' + (parseInt(extractedData.dias)||30) + ' días)',
+        ['Término de potencia',
           extractedData.termino_potencia_euros != null
             ? fmt(extractedData.termino_potencia_euros)
             : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Ver factura</span>',
-          fmtEur((parseFloat(extractedData.potencia_p1)||0) * 0.098877 * (parseInt(extractedData.dias)||30))],
-        ['Potencia P2 (' + (parseFloat(extractedData.potencia_p2)||0) + ' kW × ' + (parseInt(extractedData.dias)||30) + ' días)',
-          '',
-          fmtEur((parseFloat(extractedData.potencia_p2)||0) * 0.098877 * (parseInt(extractedData.dias)||30))],
-        ['Energía (' + (parseFloat(extractedData.kwh_total)||(parseFloat(extractedData.kwh_punta||0)+parseFloat(extractedData.kwh_llano||0)+parseFloat(extractedData.kwh_valle||0))) + ' kWh)',
+          fmtEur(calcResult.pot)],
+        ['Término de energía',
           extractedData.termino_energia_euros != null
             ? fmt(extractedData.termino_energia_euros)
             : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Ver factura</span>',
-          fmtEur((parseFloat(extractedData.kwh_total)||(parseFloat(extractedData.kwh_punta||0)+parseFloat(extractedData.kwh_llano||0)+parseFloat(extractedData.kwh_valle||0))) * 0.13155)],
+          fmtEur(calcResult.ener)],
         ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
         ['Bono social', fmt(extractedData.bono_social), fmtEur(calcResult.bonoG)],
-        ['Impuesto eléctrico', fmt(extractedData.impuesto_electrico_euros), fmtEur(calcResult.impEl)],
+        ['Impuesto eléctrico',
+          (extractedData.impuesto_electrico_euros != null
+            ? fmt(extractedData.impuesto_electrico_euros)
+            : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Incluido</span>'),
+          fmtEur(calcResult.impEl)],
         ['Base imponible', fmtEur(baseImponibleActual), fmtEur(baseImponibleGana)],
         ['IVA', fmt(extractedData.iva_euros), fmtEur(ivaGana)],
         ['Total factura', fmtEur(totalFacturaReal), fmtEur(totalGanaTabla)],
