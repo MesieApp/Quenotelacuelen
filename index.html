@@ -2082,9 +2082,9 @@ function toggleFaqExtra() {
       (parseFloat(d.kwh_llano) > 0 || parseFloat(d.kwh_valle) > 0);
 
     const tarifasParaComparar = tarifas.filter(t => {
-      if (t.tipo_energia === 'fija') return false; // Tramos Horarios excluida siempre por ahora
-      if (t.tipo_energia === 'mercado' && !tieneConsumoPorTramos) return false; // Precio Mercado solo si hay datos de tramos
-      return true; // unica (24 Horas) siempre incluida
+      if (t.tipo_energia === 'fija') return false;
+      if (t.tipo_energia === 'mercado' && !tieneConsumoPorTramos) return false;
+      return true; // unica siempre incluida, mercado solo si hay datos de tramos
     });
     
     const resultados = tarifasParaComparar.map(t => {
@@ -2859,9 +2859,9 @@ function mostrarAvisoBanner(msg) {
         ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
         ['Bono social', fmt(extractedData.bono_social), fmtEur(calcResult.bonoG)],
         ['Impuesto eléctrico',
-          (extractedData.impuesto_electrico_euros != null
+          extractedData.impuesto_electrico_euros != null
             ? fmt(extractedData.impuesto_electrico_euros)
-            : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Incluido</span>'),
+            : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Incluido</span>',
           fmtEur(calcResult.impEl)],
         ['Base imponible', fmtEur(baseImponibleActual), fmtEur(baseImponibleGana)],
         ['IVA', fmt(extractedData.iva_euros), fmtEur(ivaGana)],
