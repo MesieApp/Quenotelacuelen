@@ -2008,12 +2008,21 @@ function toggleFaqExtra() {
       }
 
     } else if (tarifa.tipo_energia === 'unica') {
-  const p1kw = parseFloat(d.potencia_p1) || 0;
-  const esGranPotencia = p1kw > 10;
-  const precioUnico = esGranPotencia
-    ? (parseFloat(tarifa.energia_unica_gt10) || parseFloat(tarifa.energia_unica))
-    : parseFloat(tarifa.energia_unica);
-  ener = etotal * precioUnico;
+      const potencia = (p1kw * 0.098877 * dias) + (p2kw * 0.098877 * dias);
+      const energia = etotal * 0.13155;
+      const bonoSocial = parseFloat(d.bono_social) || 0;
+      const impElectrico = parseFloat(d.impuesto_electrico_euros) || 0;
+      const alq = parseFloat(d.alquiler_contador_euros) || 0;
+      const baseImponible = potencia + energia + bonoSocial + impElectrico + alq;
+      const _ivaPct2 = parseFloat(d.iva_electricidad_pct);
+      const fechaFin2 = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
+      const ivaRate2 = (_ivaPct2 > 0 && _ivaPct2 <= 1)
+        ? _ivaPct2
+        : (fechaFin2 && !isNaN(fechaFin2.getTime()) && fechaFin2 >= new Date('2026-03-21T00:00:00')
+            ? 0.10 : 0.21);
+      const ivaG2 = baseImponible * ivaRate2;
+      const total = baseImponible + ivaG2;
+      return { total, pot: potencia, ener: energia, margen: 0, bonoG: bonoSocial, alq, impEl: impElectrico, ivaG: ivaG2, tarifa };
     }
 
     const margen = tarifa.margen_dia * dias;
@@ -2836,32 +2845,27 @@ function mostrarAvisoBanner(msg) {
       }
       
       const rows = [
-        ['Término de potencia', 
-          extractedData.termino_potencia_euros != null 
-            ? fmt(extractedData.termino_potencia_euros) 
+        ['Potencia P1 (' + (parseFloat(extractedData.potencia_p1)||0) + ' kW × ' + (parseInt(extractedData.dias)||30) + ' días)',
+          extractedData.termino_potencia_euros != null
+            ? fmt(extractedData.termino_potencia_euros)
             : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Ver factura</span>',
-          fmtEur(calcResult.pot)],
-        ['Término de energía', 
-          extractedData.termino_energia_euros != null 
-            ? fmt(extractedData.termino_energia_euros) 
+          fmtEur((parseFloat(extractedData.potencia_p1)||0) * 0.098877 * (parseInt(extractedData.dias)||30))],
+        ['Potencia P2 (' + (parseFloat(extractedData.potencia_p2)||0) + ' kW × ' + (parseInt(extractedData.dias)||30) + ' días)',
+          '',
+          fmtEur((parseFloat(extractedData.potencia_p2)||0) * 0.098877 * (parseInt(extractedData.dias)||30))],
+        ['Energía (' + (parseFloat(extractedData.kwh_total)||(parseFloat(extractedData.kwh_punta||0)+parseFloat(extractedData.kwh_llano||0)+parseFloat(extractedData.kwh_valle||0))) + ' kWh)',
+          extractedData.termino_energia_euros != null
+            ? fmt(extractedData.termino_energia_euros)
             : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Ver factura</span>',
-          fmtEur(calcResult.ener)],
-        ['Imp. eléctrico', 
-          (extractedData.impuesto_electrico_euros != null 
-            ? fmt(extractedData.impuesto_electrico_euros) 
-            : '<span style="font-size:0.7rem;color:#94a3b8;font-style:italic;">Incluido en Término Energía</span>'),
-          fmtEur(impElGana)
-        ],
+          fmtEur((parseFloat(extractedData.kwh_total)||(parseFloat(extractedData.kwh_punta||0)+parseFloat(extractedData.kwh_llano||0)+parseFloat(extractedData.kwh_valle||0))) * 0.13155)],
         ['Alquiler contador', fmt(extractedData.alquiler_contador_euros), fmtEur(calcResult.alq)],
-        ...serviciosRows,
-        ...((extractedData.otros_conceptos_euros || []).map(c => 
-          [c.nombre, fmtEur(parseFloat(c.importe)), '—']
-        )),
+        ['Bono social', fmt(extractedData.bono_social), fmtEur(calcResult.bonoG)],
+        ['Impuesto eléctrico', fmt(extractedData.impuesto_electrico_euros), fmtEur(calcResult.impEl)],
         ['Base imponible', fmtEur(baseImponibleActual), fmtEur(baseImponibleGana)],
         ['IVA', fmt(extractedData.iva_euros), fmtEur(ivaGana)],
+        ['Total factura', fmtEur(totalFacturaReal), fmtEur(totalGanaTabla)],
+        ['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((totalGanaTabla / dias) * 365)],
       ];
-      rows.push(['Total factura', fmtEur(totalFacturaReal), fmtEur(totalGanaTabla)]);
-      rows.push(['Coste anual', fmtEur((totalFacturaReal / dias) * 365), fmtEur((totalGanaTabla / dias) * 365)]);
       rows.forEach(([c, tu, gana]) => {
         const tr = document.createElement('tr');
         const concept = c === 'Total factura'
