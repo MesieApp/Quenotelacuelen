@@ -923,7 +923,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const p1kw = parseFloat(d.potencia_p1) || 0;
         const p2kw = parseFloat(d.potencia_p2) || p1kw;
         const pot = p1kw * 0.12909822 * dias + p2kw * 0.12909822 * dias;
-        const ener = etotal * 0.0945;
+        const ener = etotal * 0.0845;
         const margen = 0;
         const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
         const bonoFallback = (año >= 2026 ? BONO_2026 : BONO_2025) * dias;
