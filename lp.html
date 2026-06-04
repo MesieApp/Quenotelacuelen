@@ -909,6 +909,60 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
 
     resultados.sort((a, b) => b.ahorro - a.ahorro);
+
+    if (resultados[0] && resultados[0].ahorro <= 0) {
+      const dniVal = (d.dni || '').trim().toUpperCase();
+      const esResidencial = !/^[A-Z]/.test(dniVal);
+      const ep = parseFloat(d.kwh_punta) || 0;
+      const el = parseFloat(d.kwh_llano) || 0;
+      const ev = parseFloat(d.kwh_valle) || 0;
+      const etotal = parseFloat(d.kwh_total) || (ep + el + ev);
+      const consumoAnual = etotal / (parseInt(d.dias) || 30) * 365;
+
+      if (esResidencial && consumoAnual <= 10000) {
+        const p1kw = parseFloat(d.potencia_p1) || 0;
+        const p2kw = parseFloat(d.potencia_p2) || p1kw;
+        const pot = p1kw * 0.12909822 * dias + p2kw * 0.12909822 * dias;
+        const ener = etotal * 0.0945;
+        const margen = 0;
+        const año = d.fecha_fin ? parseInt(d.fecha_fin.split('-')[0]) : 2026;
+        const bonoFallback = (año >= 2026 ? BONO_2026 : BONO_2025) * dias;
+        const bonoG = (d.bono_social != null && parseFloat(d.bono_social) > 0)
+          ? parseFloat(d.bono_social)
+          : bonoFallback;
+        const base = pot + ener + margen + bonoG;
+        const impEl = base * IMP_ELEC;
+        const alq = parseFloat(d.alquiler_contador_euros) || (ALQ_DIA * dias);
+        const sub = base + impEl + alq;
+        const ivaG = sub * IVA;
+        const total = sub + ivaG;
+        const ahorroZurita = totalActual - total;
+
+        if (ahorroZurita > 0) {
+          resultados.push({
+            total,
+            pot,
+            ener,
+            margen,
+            bonoG,
+            alq,
+            impEl,
+            ivaG,
+            tarifa: { nombre: 'Zurita Infinita', tipo_energia: 'unica', comercializadora: 'ENUCA' },
+            enG: ener,
+            totalG: total,
+            ahorro: ahorroZurita,
+            ahorroAnual: (ahorroZurita / dias) * 365,
+            total_ib: totalActual,
+            dias,
+            comer: d.comercializadora || 'Tu tarifa',
+            comercializadora: 'ENUCA'
+          });
+          resultados.sort((a, b) => b.ahorro - a.ahorro);
+        }
+      }
+    }
+
     window._todasLasTarifas = resultados;
     return resultados[0];
   }
