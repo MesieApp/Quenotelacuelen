@@ -2027,23 +2027,28 @@ function toggleFaqExtra() {
       }
 
     } else if (tarifa.tipo_energia === 'unica') {
-      const potP1 = p1kw * 0.098877 * dias;
-      const potP2 = p2kw * 0.098877 * dias;
-      const potencia = potP1 + potP2;
-      const energia = etotal * 0.13155;
-      const bonoSocial = parseFloat(d.bono_social) || 0;
-      const impElectrico = parseFloat(d.impuesto_electrico_euros) || 0;
-      const alqUnica = parseFloat(d.alquiler_contador_euros) || 0;
-      const baseImponible = potencia + energia + bonoSocial + impElectrico + alqUnica;
-      const _ivaPct2 = parseFloat(d.iva_electricidad_pct);
-      const fechaFin2 = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
-      const ivaRate2 = (_ivaPct2 > 0 && _ivaPct2 <= 1)
-        ? _ivaPct2
-        : (fechaFin2 && !isNaN(fechaFin2.getTime()) && fechaFin2 >= new Date('2026-03-21T00:00:00')
-            ? 0.10 : 0.21);
-      const ivaG2 = baseImponible * ivaRate2;
-      const total = baseImponible + ivaG2;
-      return { total, pot: potencia, ener: energia, margen: 0, bonoG: bonoSocial, alq: alqUnica, impEl: impElectrico, ivaG: ivaG2, tarifa };
+      const avgPe = (pe.p + pe.l + pe.v) / 3;
+      ener = etotal * tarifa.energia_unica;
+      const potP1u = parseFloat(tarifa.potencia_p1_dia) || 0.089434;
+      const potP2u = parseFloat(tarifa.potencia_p2_dia) || 0.089434;
+      const pot = (p1kw * potP1u * dias) + (p2kw * potP2u * dias);
+      const margen = tarifa.margen_dia ? tarifa.margen_dia * dias : 0;
+      const bonoFallback = (año >= 2026 ? BONO_2026 : BONO_2025) * dias;
+      const bonoG = (d.bono_social != null && parseFloat(d.bono_social) > 0)
+        ? parseFloat(d.bono_social)
+        : bonoFallback;
+      const base = pot + ener + margen + bonoG;
+      const fechaFinU = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
+      const impElecRateU = (fechaFinU && !isNaN(fechaFinU.getTime()) && fechaFinU > new Date('2026-03-20T23:59:59')) ? 0.005 : 0.0511269632;
+      const impEl = base * impElecRateU;
+      const alq = parseFloat(d.alquiler_contador_euros) || (ALQ_DIA * dias);
+      const sub = base + impEl + alq;
+      const _ivaPct = parseFloat(d.iva_electricidad_pct);
+      const fechaFinIva = d.fecha_fin ? new Date(d.fecha_fin + 'T00:00:00') : null;
+      const ivaRate = (_ivaPct > 0 && _ivaPct <= 1) ? _ivaPct : (fechaFinIva && !isNaN(fechaFinIva.getTime()) && fechaFinIva >= new Date('2026-03-21T00:00:00') ? 0.10 : 0.21);
+      const ivaG = sub * ivaRate;
+      const total = sub + ivaG;
+      return { total, pot, ener, margen, bonoG, alq, impEl, ivaG, tarifa };
     }
 
     const margen = tarifa.margen_dia * dias;
