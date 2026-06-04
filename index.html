@@ -1513,6 +1513,25 @@ footer { background: #fff; border-top: 1px solid #E2E8F0; padding: 1.25rem 2rem;
         </div>
       </div>
 
+      <div id="dniPhotosBlock" style="display:none;margin-bottom:0.5rem;">
+        <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:1rem;margin-bottom:0.85rem;">
+          <label for="dni_foto_anverso" style="font-size:0.72rem;font-weight:600;color:#475569;text-transform:uppercase;display:block;margin-bottom:0.5rem;">DNI — parte delantera</label>
+          <input type="file" id="dni_foto_anverso" name="dni_foto_anverso" accept="image/jpeg,image/png,image/webp,image/heic" style="width:100%;border:1.5px dashed #d1e7d8;border-radius:8px;padding:0.6rem;cursor:pointer;background:#fff;box-sizing:border-box;" onchange="const n=document.getElementById('dni_anverso_name');if(n){n.textContent=this.files[0]?this.files[0].name:'';n.style.display=this.files[0]?'block':'none';}const e=document.getElementById('dni_anverso_error');if(e)e.textContent='';"/>
+          <span id="dni_anverso_name" style="display:none;font-size:0.72rem;color:#1E6B3A;margin-top:0.35rem;"></span>
+          <span class="field-error" id="dni_anverso_error" role="alert"></span>
+        </div>
+        <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:1rem;margin-bottom:0.85rem;">
+          <label for="dni_foto_reverso" style="font-size:0.72rem;font-weight:600;color:#475569;text-transform:uppercase;display:block;margin-bottom:0.5rem;">DNI — parte trasera</label>
+          <input type="file" id="dni_foto_reverso" name="dni_foto_reverso" accept="image/jpeg,image/png,image/webp,image/heic" style="width:100%;border:1.5px dashed #d1e7d8;border-radius:8px;padding:0.6rem;cursor:pointer;background:#fff;box-sizing:border-box;" onchange="const n=document.getElementById('dni_reverso_name');if(n){n.textContent=this.files[0]?this.files[0].name:'';n.style.display=this.files[0]?'block':'none';}const e=document.getElementById('dni_reverso_error');if(e)e.textContent='';"/>
+          <span id="dni_reverso_name" style="display:none;font-size:0.72rem;color:#1E6B3A;margin-top:0.35rem;"></span>
+          <span class="field-error" id="dni_reverso_error" role="alert"></span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.5rem;">
+          <span style="font-size:0.9rem;flex-shrink:0;">🔒</span>
+          <span style="font-size:0.68rem;color:#94a3b8;line-height:1.5;">Necesitamos tu DNI para tramitar el cambio con ENUCA. Solo se usa para este trámite.</span>
+        </div>
+      </div>
+
       <input type="hidden" id="email" name="email"/>
       <input type="hidden" id="telefono" name="telefono"/>
 
@@ -3207,6 +3226,10 @@ function mostrarAvisoBanner(msg) {
         fieldNote.textContent = `Imprescindible para finalizar el trámite: en las próximas horas recibirás un SMS o un correo de ${comGanadora} para autorizar el cambio.`;
       }
       window._comercializadoraGanadora = comGanadora;
+      const dniBlock = document.getElementById('dniPhotosBlock');
+      if (dniBlock) {
+        dniBlock.style.display = (window._comercializadoraGanadora === 'ENUCA') ? 'block' : 'none';
+      }
     }
   });
 
@@ -3387,6 +3410,20 @@ function mostrarAvisoBanner(msg) {
       return;
     }
 
+    const dniBlock = document.getElementById('dniPhotosBlock');
+    if (dniBlock && dniBlock.style.display !== 'none') {
+      const anverso = document.getElementById('dni_foto_anverso')?.files?.[0];
+      const reverso = document.getElementById('dni_foto_reverso')?.files?.[0];
+      if (!anverso) {
+        document.getElementById('dni_anverso_error').textContent = 'Sube la parte delantera del DNI';
+        return;
+      }
+      if (!reverso) {
+        document.getElementById('dni_reverso_error').textContent = 'Sube la parte trasera del DNI';
+        return;
+      }
+    }
+
     const submitBtn = e.target.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando...';
@@ -3505,6 +3542,26 @@ function mostrarAvisoBanner(msg) {
         } catch(e) {
           console.warn('No se pudo renombrar el PDF:', e);
           facturaUrl = window._facturaStorageUrl || null;
+        }
+      }
+
+      const dniBlockCheck = document.getElementById('dniPhotosBlock');
+      if (dniBlockCheck && dniBlockCheck.style.display !== 'none') {
+        const dniFotoAnverso = document.getElementById('dni_foto_anverso')?.files?.[0];
+        const dniFotoReverso = document.getElementById('dni_foto_reverso')?.files?.[0];
+        if (dniFotoAnverso) {
+          const b64a = await fileToBase64(dniFotoAnverso);
+          const extA = dniFotoAnverso.name.split('.').pop().toLowerCase();
+          const nameA = `dni_${clienteData.id}_anverso.${extA}`;
+          const blobA = await fetch(`data:${dniFotoAnverso.type};base64,${b64a}`).then(r => r.blob());
+          await _supabase.storage.from('facturas').upload(nameA, blobA, { contentType: dniFotoAnverso.type, upsert: true });
+        }
+        if (dniFotoReverso) {
+          const b64r = await fileToBase64(dniFotoReverso);
+          const extR = dniFotoReverso.name.split('.').pop().toLowerCase();
+          const nameR = `dni_${clienteData.id}_reverso.${extR}`;
+          const blobR = await fetch(`data:${dniFotoReverso.type};base64,${b64r}`).then(r => r.blob());
+          await _supabase.storage.from('facturas').upload(nameR, blobR, { contentType: dniFotoReverso.type, upsert: true });
         }
       }
 
